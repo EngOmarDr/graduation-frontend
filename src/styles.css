@@ -1,1 +1,41 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #6366f1;
+}
+
+@layer base {
+  /* * {
+    @apply transition-colors duration-300 ease-in-out;
+  } */
+
+  .validation-text {
+    @apply text-xs text-red-700 dark:text-red-400;
+  }
+
+  .cust-input {
+    @apply block w-full p-2.5 bg-gray-50 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white;
+  }
+
+  .cust-input-label {
+    @apply block mb-0.5 text-sm font-medium text-gray-900 dark:text-white;
+  }
+}
+:root {
+  --mat-autocomplete-background-color: white;
+}
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+select {
+  margin: 0;
+  height: 100%;
+}
+
+div:has(> select) {
+  display: flex;
+  flex-direction: column;
+}
