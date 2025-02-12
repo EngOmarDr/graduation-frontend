@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
-import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { AccountComponent } from './account/account.component';
+import { CostCenterComponent } from './cost-center/cost-center.component';
 
 export const routes: Routes = [
   {
@@ -14,13 +13,9 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'account',
-        component: AccountComponent,
+        path: 'cost-center',
+        component: CostCenterComponent,
       },
-      //   {
-      //     path: 'child-b',
-      //     component: ChildBComponent,
-      //   },
     ],
   },
 ];

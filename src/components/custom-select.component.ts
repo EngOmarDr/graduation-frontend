@@ -1,39 +1,61 @@
-// import { CommonModule } from '@angular/common';
-// import { Component, Input } from '@angular/core';
-// import { FormControl, ReactiveFormsModule } from '@angular/forms';
-// import { ValidationMessageComponent } from './validation-message.component';
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  Input,
+} from '@angular/core';
+import {
+  ControlContainer,
+  FormControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { ValidationMessageComponent } from './validation-message.component';
 
-// @Component({
-//   selector: 'cust-select',
-//   imports: [CommonModule, ValidationMessageComponent, ReactiveFormsModule],
-//   template: `
-//     <div>
-//       <label
-//         [for]="inputId"
-//         class="block text-sm font-medium text-gray-900 dark:text-white"
-//         >{{ label }}</label
-//       >
-//       <select
-//         [id]="inputId"
-//         [formControl]="control"
-//         class="block w-full p-2.5 outline-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary"
-//       >
-//         @for(option of options; track $index){
-//         <option [value]="option.key">{{ option.value }}</option>
-//         }
-//       </select>
-//       <app-validation-message
-//         [control]="control"
-//         [customMessage]="customMessage"
-//         [name]="label"
-//       />
-//     </div>
-//   `,
-// })
-// export class CustomSelectComponent {
-//   @Input() label: string = '';
-//   @Input() inputId: string = '';
-//   @Input() control!: FormControl;
-//   @Input() options!: any[];
-//   @Input() customMessage: string | null = null;
-// }
+@Component({
+  selector: 'cust-select',
+  imports: [CommonModule, ValidationMessageComponent, ReactiveFormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: () => inject(ControlContainer, { skipSelf: true }),
+    },
+  ],
+  template: `
+    <div>
+      <label
+        [for]="inputId"
+        class="cust-input-label"
+        [ngClass]="{
+          'cust-label-disable': control.disabled
+        }"
+        >{{ label }}</label
+      >
+      <select
+        [id]="inputId"
+        [formControl]="control"
+        class="cust-input"
+        [ngClass]="{
+          'invalid-input': control.invalid && (control.dirty || control.touched)
+        }"
+      >
+        @for(option of options; track $index){
+        <option [value]="option.key">{{ option.value }}</option>
+        }
+      </select>
+      <app-validation-message
+        [control]="control"
+        [customMessage]="customMessage"
+        [name]="label"
+      />
+    </div>
+  `,
+})
+export class CustomSelectComponent {
+  @Input({ required: true }) label!: string;
+  @Input({ required: true }) inputId!: string;
+  @Input({ required: true }) control!: FormControl;
+  @Input({ required: true }) options!: any[];
+  @Input() customMessage: string | null = null;
+}

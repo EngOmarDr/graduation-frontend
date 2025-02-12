@@ -8,14 +8,19 @@ import { FormsModule } from '@angular/forms';
     @for (scheme of colorSchemes; track $index) {
     <div class="flex items-center gap-2">
       <input
-        type="radio"
         [id]="scheme.id"
         name="colorScheme"
+        type="radio"
         [value]="scheme.value"
         [(ngModel)]="selectedColorScheme"
         (change)="onChangeTheme()"
+        class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
       />
-      <label [for]="scheme.id">{{ scheme.label }}</label>
+      <label
+        [for]="scheme.id"
+        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >{{ scheme.label }}</label
+      >
     </div>
     }
   `,
