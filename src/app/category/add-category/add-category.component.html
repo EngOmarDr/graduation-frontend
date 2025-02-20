@@ -1,0 +1,85 @@
+<div class="bg-white dark:bg-[#1f2937] p-7 m-7 rounded-md">
+  <h4 class="text-gray-700 pb-7 text-2xl font-bold dark:text-white">
+    Create Category
+  </h4>
+
+  <form
+    [formGroup]="categoryForm"
+    (ngSubmit)="onSubmit()"
+    class="grid grid-cols-[repeat(auto-fit,_minmax(min(100%,_300px),_1fr))] gap-4"
+  >
+    <cust-form-field
+      [control]="categoryForm.controls.code"
+      inputId="code"
+      label="Code"
+    />
+
+    <cust-form-field
+      [control]="categoryForm.controls.name"
+      inputId="name"
+      label="Name"
+    />
+
+    <cust-select
+      inputId="Category_type"
+      label="Category Type"
+      [options]="[
+        { key: 'true', value: 'primary' },
+        { key: 'false', value: 'branch' }
+      ]"
+      [control]="categoryForm.controls.isPrimary"
+    />
+
+    <div>
+      <label
+        for="primary_Category"
+        class="cust-input-label"
+        [ngClass]="{
+          'cust-label-disable': categoryForm.controls.primaryGroup.disabled
+        }"
+      >
+        Primary Category
+      </label>
+
+      <div class="relative">
+        <input
+          id="primary_Category"
+          formControlName="primaryGroup"
+          type="text"
+          class="cust-input"
+          [ngClass]="{
+            'invalid-input': categoryForm.controls.primaryGroup.invalid && (categoryForm.controls.primaryGroup.dirty || categoryForm.controls.primaryGroup.touched),
+          }"
+          [matAutocomplete]="autoAccount"
+          matInput
+        />
+        <mat-autocomplete #autoAccount="matAutocomplete" class="">
+          @for (option of results ; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-autocomplete>
+        <app-validation-message
+          [control]="categoryForm.controls.primaryGroup"
+          [customMessage]="null"
+          name="primary Category"
+        />
+      </div>
+    </div>
+
+    <cust-form-field
+      [control]="categoryForm.controls.note"
+      inputId="note"
+      label="Note"
+      class="focus:ring-4 focus:ring-primary"
+    />
+
+    <div class="col-span-full grid grid-cols-subgrid">
+      <button type="submit" class="btn" [disabled]="!categoryForm.valid">
+        Add
+      </button>
+    </div>
+  </form>
+  <div>
+    {{ categoryForm.value | json }}
+  </div>
+</div>

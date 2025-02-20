@@ -1,11 +1,14 @@
+@import url("./assets/fonts/poppins/style.css");
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-primary: #6366f1;
-
+  --font-*: initial;
+  --font-poppins: poppins, sans-serif;
   --animate-button-pop: button-pop 0s ease-out;
+
   @keyframes button-pop {
     0% {
       transform: scale(0.98);
@@ -88,7 +91,17 @@
     box-shadow: var(--shadow-lg);
   }
   .btn:focus {
+    --tw-ring-shadow: 0 0 1px 3px black;
+    box-shadow: var(--tw-ring-shadow);
+    border-color: var(--color-primary);
+    outline: none;
     animation: var(--animate-button-pop);
+  }
+  .btn:disabled {
+    background-color: rgba(0, 130, 54, 0.5);
+    cursor: not-allowed;
+    box-shadow: none;
+    transition: none;
   }
 
   /* custom label */
@@ -114,9 +127,16 @@
 
 @layer base {
 }
+
 :root {
   --mat-autocomplete-background-color: white;
 }
+
 body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: poppins, sans-serif;
+}
+
+th {
+  font-weight: inherit;
+  text-align: inherit;
 }

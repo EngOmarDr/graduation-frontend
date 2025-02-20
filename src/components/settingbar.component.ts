@@ -179,9 +179,15 @@ export class SettingbarComponent implements OnInit {
     '#ffEB3B',
   ];
   ngOnInit(): void {
-    this.primaryColor = getComputedStyle(document.documentElement)
-      .getPropertyValue('--color-primary')
-      .trim();
+    this.primaryColor =
+      localStorage.getItem('primaryColor') ??
+      getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-primary')
+        .trim();
+    document.documentElement.style.setProperty(
+      '--color-primary',
+      this.primaryColor
+    );
     // this.themeColors[7] = this.primaryColor;
   }
 
@@ -196,11 +202,13 @@ export class SettingbarComponent implements OnInit {
   changePrimaryColor(value: string | Event) {
     if (typeof value == 'string') {
       document.documentElement.style.setProperty('--color-primary', value);
+      localStorage.setItem('primaryColor', value);
       this.primaryColor = value;
       // this.themeColors[7] = this.primaryColor;
     } else {
       const color = (value.target as HTMLInputElement).value;
       document.documentElement.style.setProperty('--color-primary', color);
+      localStorage.setItem('primaryColor', color);
       this.primaryColor = color;
       // this.themeColors[7] = this.primaryColor;
     }
