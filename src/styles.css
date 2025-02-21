@@ -1,4 +1,5 @@
-@import url("./assets/fonts/poppins/style.css");
+@import url("./assets/fonts/poppins/stylesheet.css");
+@import url("./assets/fonts/tajawal/stylesheet.css");
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -123,6 +124,12 @@
     font-size: var(--text-sm) /* 0.875rem = 14px */;
     line-height: var(--tw-leading, var(--text-sm--line-height));
   }
+
+  .cust-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 1rem;
+  }
 }
 
 @layer base {
@@ -133,7 +140,7 @@
 }
 
 body {
-  font-family: poppins, sans-serif;
+  font-family: "Poppins", "Tajawal", sans-serif;
 }
 
 th {
