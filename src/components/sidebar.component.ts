@@ -61,13 +61,13 @@ import { RouterLink } from '@angular/router';
                   'max-h-[500px]': !isCollapsed
                 }"
               >
-                <li>
+                <!-- <li>
                   <a
                     routerLink="cost-center"
                     class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
                     >Cost center</a
                   >
-                </li>
+                </li> -->
                 <li>
                   <a
                     routerLink="add-category"
@@ -80,6 +80,13 @@ import { RouterLink } from '@angular/router';
                     routerLink="currencies"
                     class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
                     >Currencies</a
+                  >
+                </li>
+                <li>
+                  <a
+                    routerLink="warehouses"
+                    class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
+                    >Warehouse</a
                   >
                 </li>
               </ul>

@@ -1,0 +1,85 @@
+<div class="bg-white dark:bg-[#1f2937] p-7 m-7 rounded-md">
+  <h4 class="cust-header pb-7">Add Warehouse</h4>
+
+  <form [formGroup]="costCenterForm" (ngSubmit)="onSubmit()" class="cust-grid">
+    <cust-form-field
+      [control]="costCenterForm.controls.code"
+      inputId="code"
+      label="Code"
+    />
+
+    <cust-form-field
+      [control]="costCenterForm.controls.name"
+      inputId="name"
+      label="Name"
+    />
+
+    <cust-select
+      inputId="warehouse_type"
+      label="Warehouse Type"
+      [options]="[
+        { key: true, value: 'primary' },
+        { key: false, value: 'option' }
+      ]"
+      [control]="costCenterForm.controls.isPrimary"
+    />
+
+    <div>
+      <label
+        for="pr_warehouse"
+        class="cust-input-label"
+        [ngClass]="{
+          'cust-label-disable':
+            costCenterForm.controls.primaryCostCenter.disabled
+        }"
+      >
+        Primary Warehouse
+      </label>
+
+      <div class="relative">
+        <input
+          id="pr_ac"
+          formControlName="primaryCostCenter"
+          type="text"
+          class="cust-input"
+          [ngClass]="{
+            'invalid-input': costCenterForm.controls.primaryCostCenter.invalid && (costCenterForm.controls.primaryCostCenter.dirty || costCenterForm.controls.primaryCostCenter.touched),
+          }"
+          [matAutocomplete]="autoAccount"
+          matInput
+        />
+        <mat-autocomplete #autoAccount="matAutocomplete" class="">
+          @for (option of results ; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-autocomplete>
+        <app-validation-message
+          [control]="costCenterForm.controls.primaryCostCenter"
+          [customMessage]="null"
+          name="primary center"
+        />
+      </div>
+    </div>
+
+    <cust-form-field
+      [control]="costCenterForm.controls.address"
+      inputId="address"
+      label="Address"
+    />
+
+    <cust-form-field
+      [control]="costCenterForm.controls.note"
+      inputId="note"
+      label="Note"
+    />
+
+    <div class="col-span-full grid grid-cols-subgrid">
+      <button type="submit" class="btn focus:ring-1 focus:ring-primary">
+        Add
+      </button>
+    </div>
+  </form>
+  <div>
+    {{ costCenterForm.value | json }}
+  </div>
+</div>

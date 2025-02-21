@@ -6,6 +6,8 @@ import { AddCategoryComponent } from './category/add-category/add-category.compo
 import { AddCurrencyComponent } from './currency/add-currency/add-currency.component';
 import { ShowCurrenciesComponent } from './currency/show-currencies/show-currencies.component';
 import { UpdateCurrencyComponent } from './currency/update-currency/update-currency.component';
+import { AddWarehouseComponent } from './warehouse/add-warehouse/add-warehouse.component';
+import { ShowWarehousesComponent } from './warehouse/show-warehouses/show-warehouses.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +37,19 @@ export const routes: Routes = [
           {
             path: 'currencies',
             component: ShowCurrenciesComponent,
+          },
+        ],
+      },
+      {
+        path: '',
+        children: [
+          {
+            path: 'warehouses',
+            component: ShowWarehousesComponent,
+          },
+          {
+            path: 'add-warehouse',
+            component: AddWarehouseComponent,
           },
         ],
       },

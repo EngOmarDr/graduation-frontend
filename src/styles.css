@@ -121,14 +121,28 @@
 
   .cust-label-disable {
     opacity: 50%;
+    cursor: not-allowed;
     font-size: var(--text-sm) /* 0.875rem = 14px */;
     line-height: var(--tw-leading, var(--text-sm--line-height));
   }
 
-  .cust-grid{
+  .cust-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: 1rem;
+  }
+
+  .cust-header {
+    color: var(--color-gray-700);
+    font-weight: bold;
+    font-size: var(--text-2xl) /* 1.5rem = 24px */;
+    line-height: var(
+      --tw-leading,
+      var(--text-2xl--line-height) /* calc(2 / 1.5) ≈ 1.3333 */
+    );
+  }
+  .dark .cust-header {
+    color: var(--color-white);
   }
 }
 
