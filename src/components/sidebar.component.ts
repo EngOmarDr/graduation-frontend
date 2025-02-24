@@ -70,9 +70,9 @@ import { RouterLink } from '@angular/router';
                 </li> -->
                 <li>
                   <a
-                    routerLink="add-category"
+                    routerLink="groups"
                     class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
-                    >Category</a
+                    >Groups</a
                   >
                 </li>
                 <li>
@@ -87,6 +87,13 @@ import { RouterLink } from '@angular/router';
                     routerLink="warehouses"
                     class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
                     >Warehouse</a
+                  >
+                </li>
+                <li>
+                  <a
+                    routerLink="prices"
+                    class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
+                    >Prices</a
                   >
                 </li>
               </ul>

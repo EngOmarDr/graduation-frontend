@@ -41,6 +41,8 @@ export class AddCurrencyComponent implements OnInit {
     name: ['', [Validators.required]],
     balance: [1, [Validators.required, Validators.min(0)]],
     eq: [1, [Validators.required, Validators.min(0)]],
+    partName: [''],
+    value: [100, [Validators.required, Validators.min(0)]],
   });
 
   onSubmit() {

@@ -44,7 +44,7 @@ import { ValidationMessageComponent } from './validation-message.component';
       <app-validation-message
         [control]="control"
         [customMessage]="null"
-        name="name"
+        name="{{label}}"
       />
     </div>
   `,
