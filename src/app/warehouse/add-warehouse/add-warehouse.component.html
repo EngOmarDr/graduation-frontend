@@ -40,9 +40,6 @@
           formControlName="primaryCostCenter"
           type="text"
           class="cust-input"
-          [ngClass]="{
-            'invalid-input': costCenterForm.controls.primaryCostCenter.invalid && (costCenterForm.controls.primaryCostCenter.dirty || costCenterForm.controls.primaryCostCenter.touched),
-          }"
           [matAutocomplete]="autoAccount"
           matInput
         />

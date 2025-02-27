@@ -15,7 +15,7 @@ import { RouterLink } from '@angular/router';
 
     <!-- sidebar -->
     <aside
-      class="fixed z-40 inset-y-0 bg-[#f6f9fc] dark:bg-[#1f2937] left-0 md:z-19 w-64 overflow-y-auto transition-transform duration-300 transform lg:translate-x-0 lg:static lg:inset-0"
+      class="fixed z-40 inset-y-0 bg-card-surface shadow-primary dark:shadow-dark-primary dark:bg-dark-card-surface left-0 md:z-19 w-64 overflow-y-auto transition-transform duration-300 transform lg:translate-x-0 lg:static lg:inset-0"
       [ngClass]="{
         '-translate-x-full ease-in': !isSidebarOpen,
         'translate-x-0 ease-out': isSidebarOpen

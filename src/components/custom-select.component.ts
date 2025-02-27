@@ -32,14 +32,7 @@ import { ValidationMessageComponent } from './validation-message.component';
         }"
         >{{ label }}</label
       >
-      <select
-        [id]="inputId"
-        [formControl]="control"
-        class="cust-input"
-        [ngClass]="{
-          'invalid-input': control.invalid && (control.dirty || control.touched)
-        }"
-      >
+      <select [id]="inputId" [formControl]="control" class="cust-input">
         @for(option of options; track $index){
         <option [value]="option.key">{{ option.value }}</option>
         }

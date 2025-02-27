@@ -22,7 +22,7 @@ import { FormsModule } from '@angular/forms';
       <img src="assets/icons/settings.png" width="34" alt="settings" />
     </button>
     <div
-      class="fixed right-0 inset-y-0 w-72 p-6 pt-0 bg-[#f6f9fc] dark:bg-[#1f2937] overflow-y-auto z-40 transition-transform"
+      class="fixed right-0 accent-primary inset-y-0 w-72 p-6 pt-0 bg-card-surface dark:bg-dark-card-surface overflow-y-auto z-40 transition-transform"
       style="transition-property: visibility, translate;"
       [ngClass]="{
         'translate-x-full invisible': !isSettingOpen,

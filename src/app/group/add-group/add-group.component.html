@@ -1,9 +1,5 @@
 <cust-card title="Add Group">
-  <form
-    [formGroup]="categoryForm"
-    (ngSubmit)="onSubmit()"
-    class="cust-grid"
-  >
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="categoryForm.controls.code"
       inputId="code"
@@ -43,9 +39,6 @@
           formControlName="primaryGroup"
           type="text"
           class="cust-input"
-          [ngClass]="{
-            'invalid-input': categoryForm.controls.primaryGroup.invalid && (categoryForm.controls.primaryGroup.dirty || categoryForm.controls.primaryGroup.touched),
-          }"
           [matAutocomplete]="autoAccount"
           matInput
         />

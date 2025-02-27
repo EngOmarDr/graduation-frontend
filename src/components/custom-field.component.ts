@@ -37,9 +37,6 @@ import { ValidationMessageComponent } from './validation-message.component';
         [formControl]="control"
         type="{{ type }}"
         class="cust-input"
-        [ngClass]="{
-            'invalid-input': control.invalid && (control.dirty || control.touched),
-          }"
       />
       <app-validation-message
         [control]="control"
