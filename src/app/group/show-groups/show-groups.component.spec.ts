@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CostCenterComponent } from './cost-center.component';
+import { ShowGroupsComponent } from './show-groups.component';
 
-describe('CostCenterComponent', () => {
-  let component: CostCenterComponent;
-  let fixture: ComponentFixture<CostCenterComponent>;
+describe('ShowCategoriesComponent', () => {
+  let component: ShowGroupsComponent;
+  let fixture: ComponentFixture<ShowGroupsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CostCenterComponent]
+      imports: [ShowGroupsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CostCenterComponent);
+    fixture = TestBed.createComponent(ShowGroupsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

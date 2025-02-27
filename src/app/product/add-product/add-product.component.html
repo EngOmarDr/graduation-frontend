@@ -1,4 +1,4 @@
-<cust-card title="Add Currency">
+<cust-card title="Add Product">
   <form
     [formGroup]="currencyForm"
     (ngSubmit)="onSubmit()"
@@ -49,7 +49,4 @@
       </button>
     </div>
   </form>
-  <div>
-    {{ currencyForm.value | json }}
-  </div>
 </cust-card>

@@ -1,12 +1,8 @@
-<div class="bg-white dark:bg-[#1f2937] p-7 m-7 rounded-md">
-  <h4 class="text-gray-700 pb-7 text-2xl font-bold dark:text-white">
-    Create Category
-  </h4>
-
+<cust-card title="Add Group">
   <form
     [formGroup]="categoryForm"
     (ngSubmit)="onSubmit()"
-    class="grid grid-cols-[repeat(auto-fit,_minmax(min(100%,_300px),_1fr))] gap-4"
+    class="cust-grid"
   >
     <cust-form-field
       [control]="categoryForm.controls.code"
@@ -82,4 +78,4 @@
   <div>
     {{ categoryForm.value | json }}
   </div>
-</div>
+</cust-card>

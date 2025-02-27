@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './login/login.component';
-import { CostCenterComponent } from './cost-center/cost-center.component';
-import { AddCategoryComponent as AddGroupComponent } from './category/add-category/add-category.component';
+import { AddGroupComponent } from './group/add-group/add-group.component';
 import { AddCurrencyComponent } from './currency/add-currency/add-currency.component';
 import { ShowCurrenciesComponent } from './currency/show-currencies/show-currencies.component';
 import { UpdateCurrencyComponent } from './currency/update-currency/update-currency.component';
@@ -10,7 +9,9 @@ import { AddWarehouseComponent } from './warehouse/add-warehouse/add-warehouse.c
 import { ShowWarehousesComponent } from './warehouse/show-warehouses/show-warehouses.component';
 import { ShowPricesComponent } from './price/show-prices/show-prices.component';
 import { AddPriceComponent } from './price/add-price/add-price.component';
-import { ShowCategoriesComponent } from './category/show-categories/show-categories.component';
+import { ShowGroupsComponent } from './group/show-groups/show-groups.component';
+import { AddProductComponent } from './product/add-product/add-product.component';
+import { ShowProductsComponent } from './product/show-products/show-products.component';
 
 export const routes: Routes = [
   {
@@ -21,23 +22,6 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      {
-        path: 'cost-center',
-        component: CostCenterComponent,
-      },
-      {
-        path: '',
-        children: [
-          {
-            path: 'groups',
-            component: ShowCategoriesComponent,
-          },
-          {
-            path: 'add-group',
-            component: AddGroupComponent,
-          },
-        ],
-      },
       {
         path: '',
         children: [
@@ -56,12 +40,12 @@ export const routes: Routes = [
         path: '',
         children: [
           {
-            path: 'warehouses',
-            component: ShowWarehousesComponent,
+            path: 'groups',
+            component: ShowGroupsComponent,
           },
           {
-            path: 'add-warehouse',
-            component: AddWarehouseComponent,
+            path: 'add-group',
+            component: AddGroupComponent,
           },
         ],
       },
@@ -75,6 +59,32 @@ export const routes: Routes = [
           {
             path: 'add-price',
             component: AddPriceComponent,
+          },
+        ],
+      },
+      {
+        path: '',
+        children: [
+          {
+            path: 'products',
+            component: ShowProductsComponent,
+          },
+          {
+            path: 'add-product',
+            component: AddProductComponent,
+          },
+        ],
+      },
+      {
+        path: '',
+        children: [
+          {
+            path: 'warehouses',
+            component: ShowWarehousesComponent,
+          },
+          {
+            path: 'add-warehouse',
+            component: AddWarehouseComponent,
           },
         ],
       },

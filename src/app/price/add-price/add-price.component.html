@@ -1,6 +1,4 @@
-<div class="card">
-  <h4 class="cust-header pb-7">Add Price</h4>
-
+<cust-card title="Add Price">
   <form [formGroup]="priceForm" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="priceForm.controls.name"
@@ -15,6 +13,6 @@
     </div>
   </form>
   <div>
-    {{ priceForm.value|json}}
+    {{ priceForm.value | json }}
   </div>
-</div>
+</cust-card>

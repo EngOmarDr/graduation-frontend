@@ -10,9 +10,10 @@ import { CustomFieldComponent } from '../../../components/custom-field.component
 import { CustomSelectComponent } from '../../../components/custom-select.component';
 import { ValidationMessageComponent } from '../../../components/validation-message.component';
 import { startWith, tap } from 'rxjs';
+import { CardComponent } from "../../../components/card-form.component";
 
 @Component({
-  selector: 'app-add-category',
+  selector: 'app-add-group',
   imports: [
     ReactiveFormsModule,
     CommonModule,
@@ -20,10 +21,11 @@ import { startWith, tap } from 'rxjs';
     CustomSelectComponent,
     ValidationMessageComponent,
     MatAutocompleteModule,
-  ],
-  templateUrl: './add-category.component.html',
+    CardComponent
+],
+  templateUrl: './add-group.component.html',
 })
-export class AddCategoryComponent {
+export class AddGroupComponent {
   private fb = inject(NonNullableFormBuilder);
 
   ngOnInit(): void {

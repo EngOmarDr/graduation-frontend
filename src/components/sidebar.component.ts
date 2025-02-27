@@ -96,6 +96,13 @@ import { RouterLink } from '@angular/router';
                     >Prices</a
                   >
                 </li>
+                <li>
+                  <a
+                    routerLink="products"
+                    class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
+                    >Products</a
+                  >
+                </li>
               </ul>
             </div>
           </div>

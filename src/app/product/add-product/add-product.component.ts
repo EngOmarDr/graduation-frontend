@@ -1,19 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CardComponent } from '../../../components/card-form.component';
+import { CustomFieldComponent } from '../../../components/custom-field.component';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CustomFieldComponent } from '../../../components/custom-field.component';
-import { CardComponent } from "../../../components/card-form.component";
 
 @Component({
-  selector: 'app-add-currency',
-  imports: [CommonModule, ReactiveFormsModule, CustomFieldComponent, CardComponent],
-  templateUrl: './add-currency.component.html',
+  selector: 'app-add-product',
+  imports: [CardComponent, CustomFieldComponent, ReactiveFormsModule],
+  templateUrl: './add-product.component.html',
 })
-export class AddCurrencyComponent implements OnInit {
+export class AddProductComponent {
   private fb = inject(NonNullableFormBuilder);
 
   ngOnInit(): void {

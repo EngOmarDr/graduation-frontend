@@ -1,6 +1,4 @@
-<div class="bg-white dark:bg-[#1f2937] p-7 m-7 rounded-md">
-  <h4 class="cust-header pb-7">Add Warehouse</h4>
-
+<cust-card title="Add Warehouse">
   <form [formGroup]="costCenterForm" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="costCenterForm.controls.code"
@@ -74,7 +72,7 @@
     />
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn focus:ring-1 focus:ring-primary">
+      <button type="submit" class="btn">
         Add
       </button>
     </div>
@@ -82,4 +80,4 @@
   <div>
     {{ costCenterForm.value | json }}
   </div>
-</div>
+</cust-card>

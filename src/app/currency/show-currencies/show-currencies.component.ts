@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { CardComponent } from "../../../components/card-form.component";
 
 @Component({
   selector: 'app-show-currencies',
-  imports: [RouterLink],
+  imports: [RouterLink, CardComponent],
   templateUrl: './show-currencies.component.html',
 })
 export class ShowCurrenciesComponent {

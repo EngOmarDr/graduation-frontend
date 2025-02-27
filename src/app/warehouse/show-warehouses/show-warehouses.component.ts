@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { CardComponent } from "../../../components/card-form.component";
 
 @Component({
   selector: 'app-show-warehouses',
-  imports: [RouterLink],
+  imports: [RouterLink, CardComponent],
   templateUrl: './show-warehouses.component.html',
-  styleUrl: './show-warehouses.component.css',
 })
 export class ShowWarehousesComponent {
   private readonly route = inject(Router);

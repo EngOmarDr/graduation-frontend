@@ -10,6 +10,7 @@ import { CustomFieldComponent } from '../../../components/custom-field.component
 import { CustomSelectComponent } from '../../../components/custom-select.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ValidationMessageComponent } from '../../../components/validation-message.component';
+import { CardComponent } from "../../../components/card-form.component";
 
 @Component({
   selector: 'app-add-warehouse',
@@ -20,9 +21,9 @@ import { ValidationMessageComponent } from '../../../components/validation-messa
     CustomSelectComponent,
     MatAutocompleteModule,
     ValidationMessageComponent,
-  ],
+    CardComponent
+],
   templateUrl: './add-warehouse.component.html',
-  styleUrl: './add-warehouse.component.css',
 })
 export class AddWarehouseComponent  implements OnInit{
   private fb = inject(NonNullableFormBuilder);
