@@ -1,0 +1,52 @@
+<cust-card title="Add Product">
+  <form
+    [formGroup]="currencyForm"
+    (ngSubmit)="onSubmit()"
+    class="cust-grid"
+  >
+    <cust-form-field
+      [control]="currencyForm.controls.code"
+      inputId="code"
+      label="Code"
+    />
+
+    <cust-form-field
+      [control]="currencyForm.controls.name"
+      inputId="name"
+      label="Name"
+    />
+
+    <cust-form-field
+      [control]="currencyForm.controls.partName"
+      inputId="part"
+      label="Part Name"
+    />
+
+    <cust-form-field
+      [control]="currencyForm.controls.value"
+      inputId="value"
+      label="Value"
+      type="number"
+    />
+
+    <cust-form-field
+      [control]="currencyForm.controls.balance"
+      inputId="balance"
+      label="Balance"
+      type="number"
+    />
+
+    <cust-form-field
+      [control]="currencyForm.controls.eq"
+      inputId="eq"
+      label="Eq"
+      type="number"
+    />
+
+    <div class="col-span-full grid grid-cols-4">
+      <button type="submit" class="btn" [disabled]="!currencyForm.valid">
+        Add
+      </button>
+    </div>
+  </form>
+</cust-card>

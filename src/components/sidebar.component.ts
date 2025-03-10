@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   template: `
     <!-- overlay -->
     <div
@@ -29,58 +29,86 @@ import { RouterLink } from '@angular/router';
         <nav class="mt-6">
           <!-- Dashboard Item -->
           <div>
-            <a
-              (click)="toggleDashboard()"
-              class="flex items-center px-4 py-2 cursor-pointer"
+            <button
+              (click)="isCollapsed = !isCollapsed"
+              type="button"
+              class="flex items-center justify-between px-4 py-2 w-full cursor-pointer"
             >
+              <span>Dashboard</span>
               <svg
-                class="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 transition-transform"
+                [ngClass]="{ 'rotate-180': !isCollapsed }"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                ></path>
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
-              <span class="ml-2">Dashboard</span>
-              <!-- Arrow Icon to Indicate Expansion -->
-              <svg
-                class="w-4 h-4 ml-auto transition-transform duration-200"
-                [ngClass]="{ 'rotate-90': isDashboardExpanded }"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                ></path>
-              </svg>
-            </a>
+            </button>
 
             <!-- Sub-Items (Conditionally Rendered) -->
-            <div
-              class="pl-8 transform transition-transform duration-500"
-              [ngClass]="{'h-0 -translate-y-0 invisible z-0': !isDashboardExpanded,
-            'h-auto block translate-y-0': isDashboardExpanded,
-          }"
-            >
-              <a routerLink="account" class="block px-4 py-2">Account</a>
-              <a routerLink="cost-center" class="block px-4 py-2">Cost center</a>
-              <a href="#" class="block px-4 py-2">Reports</a>
+            <div>
+              <ul
+                class="overflow-hidden ms-3.5 transition-[max-height] "
+                [ngClass]="{
+                  'max-h-0': isCollapsed,
+                  'max-h-[500px]': !isCollapsed
+                }"
+              >
+                <!-- <li>
+                  <a
+                    routerLink="cost-center"
+                    class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
+                    >Cost center</a
+                  >
+                </li> -->
+                <li>
+                  <a
+                    routerLink="groups"
+                    class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
+                    >Groups</a
+                  >
+                </li>
+                <li>
+                  <a
+                    routerLink="currencies"
+                    class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
+                    >Currencies</a
+                  >
+                </li>
+                <li>
+                  <a
+                    routerLink="warehouses"
+                    class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
+                    >Warehouse</a
+                  >
+                </li>
+                <li>
+                  <a
+                    routerLink="prices"
+                    class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
+                    >Prices</a
+                  >
+                </li>
+                <li>
+                  <a
+                    routerLink="products"
+                    class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
+                    >Products</a
+                  >
+                </li>
+              </ul>
             </div>
           </div>
 
           <!-- Other Sidebar Items -->
-          <a
+          <!-- <a
             href="#"
             class="flex items-center px-4 py-2 mt-2 transform transition-transform duration-300"
           >
@@ -99,7 +127,7 @@ import { RouterLink } from '@angular/router';
               ></path>
             </svg>
             <span class="ml-2">Categories</span>
-          </a>
+          </a> -->
           <!-- Add more sidebar items here -->
         </nav>
       </div>
@@ -109,6 +137,7 @@ import { RouterLink } from '@angular/router';
 export class SidebarComponent {
   isSidebarOpen = false;
   isDashboardExpanded = false;
+  isCollapsed: boolean = true;
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
