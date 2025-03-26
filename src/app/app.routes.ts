@@ -12,7 +12,11 @@ import { AddPriceComponent } from './price/add-price/add-price.component';
 import { ShowGroupsComponent } from './group/show-groups/show-groups.component';
 import { AddProductComponent } from './product/add-product/add-product.component';
 // import { ShowProductsComponent } from './product/show-products/show-products.component';
-import {ProductDisplayComponent} from './products/product-display/product-display.component';
+import { ProductDisplayComponent } from './products/product-display/product-display.component';
+import { ShowBranchesComponent } from './branch/show-branches/show-branches.component';
+import { AddBranchComponent } from './branch/add-branch/add-branch.component';
+import { ShowUnitsComponent } from './unit/show-units/show-units.component';
+import { AddUnitComponent } from './unit/add-unit/add-unit.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +51,32 @@ export const routes: Routes = [
           {
             path: 'add-group',
             component: AddGroupComponent,
+          },
+        ],
+      },
+      {
+        path: '',
+        children: [
+          {
+            path: 'branches',
+            component: ShowBranchesComponent,
+          },
+          {
+            path: 'add-branch',
+            component: AddBranchComponent,
+          },
+        ],
+      },
+      {
+        path: '',
+        children: [
+          {
+            path: 'units',
+            component: ShowUnitsComponent,
+          },
+          {
+            path: 'add-unit',
+            component: AddUnitComponent,
           },
         ],
       },
