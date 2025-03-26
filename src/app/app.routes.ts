@@ -11,7 +11,8 @@ import { ShowPricesComponent } from './price/show-prices/show-prices.component';
 import { AddPriceComponent } from './price/add-price/add-price.component';
 import { ShowGroupsComponent } from './group/show-groups/show-groups.component';
 import { AddProductComponent } from './product/add-product/add-product.component';
-import { ShowProductsComponent } from './product/show-products/show-products.component';
+// import { ShowProductsComponent } from './product/show-products/show-products.component';
+import {ProductDisplayComponent} from './products/product-display/product-display.component';
 
 export const routes: Routes = [
   {
@@ -67,7 +68,7 @@ export const routes: Routes = [
         children: [
           {
             path: 'products',
-            component: ShowProductsComponent,
+            component: ProductDisplayComponent,
           },
           {
             path: 'add-product',
