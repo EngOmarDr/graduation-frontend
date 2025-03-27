@@ -8,7 +8,6 @@ import {
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomFieldComponent } from '../../../components/custom-field.component';
 import { CustomSelectComponent } from '../../../components/custom-select.component';
-import { ValidationMessageComponent } from '../../../components/validation-message.component';
 import { startWith, tap } from 'rxjs';
 import { CardComponent } from "../../../components/card-form.component";
 
@@ -19,7 +18,6 @@ import { CardComponent } from "../../../components/card-form.component";
     CommonModule,
     CustomFieldComponent,
     CustomSelectComponent,
-    ValidationMessageComponent,
     MatAutocompleteModule,
     CardComponent
 ],
