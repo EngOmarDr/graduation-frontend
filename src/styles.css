@@ -177,18 +177,16 @@
     background-color: var(--color-dark-card-surface);
     box-shadow: var(--shadow-dark-primary);
   }
+}
 
+@layer base {
+  table {
+    width: 100%;
+  }
   th {
     font-weight: inherit;
     text-align: inherit;
   }
-
-  .mat-mdc-header-cell {
-    text-transform: uppercase;
-    font-weight: 600 !important;
-    /* font-family: initial !important; */
-  }
-
   td {
     text-wrap: nowrap;
     white-space: nowrap;
@@ -197,58 +195,6 @@
   }
 }
 
-@layer base {
-}
-
 :root {
-  --mat-autocomplete-background-color: white;
-  --default-font-family: var(--font-defaults);
-  --mat-sys-title-small-font: var(--font-defaults);
-  --mat-sys-body-medium-font: var(--font-defaults);
-  --mat-sys-body-small-font: var(--font-defaults);
-  --mat-sys-primary: var(--color-primary);
   font-family: var(--font-defaults);
-}
-
-table {
-  width: 100%;
-  border-radius: 0.375rem 0.375rem 0 0;
-  overflow: hidden;
-}
-
-.mat-mdc-paginator {
-  border-radius: 0 0 0.375rem 0.375rem;
-}
-
-/* تخصيصات للوضع الليلي */
-.dark .mat-mdc-table {
-  background-color: #424242;
-  color: white;
-}
-
-.dark .mat-mdc-header-row {
-  color: white;
-  background-color: #616161;
-}
-
-.dark .mat-mdc-cell {
-  color: rgba(255, 255, 255, 0.87);
-  border-bottom-color: rgba(255, 255, 255, 0.12);
-}
-
-.dark .mat-mdc-paginator {
-  background-color: #616161;
-  color: white;
-}
-
-.dark .mat-mdc-form-field .mat-mdc-input-element {
-  color: white;
-}
-
-.dark .mat-form-field .mat-form-field-label {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.dark .mat-form-field .mat-form-field-underline {
-  background-color: rgba(255, 255, 255, 0.42);
 }
