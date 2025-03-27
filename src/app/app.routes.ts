@@ -11,8 +11,7 @@ import { ShowPricesComponent } from './price/show-prices/show-prices.component';
 import { AddPriceComponent } from './price/add-price/add-price.component';
 import { ShowGroupsComponent } from './group/show-groups/show-groups.component';
 import { AddProductComponent } from './product/add-product/add-product.component';
-// import { ShowProductsComponent } from './product/show-products/show-products.component';
-import { ProductDisplayComponent } from './products/product-display/product-display.component';
+import { ShowProductsComponent } from './product/show-products/show-products.component';
 import { ShowBranchesComponent } from './branch/show-branches/show-branches.component';
 import { AddBranchComponent } from './branch/add-branch/add-branch.component';
 import { ShowUnitsComponent } from './unit/show-units/show-units.component';
@@ -98,7 +97,7 @@ export const routes: Routes = [
         children: [
           {
             path: 'products',
-            component: ProductDisplayComponent,
+            component: ShowProductsComponent,
           },
           {
             path: 'add-product',
