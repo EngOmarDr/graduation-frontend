@@ -77,15 +77,18 @@ export class AddUnitComponent {
   }
 
   onSubmit(): void {
+    // this.form.get('unitName')?.markAsDirty();
+    // this.form.get('unitName')?.markAsTouched();
+    // this.units.controls.forEach((control) => {
+    //   control.markAsTouched();
+    //   control.markAsDirty();
+    // });
+    this.form.markAllAsTouched();
+
     if (this.form.valid) {
-      console.log('Form Submitted!');
-      console.log(this.form.controls.units.at(0).get('isDef')?.value); // Use getRawValue to include disabled controls like 'total'
-      console.log(this.form.getRawValue()); // Use getRawValue to include disabled controls like 'total'
-      // Here you would typically send the data to a backend service
+      console.log(this.form.getRawValue());
     } else {
       console.error('Form is invalid. Please check the fields.');
-      // Optionally mark all fields as touched to show errors
-      this.form.markAllAsTouched();
     }
   }
 }
