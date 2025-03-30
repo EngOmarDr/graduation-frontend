@@ -1,134 +1,73 @@
-<cust-card title="Warehouses" [titlePadding]="false">
+<cust-card title="Warehouse" [titlePadding]="false">
   <div class="flex justify-end">
-    <button
-      type="button"
-      class="py-1.5 px-2.5 mb-3 rounded-lg text-white bg-primary cursor-pointer"
-      routerLink="/add-warehouse"
-    >
+    <button type="button" class="py-1.5 px-2.5 mb-3 btn" routerLink="/add-warehouse">
       Add Warehouse
     </button>
   </div>
-  <div
-    class="rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-700"
-  >
-    <table
-      class="table-auto w-full text-sm font-medium text-start whitespace-nowrap"
-    >
-      <thead
-        class="bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-neutral-400 uppercase"
-      >
-        <tr>
-          <th scope="col" class="px-6 py-3">Code</th>
-          <th scope="col" class="px-6 py-3">Name</th>
-          <th scope="col" class="px-6 py-3">Type</th>
-          <th scope="col" class="px-6 py-3">Primary warehouse</th>
-          <th scope="col" class="px-6 py-3">address</th>
-          <th scope="col" class="px-6 py-3">note</th>
-          <th scope="col" class="px-6 py-3">Action</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y-2 divide-gray-200 dark:divide-neutral-700">
-        <!-- @for (item of [0,0,0,0,0]; track $index) { -->
-        <tr class="hover:bg-neutral-100 dark:hover:bg-neutral-700">
-          <td class="px-6 py-4">ware-001</td>
-          <td class="px-6 py-4">مستودع 1</td>
-          <td class="px-6 py-4">رئيسي</td>
-          <td class="px-6 py-4"></td>
-          <td class="px-6 py-4">عنوان</td>
-          <td class="px-6 py-4">ملاحظات</td>
-          <td class="px-6 py-4">
-            <button
-              class="cursor-pointer me-2"
-              title="edit"
-              type="button"
-              (click)="updateWarehouse()"
-            >
-              <svg
-                class="fill-green-600"
-                height="36"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="m16.19 2h-8.38c-3.64 0-5.81 2.17-5.81 5.81v8.37c0 3.65 2.17 5.82 5.81 5.82h8.37c3.64 0 5.81-2.17 5.81-5.81v-8.38c.01-3.64-2.16-5.81-5.8-5.81zm-5.24 15.51c-.29.29-.84.57-1.24.63l-2.46.35c-.09.01-.18.02-.27.02-.41 0-.79-.14-1.06-.41-.33-.33-.47-.81-.39-1.34l.35-2.46c.06-.41.33-.95.63-1.24l4.46-4.46c.08.21.16.42.27.66.1.21.21.43.33.63.1.17.21.33.3.45.11.17.24.33.32.42.05.07.09.12.11.14.25.3.54.58.79.79.07.07.11.11.13.12.15.12.3.24.43.33.16.12.32.23.49.32.2.12.42.23.64.34.23.1.44.19.65.26zm6.42-6.42-.92.93c-.06.06-.14.09-.22.09-.03 0-.07 0-.09-.01-2.03-.58-3.65-2.2-4.23-4.23-.03-.11 0-.23.08-.3l.93-.93c1.52-1.52 2.97-1.49 4.46 0 .76.76 1.13 1.49 1.13 2.25-.01.72-.38 1.44-1.14 2.2z"
-                  fill="oklch(0.627 0.194 149.214)"
-                />
-              </svg>
-            </button>
 
-            <button
-              class="cursor-pointer"
-              title="edit"
-              type="button"
-              onclick="alert('delete')"
-            >
-              <svg
-                class="fill-red-500"
-                height="34"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z"
-                />
-                <path
-                  d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
-                />
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr class="hover:bg-neutral-100 dark:hover:bg-neutral-700">
-          <td class="px-6 py-4">ware-002</td>
-          <td class="px-6 py-4">مستودع 2</td>
-          <td class="px-6 py-4">فرعي</td>
-          <td class="px-6 py-4">مستودع 1</td>
-          <td class="px-6 py-4"></td>
-          <td class="px-6 py-4"></td>
-          <td class="px-6 py-4 flex items-center">
-            <button
-              class="cursor-pointer me-2"
-              title="edit"
-              type="button"
-              (click)="updateWarehouse()"
-            >
-              <svg
-                class="fill-green-600"
-                height="36"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="m16.19 2h-8.38c-3.64 0-5.81 2.17-5.81 5.81v8.37c0 3.65 2.17 5.82 5.81 5.82h8.37c3.64 0 5.81-2.17 5.81-5.81v-8.38c.01-3.64-2.16-5.81-5.8-5.81zm-5.24 15.51c-.29.29-.84.57-1.24.63l-2.46.35c-.09.01-.18.02-.27.02-.41 0-.79-.14-1.06-.41-.33-.33-.47-.81-.39-1.34l.35-2.46c.06-.41.33-.95.63-1.24l4.46-4.46c.08.21.16.42.27.66.1.21.21.43.33.63.1.17.21.33.3.45.11.17.24.33.32.42.05.07.09.12.11.14.25.3.54.58.79.79.07.07.11.11.13.12.15.12.3.24.43.33.16.12.32.23.49.32.2.12.42.23.64.34.23.1.44.19.65.26zm6.42-6.42-.92.93c-.06.06-.14.09-.22.09-.03 0-.07 0-.09-.01-2.03-.58-3.65-2.2-4.23-4.23-.03-.11 0-.23.08-.3l.93-.93c1.52-1.52 2.97-1.49 4.46 0 .76.76 1.13 1.49 1.13 2.25-.01.72-.38 1.44-1.14 2.2z"
-                  fill="oklch(0.627 0.194 149.214)"
-                />
-              </svg>
-            </button>
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input />
+  </mat-form-field>
 
-            <button
-              class="cursor-pointer"
-              title="edit"
-              type="button"
-              onclick="alert('delete')"
-            >
-              <svg
-                class="fill-red-500"
-                height="34"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z"
-                />
-                <path
-                  d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
-                />
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <!-- } -->
-      </tbody>
+  <div class="mat-elevation-z8 w-full overflow-auto h-96">
+    <table mat-table [dataSource]="dataSource" matSort class="table-auto">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="warehouse">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Warehouse</th>
+        <td mat-cell *matCellDef="let row">{{ row.warehouse }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+        <td mat-cell *matCellDef="let row">{{ row.phone ?? 'N/A' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+        <td mat-cell *matCellDef="let row">{{ row.country }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+        <td mat-cell *matCellDef="let row">{{ row.city }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
+        <td mat-cell *matCellDef="let row">{{ row.createdAt }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let warehouse" class="flex space-x-2">
+          <button mat-icon-button color="primary" title="View" (click)="viewWarehouse(warehouse)">
+            👁
+          </button>
+          <button mat-icon-button color="accent" title="Edit" (click)="editWarehouse(warehouse)">
+            ✏️
+          </button>
+          <button mat-icon-button color="warn" title="Delete" (click)="deleteWarehouse(warehouse)">
+            🗑️
+          </button>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="7">
+          No data matching the filter "{{ form.get('filter')?.value }}"
+        </td>
+      </tr>
     </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
   </div>
 </cust-card>
