@@ -1,15 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
-  NonNullableFormBuilder,
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomFieldComponent } from '../../../components/custom-field.component';
-import { CustomSelectComponent } from '../../../components/custom-select.component';
-import { startWith, tap } from 'rxjs';
-import { CardComponent } from "../../../components/card-form.component";
+import { CardComponent } from '../../../components/card-form.component';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ValidationMessageComponent } from '../../../components/validation-message.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-group',
@@ -17,51 +20,75 @@ import { CardComponent } from "../../../components/card-form.component";
     ReactiveFormsModule,
     CommonModule,
     CustomFieldComponent,
-    CustomSelectComponent,
-    MatAutocompleteModule,
-    CardComponent
-],
+    CardComponent,
+    MatTableModule,
+    ValidationMessageComponent,
+    MatIconModule,
+  ],
   templateUrl: './add-unit.component.html',
 })
 export class AddUnitComponent {
-  private fb = inject(NonNullableFormBuilder);
+  private fb = inject(FormBuilder);
 
-  ngOnInit(): void {
-    this.form.controls.isPrimary.valueChanges
-      .pipe(
-        tap(() => this.form.controls.primaryGroup.markAsDirty()),
-        startWith(this.form.controls.isPrimary.value)
-      )
-      .subscribe((isPrimary) => {
-        if (isPrimary == 'false') {
-          this.form.controls.primaryGroup.addValidators(
-            Validators.required
-          );
-          this.form.controls.primaryGroup.enable();
-        } else {
-          this.form.controls.primaryGroup.removeValidators(
-            Validators.required
-          );
-          this.form.controls.primaryGroup.disable();
-        }
-        this.form.controls.primaryGroup.updateValueAndValidity();
-      });
-  }
-
-  results = [];
+  displayedColumns: string[] = ['name', 'fact', 'isDef', 'actions'];
+  dataSource = new MatTableDataSource<AbstractControl>([]);
 
   form = this.fb.group({
-    code: this.fb.control('', {
-      validators: [Validators.required],
-    }),
-    name: ['', [Validators.required]],
-
-    isPrimary: ['false', Validators.required],
-    primaryGroup: ['', { validators: [], disabled: true }],
-    note: [''],
+    unitName: ['', Validators.required],
+    units: this.fb.array([], Validators.required),
   });
 
-  onSubmit() {
-    alert(this.form.valid);
+  get units(): FormArray<FormGroup> {
+    return this.form.get('units') as FormArray<FormGroup>;
+  }
+
+  createUnitRow(): FormGroup {
+    const newRow = this.fb.group({
+      name: ['', Validators.required],
+      fact: [1, [Validators.required, Validators.min(1)]],
+      isDef: [this.units.length === 0, [Validators.required]],
+    });
+    return newRow;
+  }
+
+  addRow(): void {
+    const newItem = this.createUnitRow();
+    this.units.push(newItem);
+    this.updateTableData();
+  }
+
+  removeRow(index: number): void {
+    if (this.units.at(index).get('isDef')?.value == true) {
+      alert("can't delete default unit");
+      return;
+    }
+    this.units.removeAt(index);
+    this.updateTableData();
+  }
+
+  private updateTableData(): void {
+    this.dataSource.data = this.units.controls;
+  }
+
+  changeIsDef(index: number) {
+    this.units.controls.forEach((control, i) => {
+      control.get('isDef')?.setValue(i === index);
+    });
+  }
+
+  onSubmit(): void {
+    // this.form.get('unitName')?.markAsDirty();
+    // this.form.get('unitName')?.markAsTouched();
+    // this.units.controls.forEach((control) => {
+    //   control.markAsTouched();
+    //   control.markAsDirty();
+    // });
+    this.form.markAllAsTouched();
+
+    if (this.form.valid) {
+      console.log(this.form.getRawValue());
+    } else {
+      console.error('Form is invalid. Please check the fields.');
+    }
   }
 }

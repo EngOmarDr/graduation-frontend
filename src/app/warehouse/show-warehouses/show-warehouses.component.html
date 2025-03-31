@@ -44,8 +44,11 @@
 
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let warehouse">
-          <button class="cursor-pointer me-2" title="Edit" (click)="editWarehouse(warehouse)">
+        <td mat-cell *matCellDef="let warehouse" class="space-x-2">
+          <button mat-icon-button color="primary" title="View" (click)="viewWarehouse(warehouse)">
+            👁
+          </button>
+          <button mat-icon-button color="accent" title="Edit" (click)="editWarehouse(warehouse)">
             ✏️
           </button>
           <button class="cursor-pointer me-2" title="Delete" (click)="deleteWarehouse(warehouse)">
