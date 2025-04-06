@@ -1,5 +1,9 @@
-<cust-card title="Branches" [titlePadding]="false">
-  <div class="flex justify-end">
+<cust-card title="Branches">
+  <div class="flex flex-wrap-reverse justify-between items-center">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input />
+    </mat-form-field>
     <button
       type="button"
       class="py-1.5 px-2.5 mb-3 btn"
@@ -8,13 +12,6 @@
       Add Branch
     </button>
   </div>
-  <!-- <div
-    class="rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-700"
-  > -->
-  <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" #input />
-  </mat-form-field>
 
   <div class="mat-elevation-z8 w-full overflow-auto h-96">
     <table mat-table [dataSource]="dataSource" matSort class="table-auto">
@@ -87,7 +84,11 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="sticky top-0"></tr>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+        class="sticky top-0"
+      ></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
       <!-- Row shown when there is no matching data. -->

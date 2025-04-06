@@ -1,18 +1,20 @@
-<cust-card title="Product" [titlePadding]="false">
-  <div class="flex justify-end">
-    <button type="button" class="py-1.5 px-2.5 mb-3 btn" routerLink="/add-product">
+<cust-card title="Product">
+  <div class="flex flex-wrap-reverse justify-between items-center">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input />
+    </mat-form-field>
+    <button
+      type="button"
+      class="py-1.5 px-2.5 mb-3 btn"
+      routerLink="/add-product"
+    >
       Add Product
     </button>
   </div>
 
-  <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" #input />
-  </mat-form-field>
-
   <div class="mat-elevation-z8 w-full overflow-auto h-96">
     <table mat-table [dataSource]="dataSource" matSort class="table-auto">
-
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
         <td mat-cell *matCellDef="let row">{{ row.id }}</td>
@@ -50,26 +52,43 @@
 
       <ng-container matColumnDef="createdAt">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
-        <td mat-cell *matCellDef="let row">{{ row.createdAt | date:'short' }}</td>
+        <td mat-cell *matCellDef="let row">
+          {{ row.createdAt | date : "short" }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let product">
-          <button class="cursor-pointer me-2" title="Edit" (click)="editProduct(product)">
+          <button
+            class="cursor-pointer me-2"
+            title="Edit"
+            (click)="editProduct(product)"
+          >
             ✏️
           </button>
-          <button class="cursor-pointer me-2" title="Delete" (click)="deleteProduct(product)">
+          <button
+            class="cursor-pointer me-2"
+            title="Delete"
+            (click)="deleteProduct(product)"
+          >
             🗑️
           </button>
-          <button class="cursor-pointer" title="View Details" (click)="viewProduct(product)">
+          <button
+            class="cursor-pointer"
+            title="View Details"
+            (click)="viewProduct(product)"
+          >
             👁️
           </button>
         </td>
       </ng-container>
 
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="sticky top-0"></tr>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+        class="sticky top-0"
+      ></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
       <!-- Row shown when there is no matching data. -->
@@ -78,7 +97,6 @@
           No data matching the filter "{{ input.value }}"
         </td>
       </tr>
-
     </table>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 25, 100]"

@@ -1,14 +1,17 @@
-<cust-card title="Warehouse" [titlePadding]="false">
-  <div class="flex justify-end">
-    <button type="button" class="py-1.5 px-2.5 mb-3 btn" routerLink="/add-warehouse">
+<cust-card title="Warehouse">
+  <div class="flex flex-wrap-reverse justify-between items-center">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input />
+    </mat-form-field>
+    <button
+      type="button"
+      class="py-1.5 px-2.5 mb-3 btn"
+      routerLink="/add-warehouse"
+    >
       Add Warehouse
     </button>
   </div>
-
-  <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" #input />
-  </mat-form-field>
 
   <div class="mat-elevation-z8 w-full overflow-auto h-96">
     <table mat-table [dataSource]="dataSource" matSort class="table-auto">
@@ -24,7 +27,7 @@
 
       <ng-container matColumnDef="phone">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
-        <td mat-cell *matCellDef="let row">{{ row.phone ?? 'N/A' }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.phone ?? "N/A" }}</td>
       </ng-container>
 
       <ng-container matColumnDef="country">
@@ -45,29 +48,44 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let warehouse" class="space-x-2">
-          <button mat-icon-button color="accent" title="Edit" (click)="editWarehouse(warehouse)">
+          <button
+            mat-icon-button
+            color="accent"
+            title="Edit"
+            (click)="editWarehouse(warehouse)"
+          >
             ✏️
           </button>
-          <button class="cursor-pointer me-2" title="Delete" (click)="deleteWarehouse(warehouse)">
+          <button
+            class="cursor-pointer me-2"
+            title="Delete"
+            (click)="deleteWarehouse(warehouse)"
+          >
             🗑️
           </button>
-          <button class="cursor-pointer" title="View Details" (click)="viewWarehouse(warehouse)">
+          <button
+            class="cursor-pointer"
+            title="View Details"
+            (click)="viewWarehouse(warehouse)"
+          >
             👁️
           </button>
         </td>
       </ng-container>
-
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="7">
-          No data matching the filter "{{ form.get('filter')?.value }}"
+          No data matching the filter "{{ form.get("filter")?.value }}"
         </td>
       </tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page of users"
+    ></mat-paginator>
   </div>
 </cust-card>
