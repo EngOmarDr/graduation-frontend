@@ -54,16 +54,10 @@ export const routes: Routes = [
         ],
       },
       {
-        path: '',
+        path: 'branches',
         children: [
-          {
-            path: 'branches',
-            component: ShowBranchesComponent,
-          },
-          {
-            path: 'add-branch',
-            component: AddBranchComponent,
-          },
+          { path: '', component: ShowBranchesComponent },
+          { path: 'add-branch', component: AddBranchComponent },
         ],
       },
       {
