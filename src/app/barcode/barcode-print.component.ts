@@ -73,8 +73,30 @@ export class BarcodePrintComponent {
   }
 
   print() {
-    window.print();
+    const printContents = document.getElementById('print-section')?.innerHTML;
+    if (!printContents) return;
+
+    const popupWindow = window.open('', '_blank', 'width=800,height=600');
+    if (popupWindow) {
+      popupWindow.document.open();
+      popupWindow.document.write(`
+        <html>
+          <head>
+            <title>طباعة الباركود</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 20px; }
+              .barcode-item { margin-bottom: 30px; text-align: center; }
+            </style>
+          </head>
+          <body onload="window.print(); window.close();">
+            ${printContents}
+          </body>
+        </html>
+      `);
+      popupWindow.document.close();
+    }
   }
+
 
   preview() {
     alert('عرض مبدئي للباركود');

@@ -1,6 +1,6 @@
-<p>barcode-print works!</p>
 <cust-card [title]="'طباعة الباركود للمنتجات'">
     <form [formGroup]="form" class="space-y-4 mt-4">
+
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <cust-select
           [label]="'اختر المستودع'"
@@ -64,4 +64,22 @@
         <button type="button" class="btn btn-blue" (click)="preview()">Preview</button>
       </div>
     </form>
+    <!-- قسم عرض الباركودات للواجهة (العادي) -->
+<div class="overflow-x-auto mt-4" *ngIf="selectedProducts().length > 0">
+  <!-- الجدول الكامل كما في الكود الحالي -->
+</div>
+
+<!-- قسم الطباعة فقط -->
+<div id="print-section" class="hidden-print">
+  <div *ngFor="let product of selectedProducts()" class="barcode-item">
+    <ngx-barcode6
+      [bc-value]="product.code"
+      [bc-display-value]="form.value.showProduct ? true : false">
+    </ngx-barcode6>
+    <div *ngIf="form.value.showCompany">اسم الشركة</div>
+    <div *ngIf="form.value.showProduct">{{ product.name }}</div>
+    <div *ngIf="form.value.showPrice">{{ product.price | currency:'SAR' }}</div>
+  </div>
+</div>
+
   </cust-card>
