@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+
 export interface Purchase {
   id: string;
   supplier: string;
@@ -45,6 +46,7 @@ export class ShowPurchasesComponent {
     'action',
   ];
   dataSource: MatTableDataSource<Purchase>;
+  totalPurchases: number = 0; // إجمالي المشتريات
   form = new FormGroup({
     filter: new FormControl(''),
   });
@@ -55,6 +57,7 @@ export class ShowPurchasesComponent {
   constructor() {
     const purchases = Array.from({ length: 50 }, (_, k) => createNewPurchase(k + 1));
     this.dataSource = new MatTableDataSource(purchases);
+    this.calculateTotalPurchases(); // حساب إجمالي المشتريات بعد تحميل البيانات
   }
 
   ngAfterViewInit() {
@@ -77,9 +80,18 @@ export class ShowPurchasesComponent {
   deletePurchase(purchase: Purchase) {
     alert(`Delete Purchase: ${purchase.id}`);
     this.dataSource.data = this.dataSource.data.filter((p) => p.id !== purchase.id);
+    this.calculateTotalPurchases(); // إعادة حساب الإجمالي بعد الحذف
   }
+
   showPurchase(purchase: Purchase) {
     alert(`Show Purchase: ${purchase.id}`);
+  }
+
+  // حساب إجمالي المشتريات
+  calculateTotalPurchases() {
+    this.totalPurchases = this.dataSource.data.reduce((sum, purchase) => {
+      return sum + parseFloat(purchase.total);
+    }, 0);
   }
 }
 

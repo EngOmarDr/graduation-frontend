@@ -14,7 +14,8 @@ export interface Sale {
   customer: string;
   warehouse: string;
   status: string;
-  total: string;
+  total: number;
+  paid: number;
   paymentType: string;
   createdAt: Date;
 }
@@ -41,6 +42,7 @@ export class ShowSalesComponent {
     'warehouse',
     'status',
     'total',
+    'paid',
     'paymentType',
     'createdAt',
     'action',
@@ -70,6 +72,13 @@ export class ShowSalesComponent {
       this.dataSource.paginator.firstPage();
     }
   }
+  get totalSales(): number {
+    return this.dataSource.filteredData.reduce((sum, sale) => sum + sale.total, 0);
+  }
+
+  get totalPaid(): number {
+    return this.dataSource.filteredData.reduce((sum, sale) => sum + sale.paid, 0);
+  }
 
   editSale(sale: Sale) {
     alert(`Edit Sale: ${sale.id}`);
@@ -87,12 +96,15 @@ export class ShowSalesComponent {
 
 function createNewSale(id: number): Sale {
   const randomString = () => Math.random().toString(36).substring(2, 7);
+  const total = parseFloat((Math.random() * 1000).toFixed(2));
+  const paid = parseFloat((Math.random() * total).toFixed(2));
   return {
     id: id.toString(),
     customer: `Customer-${randomString()}`,
     warehouse: `Warehouse-${randomString()}`,
     status: ['Pending', 'Completed', 'Cancelled'][Math.floor(Math.random() * 3)],
-    total: (Math.random() * 1000).toFixed(2),
+    total,
+    paid,
     paymentType: ['Cash', 'Credit Card', 'Bank Transfer'][Math.floor(Math.random() * 3)],
     createdAt: new Date(),
   };
