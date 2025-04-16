@@ -9,7 +9,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-add-product',
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    CardComponent
 ],
   templateUrl: './add-product.component.html',
 })
