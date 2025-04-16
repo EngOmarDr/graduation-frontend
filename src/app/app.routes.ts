@@ -17,6 +17,8 @@ import { AddBranchComponent } from './branch/add-branch/add-branch.component';
 import { ShowUnitsComponent } from './unit/show-units/show-units.component';
 import { AddUnitComponent } from './unit/add-unit/add-unit.component';
 import {BarcodePrintComponent} from './barcode/barcode-print.component';
+import {ShowPurchasesComponent} from './purchases/show-purchases/show-purchases.component';
+import {ShowSalesComponent} from './sales/show-sales/show-sales.component';
 
 export const routes: Routes = [
   {
@@ -106,6 +108,32 @@ export const routes: Routes = [
           {
             path: 'warehouses',
             component: ShowWarehousesComponent,
+          },
+          {
+            path: 'add-warehouse',
+            component: AddWarehouseComponent,
+          },
+        ],
+      },
+      {
+        path: '',
+        children: [
+          {
+            path: 'purchases',
+            component: ShowPurchasesComponent,
+          },
+          {
+            path: 'add-warehouse',
+            component: AddWarehouseComponent,
+          },
+        ],
+      },
+      {
+        path: '',
+        children: [
+          {
+            path: 'sales',
+            component: ShowSalesComponent,
           },
           {
             path: 'add-warehouse',
