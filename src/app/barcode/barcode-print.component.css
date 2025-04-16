@@ -1,0 +1,16 @@
+.btn {
+  @apply px-4 py-2 rounded-lg text-white font-semibold;
+}
+
+.btn-primary {
+  @apply bg-blue-600 hover:bg-blue-700;
+}
+.btn-green {
+  @apply bg-green-600 hover:bg-green-700;
+}
+.btn-gray {
+  @apply bg-gray-500 hover:bg-gray-600;
+}
+.btn-blue {
+  @apply bg-cyan-600 hover:bg-cyan-700;
+}

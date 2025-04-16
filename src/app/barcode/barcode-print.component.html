@@ -1,0 +1,67 @@
+<p>barcode-print works!</p>
+<cust-card [title]="'طباعة الباركود للمنتجات'">
+    <form [formGroup]="form" class="space-y-4 mt-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <cust-select
+          [label]="'اختر المستودع'"
+          inputId="warehouse"
+          [control]="form.controls['warehouse']"
+          [options]="warehouses"
+        />
+
+        <cust-form-field
+          [label]="'كود المنتج'"
+          inputId="productCode"
+          [control]="form.controls['productCode']"
+          (keyup.enter)="searchProduct()"
+        />
+        <button type="button" class="btn btn-primary mt-6" (click)="searchProduct()">
+          بحث
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+        <label><input type="checkbox" formControlName="showCompany" /> Show Company Name</label>
+        <label><input type="checkbox" formControlName="showProduct" /> Show Product Name</label>
+        <label><input type="checkbox" formControlName="showPrice" /> Show Price</label>
+      </div>
+
+      <cust-select
+        [label]="'حجم الورقة'"
+        inputId="paperSize"
+        [control]="form.controls['paperSize']"
+        [options]="paperSizes"
+      />
+
+      <div class="overflow-x-auto mt-4">
+        <table class="min-w-full text-sm text-left border">
+          <thead class="bg-gray-100 font-bold">
+            <tr>
+              <th class="p-2 border">Product</th>
+              <th class="p-2 border">Qty</th>
+              <th class="p-2 border">Barcode</th>
+              <th class="p-2 border">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of selectedProducts(); let i = index">
+              <td class="p-2 border">{{ product.name }}</td>
+              <td class="p-2 border">{{ product.qty }}</td>
+              <td class="p-2 border">
+                <ngx-barcode6 [bc-value]="product.code" [bc-display-value]="true"></ngx-barcode6>
+              </td>
+              <td class="p-2 border">
+                <button class="text-red-600" (click)="removeProduct(i)">حذف</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex gap-4 justify-end mt-6">
+        <button type="button" class="btn btn-green" (click)="print()">Print</button>
+        <button type="button" class="btn btn-gray" (click)="reset()">Reset</button>
+        <button type="button" class="btn btn-blue" (click)="preview()">Preview</button>
+      </div>
+    </form>
+  </cust-card>

@@ -6,6 +6,7 @@ import {
   Input,
 } from '@angular/core';
 import {
+  AbstractControl,
   ControlContainer,
   FormControl,
   ReactiveFormsModule,
@@ -32,7 +33,7 @@ import { ValidationMessageComponent } from './validation-message.component';
         }"
         >{{ label }}</label
       >
-      <select [id]="inputId" [formControl]="control" class="cust-input">
+      <select [id]="inputId" [formControl]="formControl" class="cust-input">
         @for(option of options; track $index){
         <option [value]="option.key">{{ option.value }}</option>
         }
@@ -48,7 +49,11 @@ import { ValidationMessageComponent } from './validation-message.component';
 export class CustomSelectComponent {
   @Input({ required: true }) label!: string;
   @Input({ required: true }) inputId!: string;
-  @Input({ required: true }) control!: FormControl;
+  @Input({ required: true }) control!: AbstractControl;
   @Input({ required: true }) options!: any[];
   @Input() customMessage: string | null = null;
+
+  get formControl(): FormControl {
+    return this.control as FormControl;
+  }
 }

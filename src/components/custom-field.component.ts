@@ -6,6 +6,7 @@ import {
   Input,
 } from '@angular/core';
 import {
+  AbstractControl,
   ControlContainer,
   FormControl,
   ReactiveFormsModule,
@@ -34,7 +35,7 @@ import { ValidationMessageComponent } from './validation-message.component';
       </label>
       <input
         [id]="inputId"
-        [formControl]="control"
+        [formControl]="formControl"
         type="{{ type }}"
         class="cust-input"
       />
@@ -49,7 +50,10 @@ import { ValidationMessageComponent } from './validation-message.component';
 export class CustomFieldComponent {
   @Input({ required: true }) label!: string;
   @Input({ required: true }) inputId!: string;
-  @Input({ required: true }) control!: FormControl;
+  @Input({ required: true }) control!: AbstractControl;
   @Input() type: string = 'text';
   @Input() customMessage: string | null = null;
+  get formControl(): FormControl {
+    return this.control as FormControl;
+  }
 }
