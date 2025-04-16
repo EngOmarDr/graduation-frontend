@@ -24,7 +24,7 @@ export class AddProductComponent {
       name: ['', Validators.required],
       sku: ['', Validators.required],
       productImages: [null],
-      category: ['', Validators.required],
+      group: ['', Validators.required],
       brand: ['', Validators.required],
       barcodeType: ['', Validators.required],
       productUnit: ['', Validators.required],

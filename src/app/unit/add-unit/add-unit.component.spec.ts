@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddUnitComponent } from './add-unit.component';
 
-describe('AddCategoryComponent', () => {
+describe('AddGroupComponent', () => {
   let component: AddUnitComponent;
   let fixture: ComponentFixture<AddUnitComponent>;
 

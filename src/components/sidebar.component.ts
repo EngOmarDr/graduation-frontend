@@ -286,9 +286,9 @@ import { RouterLink } from '@angular/router';
                 </li>
                 <li>
                   <a
-                    routerLink="expenseCategories"
+                    routerLink="expenseGroups"
                     class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
-                    >Expense Categories</a
+                    >Expense Groups</a
                   >
                 </li>
               </ul>

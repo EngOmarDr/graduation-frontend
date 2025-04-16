@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShowGroupsComponent } from './show-groups.component';
 
-describe('ShowCategoriesComponent', () => {
+describe('ShowGroupsComponent', () => {
   let component: ShowGroupsComponent;
   let fixture: ComponentFixture<ShowGroupsComponent>;
 

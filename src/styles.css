@@ -63,7 +63,7 @@
     color: var(--color-gray-900);
     font-size: var(--text-sm) /* 0.875rem = 14px */;
     line-height: var(--tw-leading, var(--text-sm--line-height));
-    border-radius: var(--radius-lg) /* 0.5rem = 8px */;
+    border-radius: var(--radius-sm) /* 0.5rem = 8px */;
     cursor: text;
   }
 

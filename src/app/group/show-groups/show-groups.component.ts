@@ -10,11 +10,11 @@ import { CardComponent } from '../../../components/card-form.component';
 
 export interface Groups {
   id: string;
-  categories: string;
+  groups: string;
   numberProducts: number;
 }
 
-const CATEGORIES: string[] = ['Electronics', 'Clothing', 'Books', 'Furniture', 'Toys'];
+const GROUPS: string[] = ['Electronics', 'Clothing', 'Books', 'Furniture', 'Toys'];
 
 @Component({
   selector: 'app-show-groups',
@@ -31,7 +31,7 @@ const CATEGORIES: string[] = ['Electronics', 'Clothing', 'Books', 'Furniture', '
   templateUrl: './show-groups.component.html',
 })
 export class ShowGroupsComponent {
-  displayedColumns: string[] = ['id', 'categories', 'numberProducts', 'action'];
+  displayedColumns: string[] = ['id', 'groups', 'numberProducts', 'action'];
   dataSource: MatTableDataSource<Groups>;
   form = new FormGroup({
     filter: new FormControl(''),
@@ -75,10 +75,10 @@ export class ShowGroupsComponent {
 
 /** إنشاء بيانات تجريبية لمجموعة */
 function createNewGroup(id: number): Groups {
-  const category = CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
+  const group = GROUPS[Math.floor(Math.random() * GROUPS.length)];
   return {
     id: id.toString(),
-    categories: category,
+    groups: group,
     numberProducts: Math.floor(Math.random() * 100),
   };
 }

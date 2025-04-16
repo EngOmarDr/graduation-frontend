@@ -12,16 +12,6 @@
       label="Name"
     />
 
-    <cust-select
-      inputId="warehouse_type"
-      label="Warehouse Type"
-      [options]="[
-        { key: true, value: 'primary' },
-        { key: false, value: 'option' }
-      ]"
-      [control]="costCenterForm.controls.isPrimary"
-    />
-
     <div>
       <label
         for="pr_warehouse"

@@ -6,14 +6,6 @@
       label="Name"
     />
 
-    <button
-      type="button"
-      class="w-fit cursor-pointer self-end bg-green-600 rounded-full shadow-md shadow-black/40 p-2 flex text-white"
-      (click)="addRow()"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-
     <div
       class="w-full overflow-auto col-span-full rounded-md max-h-96 border border-zinc-200 dark:border-zinc-600"
     >
@@ -55,6 +47,10 @@
               type="number"
               formControlName="fact"
               class="cust-input mt-1"
+              [readOnly]="i === 0"
+              [ngClass]="{
+                'opacity-50':i===0
+              }"
             />
             <app-validation-message
               [control]="this.units.at(i).get('fact')!"
@@ -115,24 +111,16 @@
           class="sticky top-0"
         ></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-        <tr class="mat-row" *matNoDataRow>
-          <td
-            class="mat-cell"
-            colspan="99"
-            class="text-center py-3 text-red-500"
-          >
-            <p class="inline-block h-8 me-2 align-middle">No data</p>
-            <button
-              type="button"
-              class="w-fit cursor-pointer self-center bg-green-600 rounded-full shadow-md shadow-black/40 p-2 inline-flex text-white"
-              (click)="addRow()"
-            >
-              <mat-icon>add</mat-icon>
-            </button>
-          </td>
-        </tr>
       </table>
+      <div class="flex justify-center py-1 border-t border-gray-300 min-w-full">
+        <button
+          type="button"
+          class="w-fit cursor-pointer self-center bg-green-600 rounded-full shadow-sm shadow-black/40 p-2 inline-flex text-white"
+          (click)="addRow()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
     </div>
 
     <div class="col-span-full grid grid-cols-4">
@@ -140,6 +128,6 @@
     </div>
   </form>
   <div>
-    {{ form.value | json }}
+    {{ form.getRawValue() | json }}
   </div>
 </cust-card>

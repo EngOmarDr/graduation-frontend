@@ -3,8 +3,8 @@ import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
-  FormBuilder,
   FormGroup,
+  NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -28,7 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './add-unit.component.html',
 })
 export class AddUnitComponent {
-  private fb = inject(FormBuilder);
+  private fb = inject(NonNullableFormBuilder);
 
   displayedColumns: string[] = ['name', 'fact', 'isDef', 'actions'];
   dataSource = new MatTableDataSource<AbstractControl>([]);
@@ -45,7 +45,10 @@ export class AddUnitComponent {
   createUnitRow(): FormGroup {
     const newRow = this.fb.group({
       name: ['', Validators.required],
-      fact: [1, [Validators.required, Validators.min(1)]],
+      fact: this.fb.control<null | number>(this.units.length === 0 ? 1 : null, [
+        Validators.required,
+        Validators.min(1),
+      ]),
       isDef: [this.units.length === 0, [Validators.required]],
     });
     return newRow;
@@ -63,6 +66,8 @@ export class AddUnitComponent {
       return;
     }
     this.units.removeAt(index);
+
+    this.units.at(0).controls['fact'].setValue(1);
     this.updateTableData();
   }
 
