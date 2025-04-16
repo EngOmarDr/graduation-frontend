@@ -1,37 +1,117 @@
-<cust-card title="Add Branch">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
-    <cust-form-field
-      [control]="form.controls.name"
-      inputId="name"
-      label="Name"
-    />
+<div class="p-6 bg-white shadow rounded-md w-full" dir="ltr">
+  <h2 class="text-xl font-bold mb-6">Add Product:</h2>
 
-    <cust-form-field
-      [control]="form.controls.phone"
-      inputId="phone"
-      label="Phone"
-    />
+  <form [formGroup]="stockForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <!-- Name Field -->
+    <div>
+      <label class="block mb-1 font-medium">Name <span class="text-red-500">*</span></label>
+      <input type="text" formControlName="name" class="input-field" placeholder="Enter name" />
+      <div *ngIf="stockForm.get('name')?.invalid && stockForm.get('name')?.touched" class="text-red-500 text-sm">Name is required</div>
+    </div>
 
-    <cust-form-field
-      [control]="form.controls.address"
-      inputId="address"
-      label="Address"
-    />
+    <!-- Image Upload -->
+    <div>
+      <label class="block mb-1 font-medium">Product Image?</label>
+      <input type="file" (change)="onFileChange($event)" multiple class="input-field-file" />
+    </div>
 
-    <cust-form-field
-      [control]="form.controls.note"
-      inputId="note"
-      label="Note"
-      class="focus:ring-4 focus:ring-primary"
-    />
+    <!-- Category Select -->
+    <div>
+      <label class="block mb-1 font-medium">Product Category <span class="text-red-500">*</span></label>
+      <select formControlName="category" class="input-field">
+        <option value="">Select category</option>
+        <option value="1">Electronics</option>
+        <option value="2">Clothing</option>
+      </select>
+    </div>
 
-    <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn" [disabled]="!form.valid">
-        Add
-      </button>
+    <!-- Brand -->
+    <div>
+      <label class="block mb-1 font-medium">Brand <span class="text-red-500">*</span></label>
+      <select class="input-field"><option>Select brand</option></select>
+    </div>
+
+    <!-- Barcode -->
+    <div>
+      <label class="block mb-1 font-medium">Barcode <span class="text-red-500">*</span></label>
+      <select class="input-field"><option>Select barcode</option></select>
+    </div>
+
+    <!-- Unit -->
+    <div>
+      <label class="block mb-1 font-medium">Product Unit <span class="text-red-500">*</span></label>
+      <select class="input-field"><option>Select unit</option></select>
+    </div>
+
+    <!-- Roses -->
+    <div class="flex gap-2 items-end">
+      <div class="flex-1">
+        <label class="block mb-1 font-medium">Roses <span class="text-red-500">*</span></label>
+        <select class="input-field"><option>Select roses</option></select>
+      </div>
+      <button type="button" class="bg-blue-500 text-white p-2 rounded h-10 w-10">+</button>
+    </div>
+
+    <!-- Selling Unit -->
+    <div>
+      <label class="block mb-1 font-medium">Selling Unit <span class="text-red-500">*</span></label>
+      <select class="input-field"><option>Select selling unit</option></select>
+    </div>
+
+    <!-- Status -->
+    <div>
+      <label class="block mb-1 font-medium">Status <span class="text-red-500">*</span></label>
+      <select class="input-field"><option>Select status</option></select>
+    </div>
+
+    <!-- Quantity Limit -->
+    <div>
+      <label class="block mb-1 font-medium">Quantity Limit</label>
+      <input type="text" class="input-field" placeholder="Enter quantity limit" />
+    </div>
+
+    <!-- Notes -->
+    <div class="col-span-1 lg:col-span-3">
+      <label class="block mb-1 font-medium">Notes:</label>
+      <textarea class="input-field h-24 resize-none" placeholder="Enter notes"></textarea>
+    </div>
+
+    <!-- Type, Price, Cost -->
+    <div>
+      <label class="block mb-1 font-medium">Product Type <span class="text-red-500">*</span></label>
+      <select class="input-field"><option>Arabic</option></select>
+    </div>
+    <div>
+      <label class="block mb-1 font-medium">Product Price <span class="text-red-500">*</span></label>
+      <input type="text" class="input-field" placeholder="Enter product price" />
+    </div>
+    <div>
+      <label class="block mb-1 font-medium">Product Cost <span class="text-red-500">*</span></label>
+      <input type="text" class="input-field" placeholder="Enter product cost" />
+    </div>
+
+    <!-- Tax & Alerts -->
+    <div>
+      <label class="block mb-1 font-medium">Tax Type:</label>
+      <select class="input-field"><option>Select tax type</option></select>
+    </div>
+    <div>
+      <label class="block mb-1 font-medium">Add Quantity</label>
+      <input type="text" class="input-field" placeholder="Add quantity" />
+    </div>
+    <div>
+      <label class="block mb-1 font-medium">Stock Alert:</label>
+      <input type="text" class="input-field" placeholder="Enter stock alert" />
+    </div>
+    <div>
+      <label class="block mb-1 font-medium">Order Tax:</label>
+      <input type="text" class="input-field" placeholder="Enter order tax" />
     </div>
   </form>
-  <div>
-    {{ form.value | json }}
+
+  <!-- Buttons -->
+  <div class="flex justify-end mt-6 gap-4">
+    <button type="button" class="btn btn-gray">Back</button>
+    <button type="submit" class="btn btn-primary">Save</button>
   </div>
-</cust-card>
+</div>
