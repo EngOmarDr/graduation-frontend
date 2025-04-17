@@ -2,9 +2,6 @@ import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './login/login.component';
 import { AddGroupComponent } from './group/add-group/add-group.component';
-import { AddCurrencyComponent } from './currency/add-currency/add-currency.component';
-import { ShowCurrenciesComponent } from './currency/show-currencies/show-currencies.component';
-import { UpdateCurrencyComponent } from './currency/update-currency/update-currency.component';
 import { AddWarehouseComponent } from './warehouse/add-warehouse/add-warehouse.component';
 import { ShowWarehousesComponent } from './warehouse/show-warehouses/show-warehouses.component';
 import { ShowPricesComponent } from './price/show-prices/show-prices.component';
@@ -16,9 +13,10 @@ import { ShowBranchesComponent } from './branch/show-branches/show-branches.comp
 import { AddBranchComponent } from './branch/add-branch/add-branch.component';
 import { ShowUnitsComponent } from './unit/show-units/show-units.component';
 import { AddUnitComponent } from './unit/add-unit/add-unit.component';
-import {BarcodePrintComponent} from './barcode/barcode-print.component';
-import {ShowPurchasesComponent} from './purchases/show-purchases/show-purchases.component';
-import {ShowSalesComponent} from './sales/show-sales/show-sales.component';
+import { BarcodePrintComponent } from './barcode/barcode-print.component';
+import { ShowPurchasesComponent } from './purchases/show-purchases/show-purchases.component';
+import { ShowSalesComponent } from './sales/show-sales/show-sales.component';
+import { accountingRoutes } from './accounting/accounting.routes';
 
 export const routes: Routes = [
   {
@@ -29,20 +27,6 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      {
-        path: '',
-        children: [
-          { path: 'add-currency', component: AddCurrencyComponent },
-          {
-            path: 'update-currency',
-            component: UpdateCurrencyComponent,
-          },
-          {
-            path: 'currencies',
-            component: ShowCurrenciesComponent,
-          },
-        ],
-      },
       {
         path: '',
         children: [
@@ -150,6 +134,7 @@ export const routes: Routes = [
           },
         ],
       },
+      ...accountingRoutes,
     ],
   },
 ];
