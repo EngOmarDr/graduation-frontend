@@ -8,18 +8,7 @@ import { ShowAccountsComponent } from './account/show-accounts/show-accounts.com
 export const accountingRoutes: Routes = [
   { path: 'add-account', component: AddAccountComponent },
   { path: 'accounts', component: ShowAccountsComponent },
-  {
-    path: '',
-    children: [
-      { path: 'add-currency', component: AddCurrencyComponent },
-      {
-        path: 'update-currency',
-        component: UpdateCurrencyComponent,
-      },
-      {
-        path: 'currencies',
-        component: ShowCurrenciesComponent,
-      },
-    ],
-  },
+  { path: 'add-currency', component: AddCurrencyComponent },
+  { path: 'update-currency', component: UpdateCurrencyComponent },
+  { path: 'currencies', component: ShowCurrenciesComponent },
 ];

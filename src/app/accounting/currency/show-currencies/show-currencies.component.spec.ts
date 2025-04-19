@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShowCurrenciesComponent } from './show-currencies.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideRouter, withViewTransitions } from '@angular/router';
+import { routes } from '../../../app.routes';
+import { accountingRoutes } from '../../accounting.routes';
 
 describe('ShowCurrenciesComponent', () => {
   let component: ShowCurrenciesComponent;
@@ -8,9 +12,9 @@ describe('ShowCurrenciesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ShowCurrenciesComponent]
-    })
-    .compileComponents();
+      imports: [ShowCurrenciesComponent],
+      providers: [provideAnimationsAsync(),provideRouter(accountingRoutes, withViewTransitions()),],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ShowCurrenciesComponent);
     component = fixture.componentInstance;

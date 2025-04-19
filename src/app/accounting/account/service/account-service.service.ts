@@ -1,0 +1,148 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Account } from './account';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AccountService {
+  private http = inject(HttpClient);
+  getAccounts(): Observable<Account[]> {
+    return new Observable((ob) => {
+      ob.next([
+        {
+          id: 10,
+          code: 'ACC010',
+          name: 'Health Savings Account',
+          accountType: 'Health',
+          primaryAccount: 0,
+          type: 'Personal',
+          max: 15000,
+          MaxType: true,
+          finalAccount: 12000,
+          currency: 1,
+          note: 'Account for health-related expenses.',
+        },
+        {
+          id: 1,
+          code: 'ACC001',
+          name: 'Savings Account',
+          accountType: 'Savings',
+          primaryAccount: 1,
+          type: 'Personal',
+          max: 10000,
+          MaxType: true,
+          finalAccount: 5000,
+          currency: 1, // Assuming 1 represents USD
+          note: 'Primary savings account for personal use.',
+        },
+        {
+          id: 7,
+          code: 'ACC007',
+          name: 'Emergency Fund',
+          accountType: 'Savings',
+          primaryAccount: 0,
+          type: 'Personal',
+          max: 20000,
+          MaxType: true,
+          finalAccount: 18000,
+          currency: 1,
+          note: 'Fund for emergencies.',
+        },
+        {
+          id: 2,
+          code: 'ACC002',
+          name: 'Checking Account',
+          accountType: 'Checking',
+          primaryAccount: 1,
+          type: 'Personal',
+          max: 5000,
+          MaxType: false,
+          finalAccount: 2000,
+          currency: 1,
+          note: 'Main checking account for daily transactions.',
+        },
+        {
+          id: 3,
+          code: 'ACC003',
+          name: 'Business Account',
+          accountType: 'Business',
+          primaryAccount: 0,
+          type: 'Business',
+          max: 20000,
+          MaxType: true,
+          finalAccount: 15000,
+          currency: 1,
+          note: 'Account for business transactions.',
+        },
+        {
+          id: 4,
+          code: 'ACC004',
+          name: 'Investment Account',
+          accountType: 'Investment',
+          primaryAccount: 0,
+          type: 'Personal',
+          max: 30000,
+          MaxType: true,
+          finalAccount: 25000,
+          currency: 1,
+          note: 'Account for investment purposes.',
+        },
+        {
+          id: 5,
+          code: 'ACC005',
+          name: 'Retirement Account',
+          accountType: 'Retirement',
+          primaryAccount: 0,
+          type: 'Personal',
+          max: 50000,
+          MaxType: true,
+          finalAccount: 40000,
+          currency: 1,
+          note: 'Account for retirement savings.',
+        },
+        {
+          id: 6,
+          code: 'ACC006',
+          name: 'Joint Account',
+          accountType: 'Joint',
+          primaryAccount: 1,
+          type: 'Personal',
+          max: 15000,
+          MaxType: false,
+          finalAccount: 10000,
+          currency: 1,
+          note: 'Joint account with spouse.',
+        },
+        {
+          id: 8,
+          code: 'ACC008',
+          name: 'Travel Fund',
+          accountType: 'Savings',
+          primaryAccount: 0,
+          type: 'Personal',
+          max: 10000,
+          MaxType: false,
+          finalAccount: 5000,
+          currency: 1,
+          note: 'Savings for travel expenses.',
+        },
+        {
+          id: 9,
+          code: 'ACC009',
+          name: 'Education Fund',
+          accountType: 'Savings',
+          primaryAccount: 0,
+          type: 'Personal',
+          max: 25000,
+          MaxType: true,
+          finalAccount: 20000,
+          currency: 1,
+          note: 'Savings for educational expenses.',
+        },
+      ]);
+    });
+    return this.http.get<Account[]>(`/api/user/`);
+  }
+}

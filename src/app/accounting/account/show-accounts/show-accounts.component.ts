@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { CardComponent } from '../../../../components/card-form.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -10,21 +10,9 @@ import {
 } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
-
-export interface Groups {
-  id: string;
-  name: string;
-  mainAccount: string;
-  type: string;
-}
-
-const GROUPS: string[] = [
-  'Electronics',
-  'Clothing',
-  'Books',
-  'Furniture',
-  'Toys',
-];
+import { AccountService } from '../service/account-service.service';
+import { Account } from '../service/account';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-show-accounts',
@@ -40,8 +28,16 @@ const GROUPS: string[] = [
   templateUrl: './show-accounts.component.html',
 })
 export class ShowAccountsComponent {
-  displayedColumns: string[] = ['id', 'name', 'main_account', 'type', 'action'];
-  dataSource: MatTableDataSource<Groups>;
+  private accountService = inject(AccountService);
+  accounts: Account[] = [];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'primaryAccount',
+    'type',
+    'action',
+  ];
+  dataSource: MatTableDataSource<Account> = new MatTableDataSource();
   form = new FormGroup({
     filter: new FormControl(''),
   });
@@ -50,8 +46,9 @@ export class ShowAccountsComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor() {
-    const groups = Array.from({ length: 20 }, (_, k) => createNewGroup(k + 1));
-    this.dataSource = new MatTableDataSource(groups);
+    this.accountService.getAccounts().subscribe((item) => {
+      this.dataSource.data = item;
+    });
   }
 
   ngAfterViewInit() {
@@ -68,29 +65,18 @@ export class ShowAccountsComponent {
     }
   }
 
-  editGroup(group: Groups) {
+  editGroup(group: Account) {
     alert(`Edit Group: ${group.id}`);
   }
 
-  deleteGroup(group: Groups) {
+  deleteGroup(group: Account) {
     alert(`Delete Group: ${group.id}`);
     this.dataSource.data = this.dataSource.data.filter(
       (g) => g.id !== group.id
     );
   }
 
-  viewDetails(group: Groups) {
+  viewDetails(group: Account) {
     alert(`View Details for Group: ${group.id}`);
   }
-}
-
-/** إنشاء بيانات تجريبية لمجموعة */
-function createNewGroup(id: number): Groups {
-  const group = GROUPS[Math.floor(Math.random() * GROUPS.length)];
-  return {
-    id: id.toString(),
-    name: group,
-    mainAccount: group,
-    type: group,
-  };
 }
