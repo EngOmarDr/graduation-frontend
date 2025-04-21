@@ -149,7 +149,7 @@
 
   .cust-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
     gap: 1rem;
   }
 
@@ -199,25 +199,6 @@
   font-family: var(--font-defaults);
 }
 
-.input-field {
-  @apply w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-400;
-}
-
-.input-field-file {
-  @apply block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 file:rounded;
-}
-
-.btn {
-  @apply px-6 py-2 rounded font-medium;
-}
-
-.btn-primary {
-  @apply bg-blue-600 text-white hover:bg-blue-700;
-}
-
-.btn-gray {
-  @apply bg-gray-300 text-black hover:bg-gray-400;
-}
 @media print {
   body * {
     visibility: hidden;
