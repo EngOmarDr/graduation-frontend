@@ -38,6 +38,7 @@ import { ValidationMessageComponent } from './validation-message.component';
         [formControl]="formControl"
         type="{{ type }}"
         class="cust-input"
+        [readOnly]="readOnly"
       />
       <app-validation-message
         [control]="control"
@@ -52,6 +53,7 @@ export class CustomFieldComponent {
   @Input({ required: true }) inputId!: string;
   @Input({ required: true }) control!: AbstractControl;
   @Input() type: string = 'text';
+  @Input() readOnly: boolean = false;
   @Input() customMessage: string | null = null;
   get formControl(): FormControl {
     return this.control as FormControl;

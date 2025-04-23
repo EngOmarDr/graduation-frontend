@@ -6,7 +6,7 @@ import { AbstractControl, FormsModule } from '@angular/forms';
   selector: 'app-validation-message',
   imports: [FormsModule, CommonModule],
   template: `
-    @if(control?.invalid && (control.touched || control.dirty)){
+    @if(control.invalid && (control.touched || control.dirty)){
     @if(control.errors?.['required']){
     <small class="validation-text">
       {{ name + ' is required' }}

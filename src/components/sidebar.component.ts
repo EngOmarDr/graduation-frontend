@@ -161,6 +161,11 @@ export class SidebarComponent {
       routerLink: '/currencies',
     },
     {
+      name: 'Journals',
+      icon: 'icon',
+      routerLink: '/add-journal',
+    },
+    {
       name: 'Purchases',
       icon: 'icon',
       fun: () => this.togglePurchases(),

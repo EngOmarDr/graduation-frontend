@@ -28,6 +28,7 @@ import { ValidationMessageComponent } from './validation-message.component';
       <label
         [for]="inputId"
         class="cust-input-label"
+        *ngIf="showLabel"
         [ngClass]="{
           'cust-label-disable': control.disabled
         }"
@@ -51,6 +52,7 @@ export class CustomSelectComponent {
   @Input({ required: true }) inputId!: string;
   @Input({ required: true }) control!: AbstractControl;
   @Input({ required: true }) options!: any[];
+  @Input() showLabel: boolean = true;
   @Input() customMessage: string | null = null;
 
   get formControl(): FormControl {

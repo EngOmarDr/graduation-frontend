@@ -4,11 +4,15 @@ import { AddCurrencyComponent } from './currency/add-currency/add-currency.compo
 import { UpdateCurrencyComponent } from './currency/update-currency/update-currency.component';
 import { ShowCurrenciesComponent } from './currency/show-currencies/show-currencies.component';
 import { ShowAccountsComponent } from './account/show-accounts/show-accounts.component';
+import { AddJournalComponent } from './journal/add-journal/add-journal.component';
 
 export const accountingRoutes: Routes = [
   { path: 'add-account', component: AddAccountComponent },
   { path: 'accounts', component: ShowAccountsComponent },
+
   { path: 'add-currency', component: AddCurrencyComponent },
   { path: 'update-currency', component: UpdateCurrencyComponent },
   { path: 'currencies', component: ShowCurrenciesComponent },
+
+  { path: 'add-journal', component: AddJournalComponent },
 ];
