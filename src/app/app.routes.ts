@@ -17,6 +17,7 @@ import { BarcodePrintComponent } from './barcode/barcode-print.component';
 import { ShowPurchasesComponent } from './purchases/show-purchases/show-purchases.component';
 import { ShowSalesComponent } from './sales/show-sales/show-sales.component';
 import { accountingRoutes } from './accounting/accounting.routes';
+import {PaymentVoucherComponent} from './payment-voucher/payment-voucher.component'
 
 export const routes: Routes = [
   {
@@ -131,6 +132,15 @@ export const routes: Routes = [
           {
             path: 'printBarcode',
             component: BarcodePrintComponent,
+          },
+        ],
+      },
+      {
+        path: '',
+        children: [
+          {
+            path: 'paymentVoucher',
+            component: PaymentVoucherComponent,
           },
         ],
       },

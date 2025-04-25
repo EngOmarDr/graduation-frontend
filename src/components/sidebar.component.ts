@@ -166,6 +166,11 @@ export class SidebarComponent {
       routerLink: '/add-journal',
     },
     {
+      name: 'Payment Voucher',
+      icon: 'icon',
+      routerLink: '/paymentVoucher',
+    },
+    {
       name: 'Purchases',
       icon: 'icon',
       fun: () => this.togglePurchases(),
