@@ -5,6 +5,7 @@ import { UpdateCurrencyComponent } from './currency/update-currency/update-curre
 import { ShowCurrenciesComponent } from './currency/show-currencies/show-currencies.component';
 import { ShowAccountsComponent } from './account/show-accounts/show-accounts.component';
 import { AddJournalComponent } from './journal/add-journal/add-journal.component';
+import { AddPaymentVoucherComponent } from './payment-voucher/add/add-payment-voucher.component';
 
 export const accountingRoutes: Routes = [
   { path: 'add-account', component: AddAccountComponent },
@@ -15,4 +16,9 @@ export const accountingRoutes: Routes = [
   { path: 'currencies', component: ShowCurrenciesComponent },
 
   { path: 'add-journal', component: AddJournalComponent },
+
+  {
+    path: 'paymentVoucher',
+    component: AddPaymentVoucherComponent,
+  },
 ];

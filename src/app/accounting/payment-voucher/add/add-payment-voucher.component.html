@@ -1,0 +1,255 @@
+<cust-card title="Add Payment Voucher">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
+    <div>
+      <label
+        for="account"
+        class="cust-input-label"
+        [ngClass]="{
+          'cust-label-disable': form.controls.account.disabled
+        }"
+        >Account
+      </label>
+      <input
+        formControlName="account"
+        class="cust-input mt-1 min-w-[100px]"
+        matInput
+        [matAutocomplete]="auto"
+      />
+
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option.title"
+        >
+          {{ option.title }}
+        </mat-option>
+      </mat-autocomplete>
+      <app-validation-message
+        [control]="form.controls.account"
+        [customMessage]="null"
+        name="account"
+      />
+    </div>
+    <cust-form-field
+      [control]="form.controls.date"
+      inputId="Date"
+      label="Date"
+      type="date"
+    />
+
+    <cust-select
+      [control]="form.controls.currency"
+      [options]="toOption()"
+      inputId="Currency"
+      label="Currency"
+    />
+
+    <cust-form-field
+      [control]="form.controls.equality"
+      inputId="equality"
+      label="equality"
+      type="number"
+    />
+
+    <cust-form-field
+      [control]="form.controls.notes"
+      inputId="Notes"
+      label="Notes"
+    />
+    <div
+      class="flex justify-between col-span-full bg-gray-100 dark:bg-gray-700 p-2 text-sm text-gray-700 font-medium border"
+    >
+      <span class="dark:text-white">Previous balance</span>
+      <span class="text-blue-600 font-bold">10,900.00</span>
+    </div>
+    <div class="col-span-full overflow-auto">
+      <table class="max-h-96" formArrayName="rows">
+        <thead class="border-y border-gray-600 bg-gray-100 dark:bg-gray-700">
+          <tr>
+            <th class="p-2 border border-gray-600 text-center">#</th>
+            <th class="p-2 border border-gray-600 text-center">debit</th>
+            <th class="p-2 border border-gray-600 text-center">account</th>
+            <th class="p-2 border border-gray-600 text-center">notes</th>
+            <th class="p-2 border border-gray-600 text-center">actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let row of rows.controls; let i = index"
+            [formGroup]="getRowFormGroup(i)"
+            class="border-y border-gray-600"
+          >
+            <td class="border border-gray-600 text-center">{{ i + 1 }}</td>
+            <td class="border border-gray-600text-center align-top">
+              <input formControlName="debit" class="cust-input" type="number" />
+              <app-validation-message
+                [control]="row.get('debit')!"
+                [customMessage]="null"
+                name="debit"
+              />
+            </td>
+            <td class="border border-gray-600 text-center align-top">
+              <input formControlName="account" class="cust-input" />
+              <app-validation-message
+                [control]="row.get('account')!"
+                [customMessage]="null"
+                name="account"
+              />
+            </td>
+            <td
+              class="border border-gray-600 text-center text-balance align-top"
+            >
+              <input
+                formControlName="notes"
+                class="cust-input text-balance"
+                style="max-lines: 3; max-height: 200"
+              />
+              <app-validation-message
+                [control]="row.get('notes')!"
+                [customMessage]="null"
+                name="notes"
+              />
+            </td>
+            <td class="border border-gray-600 text-center">
+              <button
+                class="cursor-pointer"
+                title="edit"
+                type="button"
+                (click)="removeRow(i)"
+              >
+                <svg
+                  class="fill-red-500"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z"
+                  />
+                  <path
+                    d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        class="flex justify-center p-2 border border-t-0 border-gray-600 min-w-full sticky bottom-0 left-0"
+      >
+        <button
+          type="button"
+          class="w-fit cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
+          (click)="addRow()"
+        >
+          <img src="assets/icons/add.png" alt="add" />
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <label>Sum</label>
+      <div class="flex gap-1">
+        <input
+          type="number"
+          readonly
+          class="cust-input bg-green-200"
+          [(ngModel)]="sum"
+          [ngModelOptions]="{ standalone: true }"
+        />
+        <input
+          type="number"
+          readonly
+          class="cust-input bg-green-200"
+          [(ngModel)]="sum"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </div>
+    </div>
+    <div>
+      <label>minus</label>
+      <div class="flex gap-1">
+        <input
+          type="number"
+          readonly
+          class="cust-input bg-green-200"
+          [(ngModel)]="minus"
+          [ngModelOptions]="{ standalone: true }"
+        />
+        <input
+          type="number"
+          readonly
+          class="cust-input bg-green-200"
+          [(ngModel)]="minus"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </div>
+    </div>
+
+    <div class="col-span-full grid grid-cols-4">
+      <button type="submit" class="btn" [disabled]="!form.valid">Add</button>
+    </div>
+  </form>
+  <div>
+    {{ form.value | json }}
+  </div>
+</cust-card>
+
+<cust-card title="سند دفع">
+  <form [formGroup]="form" class="space-y-4 rtl text-right p-4">
+    <div
+      class="flex justify-between bg-gray-100 p-2 text-sm text-gray-700 font-medium border"
+    >
+      <span>الرصيد السابق</span>
+      <span class="text-blue-600 font-bold">10,900.00</span>
+    </div>
+
+    <div class="overflow-x-auto mt-4">
+      <table class="w-full border text-sm text-center">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="p-2 border">#</th>
+            <th class="p-2 border">مدين</th>
+            <th class="p-2 border">الحساب</th>
+            <th class="p-2 border">البيان</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let row of rows.controls; let i = index"
+            [formGroup]="getRowFormGroup(i)"
+          >
+            <td class="border">{{ i + 1 }}</td>
+            <td class="border">
+              <input
+                formControlName="debit"
+                class="w-full p-1 text-right border-none outline-none"
+              />
+            </td>
+            <td class="border">
+              <input
+                formControlName="account"
+                class="w-full p-1 text-right border-none outline-none"
+              />
+            </td>
+            <td class="border">
+              <input
+                formControlName="notes"
+                class="w-full p-1 text-right border-none outline-none"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-between mt-4 border-t pt-2 text-sm">
+      <div class="text-gray-600">المجموع:</div>
+      <div class="flex gap-4">
+        <span>0.00</span>
+        <span>0.00</span>
+      </div>
+    </div>
+  </form>
+</cust-card>
