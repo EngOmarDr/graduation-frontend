@@ -1,1 +1,49 @@
-<p>login works!</p>
+<!-- login.component.html -->
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white p-6">
+  <div class="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-10 space-y-10">
+
+    <!-- Title -->
+    <div class="text-center">
+      <h1 class="text-3xl font-extrabold text-blue-900">Login</h1>
+      <p class="mt-2 text-sm text-gray-500">Accounting System | Syrian Trading Company</p>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="login()" class="space-y-8">
+
+      <!-- Fields Row -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <cust-form-field
+          label="Username"
+          inputId="username"
+          [control]="form.get('username')!"
+          type="text"
+        ></cust-form-field>
+
+        <cust-form-field
+          label="Password"
+          inputId="password"
+          [control]="form.get('password')!"
+          type="password"
+        ></cust-form-field>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-4">
+        <button
+          type="submit"
+          class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition duration-300 shadow-md hover:shadow-lg"
+        >
+          Login
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Footer -->
+    <div class="text-center text-xs text-gray-400 mt-8">
+      &copy; 2025 Syrian Trading Company. All rights reserved.
+    </div>
+
+  </div>
+</div>
