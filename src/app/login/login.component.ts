@@ -3,12 +3,11 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CustomFieldComponent } from '../../components/custom-field.component';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { SearchInputComponent } from "../../components/search-input.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CustomFieldComponent, RouterModule, SearchInputComponent],
+  imports: [CommonModule, ReactiveFormsModule, CustomFieldComponent, RouterModule],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
