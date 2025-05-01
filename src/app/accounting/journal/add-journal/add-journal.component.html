@@ -7,13 +7,13 @@
       type="date"
     />
 
-    <cust-form-field
+    <!-- <cust-form-field
       [control]="form.controls.postDate"
       inputId="Post Date"
       label="Post Date"
       type="date"
       [readOnly]="true"
-    />
+    /> -->
 
     <cust-select
       [control]="form.controls.currency"
@@ -190,42 +190,6 @@
             />
           </td>
         </ng-container>
-        <ng-container matColumnDef="group">
-          <th mat-header-cell *matHeaderCellDef>group</th>
-          <td
-            mat-cell
-            *matCellDef="let itemGroup; let i = index"
-            [formGroupName]="i"
-          >
-            <input
-              formControlName="group"
-              class="cust-input mt-1 min-w-[100px]"
-            />
-            <app-validation-message
-              [control]="this.items.at(i).get('group')!"
-              [customMessage]="null"
-              name="group"
-            />
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef>date</th>
-          <td
-            mat-cell
-            *matCellDef="let itemGroup; let i = index"
-            [formGroupName]="i"
-          >
-            <input
-              formControlName="date"
-              class="cust-input mt-1 min-w-[100px]"
-            />
-            <app-validation-message
-              [control]="this.items.at(i).get('date')!"
-              [customMessage]="null"
-              name="date"
-            />
-          </td>
-        </ng-container>
         <ng-container matColumnDef="contra account">
           <th mat-header-cell *matHeaderCellDef>contra account</th>
           <td
@@ -297,28 +261,21 @@
           type="number"
           readonly
           class="cust-input bg-green-200"
-          [(ngModel)]="sum"
+          [(ngModel)]="sumDebit"
           [ngModelOptions]="{ standalone: true }"
         />
         <input
           type="number"
           readonly
           class="cust-input bg-green-200"
-          [(ngModel)]="sum"
+          [(ngModel)]="sumCredit"
           [ngModelOptions]="{ standalone: true }"
         />
       </div>
     </div>
     <div>
-      <label>minus</label>
+      <label>difference</label>
       <div class="flex gap-1">
-        <input
-          type="number"
-          readonly
-          class="cust-input bg-green-200"
-          [(ngModel)]="minus"
-          [ngModelOptions]="{ standalone: true }"
-        />
         <input
           type="number"
           readonly

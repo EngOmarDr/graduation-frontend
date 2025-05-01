@@ -39,12 +39,12 @@
       </div>
     </div>
 
-    <cust-select
+    <!-- <cust-select
       [control]="form.controls.type"
       [options]="types"
-      inputId="type"
-      label="type"
-    />
+      inputId="Estimated budget"
+      label="Estimated budget"
+    /> -->
 
     <cust-form-field
       [control]="form.controls.max"
@@ -56,8 +56,8 @@
     <cust-select
       [control]="form.controls.maxType"
       [options]="types"
-      inputId="type"
-      label="type"
+      inputId="Estimated budget"
+      label="Estimated budget"
     />
 
     <cust-select
@@ -67,8 +67,9 @@
       label="Final Account"
     />
 
-<cust-form-field
+<cust-select
       [control]="form.controls.currency"
+      [options]="currencies"
       inputId="currency"
       label="Currency"
       type="number"

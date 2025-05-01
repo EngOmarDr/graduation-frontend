@@ -73,6 +73,14 @@
     </div>
 
     <cust-form-field
+      [control]="form.controls.image"
+      type="file"
+      inputId="image"
+      label="image"
+      (change)="uploadImage($event)"
+    />
+
+    <cust-form-field
       [control]="form.controls.minQty"
       inputId="Min Qty"
       label="Min Qty"

@@ -1,8 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CardComponent } from '../../../../components/card-form.component';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -21,7 +17,14 @@ import { CustomSelectComponent } from '../../../../components/custom-select.comp
 import { ValidationMessageComponent } from '../../../../components/validation-message.component';
 import { MatIconModule } from '@angular/material/icon';
 import { Currency } from '../../currency/service/currency';
-import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -38,7 +41,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ValidationMessageComponent,
     MatIconModule,
     FormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
   ],
   templateUrl: './add-journal.component.html',
 })
@@ -58,7 +61,8 @@ export class AddJournalComponent implements OnInit {
     items: this.fb.array([], Validators.required),
   });
 
-  sum = 0;
+  sumDebit = 0;
+  sumCredit = 0;
   minus = 0;
 
   ngOnInit(): void {
@@ -80,22 +84,21 @@ export class AddJournalComponent implements OnInit {
         { emitEvent: false }
       );
     });
+    this.form.controls.currency.setValue(this.toOption()[0]?.key.toString());
   }
 
   options = [];
 
-  filteredOptions: Observable<any>=new Observable();
+  filteredOptions: Observable<any> = new Observable();
 
   filter(val: string): Observable<any> {
-    return this.searchAccounts()
-
-      .pipe(
-        map((response) =>
-          response.filter((option:any) => {
-            return option.title.toLowerCase().indexOf(val.toLowerCase()) === 0;
-          })
-        )
-      );
+    return this.searchAccounts().pipe(
+      map((response) =>
+        response.filter((option: any) => {
+          return option.title.toLowerCase().indexOf(val.toLowerCase()) === 0;
+        })
+      )
+    );
   }
   accounts: any = [];
   searchAccounts() {
@@ -124,8 +127,6 @@ export class AddJournalComponent implements OnInit {
     'currency',
     'balance',
     'equality',
-    'group',
-    'date',
     'contra account',
     'actions',
   ];
@@ -174,9 +175,11 @@ export class AddJournalComponent implements OnInit {
     });
 
     newRow.controls.debit.valueChanges.subscribe((_) => {
+      newRow.controls.credit.setValue('0', { emitEvent: false });
       this.calculateSum();
     });
     newRow.controls.credit.valueChanges.subscribe((_) => {
+      newRow.controls.debit.setValue('0', { emitEvent: false });
       this.calculateSum();
     });
 
@@ -215,12 +218,14 @@ export class AddJournalComponent implements OnInit {
   }
 
   calculateSum() {
+    this.sumDebit = this.sumCredit = 0;
     this.items.controls.forEach((group: FormGroup) => {
-      const amount = group.get('debit')?.value;
-      const mAmount = group.get('credit')?.value;
-      this.minus += mAmount ? mAmount : 0;
-      this.sum += amount ? amount : 0; // Add to sum, default to 0 if undefined
+      const amountDebit = group.get('debit')?.value ?? 0;
+      const amountCredit = group.get('credit')?.value ?? 0;
+      this.sumDebit += amountDebit;
+      this.sumCredit += amountCredit;
     });
+    this.minus = this.sumDebit - this.sumCredit;
   }
 
   toOption() {

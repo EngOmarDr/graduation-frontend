@@ -39,6 +39,7 @@ export class AddProductComponent {
   barcodesColumns = ['#', 'unitItem', 'barcode', 'actions'];
   productPricesData = new MatTableDataSource<AbstractControl>([]);
   productBarcodesData = new MatTableDataSource<AbstractControl>([]);
+  file: any;
 
   form = this.fb.group({
     code: ['', Validators.required],
@@ -47,6 +48,7 @@ export class AddProductComponent {
     unit: [null],
     prices: this.fb.array<FormGroup>([], Validators.required),
     barcodes: this.fb.array<FormGroup>([], Validators.required),
+    image: [''],
     minQty: ['', Validators.min(0)],
     maxQty: ['', Validators.min(0)],
     orderQty: ['', Validators.min(0)],
@@ -119,12 +121,8 @@ export class AddProductComponent {
     }
   }
 
-  onFileChange(event: any): void {
-    const files = event.target.files;
-    if (files.length > 0) {
-      this.form.patchValue({
-        productImages: files,
-      });
-    }
+  uploadImage(event: any) {
+    this.file = event.target.files[0];
+    console.log(this.file);
   }
 }

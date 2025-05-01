@@ -82,6 +82,7 @@ export class AddPaymentVoucherComponent implements OnInit {
         { emitEvent: false }
       );
     });
+    this.form.controls.currency.setValue(this.toOption()[0]?.key.toString());
   }
 
   options = [];

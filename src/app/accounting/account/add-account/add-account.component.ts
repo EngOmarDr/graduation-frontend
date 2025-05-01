@@ -40,6 +40,11 @@ export class AddAccountComponent {
     { key: false, value: 'sub account' },
   ];
 
+  readonly currencies = [
+    { key: 0, value: 'ليرة سورية' },
+    { key: 1, value: 'دولار' },
+  ];
+
   private fb = inject(NonNullableFormBuilder);
   results = [
     'a',

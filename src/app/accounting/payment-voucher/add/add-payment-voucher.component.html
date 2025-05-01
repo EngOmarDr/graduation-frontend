@@ -148,7 +148,7 @@
       </div>
     </div>
 
-    <div>
+    <!-- <div>
       <label>Sum</label>
       <div class="flex gap-1">
         <input
@@ -185,7 +185,7 @@
           [ngModelOptions]="{ standalone: true }"
         />
       </div>
-    </div>
+    </div> -->
 
     <div class="col-span-full grid grid-cols-4">
       <button type="submit" class="btn" [disabled]="!form.valid">Add</button>
@@ -194,62 +194,4 @@
   <div>
     {{ form.value | json }}
   </div>
-</cust-card>
-
-<cust-card title="سند دفع">
-  <form [formGroup]="form" class="space-y-4 rtl text-right p-4">
-    <div
-      class="flex justify-between bg-gray-100 p-2 text-sm text-gray-700 font-medium border"
-    >
-      <span>الرصيد السابق</span>
-      <span class="text-blue-600 font-bold">10,900.00</span>
-    </div>
-
-    <div class="overflow-x-auto mt-4">
-      <table class="w-full border text-sm text-center">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="p-2 border">#</th>
-            <th class="p-2 border">مدين</th>
-            <th class="p-2 border">الحساب</th>
-            <th class="p-2 border">البيان</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="let row of rows.controls; let i = index"
-            [formGroup]="getRowFormGroup(i)"
-          >
-            <td class="border">{{ i + 1 }}</td>
-            <td class="border">
-              <input
-                formControlName="debit"
-                class="w-full p-1 text-right border-none outline-none"
-              />
-            </td>
-            <td class="border">
-              <input
-                formControlName="account"
-                class="w-full p-1 text-right border-none outline-none"
-              />
-            </td>
-            <td class="border">
-              <input
-                formControlName="notes"
-                class="w-full p-1 text-right border-none outline-none"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="flex justify-between mt-4 border-t pt-2 text-sm">
-      <div class="text-gray-600">المجموع:</div>
-      <div class="flex gap-4">
-        <span>0.00</span>
-        <span>0.00</span>
-      </div>
-    </div>
-  </form>
 </cust-card>
