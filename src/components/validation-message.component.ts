@@ -11,6 +11,10 @@ import { AbstractControl, FormsModule } from '@angular/forms';
     <small class="validation-text">
       {{ name + ' is required' }}
     </small>
+    }@else if(control.errors?.['email']){
+    <small class="validation-text">
+      {{ 'should be a valid email' }}
+    </small>
     }@else if(customMessage){
     <small class="validation-text">
       {{ customMessage }}

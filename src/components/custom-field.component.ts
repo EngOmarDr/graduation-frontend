@@ -42,8 +42,8 @@ import { ValidationMessageComponent } from './validation-message.component';
       />
       <app-validation-message
         [control]="control"
-        [customMessage]="null"
-        name="{{label}}"
+        [customMessage]="customMessage"
+        name="{{ label }}"
       />
     </div>
   `,
@@ -52,7 +52,28 @@ export class CustomFieldComponent {
   @Input({ required: true }) label!: string;
   @Input({ required: true }) inputId!: string;
   @Input({ required: true }) control!: AbstractControl;
-  @Input() type: string = 'text';
+  @Input() type:
+    | 'button'
+    | 'checkbox'
+    | 'color'
+    | 'date'
+    | 'datetime'
+    | 'datetime-local'
+    | 'email'
+    | 'file'
+    | 'hidden'
+    | 'image'
+    | 'month'
+    | 'number'
+    | 'password'
+    | 'radio'
+    | 'range'
+    | 'search'
+    | 'tel'
+    | 'text'
+    | 'time'
+    | 'url'
+    | 'week' = 'text';
   @Input() readOnly: boolean = false;
   @Input() customMessage: string | null = null;
   get formControl(): FormControl {

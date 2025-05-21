@@ -14,10 +14,9 @@
       <!-- Fields Row -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <cust-form-field
-          label="Username"
-          inputId="username"
-          [control]="form.get('username')!"
-          type="text"
+          label="Email"
+          inputId="Email"
+          [control]="form.controls.email"
         ></cust-form-field>
 
         <cust-form-field
