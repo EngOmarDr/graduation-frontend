@@ -1,28 +1,28 @@
 import { Routes } from '@angular/router';
-import { LayoutComponent } from './layout/layout.component';
-import { LoginComponent } from './login/login.component';
-import { AddGroupComponent } from './group/add-group/add-group.component';
-import { AddWarehouseComponent } from './warehouse/add-warehouse/add-warehouse.component';
-import { ShowWarehousesComponent } from './warehouse/show-warehouses/show-warehouses.component';
-import { ShowPricesComponent } from './price/show-prices/show-prices.component';
-import { AddPriceComponent } from './price/add-price/add-price.component';
-import { ShowGroupsComponent } from './group/show-groups/show-groups.component';
-import { AddProductComponent } from './product/add-product/add-product.component';
-import { ShowProductsComponent } from './product/show-products/show-products.component';
-import { ShowBranchesComponent } from './branch/show-branches/show-branches.component';
-import { AddBranchComponent } from './branch/add-branch/add-branch.component';
-import { ShowUnitsComponent } from './unit/show-units/show-units.component';
-import { AddUnitComponent } from './unit/add-unit/add-unit.component';
-import { BarcodePrintComponent } from './barcode/barcode-print.component';
-import { ShowPurchasesComponent } from './purchases/show-purchases/show-purchases.component';
-import { ShowSalesComponent } from './sales/show-sales/show-sales.component';
-import { accountingRoutes } from './accounting/accounting.routes';
-import {AddPaymentVoucherComponent} from './accounting/payment-voucher/add/add-payment-voucher.component'
+import { LayoutComponent } from '../app/modules/layout/layout.component';
+import { LoginComponent } from '../app/modules/login/login.component';
+import { ShowBranchesComponent } from '../app/modules/branch/show-branches/show-branches.component';
+import { accountingRoutes } from '../app/modules/accounting/accounting.routes';
+import { authGuard } from './core/guards/auth.guard';
+import { ShowGroupsComponent } from './modules/inventory/group/show-groups/show-groups.component';
+import { AddGroupComponent } from './modules/inventory/group/add-group/add-group.component';
+import { AddBranchComponent } from './modules/branch/add-branch/add-branch.component';
+import { ShowUnitsComponent } from './modules/inventory/unit/show-units/show-units.component';
+import { AddUnitComponent } from './modules/inventory/unit/add-unit/add-unit.component';
+import { ShowPricesComponent } from './modules/inventory/price/show-prices/show-prices.component';
+import { AddPriceComponent } from './modules/inventory/price/add-price/add-price.component';
+import { ShowProductsComponent } from './modules/inventory/product/show-products/show-products.component';
+import { AddProductComponent } from './modules/inventory/product/add-product/add-product.component';
+import { ShowWarehousesComponent } from './modules/inventory/warehouse/show-warehouses/show-warehouses.component';
+import { AddWarehouseComponent } from './modules/inventory/warehouse/add-warehouse/add-warehouse.component';
+import { ShowPurchasesComponent } from './modules/inventory/purchases/show-purchases/show-purchases.component';
+import { ShowSalesComponent } from './modules/inventory/sales/show-sales/show-sales.component';
+import { BarcodePrintComponent } from './modules/inventory/barcode/barcode-print.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'products',
     pathMatch: 'full',
   },
   {
@@ -31,6 +31,7 @@ export const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [authGuard],
     component: LayoutComponent,
     children: [
       {
@@ -48,6 +49,7 @@ export const routes: Routes = [
       },
       {
         path: 'branches',
+        canActivate: [authGuard],
         children: [
           { path: '', component: ShowBranchesComponent },
           { path: 'add-branch', component: AddBranchComponent },
@@ -55,6 +57,7 @@ export const routes: Routes = [
       },
       {
         path: '',
+        canActivate: [authGuard],
         children: [
           {
             path: 'units',
@@ -68,6 +71,7 @@ export const routes: Routes = [
       },
       {
         path: '',
+        canActivate: [authGuard],
         children: [
           {
             path: 'prices',
@@ -81,6 +85,7 @@ export const routes: Routes = [
       },
       {
         path: '',
+        canActivate: [authGuard],
         children: [
           {
             path: 'products',
@@ -94,6 +99,7 @@ export const routes: Routes = [
       },
       {
         path: '',
+        canActivate: [authGuard],
         children: [
           {
             path: 'warehouses',
@@ -107,6 +113,7 @@ export const routes: Routes = [
       },
       {
         path: '',
+        canActivate: [authGuard],
         children: [
           {
             path: 'purchases',
@@ -120,6 +127,7 @@ export const routes: Routes = [
       },
       {
         path: '',
+        canActivate: [authGuard],
         children: [
           {
             path: 'sales',
@@ -133,6 +141,7 @@ export const routes: Routes = [
       },
       {
         path: '',
+        canActivate: [authGuard],
         children: [
           {
             path: 'printBarcode',
