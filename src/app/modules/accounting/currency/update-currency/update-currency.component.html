@@ -1,3 +1,4 @@
+<!-- update-currency.component.html -->
 <div class="bg-white dark:bg-[#1f2937] p-7 m-7 rounded-md">
   <h4 class="text-gray-700 pb-7 text-2xl font-bold dark:text-white">
     Update Currency
@@ -23,23 +24,31 @@
     <cust-form-field
       [control]="editCurrencyForm.controls.balance"
       inputId="balance"
-      label="Balance"
+      label="Currency Value"
       type="number"
     />
 
     <cust-form-field
-      [control]="editCurrencyForm.controls.eq"
-      inputId="eq"
-      label="Eq"
+      [control]="editCurrencyForm.controls.partName"
+      inputId="partName"
+      label="Part Name"
+      type="text"
+    />
+
+    <cust-form-field
+      [control]="editCurrencyForm.controls.partPrecision"
+      inputId="partPrecision"
+      label="Part Precision"
       type="number"
     />
 
     <div class="col-span-full grid grid-cols-4">
       <button type="submit" class="btn" [disabled]="!editCurrencyForm.valid">
-        Add
+        Update
       </button>
     </div>
   </form>
+
   <div>
     {{ editCurrencyForm.value | json }}
   </div>

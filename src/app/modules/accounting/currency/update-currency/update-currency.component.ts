@@ -5,63 +5,83 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
+import { CurrencyService } from '../services/currency.service';
+import { Currency } from '../models/currency.model';
 
 @Component({
   selector: 'app-edit-currency',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, CustomFieldComponent],
   templateUrl: './update-currency.component.html',
 })
 export class UpdateCurrencyComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
-
   private location = inject(Location);
-  constructor(private route: Router) {
-    const navigation = this.route.getCurrentNavigation();
-    const state = navigation?.extras.state as {
-      id: number;
-      code: string;
-      name: string;
-      balance: number;
-      eq: number;
-    };
-    if (state) {
-      this.editCurrencyForm.patchValue({
-        code: state.code,
-        name: state.name,
-        balance: state.balance,
-        eq: state.eq,
-      });
-    } else {
-      this.location.back();
-    }
-  }
-  ngOnInit(): void {
-    this.editCurrencyForm.controls.balance.valueChanges.subscribe((balance) => {
-      const newValue = balance != 0 ? 1 / balance : 0;
-      this.editCurrencyForm.controls.eq.setValue(newValue, {
-        emitEvent: false,
-      });
-    });
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private currencyService = inject(CurrencyService);
 
-    this.editCurrencyForm.controls.eq.valueChanges.subscribe((eq) => {
-      if (eq !== null && eq != 0) {
-        this.editCurrencyForm.controls.balance.setValue(1 / eq, {
-          emitEvent: false,
-        });
-      }
-    });
-  }
+  currencyId!: number;
 
   editCurrencyForm = this.fb.group({
     code: ['', [Validators.required]],
     name: ['', [Validators.required]],
     balance: [1, [Validators.required, Validators.min(0)]],
-    eq: [1, [Validators.required, Validators.min(0)]],
+    partName: ['', [Validators.required]],
+    partPrecision: [1, [Validators.required, Validators.min(0)]],
   });
 
+  ngOnInit(): void {
+    this.currencyId = Number(this.route.snapshot.paramMap.get('id'));
+    if (!this.currencyId) {
+      alert('Invalid currency ID');
+      this.location.back();
+      return;
+    }
+
+    this.currencyService.getCurrencyById(this.currencyId).subscribe({
+      next: (currency) => {
+        this.editCurrencyForm.patchValue({
+          code: currency.code,
+          name: currency.name,
+          balance: currency.currencyValue,
+          partName: currency.partName,
+          partPrecision: currency.partPrecision,
+        });
+      },
+      error: () => {
+        alert('Currency not found');
+        this.location.back();
+      },
+    });
+
+  }
+
   onSubmit() {
-    alert(this.editCurrencyForm.valid);
+    if (this.editCurrencyForm.valid && this.currencyId) {
+      const formValue = this.editCurrencyForm.value;
+
+      const updatedCurrency: Currency = {
+        id: this.currencyId,
+        code: formValue.code!,
+        name: formValue.name!,
+        currencyValue: formValue.balance!,
+        partName: formValue.partName!,
+        partPrecision: formValue.partPrecision!,
+      };
+
+      this.currencyService.updateCurrency(this.currencyId, updatedCurrency).subscribe({
+        next: () => {
+          alert('Currency updated successfully');
+          this.location.back();
+        },
+        error: (err) => {
+          console.error('Update failed', err);
+          alert('Update failed');
+        },
+      });
+    }
   }
 }

@@ -17,6 +17,13 @@
     />
 
     <cust-form-field
+      [control]="currencyForm.controls.balance"
+      inputId="currencyValue"
+      label="Currency Value"
+      type="number"
+    />
+
+        <cust-form-field
       [control]="currencyForm.controls.partName"
       inputId="part"
       label="Part Name"
@@ -24,22 +31,8 @@
 
     <cust-form-field
       [control]="currencyForm.controls.partValue"
-      inputId="value"
-      label="Value"
-      type="number"
-    />
-
-    <cust-form-field
-      [control]="currencyForm.controls.balance"
-      inputId="balance"
-      label="Balance"
-      type="number"
-    />
-
-    <cust-form-field
-      [control]="currencyForm.controls.eq"
-      inputId="eq"
-      label="Eq"
+      inputId="partPrecision"
+      label="Part Precision"
       type="number"
     />
 
@@ -49,6 +42,7 @@
       </button>
     </div>
   </form>
+
   <div>
     {{ currencyForm.value | json }}
   </div>
