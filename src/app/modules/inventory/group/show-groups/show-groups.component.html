@@ -4,49 +4,77 @@
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" #input />
     </mat-form-field>
-    <button type="button" class="py-1.5 px-2.5 mb-3 btn" routerLink="/add-group">
+    <button
+      type="button"
+      class="py-1.5 px-2.5 mb-3 btn"
+      routerLink="/add-group"
+    >
       Add Group
     </button>
   </div>
 
-  <div class="w-full overflow-auto rounded-md max-h-96 border border-zinc-200 dark:border-zinc-600">
+  <div
+    class="w-full overflow-auto rounded-md max-h-96 border border-zinc-200 dark:border-zinc-600"
+  >
     <table mat-table [dataSource]="dataSource" matSort>
-
       <!-- Column: ID -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+        <td mat-cell *matCellDef="let row; let  i = index">{{ i + 1 }}</td>
       </ng-container>
 
       <!-- Column: groups -->
-      <ng-container matColumnDef="groups">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>groups</th>
-        <td mat-cell *matCellDef="let row">{{ row.groups }}</td>
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>code</th>
+        <td mat-cell *matCellDef="let row">{{ row.code }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>name</th>
+        <td mat-cell *matCellDef="let row">{{ row.name }}</td>
       </ng-container>
 
       <!-- Column: Number of Products -->
-      <ng-container matColumnDef="numberProducts">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Number of Products</th>
-        <td mat-cell *matCellDef="let row">{{ row.numberProducts }}</td>
+      <ng-container matColumnDef="parentName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Parent
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.parentName ?? 'N/A' }}</td>
       </ng-container>
 
       <!-- Column: Actions -->
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let group">
-          <button class="cursor-pointer me-2" title="Edit" (click)="editGroup(group)">
+          <button
+            class="cursor-pointer me-2"
+            title="Edit"
+            (click)="editGroup(group)"
+          >
             ✏️
           </button>
-          <button class="cursor-pointer me-2" title="View Details" (click)="viewDetails(group)">
+          <button
+            class="cursor-pointer me-2"
+            title="View Details"
+            (click)="viewDetails(group)"
+          >
             👁️
           </button>
-          <button class="cursor-pointer" title="Delete" (click)="deleteGroup(group)">
+          <button
+            class="cursor-pointer"
+            title="Delete"
+            (click)="deleteGroup(group)"
+          >
             🗑️
           </button>
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="sticky top-0"></tr>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns"
+        class="sticky top-0"
+      ></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
       <!-- No Data Message -->
@@ -55,9 +83,12 @@
           No data matching the filter "{{ input.value }}"
         </td>
       </tr>
-
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" class="sticky bottom-0" aria-label="Select page of groups"></mat-paginator>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      class="sticky bottom-0"
+      aria-label="Select page of groups"
+    ></mat-paginator>
   </div>
 </cust-card>

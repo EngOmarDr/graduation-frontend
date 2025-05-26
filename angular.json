@@ -25,8 +25,13 @@
               },
               "src/assets"
             ],
-            "styles": ["src/styles.css", "src/theme.scss"],
-            "scripts": []
+            "styles": [
+              "src/styles.css",
+              "src/theme.scss",
+              "node_modules/cookieconsent/build/cookieconsent.min.css",
+              "node_modules/ngx-toastr/toastr.css"
+            ],
+            "scripts": ["node_modules/cookieconsent/build/cookieconsent.min.js"]
           },
           "configurations": {
             "production": {

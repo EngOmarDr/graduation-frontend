@@ -25,6 +25,7 @@
     "ngx-barcode6": "^1.0.26",
     "ngx-cookie-service": "^19.1.2",
     "ngx-cookieconsent": "^8.0.0",
+    "ngx-toastr": "^19.0.0",
     "postcss": "^8.5.1",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.0.0",

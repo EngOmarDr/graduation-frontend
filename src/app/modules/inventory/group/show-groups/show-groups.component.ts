@@ -1,20 +1,15 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CardComponent } from '../../../shared/components/card-form.component';
-
-export interface Groups {
-  id: string;
-  groups: string;
-  numberProducts: number;
-}
-
-const GROUPS: string[] = ['Electronics', 'Clothing', 'Books', 'Furniture', 'Toys'];
+import { GroupService } from '../services/group.service';
+import { Observable } from 'rxjs';
+import { Group } from '../models/group';
 
 @Component({
   selector: 'app-show-groups',
@@ -26,13 +21,16 @@ const GROUPS: string[] = ['Electronics', 'Clothing', 'Books', 'Furniture', 'Toys
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    CardComponent
+    CardComponent,
   ],
   templateUrl: './show-groups.component.html',
 })
-export class ShowGroupsComponent {
-  displayedColumns: string[] = ['id', 'groups', 'numberProducts', 'action'];
-  dataSource: MatTableDataSource<Groups>;
+export class ShowGroupsComponent implements OnInit {
+  private service = inject(GroupService);
+  private router = inject(Router);
+
+  displayedColumns: string[] = ['#', 'code', 'name', 'parentName', 'action'];
+  dataSource: MatTableDataSource<Group> = new MatTableDataSource();
   form = new FormGroup({
     filter: new FormControl(''),
   });
@@ -40,9 +38,12 @@ export class ShowGroupsComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {
-    const groups = Array.from({ length: 20 }, (_, k) => createNewGroup(k + 1));
-    this.dataSource = new MatTableDataSource(groups);
+  // groups$!: Observable<Group[]>;
+
+  ngOnInit(): void {
+    this.service.getGroups().subscribe((next) => {
+      this.dataSource.data = next;
+    });
   }
 
   ngAfterViewInit() {
@@ -59,26 +60,26 @@ export class ShowGroupsComponent {
     }
   }
 
-  editGroup(group: Groups) {
-    alert(`Edit Group: ${group.id}`);
+  editGroup(group: Group) {
+    this.router.navigate(['/update-group', group.id], {
+      state: { groupData: group },
+    });
   }
 
-  deleteGroup(group: Groups) {
-    alert(`Delete Group: ${group.id}`);
-    this.dataSource.data = this.dataSource.data.filter((g) => g.id !== group.id);
+  deleteGroup(group: Group) {
+    alert(`are you sure you want to delete the ${group.name}`);
+    this.service.deleteGroup(group.id!).subscribe(next=>{
+
+      this.dataSource.data = this.dataSource.data.filter(
+        (g) => g.id !== group.id
+      );
+    },err=>{
+      console.log(err);
+
+    });
   }
 
-  viewDetails(group: Groups) {
+  viewDetails(group: Group) {
     alert(`View Details for Group: ${group.id}`);
   }
-}
-
-/** إنشاء بيانات تجريبية لمجموعة */
-function createNewGroup(id: number): Groups {
-  const group = GROUPS[Math.floor(Math.random() * GROUPS.length)];
-  return {
-    id: id.toString(),
-    groups: group,
-    numberProducts: Math.floor(Math.random() * 100),
-  };
 }

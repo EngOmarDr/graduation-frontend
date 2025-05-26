@@ -9,6 +9,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
 import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
 import { CardComponent } from '../../../shared/components/card-form.component';
+import { GroupService } from '../services/group.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-group',
@@ -18,12 +20,14 @@ import { CardComponent } from '../../../shared/components/card-form.component';
     CustomFieldComponent,
     ValidationMessageComponent,
     MatAutocompleteModule,
-    CardComponent
-],
+    CardComponent,
+  ],
   templateUrl: './add-group.component.html',
 })
 export class AddGroupComponent {
   private fb = inject(NonNullableFormBuilder);
+  private service = inject(GroupService);
+  private router = inject(Router);
 
   results = [];
 
@@ -32,11 +36,23 @@ export class AddGroupComponent {
       validators: [Validators.required],
     }),
     name: ['', [Validators.required]],
-    primaryGroup: ['', { validators: [], disabled: true }],
+    parentId: [undefined, { validators: [], disabled: true }],
     note: [''],
   });
 
   onSubmit() {
-    alert(this.form.valid);
+    if (this.form.valid) {
+      this.service.createGroup(this.form.getRawValue()).subscribe({
+        next: (res) => {
+          console.log('Currency created:', res);
+          this.router.navigate(['/groups']);
+        },
+        error: (err) => {
+          console.error('Error:', err);
+        },
+      });
+    } else {
+      this.form.markAllAsTouched();
+    }
   }
 }

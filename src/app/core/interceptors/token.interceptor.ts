@@ -1,11 +1,14 @@
-import type { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import type {
+  HttpErrorResponse,
+  HttpInterceptorFn,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { CookieKeys } from '../constants/cookie-keys';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
+export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const cookieService = inject(CookieService);
   const router = inject(Router);
 

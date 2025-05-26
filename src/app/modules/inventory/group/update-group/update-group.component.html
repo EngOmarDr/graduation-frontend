@@ -1,13 +1,13 @@
-<cust-card title="Add Group">
+<cust-card title="Update Group">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
-      [control]="form.controls.code"
+      [control]="form.get('code')!"
       inputId="code"
       label="Code"
     />
 
     <cust-form-field
-      [control]="form.controls.name"
+      [control]="form.get('name')!"
       inputId="name"
       label="Name"
     />
@@ -17,7 +17,7 @@
         for="primary_Group"
         class="cust-input-label"
         [ngClass]="{
-          'cust-label-disable': form.controls.parentId.disabled
+          'cust-label-disable': form.get('parentId')?.disabled
         }"
       >
         Primary Group
@@ -38,7 +38,7 @@
           }
         </mat-autocomplete>
         <app-validation-message
-          [control]="form.controls.parentId"
+          [control]="form.get('parentId')!"
           [customMessage]="null"
           name="primary Group"
         />
@@ -46,7 +46,7 @@
     </div>
 
     <cust-form-field
-      [control]="form.controls.note"
+      [control]="form.get('notes')!"
       inputId="note"
       label="Note"
       class="focus:ring-4 focus:ring-primary"
@@ -54,7 +54,7 @@
 
     <div class="col-span-full grid grid-cols-4">
       <button type="submit" class="btn" [disabled]="!form.valid">
-        Add
+        Update
       </button>
     </div>
   </form>

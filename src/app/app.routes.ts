@@ -18,6 +18,7 @@ import { AddWarehouseComponent } from './modules/inventory/warehouse/add-warehou
 import { ShowPurchasesComponent } from './modules/inventory/purchases/show-purchases/show-purchases.component';
 import { ShowSalesComponent } from './modules/inventory/sales/show-sales/show-sales.component';
 import { BarcodePrintComponent } from './modules/inventory/barcode/barcode-print.component';
+import { UpdateGroupComponent } from './modules/inventory/group/update-group/update-group.component';
 
 export const routes: Routes = [
   {
@@ -44,6 +45,10 @@ export const routes: Routes = [
           {
             path: 'add-group',
             component: AddGroupComponent,
+          },
+          {
+            path: 'update-group/:id',
+            component: UpdateGroupComponent,
           },
         ],
       },
