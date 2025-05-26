@@ -15,6 +15,12 @@
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@shared/*": [
+        "app/modules/shared/*"
+      ]
+    },
     "target": "ES2022",
     "module": "ES2022"
   },

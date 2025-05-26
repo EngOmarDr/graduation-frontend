@@ -9,8 +9,6 @@ import { AddGroupComponent } from './modules/inventory/group/add-group/add-group
 import { AddBranchComponent } from './modules/branch/add-branch/add-branch.component';
 import { ShowUnitsComponent } from './modules/inventory/unit/show-units/show-units.component';
 import { AddUnitComponent } from './modules/inventory/unit/add-unit/add-unit.component';
-import { ShowPricesComponent } from './modules/inventory/price/show-prices/show-prices.component';
-import { AddPriceComponent } from './modules/inventory/price/add-price/add-price.component';
 import { ShowProductsComponent } from './modules/inventory/product/show-products/show-products.component';
 import { AddProductComponent } from './modules/inventory/product/add-product/add-product.component';
 import { ShowWarehousesComponent } from './modules/inventory/warehouse/show-warehouses/show-warehouses.component';
@@ -19,6 +17,8 @@ import { ShowPurchasesComponent } from './modules/inventory/purchases/show-purch
 import { ShowSalesComponent } from './modules/inventory/sales/show-sales/show-sales.component';
 import { BarcodePrintComponent } from './modules/inventory/barcode/barcode-print.component';
 import { UpdateGroupComponent } from './modules/inventory/group/update-group/update-group.component';
+import { AddPriceComponent } from './modules/inventory/price/pages/add-price/add-price.component';
+import { ShowPricesComponent } from './modules/inventory/price/pages/show-prices/show-prices.component';
 
 export const routes: Routes = [
   {
@@ -84,6 +84,10 @@ export const routes: Routes = [
           },
           {
             path: 'add-price',
+            component: AddPriceComponent,
+          },
+          {
+            path: 'update-price/:id',
             component: AddPriceComponent,
           },
         ],

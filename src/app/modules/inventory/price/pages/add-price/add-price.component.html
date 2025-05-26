@@ -1,4 +1,4 @@
-<cust-card title="Add Price">
+<cust-card title="{{ isUpdate ? 'Update Price' : 'Add Price' }}">
   <form [formGroup]="priceForm" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="priceForm.controls.name"
@@ -8,11 +8,8 @@
 
     <div class="col-span-full grid grid-cols-4">
       <button type="submit" class="btn" [disabled]="priceForm.invalid">
-        Add
+        {{ isUpdate ? "Update" : "Add" }}
       </button>
     </div>
   </form>
-  <div>
-    {{ priceForm.value | json }}
-  </div>
 </cust-card>

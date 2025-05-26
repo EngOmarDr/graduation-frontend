@@ -139,6 +139,11 @@ export class SidebarComponent {
           routerLink: '/warehouses',
         },
         {
+          name: 'price',
+          icon: 'icon',
+          routerLink: '/prices',
+        },
+        {
           name: 'Print Barcode',
           icon: 'icon',
           routerLink: '/printBarcode',
