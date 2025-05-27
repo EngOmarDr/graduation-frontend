@@ -19,6 +19,7 @@ import { BarcodePrintComponent } from './modules/inventory/barcode/barcode-print
 import { UpdateGroupComponent } from './modules/inventory/group/update-group/update-group.component';
 import { AddPriceComponent } from './modules/inventory/price/pages/add-price/add-price.component';
 import { ShowPricesComponent } from './modules/inventory/price/pages/show-prices/show-prices.component';
+import {UpdateUnitComponent} from './modules/inventory/unit/update-unit/update-unit.component';
 
 export const routes: Routes = [
   {
@@ -72,6 +73,10 @@ export const routes: Routes = [
             path: 'add-unit',
             component: AddUnitComponent,
           },
+          {
+            path: 'edit-unit/:id',
+            component: UpdateUnitComponent,
+          }
         ],
       },
       {
