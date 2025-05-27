@@ -16,6 +16,8 @@ import { ValidationMessageComponent } from '../../../shared/components/validatio
 import { UnitService } from '../services/unit.service';
 import { Unit } from '../models/unit.model';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { UnitItemService } from '../services/unit-item.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-add-group',
@@ -36,11 +38,12 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class AddUnitComponent {
 
   constructor() {
-  this.addRow(); // حتى يظهر صف واحد تلقائيًا عند تحميل الصفحة
+  this.addRow();
 }
   private fb = inject(NonNullableFormBuilder);
   private unitService = inject(UnitService);
   private snackBar = inject(MatSnackBar);
+  private unitItemService = inject(UnitItemService);
 
 displayedColumns: string[] = ['#', 'name', 'fact', 'isDef', 'actions'];
   dataSource = new MatTableDataSource<AbstractControl>([]);
@@ -61,7 +64,7 @@ displayedColumns: string[] = ['#', 'name', 'fact', 'isDef', 'actions'];
         Validators.required,
         Validators.min(1),
       ]),
-      isDef: [this.units.length === 0, [Validators.required]],
+      isDef: [this.units.length === 0],
     });
   }
 
@@ -93,42 +96,60 @@ displayedColumns: string[] = ['#', 'name', 'fact', 'isDef', 'actions'];
     });
   }
 
-  onSubmit(): void {
-    this.form.markAllAsTouched();
-
-    if (this.form.invalid) {
+onSubmit(): void {
   this.form.markAllAsTouched();
-  this.snackBar.open('Please fill out all required fields.', 'Close', {
-    duration: 3000,
-  });
-  return;
-}
 
-    const unit: Unit = {
-      name: this.form.value.unitName!,
-      unitItems: this.units.getRawValue().map((item: any) => ({
-          name: item.name,
-          fact: item.fact,
-          isDef: Boolean(item.isDef),
-        }))
-
-    };
-
-    this.unitService.createUnit(unit).subscribe({
-      next: (res) => {
-        this.snackBar.open('Unit created successfully!', 'Close', {
-          duration: 3000,
-        });
-        this.form.reset();
-        this.units.clear();
-        this.addRow(); // reset with default row
-      },
-      error: (err) => {
-        console.error(err);
-        this.snackBar.open('Error creating unit.', 'Close', {
-          duration: 3000,
-        });
-      },
+  if (this.form.invalid) {
+    this.snackBar.open('Please fill out all required fields.', 'Close', {
+      duration: 3000,
     });
+    return;
   }
+
+  const unit: Unit = {
+    name: this.form.value.unitName!,
+    unitItems: [],
+  };
+
+  this.unitService.createUnit(unit).subscribe({
+    next: (createdUnit) => {
+      const unitId = createdUnit.id;
+
+      const unitItems = this.units.getRawValue().map((item: any) => ({
+        name: item.name,
+        fact: item.fact,
+        isDef: Boolean(item.isDef),
+        unitId: unitId,
+      }));
+
+      const requests = unitItems.map((item) =>
+        this.unitItemService.createUnitItem(item)
+      );
+
+
+      forkJoin(requests).subscribe({
+        next: () => {
+          this.snackBar.open('Unit and its items created successfully!', 'Close', {
+            duration: 3000,
+          });
+          this.form.reset();
+          this.units.clear();
+          this.addRow();
+        },
+        error: (err) => {
+          console.error(err);
+          this.snackBar.open('Error creating unit items.', 'Close', {
+            duration: 3000,
+          });
+        },
+      });
+    },
+    error: (err) => {
+      console.error(err);
+      this.snackBar.open('Error creating unit.', 'Close', {
+        duration: 3000,
+      });
+    },
+  });
+}
 }

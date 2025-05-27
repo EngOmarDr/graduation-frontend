@@ -69,10 +69,6 @@
           >
             <input
               type="checkbox"
-              [checked]="
-                itemGroup.get('isDef')?.value === 'true' ||
-                itemGroup.get('isDef')?.value === true
-              "
               formControlName="isDef"
               (change)="changeIsDef(i)"
             />

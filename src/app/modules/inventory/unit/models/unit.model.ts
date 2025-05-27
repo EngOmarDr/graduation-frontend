@@ -1,8 +1,5 @@
-export interface UnitItem {
-  name: string;
-  fact: number;
-  isDef: boolean;
-}
+import { UnitItem } from "./unit-item.model";
+
 
 export interface Unit {
   id?: number;

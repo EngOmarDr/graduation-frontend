@@ -2,8 +2,6 @@
   <h4 class="text-gray-700 pb-7 text-2xl font-bold dark:text-white">
     Update Unit
   </h4>
-
-  <!-- نتحقق من وجود النموذج قبل عرضه -->
   <form
     *ngIf="editUnitForm"
     [formGroup]="editUnitForm"
@@ -22,8 +20,6 @@
       </button>
     </div>
   </form>
-
-  <!-- عرض البيانات فقط إذا كان النموذج جاهز -->
   <div *ngIf="editUnitForm">
     {{ editUnitForm.value | json }}
   </div>

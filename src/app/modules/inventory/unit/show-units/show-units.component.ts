@@ -10,6 +10,10 @@ import { CardComponent } from '../../../shared/components/card-form.component';
 import { Unit } from '../models/unit.model';
 import { UnitService } from '../services/unit.service';
 import { Router } from '@angular/router';
+import { UnitItemService } from '../services/unit-item.service';
+import { UnitItem } from '../models/unit-item.model';
+import { MatDialog } from '@angular/material/dialog';
+import { UnitDetailsDialogComponent } from '../unit-details-dialog/unit-details-dialog.component';
 
 
 @Component({
@@ -38,7 +42,10 @@ export class ShowUnitsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private unitService: UnitService, private router: Router) {}
+  selectedUnitItems: UnitItem[] = [];
+  selectedUnitName: string = '';
+
+  constructor(private unitService: UnitService,private unitItemService: UnitItemService,  private dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUnits();
@@ -84,5 +91,19 @@ export class ShowUnitsComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
+
+  showUnit(unit: Unit): void {
+  this.unitService.getUnitById(unit.id!).subscribe({
+    next: (fetchedUnit) => {
+      this.dialog.open(UnitDetailsDialogComponent, {
+        width: '500px',
+        data: fetchedUnit
+      });
+    },
+    error: (error) => {
+      console.error('Failed to fetch unit:', error);
+    }
+  });
   }
 }
