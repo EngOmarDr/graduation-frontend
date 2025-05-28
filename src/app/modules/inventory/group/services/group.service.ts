@@ -9,7 +9,7 @@ import { GroupTree } from '../models/group-tree';
   providedIn: 'root',
 })
 export class GroupService {
-  private apiUrl = `${environment.apiUrl}/categories`;
+  private apiUrl = `${environment.apiUrl}/groups`;
   private http = inject(HttpClient);
   constructor() {}
 

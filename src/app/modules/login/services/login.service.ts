@@ -12,11 +12,15 @@ export class LoginService {
   private http = inject(HttpClient);
   private cookieService = inject(CookieService);
 
-  login(email: string, password: string): Observable<any> {
-    const body = { email, password };
-    return this.http.post<{token:string}>(`${environment.apiUrl}/auth/login`, body).pipe(
-      tap(response => {
-        this.cookieService.set(CookieKeys.TOKEN,response.token);
-      }));
+  login(
+    data: Partial<{ username: string; password: string }>
+  ): Observable<any> {
+    return this.http
+      .post<{ token: string }>(`${environment.apiUrl}/auth/login`, data)
+      .pipe(
+        tap((response) => {
+          this.cookieService.set(CookieKeys.TOKEN, response.token);
+        })
+      );
   }
 }

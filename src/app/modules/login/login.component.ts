@@ -28,7 +28,7 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    username: ['', [Validators.required]],
     password: ['', Validators.required],
   });
 
@@ -36,21 +36,14 @@ export class LoginComponent {
 
   login() {
     if (this.form.valid) {
-      console.log(this.form.value);
-
-      this.loginService
-        .login(
-          this.form.controls.email.value,
-          this.form.controls.password.value
-        )
-        .subscribe({
-          next: (response) => {
-            this.router.navigate(['/products']);
-          },
-          error: (err) => {
-            console.error('Login failed:', err);
-          },
-        });
+      this.loginService.login(this.form.value).subscribe({
+        next: () => {
+          this.router.navigate(['/']);
+        },
+        error: (err) => {
+          console.error('Login failed:', err);
+        },
+      });
     } else {
       this.form.markAllAsTouched();
     }
