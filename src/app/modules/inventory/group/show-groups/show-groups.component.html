@@ -1,4 +1,5 @@
 <cust-card title="Groups">
+  <input type="button" name="change to tree" (click)="changeView()" value="change"/>
   <div class="flex flex-wrap-reverse justify-between items-center">
     <mat-form-field>
       <mat-label>Filter</mat-label>
@@ -12,7 +13,9 @@
       Add Group
     </button>
   </div>
-
+  @if (viewTree()) {
+  <app-tree-view [treeData]="treeData" (onDelete)="deleteGroup($event)" (onUpdate)="editGroup($event)" />
+  }@else {
   <div
     class="w-full overflow-auto rounded-md max-h-96 border border-zinc-200 dark:border-zinc-600"
   >
@@ -20,7 +23,7 @@
       <!-- Column: ID -->
       <ng-container matColumnDef="#">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
-        <td mat-cell *matCellDef="let row; let  i = index">{{ i + 1 }}</td>
+        <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
       </ng-container>
 
       <!-- Column: groups -->
@@ -36,10 +39,8 @@
 
       <!-- Column: Number of Products -->
       <ng-container matColumnDef="parentName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          Parent
-        </th>
-        <td mat-cell *matCellDef="let row">{{ row.parentName ?? 'N/A' }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Parent</th>
+        <td mat-cell *matCellDef="let row">{{ row.parentName ?? "N/A" }}</td>
       </ng-container>
 
       <!-- Column: Actions -->
@@ -91,4 +92,6 @@
       aria-label="Select page of groups"
     ></mat-paginator>
   </div>
+
+  }
 </cust-card>

@@ -7,6 +7,7 @@ import { ShowAccountsComponent } from './account/show-accounts/show-accounts.com
 // import { AddJournalComponent } from './journal/add-journal/add-journal.component';
 // import { AddPaymentVoucherComponent } from './payment-voucher/add/add-payment-voucher.component';
 import { authGuard } from '../../core/guards/auth.guard';
+import { AddPaymentVoucherComponent } from './payment-voucher/add/add-payment-voucher.component';
 
 export const accountingRoutes: Routes = [
   {
@@ -43,9 +44,9 @@ export const accountingRoutes: Routes = [
   //   canActivate: [authGuard],
   // },
 
-  // {
-  //   path: 'paymentVoucher',
-  //   canActivate: [authGuard],
-  //   // component: AddPaymentVoucherComponent,
-  // },
+  {
+    path: 'paymentVoucher',
+    canActivate: [authGuard],
+    component: AddPaymentVoucherComponent,
+  },
 ];
