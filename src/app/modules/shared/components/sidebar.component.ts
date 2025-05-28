@@ -6,95 +6,124 @@ import { RouterLink } from '@angular/router';
   selector: 'app-sidebar',
   imports: [CommonModule, RouterLink],
   template: `
-    <!-- overlay -->
-    <div
-      class="fixed inset-0 z-30 transition-opacity bg-black opacity-50"
-      *ngIf="isSidebarOpen"
-      (click)="closeSidebar()"
-    ></div>
+<!-- overlay -->
+<div
+  class="fixed inset-0 z-30 transition-opacity bg-black bg-opacity-50 lg:hidden"
+  *ngIf="isSidebarOpen"
+  (click)="closeSidebar()"
+></div>
 
-    <!-- sidebar -->
-    <aside
-      class="fixed start-0 top-0 lg:sticky z-40 h-svh bg-card-surface shadow-primary dark:shadow-dark-primary dark:bg-dark-card-surface w-64 overflow-y-auto transition-transform duration-300 lg:translate-x-0"
-      [ngClass]="{
-        '-translate-x-full ease-in': !isSidebarOpen,
-        'translate-x-0 ease-out': isSidebarOpen
-      }"
-      style="overflow: -moz-hidden-unscrollable;
-            scrollbar-width: none;"
-    >
-      <div class="flex items-center justify-center h-16 ">
-        <h2 class="text-xl font-bold">Logo</h2>
-      </div>
-      <nav class="mb-3">
+<!-- sidebar -->
+<aside
+  class="fixed start-0 top-0 z-40 h-svh w-64 bg-white dark:bg-dark-card-surface shadow-lg transition-transform duration-300 lg:sticky lg:translate-x-0 overflow-y-auto"
+  [ngClass]="{
+    '-translate-x-full ease-in': !isSidebarOpen,
+    'translate-x-0 ease-out': isSidebarOpen,
+    'w-64': !isCollapseded, 'w-20': isCollapseded
+  }"
+>
+
+<button (click)="toggleCollapse()" class="p-2">
+  <svg class="w-6 h-6 text-gray-700 dark:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path
+      *ngIf="isCollapseded; else expandedIcon"
+      d="M9 5l7 7-7 7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <ng-template #expandedIcon>
+      <path
+        d="M15 19l-7-7 7-7"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </ng-template>
+  </svg>
+</button>
+
+
+  <!-- Logo / Branding -->
+  <div class="flex items-center justify-center h-16 border-b border-gray-200 dark:border-gray-700">
+    <h2 class="text-2xl font-bold text-primary dark:text-white">🧾 STC</h2>
+  </div>
+
+  <nav class="p-4 space-y-2">
+    <!-- Navigation Items -->
+    <ng-container *ngFor="let item of routes">
+      <div *ngIf="item.children; else noChildren">
+        <!-- Parent Item -->
+        <button
+          (click)="item.fun()"
+          class="flex items-center justify-between w-full px-3 py-2 rounded-lg text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+        >
+          <span class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 6H20M4 12H20M4 18H11" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ item.name }}
+          </span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4 transition-transform"
+            [ngClass]="{ 'rotate-180': item.attr() }"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+          </svg>
+        </button>
+
+        <!-- Sub Items -->
         <ul
-          class="mb-3 ms-3.5 transition-[max-height] "
+          class="mt-1 pl-4 overflow-hidden space-y-1 transition-all"
           [ngClass]="{
-            'max-h-0': isCollapsed,
-            '': !isCollapsed
+            'max-h-0': !item.attr(),
+            'max-h-96': item.attr()
           }"
         >
-          @for (item of routes; track item.name) { @if (item.children) {
-          <li>
-            <div>
-              <button
-                (click)="item.fun()"
-                type="button"
-                class="flex items-center justify-between px-4 py-2 w-full cursor-pointer hover:bg-gray-200"
-              >
-                <span>{{ item.name }}</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 transition-transform"
-                  [ngClass]="{ 'rotate-180': item.attr() }"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-
-              <!-- Sub-Items -->
-              <ul
-                class="overflow-hidden ms-3.5 transition-[max-height]"
-                [ngClass]="{
-                  'max-h-0': !item.attr(),
-                  'max-h-[500px]': item.attr()
-                }"
-              >
-                @for(subItem of item.children; track subItem.name){
-                <li>
-                  <a
-                    routerLink="{{ subItem.routerLink }}"
-                    class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
-                    >{{ subItem.name }}</a
-                  >
-                </li>
-
-                }
-              </ul>
-            </div>
-          </li>
-          }@else{
-          <li>
+          <li *ngFor="let subItem of item.children">
             <a
-              routerLink="{{ item.routerLink }}"
-              class="block px-4 py-2 hover:bg-gray-200 transition-colors cursor-pointer"
-              >{{ item.name }}</a
+              routerLink="{{ subItem.routerLink }}"
+              class="block px-3 py-1 rounded-md text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+              routerLinkActive="bg-primary text-white dark:bg-primary"
+              >{{ subItem.name }}</a
             >
           </li>
-          } }
-
-          <span aria-hidden="true" class="block mb-3 pb-3"> </span>
         </ul>
-      </nav>
-    </aside>
+      </div>
+
+      <!-- Items without children -->
+      <ng-template #noChildren>
+        <a
+          routerLink="{{ item.routerLink }}"
+          class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          routerLinkActive="bg-primary text-white dark:bg-primary"
+        >
+          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M4 6H20M4 12H20M4 18H11" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          {{ item.name }}
+        </a>
+      </ng-template>
+    </ng-container>
+
+    <!-- Divider -->
+    <hr class="my-4 border-gray-300 dark:border-gray-600" />
+
+    <!-- Settings -->
+    <a
+      routerLink="/settings"
+      class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+      routerLinkActive="bg-primary text-white dark:bg-primary"
+    >
+      <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M12 8V4m0 16v-4m8-4h4m-16 0H4m12.36-7.64l2.83-2.83m-11.31 0L4.22 4.22m0 15.56l2.83 2.83m11.31 0l2.83-2.83" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      Settings
+    </a>
+  </nav>
+</aside>
   `,
 })
 export class SidebarComponent {
@@ -105,6 +134,12 @@ export class SidebarComponent {
   isProductsExpanded = signal(false);
   isPurchasesExpanded = signal(false);
   isSalesExpanded = signal(false);
+
+  isCollapseded = false;
+
+toggleCollapse() {
+  this.isCollapseded = !this.isCollapseded;
+}
 
   routes = [
     {

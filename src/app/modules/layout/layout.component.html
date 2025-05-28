@@ -1,6 +1,4 @@
-<div
-  class="flex min-h-svh text-black dark:text-white bg-surface dark:bg-dark-surface"
->
+<div class="flex min-h-screen text-neutral-900 dark:text-white bg-gradient-to-br from-[#f8f9fb] to-[#e3e7ed] dark:from-[#1f2937] dark:to-[#111827]">
   <!-- Sidebar -->
   <app-sidebar />
 
@@ -9,12 +7,10 @@
 
   <!-- Main Content -->
   <div class="flex flex-col flex-1 overflow-hidden">
-    <!-- header -->
-    <header
-      class="flex items-center justify-between h-16 px-6 py-4 border-b-4 border-primary"
-    >
+    <!-- Header -->
+    <header class="flex items-center justify-between h-16 px-6 py-4 shadow-md border-b border-primary/50 bg-white dark:bg-dark-card-surface backdrop-blur-md z-10">
       <button
-        class="focus:outline-none lg:hidden"
+        class="focus:outline-none lg:hidden text-primary dark:text-white"
         (click)="sidebarComponent.toggleSidebar()"
       >
         <svg
@@ -29,20 +25,36 @@
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-          ></path>
+          />
         </svg>
       </button>
-      <!-- <input type="color" [value]="primaryColor" class="rounded-full inline w-7 h-7 outline-0" (change)="changePrimaryColor($event)" /> -->
-      <!-- <app-toggle-theme /> -->
-      <div class="relative mx-4 min-h-5 lg:mx-0"></div>
-      <img
-        src="assets/icons/settings-gray.png"
-        width="20"
-        alt="settings"
-        (click)="SettingbarComponent.showSetting()"
-      />
-    </header>
-    <router-outlet></router-outlet>
-  </div>
 
+      <!-- Placeholder / Search / Branding -->
+      <div class="relative mx-4 flex-1 flex items-center justify-center lg:justify-start">
+        <h1 class="text-xl font-semibold text-gray-700 dark:text-white tracking-wide">
+          Syrian Trading Company
+        </h1>
+      </div>
+
+      <!-- Settings Icon -->
+      <div class="flex items-center space-x-4">
+        <button
+          class="rounded-full p-1 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+          (click)="SettingbarComponent.showSetting()"
+        >
+          <img
+            src="assets/icons/settings-gray.png"
+            width="24"
+            alt="settings"
+            class="dark:invert"
+          />
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Routing Content -->
+    <div class="flex-1 overflow-auto p-6 bg-surface dark:bg-dark-surface">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
