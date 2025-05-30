@@ -15,6 +15,7 @@ import { CardComponent } from '../../../shared/components/card-form.component';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
 import { CustomSelectComponent } from '../../../shared/components/custom-select.component';
 import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
+import {CustomTableComponent} from '../../../shared/components/cust-table.component'
 
 @Component({
   selector: 'app-payment-voucher',
@@ -27,6 +28,7 @@ import { ValidationMessageComponent } from '../../../shared/components/validatio
     MatAutocompleteModule,
     ValidationMessageComponent,
     FormsModule,
+    CustomTableComponent
   ],
   standalone: true,
   templateUrl: './add-payment-voucher.component.html',
@@ -135,5 +137,15 @@ export class AddPaymentVoucherComponent implements OnInit {
       key: e.id,
       value: e.name,
     }));
+  }
+
+columns = [
+  { key: 'debit', label: 'Debit', type: 'number' },
+  { key: 'account', label: 'Account', type: 'text' },
+  { key: 'notes', label: 'Notes', type: 'text' },
+];
+
+  onRowRemoved(index: number) {
+    this.removeRow(index);
   }
 }

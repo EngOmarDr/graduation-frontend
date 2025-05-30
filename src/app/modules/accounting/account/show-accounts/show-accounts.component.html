@@ -16,68 +16,12 @@
   <div
     class="w-full overflow-auto rounded-md max-h-96 border border-zinc-200 dark:border-zinc-600"
   >
-    <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>name</th>
-        <td mat-cell *matCellDef="let row">{{ row.name }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="primaryAccount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Main Account</th>
-        <td mat-cell *matCellDef="let row">{{ row.primaryAccount }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>type</th>
-        <td mat-cell *matCellDef="let row">{{ row.type }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let group">
-          <button
-            class="cursor-pointer me-2"
-            title="Edit"
-            (click)="editGroup(group)"
-          >
-            ✏️
-          </button>
-          <button
-            class="cursor-pointer me-2"
-            title="View Details"
-            (click)="viewDetails(group)"
-          >
-            👁️
-          </button>
-          <button
-            class="cursor-pointer"
-            title="Delete"
-            (click)="deleteGroup(group)"
-          >
-            🗑️
-          </button>
-        </td>
-      </ng-container>
-
-      <tr
-        mat-header-row
-        *matHeaderRowDef="displayedColumns"
-        class="sticky top-0"
-      ></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-      <!-- No Data Message -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell text-center py-2" colspan="99">
-          No data
-        </td>
-      </tr>
-    </table>
+  <app-custom-table
+    [tableFormArray]="tableFormArray"
+    [columns]="columns"
+    (rowRemoved)="onRowRemoved($event)"
+  >
+  </app-custom-table>
 
     <mat-paginator
       [pageSizeOptions]="[5, 10, 25, 100]"

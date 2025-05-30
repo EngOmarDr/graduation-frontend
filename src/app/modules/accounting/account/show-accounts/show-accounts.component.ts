@@ -13,6 +13,8 @@ import { AccountService } from '../service/account-service.service';
 import { Account } from '../service/account';
 import { Observable } from 'rxjs';
 import { CardComponent } from '../../../shared/components/card-form.component';
+import { FormArray, NonNullableFormBuilder } from '@angular/forms';
+import {CustomTableComponent} from '../../../shared/components/cust-table.component'
 
 @Component({
   selector: 'app-show-accounts',
@@ -24,6 +26,7 @@ import { CardComponent } from '../../../shared/components/card-form.component';
     MatFormFieldModule,
     MatTableModule,
     RouterModule,
+    CustomTableComponent
   ],
   templateUrl: './show-accounts.component.html',
 })
@@ -37,6 +40,37 @@ export class ShowAccountsComponent {
     'type',
     'action',
   ];
+    private fb = inject(NonNullableFormBuilder);
+      tableFormArray = new FormArray<FormGroup>([]);
+      columns = [
+    { key: 'id', label: 'ID', type: 'number' },
+    { key: 'name', label: 'Name', type: 'text' },
+    { key: 'primaryAccount', label: 'Main Account', type: 'text' },
+    { key: 'type', label: 'Type', type: 'text' },
+  ];
+
+  ngOnInit() {
+    this.accountService.getAccounts().subscribe(accounts => {
+
+      this.tableFormArray.clear();
+
+      accounts.forEach(acc => {
+        const group = this.fb.group({
+          id: [acc.id],
+          name: [acc.name],
+          primaryAccount: [acc.primaryAccount],
+          type: [acc.type],
+        });
+        this.tableFormArray.push(group);
+      });
+    });
+  }
+
+  onRowRemoved(index: number) {
+    this.tableFormArray.removeAt(index);
+  }
+
+
   dataSource: MatTableDataSource<Account> = new MatTableDataSource();
   form = new FormGroup({
     filter: new FormControl(''),
