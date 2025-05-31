@@ -73,7 +73,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 `,
 })
 export class CustomTableComponent {
-  constructor(public fb: NonNullableFormBuilder) {}  // حقن عبر الكونستركتور
+  constructor(public fb: NonNullableFormBuilder) {} 
 
   @Input() tableFormArray!: FormArray<FormGroup>;
   @Input() columns: { key: string; label: string; type?: string }[] = [];
