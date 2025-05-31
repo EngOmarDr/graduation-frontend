@@ -5,7 +5,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { accountingRoutes } from '../../accounting.routes';
+import { accountingRoutes } from '../../../accounting.routes';
 
 describe('ShowAccountsComponent', () => {
   let component: ShowAccountsComponent;

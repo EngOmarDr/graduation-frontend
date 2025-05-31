@@ -62,13 +62,78 @@
       <span class="dark:text-white">Previous balance</span>
       <span class="text-blue-600 font-bold">10,900.00</span>
     </div>
-    <div class="col-span-full overflow-auto">
-      
-    <app-custom-table
-      [tableFormArray]="rows"
-      [columns]="columns"
-      (rowRemoved)="onRowRemoved($event)"
-    ></app-custom-table>
+
+    <div class="col-span-full">
+      <table formArrayName="rows">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>debit</th>
+            <th>account</th>
+            <th>notes</th>
+            <th>actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let row of rows.controls; let i = index"
+            [formGroup]="getRowFormGroup(i)"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>
+              <input formControlName="debit" class="cust-input" type="number" />
+              <app-validation-message
+                [control]="row.get('debit')!"
+                [customMessage]="null"
+                name="debit"
+              />
+            </td>
+            <td>
+              <input formControlName="account" class="cust-input" />
+              <app-validation-message
+                [control]="row.get('account')!"
+                [customMessage]="null"
+                name="account"
+              />
+            </td>
+            <td>
+              <input
+                formControlName="notes"
+                class="cust-input text-balance"
+                style="max-lines: 3; max-height: 200"
+              />
+              <app-validation-message
+                [control]="row.get('notes')!"
+                [customMessage]="null"
+                name="notes"
+              />
+            </td>
+            <td>
+              <button
+                class="cursor-pointer"
+                title="edit"
+                type="button"
+                (click)="removeRow(i)"
+              >
+                <svg
+                  class="fill-red-500"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z"
+                  />
+                  <path
+                    d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
       <div
         class="flex justify-center p-2 border border-t-0 border-gray-600 min-w-full sticky bottom-0 left-0"
       >
