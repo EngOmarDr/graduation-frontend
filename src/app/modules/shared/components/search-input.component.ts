@@ -1,7 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  Observable,
+  Subject,
+  switchMap,
+} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ValidationMessageComponent } from './validation-message.component';
@@ -12,6 +18,7 @@ import { ValidationMessageComponent } from './validation-message.component';
     CommonModule,
     FormsModule,
     NgSelectModule,
+    AsyncPipe,
     ValidationMessageComponent,
   ],
   template: `
@@ -25,7 +32,7 @@ import { ValidationMessageComponent } from './validation-message.component';
         >{{ label }}
       </label>
       <ng-select
-        [items]="filteredOptions"
+        [items]="data | async"
         bindLabel="name"
         placeholder=""
         [typeahead]="searchInput$"
@@ -57,10 +64,11 @@ import { ValidationMessageComponent } from './validation-message.component';
     </div>
   `,
 })
-export class SearchInputComponent {
+export class SearchInputComponent<T> {
   @Input({ required: true }) label!: string;
   @Input({ required: true }) controlName!: string;
   @Input({ required: true }) control!: AbstractControl;
+  @Input({ required: true }) data!: Observable<T[]>;
   @Input() type: string = 'text';
   @Input() readOnly: boolean = false;
   @Input() customMessage: string | null = null;

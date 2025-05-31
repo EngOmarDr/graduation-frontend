@@ -28,7 +28,6 @@ import {CustomTableComponent} from '../../../shared/components/cust-table.compon
     MatAutocompleteModule,
     ValidationMessageComponent,
     FormsModule,
-    CustomTableComponent
   ],
   standalone: true,
   templateUrl: './add-payment-voucher.component.html',

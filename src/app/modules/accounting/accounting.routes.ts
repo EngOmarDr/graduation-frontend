@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
-import { AddAccountComponent } from './account/add-account/add-account.component';
+import { AddAccountComponent } from './account/components/add-account/add-account.component';
 import { AddCurrencyComponent } from './currency/add-currency/add-currency.component';
 import { UpdateCurrencyComponent } from './currency/update-currency/update-currency.component';
 import { ShowCurrenciesComponent } from './currency/show-currencies/show-currencies.component';
-import { ShowAccountsComponent } from './account/show-accounts/show-accounts.component';
+import { ShowAccountsComponent } from './account/components/show-accounts/show-accounts.component';
 // import { AddJournalComponent } from './journal/add-journal/add-journal.component';
 // import { AddPaymentVoucherComponent } from './payment-voucher/add/add-payment-voucher.component';
 import { authGuard } from '../../core/guards/auth.guard';
 import { AddPaymentVoucherComponent } from './payment-voucher/add/add-payment-voucher.component';
+import { UpdateAccountComponent } from './account/components/update-account/update-account.component';
 
 export const accountingRoutes: Routes = [
   {
@@ -20,17 +21,22 @@ export const accountingRoutes: Routes = [
     component: ShowAccountsComponent,
     canActivate: [authGuard],
   },
+  {
+    path: 'update-account/:id',
+    component: UpdateAccountComponent,
+    canActivate: [authGuard],
+  },
 
   {
     path: 'add-currency',
     component: AddCurrencyComponent,
     canActivate: [authGuard],
   },
- {
-  path: 'update-currency/:id',
-  component: UpdateCurrencyComponent,
-  canActivate: [authGuard],
-},
+  {
+    path: 'update-currency/:id',
+    component: UpdateCurrencyComponent,
+    canActivate: [authGuard],
+  },
 
   {
     path: 'currencies',

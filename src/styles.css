@@ -216,7 +216,75 @@
     color: var(--color-gray-900);
     font-size: var(--text-sm) /* 0.875rem = 14px */;
     line-height: var(--tw-leading, var(--text-sm--line-height));
+  }
 
+  /* table */
+  table > thead {
+    background-color: var(--color-gray-100);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .dark table > thead {
+    background-color: var(--color-gray-700);
+  }
+
+  thead > tr > th {
+    padding: calc(var(--spacing) * 2); /* 0.5rem = 8px */
+    text-align: center;
+    position: relative;
+  }
+  thead > tr > th::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-color: var(--color-gray-600);
+    border-width: 1px 0 1px 1px;
+  }
+  thead > tr > th:last-child:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-color: var(--color-gray-600);
+    border-width: 1px 1px 1px 1px;
+  }
+  .dark thead > tr > th::after {
+    border-color: var(--color-gray-400);
+  }
+
+  tbody > tr > td {
+    padding: 10px 5px;
+    text-align: center;
+    vertical-align: middle;
+    text-wrap: balance;
+    position: relative;
+  }
+  tbody > tr > td::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-color: var(--color-gray-600);
+    border-width: 0px 0 1px 1px;
+    pointer-events: none; /* Allow clicks to pass through to the th */
+  }
+  tbody > tr > td:last-child::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-color: var(--color-gray-600);
+    border-width: 0px 1px 1px 1px;
+    pointer-events: none; /* Allow clicks to pass through to the th */
+  }
+  .dark tbody > tr > td::after {
+    border-color: var(--color-gray-400);
+  }
+
+  table .cust-input {
+    border-radius: 0;
+  }
+
+  tbody > tr > td:has(.cust-input) {
+    vertical-align: top;
   }
 }
 

@@ -23,7 +23,7 @@ import { AbstractControl, FormsModule } from '@angular/forms';
   `,
 })
 export class ValidationMessageComponent {
-  @Input() control!: AbstractControl;
-  @Input() name!: string;
+  @Input({ required: true }) control!: AbstractControl;
+  @Input({ required: true }) name!: string;
   @Input() customMessage: string | null = null;
 }
