@@ -50,22 +50,29 @@ export const routes: Routes = [
         ],
       },
       {
-        path: 'branches',
+        path: '',
         canActivate: [authGuard],
         children: [
           {
-            path: '',
+            path: 'branches',
             loadComponent: () =>
               import(
-                '../app/modules/branch/show-branches/show-branches.component'
+                './modules/branch/components/show-branches/show-branches.component'
               ).then((m) => m.ShowBranchesComponent),
           },
           {
             path: 'add-branch',
             loadComponent: () =>
-              import('./modules/branch/add-branch/add-branch.component').then(
-                (m) => m.AddBranchComponent
-              ),
+              import(
+                './modules/branch/components/add-branch/add-branch.component'
+              ).then((m) => m.AddBranchComponent),
+          },
+          {
+            path: 'update-branch/:id',
+            loadComponent: () =>
+              import(
+                './modules/branch/components/update-branch/update-branch.component'
+              ).then((m) => m.UpdateBranchComponent),
           },
         ],
       },
