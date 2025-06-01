@@ -1,0 +1,274 @@
+<cust-card title="Add Product">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
+    <cust-form-field
+      [control]="form.controls.code"
+      inputId="code"
+      label="code"
+    />
+
+    <cust-form-field
+      [control]="form.controls.name"
+      inputId="name"
+      label="Name"
+    />
+
+    <cust-select
+      [control]="form.controls.type"
+      inputId="Type"
+      label="Type"
+      [options]="[
+        { key: 'type1', value: 'type1' },
+        { key: 'type2', value: 'type2' }
+      ]"
+    />
+
+    <div>
+      <label for="group" class="cust-input-label"> Group </label>
+
+      <div class="relative">
+        <input
+          id="group"
+          formControlName="group"
+          type="text"
+          class="cust-input"
+          matInput
+        />
+      </div>
+      <app-validation-message
+        [control]="this.form.controls.group"
+        [customMessage]="null"
+        name="group"
+      />
+    </div>
+
+    <div>
+      <label for="unit" class="cust-input-label"> Unit </label>
+
+      <div class="relative">
+        <input
+          id="unit"
+          formControlName="unit"
+          type="text"
+          class="cust-input"
+          matInput
+        />
+      </div>
+      <app-validation-message
+        [control]="this.form.controls.unit"
+        [customMessage]="null"
+        name="unit"
+      />
+    </div>
+
+    <cust-form-field
+      [control]="form.controls.image"
+      type="file"
+      inputId="image"
+      label="image"
+      (change)="uploadImage($event)"
+    />
+
+    <cust-form-field
+      [control]="form.controls.minQty"
+      inputId="Min Qty"
+      label="Min Qty"
+    />
+
+    <cust-form-field
+      [control]="form.controls.maxQty"
+      inputId="Max Qty"
+      label="Max Qty"
+    />
+
+    <cust-form-field
+      [control]="form.controls.orderQty"
+      inputId="Order Qty"
+      label="Order Qty"
+    />
+
+    <cust-form-field
+      [control]="form.controls.notes"
+      inputId="Note"
+      label="Note"
+    />
+
+    <div class="overflow-auto max-h-80 relative col-span-full">
+      <table formArrayName="prices">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Price Type</th>
+            <th>Unit Name</th>
+            <th>price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let row of prices.controls; let i = index"
+            [formGroup]="getPriceFormGroup(i)"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>
+              <input
+                formControlName="priceType"
+                class="cust-input"
+                type="number"
+              />
+              <app-validation-message
+                [control]="row.get('priceType')!"
+                [customMessage]="null"
+                name="Price Type"
+              />
+            </td>
+            <td>
+              <input formControlName="unitType" class="cust-input" />
+              <app-validation-message
+                [control]="row.get('unitType')!"
+                [customMessage]="null"
+                name="Unit Type"
+              />
+            </td>
+            <td>
+              <input formControlName="price" class="cust-input" />
+              <app-validation-message
+                [control]="row.get('price')!"
+                [customMessage]="null"
+                name="price"
+              />
+            </td>
+
+            <td>
+              <button
+                class="cursor-pointer"
+                title="edit"
+                type="button"
+                (click)="removePriceRow(i)"
+              >
+                <svg
+                  class="fill-red-500"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z"
+                  />
+                  <path
+                    d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td [attr.colspan]="6" class="text-center w-full">
+              <button
+                type="button"
+                class="w-fit self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
+                (click)="addPriceRow()"
+              >
+                <img src="assets/icons/add.png" alt="add" />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <app-validation-message
+        *ngIf="prices.errors"
+        [control]="this.prices"
+        [customMessage]="null"
+        name="prices"
+        class="col-span-full flex justify-start"
+      />
+    </div>
+
+    <div class="overflow-auto max-h-80 relative col-span-full">
+      <table formArrayName="barcodes">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Unit Item</th>
+            <th>barcode</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let row of barcodes.controls; let i = index"
+            [formGroup]="getBarcodeFormGroup(i)"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>
+              <input
+                formControlName="unitItem"
+                class="cust-input"
+                type="number"
+              />
+              <app-validation-message
+                [control]="row.get('unitItem')!"
+                [customMessage]="null"
+                name="Unit Item"
+              />
+            </td>
+            <td>
+              <input formControlName="barcode" class="cust-input" />
+              <app-validation-message
+                [control]="row.get('barcode')!"
+                [customMessage]="null"
+                name="Barcode"
+              />
+            </td>
+            <td>
+              <button
+                class="cursor-pointer"
+                title="edit"
+                type="button"
+                (click)="removeBarcodeRow(i)"
+              >
+                <svg
+                  class="fill-red-500"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z"
+                  />
+                  <path
+                    d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td [attr.colspan]="6" class="text-center w-full">
+              <button
+                type="button"
+                class="w-fit self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
+                (click)="addBarcodeRow()"
+              >
+                <img src="assets/icons/add.png" alt="add" />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <app-validation-message
+        *ngIf="barcodes.errors"
+        [control]="this.barcodes"
+        [customMessage]="null"
+        name="barcodes"
+        class="col-span-full flex justify-start"
+      />
+    </div>
+
+    <div class="col-span-full grid grid-cols-4">
+      <button type="submit" class="btn">Add</button>
+    </div>
+  </form>
+  <div>
+    {{ form.getRawValue() | json }}
+  </div>
+</cust-card>

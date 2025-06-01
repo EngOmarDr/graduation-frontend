@@ -131,14 +131,14 @@ export const routes: Routes = [
             path: 'products',
             loadComponent: () =>
               import(
-                './modules/inventory/product/show-products/show-products.component'
+                './modules/inventory/product/components/show-products/show-products.component'
               ).then((m) => m.ShowProductsComponent),
           },
           {
             path: 'add-product',
             loadComponent: () =>
               import(
-                './modules/inventory/product/add-product/add-product.component'
+                './modules/inventory/product/components/add-product/add-product.component'
               ).then((m) => m.AddProductComponent),
           },
         ],

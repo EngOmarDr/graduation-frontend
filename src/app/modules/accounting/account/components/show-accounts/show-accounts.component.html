@@ -14,7 +14,7 @@
     <app-custom-table
       [data]="accounts$ | async"
       [columns]="displayedColumns"
-      (editRowEvent)="updateAccount($event)"
+      (updateRowEvent)="updateAccount($event)"
       (deleteRowEvent)="deleteAccount($event)"
     />
   </div>

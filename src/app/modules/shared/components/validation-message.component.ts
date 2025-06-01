@@ -19,6 +19,11 @@ import { AbstractControl, FormsModule } from '@angular/forms';
     <small class="validation-text">
       {{ customMessage }}
     </small>
+  }@else {
+      <small class="validation-text">
+        {{ control.errors }}
+      </small>
+
     } }
   `,
 })

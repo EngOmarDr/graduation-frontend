@@ -65,12 +65,12 @@ export class CustomTableComponent<T> {
    */
   readonly columns = input.required<(keyof T)[]>();
   readonly deleteRowEvent = output<T>();
-  readonly editRowEvent = output<T>();
+  readonly updateRowEvent = output<T>();
 
   deleteRow(object: T) {
     this.deleteRowEvent.emit(object);
   }
   editRow(object: T) {
-    this.editRowEvent.emit(object);
+    this.updateRowEvent.emit(object);
   }
 }

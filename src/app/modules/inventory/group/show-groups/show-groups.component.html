@@ -1,27 +1,22 @@
-<cust-card title="Groups">
-  <input type="button" name="change to tree" (click)="changeView()" value="change"/>
-  <div class="flex flex-wrap-reverse justify-between items-center">
-    <!-- <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" #input />
-    </mat-form-field> -->
-    <button
-      type="button"
-      class="py-1.5 px-2.5 mb-3 btn"
-      routerLink="/add-group"
-    >
+<cust-card [title]="'Groups'" [titlePadding]="false">
+  <div class="flex justify-end items-center">
+    <button type="button" class="mb-3 btn" routerLink="/add-group">
       Add Group
     </button>
   </div>
   @if (viewTree()) {
-  <app-tree-view [treeData]="treeData" (onDelete)="deleteGroup($event)" (onUpdate)="editGroup($event)" />
+  <app-tree-view
+    [treeData]="treeData"
+    (onDelete)="deleteGroup($event)"
+    (onUpdate)="updateGroup($event)"
+  />
   }@else {
-  <div
-    class="w-full overflow-auto rounded-md max-h-96 border border-zinc-200 dark:border-zinc-600"
-  >
 
-
-  </div>
-
+  <app-custom-table
+    [data]="groups$ | async"
+    [columns]="displayedColumns"
+    (deleteRowEvent)="deleteGroup($event)"
+    (updateRowEvent)="updateGroup($event)"
+  />
   }
 </cust-card>

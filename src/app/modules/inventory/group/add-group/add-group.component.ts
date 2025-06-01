@@ -35,7 +35,7 @@ export class AddGroupComponent {
     }),
     name: ['', [Validators.required]],
     parentId: [undefined, { validators: [], disabled: true }],
-    note: [''],
+    notes: [''],
   });
 
   onSubmit() {
