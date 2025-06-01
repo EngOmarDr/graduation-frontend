@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { filter } from 'rxjs';
     <div class="card">
       <div
         class="flex items-center gap-x-2"
-        [ngClass]="{ 'pb-7': titlePadding }"
+        [ngClass]="{ 'pb-7': titlePadding() }"
       >
         <!-- <mat-icon
           aria-hidden="false"
@@ -20,7 +20,7 @@ import { filter } from 'rxjs';
           (click)="goBack()"
         ></mat-icon> -->
         <h4 class="cust-header">
-          {{ title }}
+          {{ title() }}
         </h4>
       </div>
       <ng-content></ng-content>
@@ -28,8 +28,8 @@ import { filter } from 'rxjs';
   `,
 })
 export class CardComponent {
-  @Input({ required: true }) title!: string;
-  @Input() titlePadding: boolean = true;
+  readonly title = input.required<string>();
+  readonly titlePadding = input<boolean>(true);
 
   showBackButton: boolean = false;
   constructor(private router: Router, private location: Location) {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { AbstractControl, FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,7 @@ import { AbstractControl, FormsModule } from '@angular/forms';
     @if(control.invalid && (control.touched || control.dirty)){
     @if(control.errors?.['required']){
     <small class="validation-text">
-      {{ name + ' is required' }}
+      {{ name() + ' is required' }}
     </small>
     }@else if(control.errors?.['email']){
     <small class="validation-text">
@@ -24,6 +24,6 @@ import { AbstractControl, FormsModule } from '@angular/forms';
 })
 export class ValidationMessageComponent {
   @Input({ required: true }) control!: AbstractControl;
-  @Input({ required: true }) name!: string;
+  readonly name = input.required<string>();
   @Input() customMessage: string | null = null;
 }

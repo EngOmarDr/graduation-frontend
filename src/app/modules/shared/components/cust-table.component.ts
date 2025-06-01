@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, output, input } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -13,25 +13,25 @@ import { ReactiveFormsModule } from '@angular/forms';
         <thead>
           <tr>
             <th>#</th>
-            <th *ngFor="let col of columns">
+            <th *ngFor="let col of columns()">
               {{ col }}
             </th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          @if (data?.length == 0) {
+          @if (data()?.length == 0) {
           <tr>
-            <td [attr.colspan]="columns.length + 2">
+            <td [attr.colspan]="columns().length + 2">
               No Data Found
             </td>
           </tr>
           }
-          <tr *ngFor="let row of data; let i = index">
+          <tr *ngFor="let row of data(); let i = index">
             <td>
               {{ i + 1 }}
             </td>
-            <td *ngFor="let col of columns">{{ row[col] }}</td>
+            <td *ngFor="let col of columns()">{{ row[col] }}</td>
             <td>
               <button
                 type="button"
@@ -59,13 +59,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class CustomTableComponent<T> {
   constructor(public fb: NonNullableFormBuilder) {}
 
-  @Input({ required: true }) data: T[] | null = null;
+  readonly data = input.required<T[] | null>();
   /**
    * يجب أن تكون نفس اسماء الحقول الخاصة بالكائن
    */
-  @Input({ required: true }) columns!: (keyof T)[];
-  @Output() deleteRowEvent = new EventEmitter<T>();
-  @Output() editRowEvent = new EventEmitter<T>();
+  readonly columns = input.required<(keyof T)[]>();
+  readonly deleteRowEvent = output<T>();
+  readonly editRowEvent = output<T>();
 
   deleteRow(object: T) {
     this.deleteRowEvent.emit(object);

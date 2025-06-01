@@ -3,7 +3,7 @@ import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   inject,
-  Input,
+  input,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -26,33 +26,33 @@ import { ValidationMessageComponent } from './validation-message.component';
   template: `
     <div>
       <label
-        [for]="inputId"
+        [for]="inputId()"
         class="cust-input-label"
         [ngClass]="{
-          'cust-label-disable': control.disabled
+          'cust-label-disable': control().disabled
         }"
-        >{{ label }}
+        >{{ label() }}
       </label>
       <input
-        [id]="inputId"
+        [id]="inputId()"
         [formControl]="formControl"
-        type="{{ type }}"
+        type="{{ type() }}"
         class="cust-input"
-        [readOnly]="readOnly"
+        [readOnly]="readOnly()"
       />
       <app-validation-message
-        [control]="control"
-        [customMessage]="customMessage"
-        name="{{ label }}"
+        [control]="control()"
+        [customMessage]="customMessage()"
+        name="{{ label() }}"
       />
     </div>
   `,
 })
 export class CustomFieldComponent {
-  @Input({ required: true }) label!: string;
-  @Input({ required: true }) inputId!: string;
-  @Input({ required: true }) control!: AbstractControl;
-  @Input() type:
+  readonly label = input.required<string>();
+  readonly inputId = input.required<string>();
+  readonly control = input.required<AbstractControl>();
+  readonly type = input<
     | 'button'
     | 'checkbox'
     | 'color'
@@ -73,10 +73,11 @@ export class CustomFieldComponent {
     | 'text'
     | 'time'
     | 'url'
-    | 'week' = 'text';
-  @Input() readOnly: boolean = false;
-  @Input() customMessage: string | null = null;
+    | 'week'
+  >('text');
+  readonly readOnly = input<boolean>(false);
+  readonly customMessage = input<string | null>(null);
   get formControl(): FormControl {
-    return this.control as FormControl;
+    return this.control() as FormControl;
   }
 }

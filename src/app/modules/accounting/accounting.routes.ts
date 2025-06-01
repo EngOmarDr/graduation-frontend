@@ -1,46 +1,37 @@
 import { Routes } from '@angular/router';
-import { AddAccountComponent } from './account/components/add-account/add-account.component';
-import { AddCurrencyComponent } from './currency/add-currency/add-currency.component';
-import { UpdateCurrencyComponent } from './currency/update-currency/update-currency.component';
-import { ShowCurrenciesComponent } from './currency/show-currencies/show-currencies.component';
-import { ShowAccountsComponent } from './account/components/show-accounts/show-accounts.component';
-// import { AddJournalComponent } from './journal/add-journal/add-journal.component';
-// import { AddPaymentVoucherComponent } from './payment-voucher/add/add-payment-voucher.component';
 import { authGuard } from '../../core/guards/auth.guard';
-import { AddPaymentVoucherComponent } from './payment-voucher/add/add-payment-voucher.component';
-import { UpdateAccountComponent } from './account/components/update-account/update-account.component';
 
 export const accountingRoutes: Routes = [
   {
     path: 'add-account',
-    component: AddAccountComponent,
+    loadComponent: () => import('./account/components/add-account/add-account.component').then(m => m.AddAccountComponent),
     canActivate: [authGuard],
   },
   {
     path: 'accounts',
-    component: ShowAccountsComponent,
+    loadComponent: () => import('./account/components/show-accounts/show-accounts.component').then(m => m.ShowAccountsComponent),
     canActivate: [authGuard],
   },
   {
     path: 'update-account/:id',
-    component: UpdateAccountComponent,
+    loadComponent: () => import('./account/components/update-account/update-account.component').then(m => m.UpdateAccountComponent),
     canActivate: [authGuard],
   },
 
   {
     path: 'add-currency',
-    component: AddCurrencyComponent,
+    loadComponent: () => import('./currency/add-currency/add-currency.component').then(m => m.AddCurrencyComponent),
     canActivate: [authGuard],
   },
   {
     path: 'update-currency/:id',
-    component: UpdateCurrencyComponent,
+    loadComponent: () => import('./currency/update-currency/update-currency.component').then(m => m.UpdateCurrencyComponent),
     canActivate: [authGuard],
   },
 
   {
     path: 'currencies',
-    component: ShowCurrenciesComponent,
+    loadComponent: () => import('./currency/show-currencies/show-currencies.component').then(m => m.ShowCurrenciesComponent),
     canActivate: [authGuard],
   },
 
@@ -53,6 +44,6 @@ export const accountingRoutes: Routes = [
   {
     path: 'paymentVoucher',
     canActivate: [authGuard],
-    component: AddPaymentVoucherComponent,
+    loadComponent: () => import('./payment-voucher/add/add-payment-voucher.component').then(m => m.AddPaymentVoucherComponent),
   },
 ];
