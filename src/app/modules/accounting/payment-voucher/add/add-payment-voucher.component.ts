@@ -9,7 +9,6 @@ import {
 } from '@angular/forms';
 import { Currency } from '../../currency/models/currency.model';
 import { CommonModule } from '@angular/common';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { CardComponent } from '../../../shared/components/card-form.component';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
@@ -25,7 +24,6 @@ import {CustomTableComponent} from '../../../shared/components/cust-table.compon
     CustomSelectComponent,
     CommonModule,
     ReactiveFormsModule,
-    MatAutocompleteModule,
     ValidationMessageComponent,
     FormsModule,
   ],

@@ -1,9 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -26,11 +21,7 @@ export interface Sale {
   imports: [
     CardComponent,
     RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
+
     CommonModule
   ],
   templateUrl: './show-sales.component.html',
@@ -47,37 +38,39 @@ export class ShowSalesComponent {
     'createdAt',
     'action',
   ];
-  dataSource: MatTableDataSource<Sale>;
+  // dataSource: MatTableDataSource<Sale>;
   form = new FormGroup({
     filter: new FormControl(''),
   });
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  // @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // @ViewChild(MatSort) sort!: MatSort;
 
   constructor() {
     const sales = Array.from({ length: 50 }, (_, k) => createNewSale(k + 1));
-    this.dataSource = new MatTableDataSource(sales);
+    // this.dataSource = new MatTableDataSource(sales);
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
   }
   get totalSales(): number {
-    return this.dataSource.filteredData.reduce((sum, sale) => sum + sale.total, 0);
+    return 0;
+    // return this.dataSource.filteredData.reduce((sum, sale) => sum + sale.total, 0);
   }
 
   get totalPaid(): number {
-    return this.dataSource.filteredData.reduce((sum, sale) => sum + sale.paid, 0);
+    return 0;
+    // return this.dataSource.filteredData.reduce((sum, sale) => sum + sale.paid, 0);
   }
 
   editSale(sale: Sale) {
@@ -86,7 +79,7 @@ export class ShowSalesComponent {
 
   deleteSale(sale: Sale) {
     alert(`Delete Sale: ${sale.id}`);
-    this.dataSource.data = this.dataSource.data.filter((s) => s.id !== sale.id);
+    // this.dataSource.data = this.dataSource.data.filter((s) => s.id !== sale.id);
   }
 
   showSale(sale: Sale) {

@@ -1,9 +1,4 @@
 import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CardComponent } from '../../../shared/components/card-form.component';
@@ -21,11 +16,7 @@ import { GroupTree } from '../models/group-tree';
   standalone: true,
   imports: [
     RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
+
     CardComponent,
     TreeViewComponent,
   ],
@@ -36,48 +27,48 @@ export class ShowGroupsComponent implements OnInit {
   private router = inject(Router);
 
   displayedColumns: string[] = ['#', 'code', 'name', 'parentName', 'action'];
-  dataSource: MatTableDataSource<Group> = new MatTableDataSource();
+  // dataSource: MatTableDataSource<Group> = new MatTableDataSource();
   form = new FormGroup({
     filter: new FormControl(''),
   });
   viewTree = signal(false);
   treeData: TreeNode[] = [];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  // @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // @ViewChild(MatSort) sort!: MatSort;
 
   // groups$!: Observable<Group[]>;
 
   ngOnInit(): void {
     this.service.getGroups().subscribe((next) => {
-      this.dataSource.data = next;
+      // this.dataSource.data = next;
     });
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
   }
 
   editGroup(group: Group | number) {
     if (typeof group == 'number') {
-      let data = this.dataSource.data
-        .filter((value) => {
-          return value.id == group;
-        })
-        .at(0);
-      this.router.navigate(['/update-group', data!.id], {
-        state: { groupData: data },
-      });
+      // let data = this.dataSource.data
+      //   .filter((value) => {
+      //     return value.id == group;
+      //   })
+      //   .at(0);
+      // this.router.navigate(['/update-group', data!.id], {
+      //   state: { groupData: data },
+      // });
     } else {
       this.router.navigate(['/update-group', group.id], {
         state: { groupData: group },
@@ -88,29 +79,29 @@ export class ShowGroupsComponent implements OnInit {
   deleteGroup(group: Group | number) {
     let data: Group;
     if (typeof group == 'number') {
-      data = this.dataSource.data
-        .filter((value) => {
-          return value.id == group;
-        })
-        .at(0)!;
+      // data = this.dataSource.data
+      //   .filter((value) => {
+      //     return value.id == group;
+      //   })
+      //   .at(0)!;
     }else {
       data = group;
     }
-    alert(`are you sure you want to delete the ${data.name}`);
+    // alert(`are you sure you want to delete the ${data.name}`);
 
-    this.service.deleteGroup(data.id!).subscribe(
-      (next) => {
-        this.dataSource.data = this.dataSource.data.filter(
-          (g) => g.id !== data.id
-        );
-        this.treeData = this.convertGroupTreeToTreeNode(this.dataSource.data);
-        this.changeView()
+    // this.service.deleteGroup(data.id!).subscribe(
+    //   (next) => {
+    //     // this.dataSource.data = this.dataSource.data.filter(
+    //     //   (g) => g.id !== data.id
+    //     // );
+    //     this.treeData = this.convertGroupTreeToTreeNode(this.dataSource.data);
+    //     this.changeView()
 
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    //   },
+    //   (err) => {
+    //     console.log(err);
+    //   }
+    // );
   }
 
   changeView() {

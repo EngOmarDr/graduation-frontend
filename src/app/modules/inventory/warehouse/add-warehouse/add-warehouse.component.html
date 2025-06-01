@@ -30,14 +30,8 @@
           formControlName="primaryCostCenter"
           type="text"
           class="cust-input"
-          [matAutocomplete]="autoAccount"
-          matInput
         />
-        <mat-autocomplete #autoAccount="matAutocomplete" class="">
-          @for (option of results ; track option) {
-          <mat-option [value]="option">{{ option }}</mat-option>
-          }
-        </mat-autocomplete>
+
         <app-validation-message
           [control]="costCenterForm.controls.primaryCostCenter"
           [customMessage]="null"

@@ -27,7 +27,6 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/theme.scss",
               "node_modules/cookieconsent/build/cookieconsent.min.css",
               "node_modules/ngx-toastr/toastr.css"
             ],
@@ -90,7 +89,7 @@
               },
               "src/assets"
             ],
-            "styles": ["src/styles.css", "src/theme.scss"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         }

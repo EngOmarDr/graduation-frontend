@@ -1,9 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,11 +25,6 @@ const NAMES: string[] = [
   imports: [
     CardComponent,
     RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
     ReactiveFormsModule,
   ],
   templateUrl: './show-warehouses.component.html',
@@ -43,31 +33,31 @@ export class ShowWarehousesComponent implements OnInit {
   displayedColumns: string[] = [
     'id', 'warehouse', 'phone', 'country', 'city', 'createdAt', 'action',
   ];
-  dataSource = new MatTableDataSource<Warehouse>([]);
+  // dataSource = new MatTableDataSource<Warehouse>([]);
   form = new FormGroup({
     filter: new FormControl(''),
   });
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  // @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit() {
     const warehouses = Array.from({ length: 100 }, (_, k) => this.createNewWarehouse(k + 1));
-    this.dataSource = new MatTableDataSource(warehouses);
+    // this.dataSource = new MatTableDataSource(warehouses);
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
   }
 
   editWarehouse(warehouse: Warehouse) {
@@ -76,7 +66,7 @@ export class ShowWarehousesComponent implements OnInit {
 
   deleteWarehouse(warehouse: Warehouse) {
     alert(`Delete warehouse: ${warehouse.id}`);
-    this.dataSource.data = this.dataSource.data.filter((w) => w.id !== warehouse.id);
+    // this.dataSource.data = this.dataSource.data.filter((w) => w.id !== warehouse.id);
   }
 
   viewWarehouse(warehouse: Warehouse) {

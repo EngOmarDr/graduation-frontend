@@ -31,14 +31,9 @@
           formControlName="group"
           type="text"
           class="cust-input"
-          [matAutocomplete]="autoAccount"
           matInput
         />
-        <mat-autocomplete #autoAccount="matAutocomplete">
-          @for (option of ['1','2','3','4'] ; track option) {
-          <mat-option [value]="option">{{ option }}</mat-option>
-          }
-        </mat-autocomplete>
+
       </div>
       <app-validation-message
         [control]="this.form.controls.group"
@@ -56,14 +51,9 @@
           formControlName="unit"
           type="text"
           class="cust-input"
-          [matAutocomplete]="complateUnit"
           matInput
         />
-        <mat-autocomplete #complateUnit="matAutocomplete">
-          @for (option of ['1','2','3','4'] ; track option) {
-          <mat-option [value]="option">{{ option }}</mat-option>
-          }
-        </mat-autocomplete>
+
       </div>
       <app-validation-message
         [control]="this.form.controls.unit"
@@ -107,7 +97,7 @@
     <div
       class="w-full overflow-auto col-span-full rounded-md max-h-96 border border-zinc-200 dark:border-zinc-600"
     >
-      <table
+      <!-- <table
         mat-table
         [dataSource]="productPricesData"
         formArrayName="prices"
@@ -207,14 +197,14 @@
           class="sticky top-0"
         ></tr>
         <tr mat-row *matRowDef="let row; columns: pricesColumns"></tr>
-      </table>
+      </table> -->
       <div class="flex justify-center py-1 border-t border-gray-300 min-w-full">
         <button
           type="button"
           class="w-fit cursor-pointer self-center bg-green-600 rounded-full shadow-sm shadow-black/40 p-2 inline-flex text-white"
           (click)="addRow()"
         >
-          <mat-icon>add</mat-icon>
+          <!-- <mat-icon>add</mat-icon> -->
         </button>
       </div>
       <app-validation-message
@@ -229,7 +219,7 @@
     <div
       class="w-full overflow-auto col-span-full rounded-md max-h-96 border border-zinc-200 dark:border-zinc-600"
     >
-      <table
+      <!-- <table
         mat-table
         [dataSource]="productBarcodesData"
         formArrayName="barcodes"
@@ -308,14 +298,14 @@
           class="sticky top-0"
         ></tr>
         <tr mat-row *matRowDef="let row; columns: barcodesColumns"></tr>
-      </table>
+      </table> -->
       <div class="flex justify-center py-1 border-t border-gray-300 min-w-full">
         <button
           type="button"
           class="w-fit cursor-pointer self-center bg-green-600 rounded-full shadow-sm shadow-black/40 p-2 inline-flex text-white"
           (click)="addBarcodeRow()"
         >
-          <mat-icon>add</mat-icon>
+          <!-- <mat-icon>add</mat-icon> -->
         </button>
       </div>
       <app-validation-message

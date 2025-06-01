@@ -9,9 +9,6 @@ import {
   FormArray,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
 import { CustomSelectComponent } from '../../../shared/components/custom-select.component';
 import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
@@ -26,9 +23,7 @@ import { CardComponent } from '../../../shared/components/card-form.component';
     CustomFieldComponent,
     ValidationMessageComponent,
     CustomSelectComponent,
-    MatAutocompleteModule,
-    MatTableModule,
-    MatIconModule,
+
   ],
   templateUrl: './add-product.component.html',
 })
@@ -37,8 +32,8 @@ export class AddProductComponent {
 
   pricesColumns: string[] = ['#', 'priceType', 'unitName', 'price', 'actions'];
   barcodesColumns = ['#', 'unitItem', 'barcode', 'actions'];
-  productPricesData = new MatTableDataSource<AbstractControl>([]);
-  productBarcodesData = new MatTableDataSource<AbstractControl>([]);
+  // productPricesData = new MatTableDataSource<AbstractControl>([]);
+  // productBarcodesData = new MatTableDataSource<AbstractControl>([]);
   file: any;
 
   form = this.fb.group({
@@ -86,7 +81,7 @@ export class AddProductComponent {
   }
 
   private updatePricesData(): void {
-    this.productPricesData.data = this.prices.controls;
+    // this.productPricesData.data = this.prices.controls;
   }
 
   createBarcodeRow(): FormGroup {
@@ -110,7 +105,7 @@ export class AddProductComponent {
   }
 
   private updateBarcodesData(): void {
-    this.productBarcodesData.data = this.barcodes.controls;
+    // this.productBarcodesData.data = this.barcodes.controls;
   }
 
   onSubmit(): void {

@@ -1,16 +1,10 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CardComponent } from '../../../shared/components/card-form.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Group } from '../models/group';
 import {
   FormBuilder,
   FormGroup,
-  NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -18,24 +12,17 @@ import { GroupService } from '../services/group.service';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
 import { CommonModule } from '@angular/common';
 import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-update-group',
   imports: [
     RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
     CardComponent,
     CustomFieldComponent,
     ReactiveFormsModule,
     CommonModule,
     CustomFieldComponent,
     ValidationMessageComponent,
-    MatAutocompleteModule,
     CardComponent,
   ],
   templateUrl: './update-group.component.html',

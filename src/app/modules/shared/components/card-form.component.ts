@@ -1,25 +1,24 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'cust-card',
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule],
   template: `
     <div class="card">
       <div
         class="flex items-center gap-x-2"
         [ngClass]="{ 'pb-7': titlePadding }"
       >
-        <mat-icon
+        <!-- <mat-icon
           aria-hidden="false"
           aria-label="back button"
           fontIcon="arrow_back"
           *ngIf="showBackButton"
           (click)="goBack()"
-        ></mat-icon>
+        ></mat-icon> -->
         <h4 class="cust-header">
           {{ title }}
         </h4>
