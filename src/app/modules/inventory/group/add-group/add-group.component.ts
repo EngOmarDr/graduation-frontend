@@ -5,7 +5,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
 import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
 import { CardComponent } from '../../../shared/components/card-form.component';
@@ -19,7 +18,6 @@ import { Router } from '@angular/router';
     CommonModule,
     CustomFieldComponent,
     ValidationMessageComponent,
-    MatAutocompleteModule,
     CardComponent,
   ],
   templateUrl: './add-group.component.html',
@@ -37,7 +35,7 @@ export class AddGroupComponent {
     }),
     name: ['', [Validators.required]],
     parentId: [undefined, { validators: [], disabled: true }],
-    note: [''],
+    notes: [''],
   });
 
   onSubmit() {

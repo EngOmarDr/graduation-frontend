@@ -3,7 +3,7 @@ import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   inject,
-  Input,
+  input
 } from '@angular/core';
 import {
   AbstractControl,
@@ -26,36 +26,36 @@ import { ValidationMessageComponent } from './validation-message.component';
   template: `
     <div>
       <label
-        [for]="inputId"
+        [for]="inputId()"
         class="cust-input-label"
-        *ngIf="showLabel"
+        *ngIf="showLabel()"
         [ngClass]="{
-          'cust-label-disable': control.disabled
+          'cust-label-disable': control().disabled
         }"
-        >{{ label }}</label
+        >{{ label() }}</label
       >
-      <select [id]="inputId" [formControl]="formControl" class="cust-input">
-        @for(option of options; track $index){
+      <select [id]="inputId()" [formControl]="formControl" class="cust-input">
+        @for(option of options(); track $index){
         <option [value]="option.key">{{ option.value }}</option>
         }
       </select>
       <app-validation-message
-        [control]="control"
-        [customMessage]="customMessage"
-        [name]="label"
+        [control]="control()"
+        [customMessage]="customMessage()"
+        [name]="label()"
       />
     </div>
   `,
 })
 export class CustomSelectComponent {
-  @Input({ required: true }) label!: string;
-  @Input({ required: true }) inputId!: string;
-  @Input({ required: true }) control!: AbstractControl;
-  @Input({ required: true }) options!: any[];
-  @Input() showLabel: boolean = true;
-  @Input() customMessage: string | null = null;
+  readonly label = input.required<string>();
+  readonly inputId = input.required<string>();
+  readonly control = input.required<AbstractControl>();
+  readonly options = input.required<any[]>();
+  readonly showLabel = input<boolean>(true);
+  readonly customMessage = input<string | null>(null);
 
   get formControl(): FormControl {
-    return this.control as FormControl;
+    return this.control() as FormControl;
   }
 }

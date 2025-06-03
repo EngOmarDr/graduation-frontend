@@ -7,9 +7,13 @@
     />
 
     <div
-      class="w-full overflow-auto col-span-full rounded-md max-h-96 border border-zinc-200 dark:border-zinc-600"
+      class="col-span-full"
     >
-      <table
+    <!-- <app-custom-table
+    [columns]="displayedColumns"
+    /> -->
+
+      <!-- <table
         mat-table
         [dataSource]="dataSource"
         formArrayName="units"
@@ -107,14 +111,14 @@
           class="sticky top-0"
         ></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
+      </table> -->
       <div class="flex justify-center py-1 border-t border-gray-300 min-w-full">
         <button
           type="button"
           class="w-fit cursor-pointer self-center bg-green-600 rounded-full shadow-sm shadow-black/40 p-2 inline-flex text-white"
           (click)="addRow()"
         >
-          <mat-icon>add</mat-icon>
+          <!-- <mat-icon>add</mat-icon> -->
         </button>
       </div>
     </div>

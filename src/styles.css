@@ -110,6 +110,7 @@
   .btn {
     cursor: pointer;
     padding-block: calc(var(--spacing) * 2) /* 0.5rem = 8px */;
+    padding-inline: calc(var(--spacing) * 2.5) /* 0.625rem = 10px */;
     color: var(--color-white);
     border-radius: var(--radius-md);
     background-color: var(--color-primary);

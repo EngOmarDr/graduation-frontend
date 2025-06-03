@@ -9,13 +9,10 @@ import {
   FormArray,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
-import { CustomSelectComponent } from '../../../shared/components/custom-select.component';
-import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
-import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
-import { CardComponent } from '../../../shared/components/card-form.component';
+import { CustomSelectComponent } from '../../../../shared/components/custom-select.component';
+import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
+import { CustomFieldComponent } from '../../../../shared/components/custom-field.component';
+import { CardComponent } from '../../../../shared/components/card-form.component';
 
 @Component({
   selector: 'app-add-product',
@@ -26,19 +23,14 @@ import { CardComponent } from '../../../shared/components/card-form.component';
     CustomFieldComponent,
     ValidationMessageComponent,
     CustomSelectComponent,
-    MatAutocompleteModule,
-    MatTableModule,
-    MatIconModule,
   ],
   templateUrl: './add-product.component.html',
 })
 export class AddProductComponent {
   private fb = inject(NonNullableFormBuilder);
 
-  pricesColumns: string[] = ['#', 'priceType', 'unitName', 'price', 'actions'];
   barcodesColumns = ['#', 'unitItem', 'barcode', 'actions'];
-  productPricesData = new MatTableDataSource<AbstractControl>([]);
-  productBarcodesData = new MatTableDataSource<AbstractControl>([]);
+
   file: any;
 
   form = this.fb.group({
@@ -60,8 +52,15 @@ export class AddProductComponent {
   get prices(): FormArray<FormGroup> {
     return this.form.get('prices') as FormArray<FormGroup>;
   }
+  getPriceFormGroup(index: number): FormGroup {
+    return this.prices.at(index) as FormGroup;
+  }
+
   get barcodes(): FormArray<FormGroup> {
     return this.form.get('barcodes') as FormArray<FormGroup>;
+  }
+  getBarcodeFormGroup(index: number): FormGroup {
+    return this.barcodes.at(index) as FormGroup;
   }
 
   createPriceRow(): FormGroup {
@@ -73,20 +72,13 @@ export class AddProductComponent {
     return newRow;
   }
 
-  addRow(): void {
+  addPriceRow(): void {
     const newItem = this.createPriceRow();
     this.prices.push(newItem);
-    this.updatePricesData();
   }
 
-  removeRow(index: number): void {
+  removePriceRow(index: number): void {
     this.prices.removeAt(index);
-
-    this.updatePricesData();
-  }
-
-  private updatePricesData(): void {
-    this.productPricesData.data = this.prices.controls;
   }
 
   createBarcodeRow(): FormGroup {
@@ -100,25 +92,18 @@ export class AddProductComponent {
   addBarcodeRow(): void {
     const newItem = this.createBarcodeRow();
     this.barcodes.push(newItem);
-    this.updateBarcodesData();
   }
 
   removeBarcodeRow(index: number): void {
     this.barcodes.removeAt(index);
-
-    this.updateBarcodesData();
-  }
-
-  private updateBarcodesData(): void {
-    this.productBarcodesData.data = this.barcodes.controls;
   }
 
   onSubmit(): void {
-    if (this.form.valid) {
-      console.log('Form Submitted:', this.form.value);
-    } else {
-      this.form.markAllAsTouched();
-    }
+    // if (this.form.valid) {
+    //   console.log('Form Submitted:', this.form.value);
+    // } else {
+    //   this.form.markAllAsTouched();
+    // }
   }
 
   uploadImage(event: any) {

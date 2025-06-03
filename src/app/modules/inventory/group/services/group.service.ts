@@ -11,7 +11,7 @@ import { GroupTree } from '../models/group-tree';
 export class GroupService {
   private apiUrl = `${environment.apiUrl}/groups`;
   private http = inject(HttpClient);
-  constructor() {}
+
 
   getGroups(): Observable<Group[]> {
     return this.http.get<Group[]>(this.apiUrl);

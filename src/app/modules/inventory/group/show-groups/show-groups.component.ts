@@ -1,33 +1,27 @@
-import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CardComponent } from '../../../shared/components/card-form.component';
 import { GroupService } from '../services/group.service';
-import { Observable } from 'rxjs';
 import { Group } from '../models/group';
 import {
   TreeNode,
   TreeViewComponent,
 } from '../../../shared/components/tree-view.component';
 import { GroupTree } from '../models/group-tree';
+import { CustomTableComponent } from '../../../shared/components/cust-table.component';
+import { filter, map, Observable, of, tap } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-show-groups',
   standalone: true,
   imports: [
     RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
     CardComponent,
     TreeViewComponent,
+    CustomTableComponent,
+    AsyncPipe,
   ],
   templateUrl: './show-groups.component.html',
 })
@@ -35,49 +29,26 @@ export class ShowGroupsComponent implements OnInit {
   private service = inject(GroupService);
   private router = inject(Router);
 
-  displayedColumns: string[] = ['#', 'code', 'name', 'parentName', 'action'];
-  dataSource: MatTableDataSource<Group> = new MatTableDataSource();
-  form = new FormGroup({
-    filter: new FormControl(''),
-  });
+  displayedColumns: (keyof Group)[] = ['code', 'name', 'parentName', 'notes'];
   viewTree = signal(false);
   treeData: TreeNode[] = [];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  // groups$!: Observable<Group[]>;
+  groups$!: Observable<Group[]>;
 
   ngOnInit(): void {
-    this.service.getGroups().subscribe((next) => {
-      this.dataSource.data = next;
-    });
+    this.groups$ = this.service.getGroups();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  editGroup(group: Group | number) {
+  updateGroup(group: Group | number) {
     if (typeof group == 'number') {
-      let data = this.dataSource.data
-        .filter((value) => {
-          return value.id == group;
-        })
-        .at(0);
-      this.router.navigate(['/update-group', data!.id], {
-        state: { groupData: data },
-      });
+      // let data = this.dataSource.data
+      //   .filter((value) => {
+      //     return value.id == group;
+      //   })
+      //   .at(0);
+      // this.router.navigate(['/update-group', data!.id], {
+      //   state: { groupData: data },
+      // });
     } else {
       this.router.navigate(['/update-group', group.id], {
         state: { groupData: group },
@@ -88,29 +59,24 @@ export class ShowGroupsComponent implements OnInit {
   deleteGroup(group: Group | number) {
     let data: Group;
     if (typeof group == 'number') {
-      data = this.dataSource.data
-        .filter((value) => {
-          return value.id == group;
-        })
-        .at(0)!;
-    }else {
+      // data = this.dataSource.data
+      //   .filter((value) => {
+      //     return value.id == group;
+      //   })
+      //   .at(0)!;
+    } else {
       data = group;
     }
-    alert(`are you sure you want to delete the ${data.name}`);
-
-    this.service.deleteGroup(data.id!).subscribe(
-      (next) => {
-        this.dataSource.data = this.dataSource.data.filter(
-          (g) => g.id !== data.id
-        );
-        this.treeData = this.convertGroupTreeToTreeNode(this.dataSource.data);
-        this.changeView()
-
+    this.service.deleteGroup(data!.id!).subscribe({
+      next: () => {
+        this.groups$
+          .pipe(
+            map((groups) => groups.filter((group) => group.id != data.id)),
+            tap((filteredItems) => (this.groups$ = of(filteredItems)))
+          )
+          .subscribe();
       },
-      (err) => {
-        console.log(err);
-      }
-    );
+    });
   }
 
   changeView() {

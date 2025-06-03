@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, output, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 export interface TreeNode {
@@ -196,9 +196,9 @@ export interface TreeNode {
   styles: [],
 })
 export class TreeViewComponent implements OnInit {
-  @Input({ required: true }) treeData: TreeNode[]=[];
-  @Output() onUpdate = new EventEmitter<number>();
-  @Output() onDelete = new EventEmitter<number>();
+  readonly treeData = input.required<TreeNode[]>();
+  readonly onUpdate = output<number>();
+  readonly onDelete = output<number>();
 
   filteredData: TreeNode[] = [];
 
@@ -206,8 +206,8 @@ export class TreeViewComponent implements OnInit {
 
   ngOnInit() {
 
-    this.filteredData = this.cloneTree(this.treeData);
-    console.log(this.treeData);
+    this.filteredData = this.cloneTree(this.treeData());
+    console.log(this.treeData());
   }
 
   toggleNode(node: TreeNode): void {
@@ -219,10 +219,10 @@ export class TreeViewComponent implements OnInit {
   applyFilter() {
     if (!this.filterText) {
       // If filter is empty, reset tree and collapse all nodes
-      this.filteredData = this.cloneTree(this.treeData);
+      this.filteredData = this.cloneTree(this.treeData());
     } else {
       this.filteredData = this.filterTree(
-        this.treeData,
+        this.treeData(),
         this.filterText.toLowerCase()
       );
       // Expand all nodes that have matching children or themselves match

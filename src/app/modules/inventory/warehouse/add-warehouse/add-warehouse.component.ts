@@ -5,8 +5,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { startWith, tap } from 'rxjs';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
 import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
 import { CardComponent } from '../../../shared/components/card-form.component';
@@ -17,7 +15,6 @@ import { CardComponent } from '../../../shared/components/card-form.component';
     CommonModule,
     ReactiveFormsModule,
     CustomFieldComponent,
-    MatAutocompleteModule,
     ValidationMessageComponent,
     CardComponent,
   ],

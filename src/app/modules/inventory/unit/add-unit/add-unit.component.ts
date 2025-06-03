@@ -8,14 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
 import { CardComponent } from '../../../shared/components/card-form.component';
-import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
 import { UnitService } from '../services/unit.service';
 import { Unit } from '../models/unit.model';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UnitItemService } from '../services/unit-item.service';
 import { forkJoin } from 'rxjs';
 
@@ -26,10 +22,6 @@ import { forkJoin } from 'rxjs';
     CommonModule,
     CustomFieldComponent,
     CardComponent,
-    MatTableModule,
-    ValidationMessageComponent,
-    MatIconModule,
-    MatSnackBarModule,
   ],
   templateUrl: './add-unit.component.html',
 })
@@ -42,11 +34,9 @@ export class AddUnitComponent {
 }
   private fb = inject(NonNullableFormBuilder);
   private unitService = inject(UnitService);
-  private snackBar = inject(MatSnackBar);
   private unitItemService = inject(UnitItemService);
 
 displayedColumns: string[] = ['#', 'name', 'fact', 'isDef', 'actions'];
-  dataSource = new MatTableDataSource<AbstractControl>([]);
 
     form = this.fb.group({
       unitName: ['', Validators.required],
@@ -87,7 +77,7 @@ displayedColumns: string[] = ['#', 'name', 'fact', 'isDef', 'actions'];
   }
 
   private updateTableData(): void {
-    this.dataSource.data = this.units.controls;
+    // this.dataSource.data = this.units.controls;
   }
 
   changeIsDef(index: number): void {
@@ -100,9 +90,9 @@ onSubmit(): void {
   this.form.markAllAsTouched();
 
   if (this.form.invalid) {
-    this.snackBar.open('Please fill out all required fields.', 'Close', {
-      duration: 3000,
-    });
+    // this.snackBar.open('Please fill out all required fields.', 'Close', {
+    //   duration: 3000,
+    // });
     return;
   }
 
@@ -129,26 +119,26 @@ onSubmit(): void {
 
       forkJoin(requests).subscribe({
         next: () => {
-          this.snackBar.open('Unit and its items created successfully!', 'Close', {
-            duration: 3000,
-          });
+          // this.snackBar.open('Unit and its items created successfully!', 'Close', {
+          //   duration: 3000,
+          // });
           this.form.reset();
           this.units.clear();
           this.addRow();
         },
         error: (err) => {
           console.error(err);
-          this.snackBar.open('Error creating unit items.', 'Close', {
-            duration: 3000,
-          });
+          // this.snackBar.open('Error creating unit items.', 'Close', {
+          //   duration: 3000,
+          // });
         },
       });
     },
     error: (err) => {
       console.error(err);
-      this.snackBar.open('Error creating unit.', 'Close', {
-        duration: 3000,
-      });
+      // this.snackBar.open('Error creating unit.', 'Close', {
+      //   duration: 3000,
+      // });
     },
   });
 }

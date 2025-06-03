@@ -1,0 +1,14 @@
+<cust-card title="Product">
+  <div class="flex justify-end items-center">
+    <button type="button" class="mb-3 btn" routerLink="/add-product">
+      Add Product
+    </button>
+  </div>
+
+  <app-custom-table
+    [data]="products$ | async"
+    [columns]="displayedColumns"
+    (deleteRowEvent)="deleteProduct($event)"
+    (updateRowEvent)="updateProduct($event)"
+  />
+</cust-card>

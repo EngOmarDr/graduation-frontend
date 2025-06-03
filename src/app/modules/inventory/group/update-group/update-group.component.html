@@ -29,14 +29,13 @@
           formControlName="parentId"
           type="text"
           class="cust-input"
-          [matAutocomplete]="autoAccount"
           matInput
         />
-        <mat-autocomplete #autoAccount="matAutocomplete" class="">
+        <!-- <mat-autocomplete #autoAccount="matAutocomplete" class="">
           @for (option of results ; track option) {
           <mat-option [value]="option">{{ option }}</mat-option>
           }
-        </mat-autocomplete>
+        </mat-autocomplete> -->
         <app-validation-message
           [control]="form.get('parentId')!"
           [customMessage]="null"

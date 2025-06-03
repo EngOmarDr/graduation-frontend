@@ -29,14 +29,13 @@
           formControlName="parentId"
           type="text"
           class="cust-input"
-          [matAutocomplete]="autoAccount"
           matInput
         />
-        <mat-autocomplete #autoAccount="matAutocomplete" class="">
+        <!-- <mat-autocomplete #autoAccount="matAutocomplete" class="">
           @for (option of results ; track option) {
           <mat-option [value]="option">{{ option }}</mat-option>
           }
-        </mat-autocomplete>
+        </mat-autocomplete> -->
         <app-validation-message
           [control]="form.controls.parentId"
           [customMessage]="null"
@@ -46,7 +45,7 @@
     </div>
 
     <cust-form-field
-      [control]="form.controls.note"
+      [control]="form.controls.notes"
       inputId="note"
       label="Note"
       class="focus:ring-4 focus:ring-primary"

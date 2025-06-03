@@ -1,5 +1,5 @@
 <cust-card title="Accounts" [titlePadding]="false">
-  <div class="flex flex-wrap-reverse justify-end items-center">
+  <div class="flex  justify-end items-center">
     <!-- <input type="text" class="cust-input" (change)="applyFilter($event)"> -->
     <button
       type="button"
@@ -14,7 +14,7 @@
     <app-custom-table
       [data]="accounts$ | async"
       [columns]="displayedColumns"
-      (editRowEvent)="updateAccount($event)"
+      (updateRowEvent)="updateAccount($event)"
       (deleteRowEvent)="deleteAccount($event)"
     />
   </div>

@@ -1,25 +1,6 @@
 import { Routes } from '@angular/router';
-import { LayoutComponent } from '../app/modules/layout/layout.component';
-import { LoginComponent } from '../app/modules/login/login.component';
-import { ShowBranchesComponent } from '../app/modules/branch/show-branches/show-branches.component';
 import { accountingRoutes } from '../app/modules/accounting/accounting.routes';
 import { authGuard } from './core/guards/auth.guard';
-import { ShowGroupsComponent } from './modules/inventory/group/show-groups/show-groups.component';
-import { AddGroupComponent } from './modules/inventory/group/add-group/add-group.component';
-import { AddBranchComponent } from './modules/branch/add-branch/add-branch.component';
-import { ShowUnitsComponent } from './modules/inventory/unit/show-units/show-units.component';
-import { AddUnitComponent } from './modules/inventory/unit/add-unit/add-unit.component';
-import { ShowProductsComponent } from './modules/inventory/product/show-products/show-products.component';
-import { AddProductComponent } from './modules/inventory/product/add-product/add-product.component';
-import { ShowWarehousesComponent } from './modules/inventory/warehouse/show-warehouses/show-warehouses.component';
-import { AddWarehouseComponent } from './modules/inventory/warehouse/add-warehouse/add-warehouse.component';
-import { ShowPurchasesComponent } from './modules/inventory/purchases/show-purchases/show-purchases.component';
-import { ShowSalesComponent } from './modules/inventory/sales/show-sales/show-sales.component';
-import { BarcodePrintComponent } from './modules/inventory/barcode/barcode-print.component';
-import { UpdateGroupComponent } from './modules/inventory/group/update-group/update-group.component';
-import { AddPriceComponent } from './modules/inventory/price/pages/add-price/add-price.component';
-import { ShowPricesComponent } from './modules/inventory/price/pages/show-prices/show-prices.component';
-import {UpdateUnitComponent} from './modules/inventory/unit/update-unit/update-unit.component';
 
 export const routes: Routes = [
   {
@@ -29,36 +10,70 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
+    loadComponent: () =>
+      import('../app/modules/login/login.component').then(
+        (m) => m.LoginComponent
+      ),
   },
   {
     path: '',
     canActivate: [authGuard],
-    component: LayoutComponent,
+    loadComponent: () =>
+      import('../app/modules/layout/layout.component').then(
+        (m) => m.LayoutComponent
+      ),
     children: [
       {
         path: '',
         children: [
           {
             path: 'groups',
-            component: ShowGroupsComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/group/show-groups/show-groups.component'
+              ).then((m) => m.ShowGroupsComponent),
           },
           {
             path: 'add-group',
-            component: AddGroupComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/group/add-group/add-group.component'
+              ).then((m) => m.AddGroupComponent),
           },
           {
             path: 'update-group/:id',
-            component: UpdateGroupComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/group/update-group/update-group.component'
+              ).then((m) => m.UpdateGroupComponent),
           },
         ],
       },
       {
-        path: 'branches',
+        path: '',
         canActivate: [authGuard],
         children: [
-          { path: '', component: ShowBranchesComponent },
-          { path: 'add-branch', component: AddBranchComponent },
+          {
+            path: 'branches',
+            loadComponent: () =>
+              import(
+                './modules/branch/components/show-branches/show-branches.component'
+              ).then((m) => m.ShowBranchesComponent),
+          },
+          {
+            path: 'add-branch',
+            loadComponent: () =>
+              import(
+                './modules/branch/components/add-branch/add-branch.component'
+              ).then((m) => m.AddBranchComponent),
+          },
+          {
+            path: 'update-branch/:id',
+            loadComponent: () =>
+              import(
+                './modules/branch/components/update-branch/update-branch.component'
+              ).then((m) => m.UpdateBranchComponent),
+          },
         ],
       },
       {
@@ -67,16 +82,25 @@ export const routes: Routes = [
         children: [
           {
             path: 'units',
-            component: ShowUnitsComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/unit/show-units/show-units.component'
+              ).then((m) => m.ShowUnitsComponent),
           },
           {
             path: 'add-unit',
-            component: AddUnitComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/unit/add-unit/add-unit.component'
+              ).then((m) => m.AddUnitComponent),
           },
           {
             path: 'edit-unit/:id',
-            component: UpdateUnitComponent,
-          }
+            loadComponent: () =>
+              import(
+                './modules/inventory/unit/update-unit/update-unit.component'
+              ).then((m) => m.UpdateUnitComponent),
+          },
         ],
       },
       {
@@ -85,15 +109,24 @@ export const routes: Routes = [
         children: [
           {
             path: 'prices',
-            component: ShowPricesComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/price/pages/show-prices/show-prices.component'
+              ).then((m) => m.ShowPricesComponent),
           },
           {
             path: 'add-price',
-            component: AddPriceComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/price/pages/add-price/add-price.component'
+              ).then((m) => m.AddPriceComponent),
           },
           {
             path: 'update-price/:id',
-            component: AddPriceComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/price/pages/add-price/add-price.component'
+              ).then((m) => m.AddPriceComponent),
           },
         ],
       },
@@ -103,11 +136,17 @@ export const routes: Routes = [
         children: [
           {
             path: 'products',
-            component: ShowProductsComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/product/components/show-products/show-products.component'
+              ).then((m) => m.ShowProductsComponent),
           },
           {
             path: 'add-product',
-            component: AddProductComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/product/components/add-product/add-product.component'
+              ).then((m) => m.AddProductComponent),
           },
         ],
       },
@@ -117,11 +156,17 @@ export const routes: Routes = [
         children: [
           {
             path: 'warehouses',
-            component: ShowWarehousesComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/warehouse/show-warehouses/show-warehouses.component'
+              ).then((m) => m.ShowWarehousesComponent),
           },
           {
             path: 'add-warehouse',
-            component: AddWarehouseComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/warehouse/add-warehouse/add-warehouse.component'
+              ).then((m) => m.AddWarehouseComponent),
           },
         ],
       },
@@ -131,11 +176,17 @@ export const routes: Routes = [
         children: [
           {
             path: 'purchases',
-            component: ShowPurchasesComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/purchases/show-purchases/show-purchases.component'
+              ).then((m) => m.ShowPurchasesComponent),
           },
           {
             path: 'add-warehouse',
-            component: AddWarehouseComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/warehouse/add-warehouse/add-warehouse.component'
+              ).then((m) => m.AddWarehouseComponent),
           },
         ],
       },
@@ -145,11 +196,17 @@ export const routes: Routes = [
         children: [
           {
             path: 'sales',
-            component: ShowSalesComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/sales/show-sales/show-sales.component'
+              ).then((m) => m.ShowSalesComponent),
           },
           {
             path: 'add-warehouse',
-            component: AddWarehouseComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/warehouse/add-warehouse/add-warehouse.component'
+              ).then((m) => m.AddWarehouseComponent),
           },
         ],
       },
@@ -159,7 +216,10 @@ export const routes: Routes = [
         children: [
           {
             path: 'printBarcode',
-            component: BarcodePrintComponent,
+            loadComponent: () =>
+              import(
+                './modules/inventory/barcode/barcode-print.component'
+              ).then((m) => m.BarcodePrintComponent),
           },
         ],
       },
