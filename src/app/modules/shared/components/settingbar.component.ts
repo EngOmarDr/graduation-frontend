@@ -138,10 +138,21 @@ import { FormsModule } from '@angular/forms';
       </div>
 
       <!-- Color Scheme Section -->
-      <h5 class="text-lg font-semibold mt-4 mb-2">Color Scheme</h5>
+      <!-- <h5 class="text-lg font-semibold mt-4 mb-2">Color Scheme</h5>
       <div class="flex flex-col gap-2">
         <app-toggle-theme />
+      </div> -->
+
+      <!-- Color Scheme Section -->
+      <h5 class="text-lg font-semibold mt-4 mb-2">Color Scheme</h5>
+      <div class="flex flex-col gap-2">
+        <!-- Theme toggle button -->
+        <button (click)="toggleDarkMode()" class="p-2 bg-gray-200 dark:bg-gray-700 rounded w-fit">
+          <span class="dark:hidden">🌙 Light</span>
+          <span class="hidden dark:inline">☀️ Dark</span>
+        </button>
       </div>
+
 
       <!-- Input Style Section -->
       <h5 class="text-lg font-semibold mt-4 mb-2">Input Style</h5>
@@ -246,4 +257,9 @@ export class SettingbarComponent implements OnInit {
   selectedMenuTheme = 'colorScheme';
   selectedInputStyle = 'outlined';
   rippleEffect = false;
+
+    toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+    }
+
 }
