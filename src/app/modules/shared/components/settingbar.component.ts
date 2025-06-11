@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
-import { ToggleThemeComponent } from './toggleTheme.component';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -147,12 +146,14 @@ import { FormsModule } from '@angular/forms';
       <h5 class="text-lg font-semibold mt-4 mb-2">Color Scheme</h5>
       <div class="flex flex-col gap-2">
         <!-- Theme toggle button -->
-        <button (click)="toggleDarkMode()" class="p-2 bg-gray-200 dark:bg-gray-700 rounded w-fit">
+        <button
+          (click)="toggleDarkMode()"
+          class="p-2 bg-gray-200 dark:bg-gray-700 rounded w-fit"
+        >
           <span class="dark:hidden">🌙 Light</span>
           <span class="hidden dark:inline">☀️ Dark</span>
         </button>
       </div>
-
 
       <!-- Input Style Section -->
       <h5 class="text-lg font-semibold mt-4 mb-2">Input Style</h5>
@@ -258,8 +259,7 @@ export class SettingbarComponent implements OnInit {
   selectedInputStyle = 'outlined';
   rippleEffect = false;
 
-    toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-    }
-
+  toggleDarkMode() {
+    document.documentElement.classList.toggle('dark');
+  }
 }

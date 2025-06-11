@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Currency } from '../models/currency.model';
 import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -7,10 +7,9 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class CurrencyService {
   private apiUrl = `${environment.apiUrl}/currencies`;
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
-
-    getCurrencies(): Observable<Currency[]> {
+  getCurrencies(): Observable<Currency[]> {
     return this.http.get<Currency[]>(this.apiUrl);
   }
 
@@ -23,11 +22,10 @@ export class CurrencyService {
   }
 
   updateCurrency(id: number, currency: Currency): Observable<Currency> {
-  return this.http.put<Currency>(`${this.apiUrl}/${id}`, currency);
+    return this.http.put<Currency>(`${this.apiUrl}/${id}`, currency);
   }
 
   deleteCurrency(id: number): Observable<void> {
-  return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-
 }
