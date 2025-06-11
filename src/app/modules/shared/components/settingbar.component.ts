@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-setting-bar',
-  imports: [CommonModule, ToggleThemeComponent, FormsModule],
+  imports: [CommonModule, FormsModule],
   template: `
     <!-- overlay -->
     <div
