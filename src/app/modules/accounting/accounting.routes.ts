@@ -96,7 +96,7 @@ export const accountingRoutes: Routes = [
     path: 'cust-journal/:name',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./journal copy/components/add/add-custom-journal.component').then(
+      import('./custom-journal/components/add/add-custom-journal.component').then(
         (m) => m.AddCustomJournalComponent
       ),
   },
