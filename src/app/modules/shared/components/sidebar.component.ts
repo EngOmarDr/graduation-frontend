@@ -8,120 +8,211 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-<!-- overlay -->
-<div class="fixed inset-0 z-30 transition-opacity bg-black bg-opacity-50 lg:hidden"
-     *ngIf="isSidebarOpen"
-     (click)="closeSidebar()"></div>
+    <!-- overlay -->
+    <div
+      class="fixed inset-0 z-30 transition-opacity bg-black bg-opacity-50 lg:hidden"
+      *ngIf="isSidebarOpen"
+      (click)="closeSidebar()"
+    ></div>
 
-<!-- sidebar -->
-<aside class="fixed start-0 top-0 z-40 h-svh bg-white dark:bg-dark-card-surface shadow-lg transition-transform duration-300 lg:sticky lg:translate-x-0 overflow-y-auto"
-       [ngClass]="{ '-translate-x-full ease-in': !isSidebarOpen, 'translate-x-0 ease-out': isSidebarOpen, 'w-64': !isCollapseded, 'w-20': isCollapseded }">
-
-  <button (click)="toggleCollapse()" class="p-2" class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-[ngClass]="{
-  'justify-center': isCollapseded,
-  'gap-2 text-left': !isCollapseded
-}">
-
-    <svg class="w-6 h-6 text-gray-700 dark:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path *ngIf="isCollapseded; else expandedIcon" d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
-      <ng-template #expandedIcon>
-        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" />
-      </ng-template>
-    </svg>
-  </button>
-
-  <!-- Logo -->
-  <div class="flex items-center justify-center h-16 border-b border-gray-200 dark:border-gray-700">
-    <h2 *ngIf="!isCollapseded" class="text-2xl font-bold text-primary dark:text-white">🧾 STC</h2>
-    <svg *ngIf="isCollapseded" class="w-6 h-6 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-  </div>
-
-
-  <nav class="p-4 space-y-2">
-    <ng-container *ngFor="let item of routes">
-      <div *ngIf="item.children; else noChildren">
-        <button (click)="item.fun()"
+    <!-- sidebar -->
+    <aside
+      class="fixed start-0 top-0 z-40 h-svh bg-white dark:bg-dark-card-surface shadow-lg transition-transform duration-300 lg:sticky lg:translate-x-0 overflow-y-auto"
+      [ngClass]="{
+        '-translate-x-full ease-in': !isSidebarOpen,
+        'translate-x-0 ease-out': isSidebarOpen,
+        'w-64': !isCollapseded,
+        'w-20': isCollapseded
+      }"
+    >
+      <button
+        (click)="toggleCollapse()"
+        class="p-2"
         class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-[ngClass]="{
-  'justify-center': isCollapseded,
-  'gap-2 text-left': !isCollapseded
-}"
-                class="flex items-center justify-between w-full px-3 py-2 rounded-lg text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-          <span class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round" [innerHTML]="getLucideIcon(item.icon)">
-            </svg>
-            <span *ngIf="!isCollapseded">{{ item.name }}</span>
-          </span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform"
-               [ngClass]="{ 'rotate-180': item.attr() }"
-               fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-          </svg>
+        [ngClass]="{
+          'justify-center': isCollapseded,
+          'gap-2 text-left': !isCollapseded
+        }"
+      >
+        <svg
+          class="w-6 h-6 text-gray-700 dark:text-white"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            *ngIf="isCollapseded; else expandedIcon"
+            d="M9 5l7 7-7 7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <ng-template #expandedIcon>
+            <path
+              d="M15 19l-7-7 7-7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </ng-template>
+        </svg>
+      </button>
 
-        </button>
-
-        <ul class="mt-1 pl-4 overflow-hidden space-y-1 transition-all"
-            [ngClass]="{ 'max-h-0': !item.attr(), 'max-h-96': item.attr() }">
-          <li *ngFor="let subItem of item.children">
-            <a routerLink="{{ subItem.routerLink }}"
-            class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-[ngClass]="{
-  'justify-center': isCollapseded,
-  'gap-2 text-left': !isCollapseded
-}"
-               class="flex items-center gap-2 px-3 py-1 rounded-md text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-               routerLinkActive="bg-primary text-white dark:bg-primary">
-              <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                   stroke-linecap="round" stroke-linejoin="round" [innerHTML]="getLucideIcon(subItem.icon)">
-              </svg>
-              <span *ngIf="!isCollapseded">{{ subItem.name }}</span>
-            </a>
-          </li>
-        </ul>
+      <!-- Logo -->
+      <div
+        class="flex items-center justify-center h-16 border-b border-gray-200 dark:border-gray-700"
+      >
+        <h2
+          *ngIf="!isCollapseded"
+          class="text-2xl font-bold text-primary dark:text-white"
+        >
+          🧾 STC
+        </h2>
+        <svg
+          *ngIf="isCollapseded"
+          class="w-6 h-6 text-primary"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+        >
+          <path
+            d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </div>
 
-      <ng-template #noChildren>
-        <a routerLink="{{ item.routerLink }}"
-        class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-[ngClass]="{
-  'justify-center': isCollapseded,
-  'gap-2 text-left': !isCollapseded
-}"
-           class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-           routerLinkActive="bg-primary text-white dark:bg-primary">
-          <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round" [innerHTML]="getLucideIcon(item.icon)">
-          </svg>
-          <span *ngIf="!isCollapseded">{{ item.name }}</span>
-        </a>
-      </ng-template>
-    </ng-container>
+      <nav class="p-4 space-y-2">
+        <ng-container *ngFor="let item of routes">
+          <div *ngIf="item.children; else noChildren">
+            <button
+              (click)="item.fun()"
+              class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+              [ngClass]="{
+                'justify-center': isCollapseded,
+                'gap-2 text-left': !isCollapseded
+              }"
+              class="flex items-center justify-between w-full px-3 py-2 rounded-lg text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            >
+              <span class="flex items-center gap-2">
+                <svg
+                  class="w-5 h-5 text-primary"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  [innerHTML]="getLucideIcon(item.icon)"
+                ></svg>
+                <span *ngIf="!isCollapseded">{{ item.name }}</span>
+              </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 transition-transform"
+                [ngClass]="{ 'rotate-180': item.attr() }"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  d="M19 9l-7 7-7-7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                />
+              </svg>
+            </button>
 
-    <hr class="my-4 border-gray-300 dark:border-gray-600" />
+            <ul
+              class="mt-1 pl-4 overflow-hidden space-y-1 transition-all"
+              [ngClass]="{ 'max-h-0': !item.attr(), 'max-h-96': item.attr() }"
+            >
+              <li *ngFor="let subItem of item.children">
+                <a
+                  routerLink="{{ subItem.routerLink }}"
+                  class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                  [ngClass]="{
+                    'justify-center': isCollapseded,
+                    'gap-2 text-left': !isCollapseded
+                  }"
+                  class="flex items-center gap-2 px-3 py-1 rounded-md text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                  routerLinkActive="bg-primary text-white dark:bg-primary"
+                >
+                  <svg
+                    class="w-4 h-4 text-primary"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    [innerHTML]="getLucideIcon(subItem.icon)"
+                  ></svg>
+                  <span *ngIf="!isCollapseded">{{ subItem.name }}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
 
-    <a routerLink="/settings"
-    class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-[ngClass]="{
-  'justify-center': isCollapseded,
-  'gap-2 text-left': !isCollapseded
-}"
-       class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-       routerLinkActive="bg-primary text-white dark:bg-primary">
-      <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-           stroke-linecap="round" stroke-linejoin="round" [innerHTML]="getLucideIcon('settings')">
-      </svg>
-      Settings
-    </a>
-  </nav>
-</aside>
+          <ng-template #noChildren>
+            <a
+              routerLink="{{ item.routerLink }}"
+              class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+              [ngClass]="{
+                'justify-center': isCollapseded,
+                'gap-2 text-left': !isCollapseded
+              }"
+              class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+              routerLinkActive="bg-primary text-white dark:bg-primary"
+            >
+              <svg
+                class="w-5 h-5 text-primary"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                [innerHTML]="getLucideIcon(item.icon)"
+              ></svg>
+              <span *ngIf="!isCollapseded">{{ item.name }}</span>
+            </a>
+          </ng-template>
+        </ng-container>
+
+        <!-- <hr class="my-4 border-gray-300 dark:border-gray-600" />
+
+        <a
+          routerLink="/settings"
+          class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+          [ngClass]="{
+            'justify-center': isCollapseded,
+            'gap-2 text-left': !isCollapseded
+          }"
+          class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          routerLinkActive="bg-primary text-white dark:bg-primary"
+        >
+          <svg
+            class="w-5 h-5 text-primary"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            [innerHTML]="getLucideIcon('settings')"
+          ></svg>
+          Settings
+        </a> -->
+      </nav>
+    </aside>
   `,
 })
 export class SidebarComponent {
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer) {}
 
   isSidebarOpen = false;
   isCollapseded = false;
@@ -142,15 +233,15 @@ export class SidebarComponent {
   }
 
   toggleProducts() {
-    this.isProductsExpanded.update(v => !v);
+    this.isProductsExpanded.update((v) => !v);
   }
 
   togglePurchases() {
-    this.isPurchasesExpanded.update(v => !v);
+    this.isPurchasesExpanded.update((v) => !v);
   }
 
   toggleSales() {
-    this.isSalesExpanded.update(v => !v);
+    this.isSalesExpanded.update((v) => !v);
   }
 
   routes = [
@@ -172,7 +263,7 @@ export class SidebarComponent {
     { name: 'Accounts', icon: 'wallet-cards', routerLink: '/accounts' },
     { name: 'Branches', icon: 'git-branch', routerLink: '/branches' },
     { name: 'Currencies', icon: 'coins', routerLink: '/currencies' },
-    { name: 'Journals', icon: 'book-text', routerLink: '/add-journal' },
+    { name: 'Journals', icon: 'book-text', routerLink: 'journal/add-journal' },
     { name: 'Payment Voucher', icon: 'receipt', routerLink: '/paymentVoucher' },
     {
       name: 'Purchases',
@@ -181,7 +272,11 @@ export class SidebarComponent {
       attr: this.isPurchasesExpanded,
       children: [
         { name: 'Purchases', icon: 'shopping-bag', routerLink: '/purchases' },
-        { name: 'Purchases Returns', icon: 'rotate-ccw', routerLink: '/purchasesReturns' },
+        {
+          name: 'Purchases Returns',
+          icon: 'rotate-ccw',
+          routerLink: '/purchasesReturns',
+        },
       ],
     },
     {
@@ -191,7 +286,11 @@ export class SidebarComponent {
       attr: this.isSalesExpanded,
       children: [
         { name: 'Sales', icon: 'badge-dollar-sign', routerLink: '/sales' },
-        { name: 'Sales Returns', icon: 'rotate-ccw', routerLink: '/salesReturns' },
+        {
+          name: 'Sales Returns',
+          icon: 'rotate-ccw',
+          routerLink: '/salesReturns',
+        },
       ],
     },
     { name: 'Roles/Permissions', icon: 'lock-keyhole', routerLink: '/roles' },
@@ -224,5 +323,4 @@ export class SidebarComponent {
 
     return this.sanitizer.bypassSecurityTrustHtml(icons[name] || '');
   }
-
 }
