@@ -92,4 +92,12 @@ export const accountingRoutes: Routes = [
         (m) => m.AddPaymentVoucherComponent
       ),
   },
+  {
+    path: 'cust-journal/:name',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./journal copy/components/add/add-custom-journal.component').then(
+        (m) => m.AddCustomJournalComponent
+      ),
+  },
 ];

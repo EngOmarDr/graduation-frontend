@@ -204,8 +204,8 @@
   }
   .ng-dropdown-panel-items {
     width: 100%;
-    /* transform: translateX(calc(var(--spacing) * -2.5))
-      translateY(calc(var(--spacing) * 2.5)); */
+    transform: translateX(calc(var(--spacing) * -2.5))
+      translateY(calc(var(--spacing) * 2.5));
     /* margin-left: calc(var(--spacing) * -4); */
     /* padding: calc(var(--spacing) * 2.5); */
     background-color: var(--color-gray-50);

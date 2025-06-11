@@ -1,7 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  Signal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Observable, of } from 'rxjs';
+import { JournalTypesResponse } from 'app/core/models/response/journal-types-response';
+import { JournalTypesService } from 'app/core/services/journal-types.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,7 +20,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   template: `
     <!-- overlay -->
     <div
-      class="fixed inset-0 z-30 transition-opacity bg-black bg-opacity-50 lg:hidden"
+      class="fixed inset-0 z-30 transition-opacity bg-black opacity-50 lg:hidden"
       *ngIf="isSidebarOpen"
       (click)="closeSidebar()"
     ></div>
@@ -88,7 +98,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
         <ng-container *ngFor="let item of routes">
           <div *ngIf="item.children; else noChildren">
             <button
-              (click)="item.fun()"
+              (click)="item?.fun()"
               class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
               [ngClass]="{
                 'justify-center': isCollapseded,
@@ -112,7 +122,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="w-4 h-4 transition-transform"
-                [ngClass]="{ 'rotate-180': item.attr() }"
+                [ngClass]="{ 'rotate-180': item?.attr() }"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -128,11 +138,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
             <ul
               class="mt-1 pl-4 overflow-hidden space-y-1 transition-all"
-              [ngClass]="{ 'max-h-0': !item.attr(), 'max-h-96': item.attr() }"
+              [ngClass]="{ 'max-h-0': !item?.attr(), 'max-h-96': item?.attr() }"
             >
               <li *ngFor="let subItem of item.children">
                 <a
-                  routerLink="{{ subItem.routerLink }}"
+                  [routerLink]="[subItem.routerLink]"
+                  [state]="{ journalType: subItem.state }"
                   class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                   [ngClass]="{
                     'justify-center': isCollapseded,
@@ -211,12 +222,30 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     </aside>
   `,
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+  private service = inject(JournalTypesService);
+  journalTypes = signal<JournalTypesResponse[]>([]);
+
   constructor(private sanitizer: DomSanitizer) {}
+
+  ngOnInit(): void {
+    this.service.getJournalTypes().subscribe((next) => {
+      this.journalTypes.set(next);
+      this.routes[2].children?.push(
+        ...this.journalTypes().map((next) => ({
+          name: next.name,
+          routerLink: `/cust-journal/${next.name}`,
+          icon: '',
+          state: next,
+        }))
+      );
+    });
+  }
 
   isSidebarOpen = false;
   isCollapseded = false;
   isProductsExpanded = signal(false);
+  isAccountsExpanded = signal(false);
   isPurchasesExpanded = signal(false);
   isSalesExpanded = signal(false);
 
@@ -232,6 +261,9 @@ export class SidebarComponent {
     this.isSidebarOpen = false;
   }
 
+  toggleAccounts() {
+    this.isAccountsExpanded.update((v) => !v);
+  }
   toggleProducts() {
     this.isProductsExpanded.update((v) => !v);
   }
@@ -244,7 +276,22 @@ export class SidebarComponent {
     this.isSalesExpanded.update((v) => !v);
   }
 
-  routes = [
+  routes: {
+    name: string;
+    icon: string;
+    fun?: () => void;
+    attr?: WritableSignal<boolean>;
+    routerLink?: string;
+    children?: {
+      name: string;
+      icon: string;
+      routerLink?: string;
+      fun?: undefined;
+      attr?: undefined;
+      children?: undefined;
+      state?: any;
+    }[];
+  }[] = [
     { name: 'Dashboard', icon: 'home', routerLink: '' },
     {
       name: 'Products',
@@ -252,7 +299,12 @@ export class SidebarComponent {
       fun: () => this.toggleProducts(),
       attr: this.isProductsExpanded,
       children: [
-        { name: 'Products', icon: 'box', routerLink: '/products' },
+        {
+          name: 'Products',
+          icon: 'box',
+          routerLink: '/products',
+          state: undefined,
+        },
         { name: 'Groups', icon: 'layers', routerLink: '/groups' },
         { name: 'Units', icon: 'ruler', routerLink: '/units' },
         { name: 'Warehouses', icon: 'warehouse', routerLink: '/warehouses' },
@@ -260,7 +312,15 @@ export class SidebarComponent {
         { name: 'Print Barcode', icon: 'barcode', routerLink: '/printBarcode' },
       ],
     },
-    { name: 'Accounts', icon: 'wallet-cards', routerLink: '/accounts' },
+    {
+      name: 'Accounts',
+      icon: 'wallet-cards',
+      fun: () => this.toggleAccounts(),
+      attr: this.isAccountsExpanded,
+      children: [
+        { name: 'Accounts', icon: 'wallet-card', routerLink: '/accounts' },
+      ],
+    },
     { name: 'Branches', icon: 'git-branch', routerLink: '/branches' },
     { name: 'Currencies', icon: 'coins', routerLink: '/currencies' },
     { name: 'Journals', icon: 'book-text', routerLink: 'journal/add-journal' },
