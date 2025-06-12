@@ -5,13 +5,16 @@ import { Group } from '../models/group';
 import {
   FormBuilder,
   FormGroup,
+  NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { GroupService } from '../services/group.service';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
+import { Observable, of } from 'rxjs';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-update-group',
@@ -24,35 +27,59 @@ import { ValidationMessageComponent } from '../../../shared/components/validatio
     CustomFieldComponent,
     ValidationMessageComponent,
     CardComponent,
+    NgSelectModule,
+    AsyncPipe,
   ],
   templateUrl: './update-group.component.html',
 })
 export class UpdateGroupComponent implements OnInit {
-  private fb = inject(FormBuilder);
+  private fb = inject(NonNullableFormBuilder);
   private service = inject(GroupService);
   private activeRouter = inject(ActivatedRoute);
   private router = inject(Router);
 
   results = [];
-  group: Group | null = null;
+  group: Group | undefined = undefined;
 
-  form: FormGroup = this.fb.group({});
+  form = this.fb.group({
+    code: this.fb.control(this.group?.code == null ? '' : this.group!.code, [
+      Validators.required,
+    ]),
+    name: [this.group?.name ?? '', [Validators.required]],
+    parentId: [
+      this.group?.parentId ?? undefined,
+      { validators: [], disabled: true },
+    ],
+    notes: [this.group?.notes ?? ''],
+  });
+
+  groups$: Observable<Group[]> = of();
+
+  searchFn(term: string, item: any) {
+    term = term.toLowerCase();
+    return (
+      item.name.toLowerCase().includes(term) ||
+      item.code.toLowerCase().includes(term)
+    );
+  }
 
   ngOnInit() {
     // Get the data passed from navigation
+    this.groups$ = this.service.getGroups();
     const navigation = window.history.state;
     if (navigation.groupData) {
       this.group = navigation.groupData;
       this.form = this.fb.group({
-        code: this.fb.control(this.group?.code ?? '', {
-          validators: [Validators.required],
-        }),
+        code: this.fb.control(
+          this.group?.code == null ? '' : this.group!.code,
+          [Validators.required]
+        ),
         name: [this.group?.name ?? '', [Validators.required]],
         parentId: [
-          this.group?.parentId! ?? '',
+          this.group?.parentId ?? undefined,
           { validators: [], disabled: true },
         ],
-        notes: [this.group?.notes],
+        notes: [this.group?.notes ?? ''],
       });
     } else {
       // Fallback: if page refreshed, get ID from route and fetch from API
@@ -61,15 +88,15 @@ export class UpdateGroupComponent implements OnInit {
         this.service.getGroupById(Number.parseInt(id)).subscribe((next) => {
           this.group = next;
           this.form = this.fb.group({
-            code: this.fb.control(this.group?.code ?? '', {
-              validators: [Validators.required],
-            }),
+            code: this.fb.control(this.group?.code ?? '', [
+              Validators.required,
+            ]),
             name: [this.group?.name ?? '', [Validators.required]],
             parentId: [
-              this.group?.parentId! ?? '',
+              this.group?.parentId ?? undefined,
               { validators: [], disabled: true },
             ],
-            notes: [this.group?.notes],
+            notes: [this.group?.notes ?? ''],
           });
         });
       }

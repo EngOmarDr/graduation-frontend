@@ -34,8 +34,6 @@
     </div>
 
     // this is TS
-    searchInput$ = new Subject<string>();
-
   accounts$: Observable<Account[]> = of();
 
   ngOnInit(): void {

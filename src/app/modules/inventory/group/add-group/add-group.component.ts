@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
   NonNullableFormBuilder,
@@ -10,6 +10,9 @@ import { ValidationMessageComponent } from '../../../shared/components/validatio
 import { CardComponent } from '../../../shared/components/card-form.component';
 import { GroupService } from '../services/group.service';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { Group } from '../models/group';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-add-group',
@@ -19,6 +22,8 @@ import { Router } from '@angular/router';
     CustomFieldComponent,
     ValidationMessageComponent,
     CardComponent,
+    NgSelectModule,
+    AsyncPipe,
   ],
   templateUrl: './add-group.component.html',
 })
@@ -38,6 +43,19 @@ export class AddGroupComponent {
     notes: [''],
   });
 
+  groups$: Observable<Group[]> = of();
+
+  ngOnInit(): void {
+    this.groups$ = this.service.getGroups();
+  }
+
+  searchFn(term: string, item: any) {
+    term = term.toLowerCase();
+    return (
+      item.name.toLowerCase().includes(term) ||
+      item.code.toLowerCase().includes(term)
+    );
+  }
   onSubmit() {
     if (this.form.valid) {
       this.service.createGroup(this.form.getRawValue()).subscribe({
