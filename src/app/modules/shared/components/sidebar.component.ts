@@ -10,8 +10,9 @@ import {
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
-import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
 import { JournalTypesService } from 'app/modules/accounting/journal-type/services/journal-types.service';
+import {JournalTypeResponse} from 'app/modules/accounting/journal-type/models/response/journal-type-response.model'
+
 
 @Component({
   selector: 'app-sidebar',
@@ -229,7 +230,7 @@ export class SidebarComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.service.getJournalTypes().subscribe((next) => {
+    this.service.getJournalTypes().subscribe((next: JournalTypeResponse[]) => {
       this.journalTypes.set(next);
       this.routes[2].children?.push(
         ...this.journalTypes().map((next) => ({
@@ -323,8 +324,7 @@ export class SidebarComponent implements OnInit {
     },
     { name: 'Branches', icon: 'git-branch', routerLink: '/branches' },
     { name: 'Currencies', icon: 'coins', routerLink: '/currencies' },
-    { name: 'Journals', icon: 'book-text', routerLink: 'journal/add-journal' },
-    { name: 'Journal Type', icon: 'book-text', routerLink: '/journal-types' },
+    { name: 'Journals', icon: 'book-text', routerLink: 'journal/journals' },
     { name: 'Payment Voucher', icon: 'receipt', routerLink: '/paymentVoucher' },
     {
       name: 'Purchases',

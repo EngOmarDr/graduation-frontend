@@ -1,0 +1,50 @@
+<cust-card titleText="السندات" [titlePadding]="false">
+  <div class="flex justify-end items-center">
+    <button
+      type="button"
+      class="py-1.5 px-2.5 mb-3 btn"
+      routerLink="/journal/add-journal"
+    >
+      إضافة سند جديد
+    </button>
+  </div>
+
+  <div class="overflow-auto max-h-80 relative">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th *ngFor="let col of displayedColumns">{{ col | titlecase }}</th>
+          <th>الإجراءات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="vouchers().length === 0">
+          <td [attr.colspan]="displayedColumns.length + 2" class="text-center">
+            لا توجد بيانات
+          </td>
+        </tr>
+
+        <tr *ngFor="let voucher of vouchers(); let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ voucher.branch.name }}</td>
+          <td>{{ voucher.date | date:'yyyy-MM-dd' }}</td>
+          <td>{{ voucher.currency.name }}</td>
+          <td>{{ voucher.currencyValue | number:'1.2-2' }}</td>
+          <td>{{ voucher.isPosted ? 'مُرحّل' : 'غير مُرحّل' }}</td>
+          <td>{{ voucher.notes ?? '-' }}</td>
+          <td>
+            <button
+              type="button"
+              (click)="deleteItem(voucher)"
+              title="حذف"
+              class="text-red-600 hover:text-red-800 cursor-pointer"
+            >
+              حذف
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</cust-card>
