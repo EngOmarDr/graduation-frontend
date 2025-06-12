@@ -1,29 +1,29 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Unit } from '../models/unit.model';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
+import { UnitRequest } from '../models/request/unit-request.model';
+import { UnitResponse } from '../models/response/unit-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class UnitService {
   private apiUrl = `${environment.apiUrl}/units`;
+  private readonly http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
-
-  getUnits(): Observable<Unit[]> {
-    return this.http.get<Unit[]>(this.apiUrl);
+  getUnits(): Observable<UnitResponse[]> {
+    return this.http.get<UnitResponse[]>(this.apiUrl);
   }
 
-  getUnitById(id: number): Observable<Unit> {
-    return this.http.get<Unit>(`${this.apiUrl}/${id}`);
+  getUnitById(id: number): Observable<UnitResponse> {
+    return this.http.get<UnitResponse>(`${this.apiUrl}/${id}`);
   }
 
-  createUnit(unit: Partial<Unit>): Observable<Unit> {
-    return this.http.post<Unit>(this.apiUrl, unit);
+  createUnit(unit: UnitRequest): Observable<UnitResponse> {
+    return this.http.post<UnitResponse>(this.apiUrl, unit);
   }
 
-  updateUnit(id: number, unit: Partial<Unit>): Observable<Unit> {
-    return this.http.put<Unit>(`${this.apiUrl}/${id}`, unit);
+  updateUnit(id: number, unit: UnitRequest): Observable<UnitResponse> {
+    return this.http.put<UnitResponse>(`${this.apiUrl}/${id}`, unit);
   }
 
   deleteUnit(id: number): Observable<void> {

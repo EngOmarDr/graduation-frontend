@@ -256,6 +256,12 @@
     border-color: var(--color-gray-400);
   }
 
+  tbody > tr:hover {
+    background-color: var(--color-neutral-100);
+  }
+  .dark tbody > tr:hover {
+    background-color: var(--color-neutral-700);
+  }
   tbody > tr > td {
     padding: 10px 5px;
     text-align: center;

@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <div class="overflow-auto max-h-80 relative">
+    <div class="overflow-auto max-h-96 relative">
       <table>
         <thead>
           <tr>

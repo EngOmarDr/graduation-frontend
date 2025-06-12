@@ -84,21 +84,21 @@ export const routes: Routes = [
             path: 'units',
             loadComponent: () =>
               import(
-                './modules/inventory/unit/show-units/show-units.component'
+                './modules/inventory/unit/components/show-units/show-units.component'
               ).then((m) => m.ShowUnitsComponent),
           },
           {
             path: 'add-unit',
             loadComponent: () =>
               import(
-                './modules/inventory/unit/add-unit/add-unit.component'
+                './modules/inventory/unit/components/add-unit/add-unit.component'
               ).then((m) => m.AddUnitComponent),
           },
           {
-            path: 'edit-unit/:id',
+            path: 'update-unit/:id',
             loadComponent: () =>
               import(
-                './modules/inventory/unit/update-unit/update-unit.component'
+                './modules/inventory/unit/components/update-unit/update-unit.component'
               ).then((m) => m.UpdateUnitComponent),
           },
         ],

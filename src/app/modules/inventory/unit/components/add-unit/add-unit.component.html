@@ -1,0 +1,82 @@
+<cust-card titleText="Add Unit">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
+    <cust-form-field
+      [control]="form.controls.name"
+      inputId="name"
+      label="Name"
+    />
+
+    <div class="overflow-y-auto col-span-full w-full">
+      <table formArrayName="unitItems" class="add-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Fact</th>
+            <th>Is Default</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let row of unitItems.controls; let i = index"
+            [formGroup]="row"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>
+              <input formControlName="name" class="cust-input" />
+              <app-validation-message
+                [control]="row.get('name')!"
+                name="name"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                formControlName="fact"
+                class="cust-input"
+                [readOnly]="i === 0"
+                [ngClass]="{
+                  'opacity-50': i === 0
+                }"
+              />
+              <app-validation-message
+                [control]="row.get('fact')!"
+                name="fact"
+              />
+            </td>
+
+            <td>
+              <input
+                type="checkbox"
+                formControlName="isDef"
+                (change)="changeIsDef(i)"
+              />
+            </td>
+
+            <td>
+              <button type="button" class="text-red-500" (click)="removeRow(i)">
+                Remove
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td [attr.colspan]="6" class="text-center w-full py-2">
+              <button
+                type="button"
+                class="w-fit self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
+                (click)="addRow()"
+              >
+                <img src="assets/icons/add.png" alt="add" />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-span-full">
+      <button type="submit" class="btn">Add</button>
+    </div>
+  </form>
+</cust-card>
