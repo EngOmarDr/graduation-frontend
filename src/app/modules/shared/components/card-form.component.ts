@@ -20,7 +20,7 @@ import { filter } from 'rxjs';
           (click)="goBack()"
         ></mat-icon> -->
         <h4 class="cust-header">
-          {{ title() }}
+          {{ titleText() }}
         </h4>
       </div>
       <ng-content></ng-content>
@@ -28,7 +28,7 @@ import { filter } from 'rxjs';
   `,
 })
 export class CardComponent {
-  readonly title = input.required<string>();
+  readonly titleText = input.required<string>();
   readonly titlePadding = input<boolean>(true);
 
   showBackButton: boolean = false;

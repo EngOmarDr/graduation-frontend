@@ -1,4 +1,4 @@
-<cust-card title="{{ isUpdate ? 'Update Price' : 'Add Price' }}">
+<cust-card titleText="{{ isUpdate ? 'Update Price' : 'Add Price' }}">
   <form [formGroup]="priceForm" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="priceForm.controls.name"
