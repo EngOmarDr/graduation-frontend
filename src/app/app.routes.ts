@@ -50,11 +50,11 @@ export const routes: Routes = [
         ],
       },
       {
-        path: '',
+        path: 'branches',
         canActivate: [authGuard],
         children: [
           {
-            path: 'branches',
+            path: '',
             loadComponent: () =>
               import(
                 './modules/branch/components/show-branches/show-branches.component'

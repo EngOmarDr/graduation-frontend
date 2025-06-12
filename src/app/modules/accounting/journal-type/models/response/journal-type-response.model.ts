@@ -1,7 +1,7 @@
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
 import { CurrencyResponse } from 'app/modules/accounting/currency/models/response/currency-response.model';
 
-export interface JournalTypesResponse {
+export interface JournalTypeResponse {
   id: number;
   name: string;
   autoPost: boolean;
@@ -11,9 +11,9 @@ export interface JournalTypesResponse {
   fieldCurrencyName: boolean;
   fieldDate: boolean;
   fieldCurrencyEquilty: boolean;
-  defaultCurrency: CurrencyResponse;
+  defaultCurrency?: CurrencyResponse;
   numberFormat: string;
   debitName: string;
   creditName: string;
-  defaultAccountId: AccountResponse;
+  defaultAccountId?: AccountResponse;
 }

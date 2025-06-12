@@ -1,0 +1,57 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
+import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
+import { JournalTypesService } from '../../services/journal-types.service';
+import { Router, RouterModule } from '@angular/router';
+import { CardComponent } from '@shared/components/card-form.component';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-show-journal-types',
+  imports: [CardComponent, CommonModule,RouterModule],
+  templateUrl: './show-journal-type.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ShowJournalTypesComponent {
+  private readonly service = inject(JournalTypesService);
+  private readonly router = inject(Router);
+
+  displayedColumns: (keyof JournalTypeResponse)[] = [
+    'name',
+    'defaultAccountId',
+    'defaultCurrency',
+    'debitName',
+    'creditName',
+  ];
+  journalTypes = signal<JournalTypeResponse[]>([]);
+
+  ngOnInit(): void {
+    this.service.getJournalTypes().subscribe((next) => {
+      console.log(next);
+
+      this.journalTypes.set(next);
+    });
+  }
+
+  updateItem(object: JournalTypeResponse) {
+    this.router.navigate([
+      'update-journalType',
+      object.id,
+      { state: { object } },
+    ]);
+  }
+
+  deleteItem(object: JournalTypeResponse): void {
+    if (confirm('Are you sure you want to delete this journalType?')) {
+      this.service.deleteJournalType(object.id).subscribe(() => {
+        this.journalTypes.update((old) =>
+          old.filter((item) => item.id != object.id)
+        );
+      });
+    }
+  }
+}

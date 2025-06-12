@@ -1,0 +1,126 @@
+<cust-card title="Add Journal Type">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
+    <cust-form-field
+      [control]="form.controls.name"
+      inputId="name"
+      label="Name"
+    />
+
+    <div>
+      <label
+        for="defAccount"
+        class="cust-input-label"
+        [ngClass]="{
+          'cust-label-disable': form.controls.defaultAccountId.disabled
+        }"
+        >Default Account
+      </label>
+      <ng-select
+        id="defAccount"
+        [items]="accounts$ | async"
+        bindLabel="name"
+        bindValue="id"
+        [searchFn]="searchFn"
+        [formControl]="formControls.defaultAccountId"
+        class="cust-input"
+      >
+        <ng-template
+          ng-option-tmp
+          let-item="item"
+          let-index="index"
+          let-search="searchTerm"
+        >
+          <div>{{ item.name + "-" + item.code }}</div>
+        </ng-template>
+      </ng-select>
+      <app-validation-message
+        [control]="form.controls.defaultAccountId"
+        name="Default Account"
+      />
+    </div>
+
+    <div>
+      <label
+        for="defCurrency"
+        class="cust-input-label"
+        [ngClass]="{
+          'cust-label-disable': form.controls.defaultCurrencyId.disabled
+        }"
+        >Default Currency
+      </label>
+      <ng-select
+        id="defCurrency"
+        [items]="currencies$ | async"
+        bindLabel="name"
+        bindValue="id"
+        [searchFn]="searchFn"
+        [formControl]="formControls.defaultCurrencyId"
+        class="cust-input"
+      >
+        <ng-template
+          ng-option-tmp
+          let-item="item"
+          let-index="index"
+          let-search="searchTerm"
+        >
+          <div>{{ item.name + "-" + item.code }}</div>
+        </ng-template>
+      </ng-select>
+      <app-validation-message
+        [control]="form.controls.defaultCurrencyId"
+        name="Default Currency"
+      />
+    </div>
+
+    <cust-form-field
+      [control]="form.controls.creditName"
+      inputId="Credit Name"
+      label="Credit Name"
+    />
+
+    <cust-form-field
+      [control]="form.controls.debitName"
+      inputId="Debit Name"
+      label="Debit Name"
+    />
+
+    <label>
+      <input type="checkbox" [formControl]="formControls.fieldCredit" />
+      Field Credit
+    </label>
+    <label>
+      <input type="checkbox" [formControl]="formControls.fieldDebit" />
+      Field Debit
+    </label>
+    <label>
+      <input type="checkbox" [formControl]="formControls.fieldDate" />
+      Field Date
+    </label>
+    <label>
+      <input type="checkbox" [formControl]="formControls.fieldNotes" />
+      Field Notes
+    </label>
+    <label>
+      <input type="checkbox" [formControl]="formControls.fieldCurrencyName" />
+      Field Currency Name
+    </label>
+    <label>
+      <input
+        type="checkbox"
+        [formControl]="formControls.fieldCurrencyEquilty"
+      />
+      Field Currency Equilty
+    </label>
+    <label>
+      <input type="checkbox" [formControl]="formControls.autoPost" />
+      auto post
+    </label>
+
+    <div class="col-span-full grid grid-cols-4">
+      <button type="submit" class="btn" [disabled]="!form.valid">Add</button>
+    </div>
+  </form>
+  <div>
+    {{ form.value | json }}
+  </div>
+</cust-card>

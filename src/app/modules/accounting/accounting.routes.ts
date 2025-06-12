@@ -85,6 +85,34 @@ export const accountingRoutes: Routes = [
   },
 
   {
+    path: '',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'journal-types',
+        loadComponent: () =>
+          import(
+            './journal-type/components/show-all/show-journal-type.component'
+          ).then((m) => m.ShowJournalTypesComponent),
+      },
+      {
+        path: 'add-journal-type',
+        loadComponent: () =>
+          import(
+            './journal-type/components/add/add-journal-type.component'
+          ).then((m) => m.AddJournalTypeComponent),
+      },
+      {
+        path: 'update-journalType/:id',
+        loadComponent: () =>
+          import(
+            './journal-type/components/update/update-journal-type.component'
+          ).then((m) => m.UpdateJournalTypeComponent),
+      },
+    ],
+  },
+
+  {
     path: 'paymentVoucher',
     canActivate: [authGuard],
     loadComponent: () =>
@@ -96,8 +124,8 @@ export const accountingRoutes: Routes = [
     path: 'cust-journal/:name',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./custom-journal/components/add/add-custom-journal.component').then(
-        (m) => m.AddCustomJournalComponent
-      ),
+      import(
+        './custom-journal/components/add/add-custom-journal.component'
+      ).then((m) => m.AddCustomJournalComponent),
   },
 ];

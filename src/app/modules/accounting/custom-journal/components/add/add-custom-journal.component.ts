@@ -19,7 +19,7 @@ import { ValidationMessageComponent } from '../../../../shared/components/valida
 import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
 import { Account } from 'app/modules/accounting/account/models/account';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JournalTypesResponse } from 'app/core/models/response/journal-types-response';
+import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
 
 @Component({
@@ -77,7 +77,7 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
   sumCredit = 0;
   minus = 0;
 
-  journalType: JournalTypesResponse | undefined;
+  journalType: JournalTypeResponse | undefined;
   private subscriptions = new Subscription();
 
   ngOnInit(): void {
