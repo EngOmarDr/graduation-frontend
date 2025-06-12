@@ -1,26 +1,26 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  FormArray,
-  FormGroup,
-  FormsModule,
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
+  FormArray, FormGroup, FormsModule, NonNullableFormBuilder,
+  ReactiveFormsModule, Validators
 } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Currency } from 'app/modules/accounting/currency/models/currency.model';
 import { CurrencyService } from 'app/modules/accounting/currency/services/currency.service';
+import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
+import { Account } from 'app/modules/accounting/account/models/account';
+import { JournalService } from '../../service/journal.service';
+import { JournalRequest } from 'app/modules/accounting/journal/models/journal.model';
+
 import { CardComponent } from '../../../../shared/components/card-form.component';
 import { CustomFieldComponent } from '../../../../shared/components/custom-field.component';
 import { CustomSelectComponent } from '../../../../shared/components/custom-select.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
-import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
-import { Account } from 'app/modules/accounting/account/models/account';
 
 @Component({
-  selector: 'app-journal',
+  selector: 'app-add-journal',
+  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -29,7 +29,7 @@ import { Account } from 'app/modules/accounting/account/models/account';
     CustomFieldComponent,
     CustomSelectComponent,
     NgSelectModule,
-    ValidationMessageComponent,
+    ValidationMessageComponent
   ],
   templateUrl: './add-journal.component.html',
 })
@@ -37,34 +37,18 @@ export class AddJournalComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
   private currencyService = inject(CurrencyService);
   private accountService = inject(AccountService);
+  private journalService = inject(JournalService);
 
   currencies: Currency[] = [];
-  searchAccounts$: Observable<Account[]> = of();
+  searchAccounts$: Observable<Account[]> = this.accountService.getAccounts();
+  response: any;
+
   form = this.fb.group({
-    date: [this.getCurrentDate(), [Validators.required]],
-    postDate: [this.getCurrentDate()],
-    currency: ['1', [Validators.required]],
-    equality: this.fb.control<number | undefined>(undefined, [
-      Validators.required,
-    ]),
-    notes: [''],
-    items: this.fb.array<FormGroup>(
-      [
-        this.fb.group({
-          account: ['', Validators.required],
-          notes: [''],
-          debit: ['', [Validators.min(0), Validators.required]],
-          credit: ['', [Validators.min(0), Validators.required]],
-          currency: ['', [Validators.required]],
-          balance: this.fb.control<number>(1, Validators.required),
-          equality: this.fb.control<number>(1, Validators.required),
-          group: ['', [Validators.required]],
-          date: ['', [Validators.required]],
-          contraAccount: ['', [Validators.required]],
-        }),
-      ],
-      Validators.required
-    ),
+    date: [this.getCurrentDate(), Validators.required],
+    branchId: [1, Validators.required],
+    currencyId: ['1', Validators.required],
+    currencyValue: [1, Validators.required],
+    items: this.fb.array<FormGroup>([], Validators.required),
   });
 
   sumDebit = 0;
@@ -72,29 +56,21 @@ export class AddJournalComponent implements OnInit {
   minus = 0;
 
   ngOnInit(): void {
-    this.currencyService.getCurrencies().subscribe({
-      next: (data) => {
-        this.currencies = data;
-        this.form.controls.currency.setValue(data[0]?.id?.toString() ?? '1');
-      },
+    this.currencyService.getCurrencies().subscribe((data) => {
+      this.currencies = data;
+      this.form.controls.currencyId.setValue(data[0]?.id!.toString() ?? '1');
     });
-    this.searchAccounts$ = this.accountService.getAccounts();
-    this.form.controls.currency.valueChanges.subscribe((value) => {
-      this.form.controls.equality.setValue(
-        this.currencies.find((currnecy) => `${currnecy.id}` == value)
-          ?.currencyValue,
-        { emitEvent: false }
-      );
+
+    this.form.controls.currencyId.valueChanges.subscribe((value) => {
+      const curr = this.currencies.find(c => `${c.id}` === value);
+      this.form.controls.currencyValue.setValue(curr?.currencyValue ?? 1, { emitEvent: false });
     });
+
+    this.addRow();
   }
 
   getCurrentDate(): string {
-    const date = new Date();
-    return date.toISOString().split('T')[0];
-  }
-
-  onSubmit() {
-    console.log(this.form.value);
+    return new Date().toISOString().split('T')[0];
   }
 
   get items(): FormArray<FormGroup> {
@@ -102,95 +78,91 @@ export class AddJournalComponent implements OnInit {
   }
 
   createItemRow(): FormGroup {
-    const newRow = this.fb.group({
-      account: ['', Validators.required],
-      notes: [''],
-      debit: ['', [Validators.min(0), Validators.required]],
-      credit: ['', [Validators.min(0), Validators.required]],
-      currency: [''],
-      balance: this.fb.control<number>(1, Validators.required),
-      equality: this.fb.control<number>(1, Validators.required),
-      group: ['', [Validators.required]],
-      date: ['', [Validators.required]],
-      contraAccount: ['', [Validators.required]],
-    });
-    newRow.controls.currency.valueChanges.subscribe((value) => {
-      newRow.controls.equality.setValue(
-        this.currencies.find((currnecy) => `${currnecy.id}` == value)
-          ?.currencyValue ?? 0,
-        { emitEvent: false }
-      );
-      newRow.controls.balance.setValue(
-        parseFloat((1 / newRow.controls.equality.value).toFixed(5)),
-        {
-          emitEvent: false,
-        }
-      );
+    const row = this.fb.group({
+      accountId: ['', Validators.required],
+      debit: [0, [Validators.required, Validators.min(0)]],
+      credit: [0, [Validators.required, Validators.min(0)]],
+      currencyId: ['1', Validators.required],
+      currencyValue: [1, Validators.required],
+      date: [this.getCurrentDate(), Validators.required],
     });
 
-    newRow.controls.debit.valueChanges.subscribe((_) => {
-      newRow.controls.credit.setValue('0', { emitEvent: false });
+    row.controls.debit.valueChanges.subscribe(() => {
+      row.controls.credit.setValue(0, { emitEvent: false });
       this.calculateSum();
     });
-    newRow.controls.credit.valueChanges.subscribe((_) => {
-      newRow.controls.debit.setValue('0', { emitEvent: false });
+    row.controls.credit.valueChanges.subscribe(() => {
+      row.controls.debit.setValue(0, { emitEvent: false });
       this.calculateSum();
     });
-
-    newRow.controls.balance.valueChanges.subscribe((balance) => {
-      const newValue =
-        balance != 0 ? (1 / (balance ?? 0)).toFixed(5) : '0.00000';
-      newRow.controls.equality.setValue(parseFloat(newValue), {
-        emitEvent: false,
-      });
+    row.controls.currencyId.valueChanges.subscribe((value) => {
+      const curr = this.currencies.find(c => `${c.id}` === value);
+      row.controls.currencyValue.setValue(curr?.currencyValue ?? 1, { emitEvent: false });
     });
 
-    newRow.controls.equality.valueChanges.subscribe((eq) => {
-      const newBalance = (1 / (eq ?? 0)).toFixed(5);
-      newRow.controls.balance.setValue(parseFloat(newBalance), {
-        emitEvent: false,
-      });
-    });
-    return newRow;
+    return row;
   }
 
-  addRow(): void {
-    const newItem = this.createItemRow();
-    this.items.push(newItem);
+  addRow() {
+    this.items.push(this.createItemRow());
   }
 
-  removeRow(index: number): void {
-    this.items.removeAt(index);
-
-    this.items.at(0).controls['fact'].setValue(1);
+  removeRow(i: number) {
+    this.items.removeAt(i);
+    this.calculateSum();
   }
 
   calculateSum() {
-    this.sumDebit = this.sumCredit = 0;
-    this.items.controls.forEach((group: FormGroup) => {
-      const amountDebit = group.get('debit')?.value ?? 0;
-      const amountCredit = group.get('credit')?.value ?? 0;
-      this.sumDebit += amountDebit;
-      this.sumCredit += amountCredit;
+    this.sumDebit = 0;
+    this.sumCredit = 0;
+    this.items.controls.forEach(g => {
+      this.sumDebit += +g.get('debit')?.value || 0;
+      this.sumCredit += +g.get('credit')?.value || 0;
     });
     this.minus = this.sumDebit - this.sumCredit;
   }
 
-  searchFn(term: string, item: any) {
-    term = term.toLowerCase();
-    return (
-      item.name.toLowerCase().includes(term) ||
-      item.code.toLowerCase().includes(term)
-    );
+  toOption() {
+    return this.currencies.map(c => ({ key: c.id!, value: c.name }));
   }
 
-  toOption(): {
-    key: number;
-    value: string;
-  }[] {
-    return this.currencies.map((e) => ({
-      key: e.id!,
-      value: e.name,
-    }));
+  searchFn(term: string, item: any) {
+    term = term.toLowerCase();
+    return item.name.toLowerCase().includes(term) ||
+           item.code.toLowerCase().includes(term);
+  }
+
+private toDateTimeString(dateStr: string): string {
+  return dateStr ? `${dateStr}T00:00:00` : '';
+}
+
+  onSubmit() {
+    if (this.form.invalid) return;
+
+    const fv = this.form.value;
+    const req: JournalRequest = {
+      journalHeader: {
+        branchId: fv.branchId ?? 0,
+         date: this.toDateTimeString(fv.date ?? ''),
+        debit: this.sumDebit.toFixed(2),
+        credit: this.sumCredit.toFixed(2),
+        currencyId: fv.currencyId ? +fv.currencyId : 0,
+        currencyValue: fv.currencyValue?.toString() ?? '0',
+        isPosted: false
+      },
+      journalItems: (fv.items ?? []).map((it: any) => ({
+        accountId: +it.accountId,
+        debit: it.debit.toFixed(2),
+        credit: it.credit.toFixed(2),
+        currencyId: +it.currencyId,
+        currencyValue: it.currencyValue.toString(),
+        date: this.toDateTimeString(it.date)
+      }))
+    };
+
+    this.journalService.createJournal(req).subscribe({
+      next: res => this.response = res,
+      error: err => console.error(err)
+    });
   }
 }
