@@ -17,6 +17,8 @@ import { CustomFieldComponent } from '../../../../shared/components/custom-field
 import { CustomSelectComponent } from '../../../../shared/components/custom-select.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
+import { BranchService } from '../../../../branch/services/branch.service';
+import { BranchResponse } from 'app/modules/branch/models/response/branch-response';
 
 @Component({
   selector: 'app-add-journal',
@@ -38,7 +40,9 @@ export class AddJournalComponent implements OnInit {
   private currencyService = inject(CurrencyService);
   private accountService = inject(AccountService);
   private journalService = inject(JournalService);
+  private branchService = inject(BranchService);
 
+  branches: BranchResponse[] = [];
   currencies: Currency[] = [];
   searchAccounts$: Observable<Account[]> = this.accountService.getAccounts();
   response: any;
@@ -61,12 +65,23 @@ export class AddJournalComponent implements OnInit {
       this.form.controls.currencyId.setValue(data[0]?.id!.toString() ?? '1');
     });
 
+     this.branchService.getBranches().subscribe((data) => {
+        this.branches = data;
+        if (data.length) {
+          this.form.controls.branchId.setValue(data[0].id);
+          }
+      });
+
     this.form.controls.currencyId.valueChanges.subscribe((value) => {
       const curr = this.currencies.find(c => `${c.id}` === value);
       this.form.controls.currencyValue.setValue(curr?.currencyValue ?? 1, { emitEvent: false });
     });
 
     this.addRow();
+  }
+
+  get branchOptions() {
+    return this.branches.map(b => ({ key: b.id, value: b.name }));
   }
 
   getCurrentDate(): string {
