@@ -10,8 +10,8 @@ import {
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
-import { JournalTypesResponse } from 'app/core/models/response/journal-types-response';
-import { JournalTypesService } from 'app/core/services/journal-types.service';
+import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
+import { JournalTypesService } from 'app/modules/accounting/journal-type/services/journal-types.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -224,7 +224,7 @@ import { JournalTypesService } from 'app/core/services/journal-types.service';
 })
 export class SidebarComponent implements OnInit {
   private service = inject(JournalTypesService);
-  journalTypes = signal<JournalTypesResponse[]>([]);
+  journalTypes = signal<JournalTypeResponse[]>([]);
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -324,6 +324,7 @@ export class SidebarComponent implements OnInit {
     { name: 'Branches', icon: 'git-branch', routerLink: '/branches' },
     { name: 'Currencies', icon: 'coins', routerLink: '/currencies' },
     { name: 'Journals', icon: 'book-text', routerLink: 'journal/add-journal' },
+    { name: 'Journal Type', icon: 'book-text', routerLink: '/journal-types' },
     { name: 'Payment Voucher', icon: 'receipt', routerLink: '/paymentVoucher' },
     {
       name: 'Purchases',

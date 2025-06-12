@@ -67,6 +67,9 @@
     border-radius: var(--radius-sm) /* 0.5rem = 8px */;
     cursor: text;
   }
+  input[type="checkbox"] {
+    accent-color: var(--color-primary);
+  }
 
   input[type="file"] {
     padding: 0;

@@ -1,0 +1,51 @@
+ //           this is HTML
+<div>
+      <label
+        for="primaryAccount"
+        class="cust-input-label"
+        [ngClass]="{
+          'cust-label-disable': form.controls.parentId.disabled
+        }"
+        >Primary Account
+      </label>
+      <ng-select
+        id="primaryAccount"
+        [items]="accounts$ | async"
+        bindLabel="name"
+        bindValue="id"
+        [searchFn]="searchFn"
+        [formControl]="form.controls.parentId"
+        class="cust-input"
+      >
+        <ng-template
+          ng-option-tmp
+          let-item="item"
+          let-index="index"
+          let-search="searchTerm"
+        >
+          <div>{{ item.name + "-" + item.code }}</div>
+        </ng-template>
+      </ng-select>
+      <app-validation-message
+        [control]="form.controls.parentId"
+        [customMessage]="null"
+        name="Primary Account"
+      />
+    </div>
+
+    // this is TS
+    searchInput$ = new Subject<string>();
+
+  accounts$: Observable<Account[]> = of();
+
+  ngOnInit(): void {
+    this.accounts$ = this.service.getAccounts();
+  }
+
+  searchFn(term: string, item: any) {
+    term = term.toLowerCase();
+    return (
+      item.name.toLowerCase().includes(term) ||
+      item.code.toLowerCase().includes(term)
+    );
+  }

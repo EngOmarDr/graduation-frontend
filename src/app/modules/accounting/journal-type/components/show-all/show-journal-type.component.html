@@ -1,0 +1,50 @@
+<cust-card title="Journal Types" [titlePadding]="false">
+  <div class="flex justify-end items-center">
+    <button type="button" class="py-1.5 px-2.5 mb-3 btn" routerLink="/add-journal-type">
+      Add Journal Type
+    </button>
+  </div>
+
+  <div class="overflow-auto max-h-80 relative">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th *ngFor="let col of displayedColumns">
+            {{ col }}
+          </th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (journalTypes().length == 0) {
+        <tr>
+          <td [attr.colspan]="displayedColumns.length + 2">
+            No Data Found
+          </td>
+        </tr>
+        }
+        <tr *ngFor="let row of journalTypes(); let i = index">
+          <td>
+            {{ i + 1 }}
+          </td>
+          <td class="text-nowrap">{{ row.name }}</td>
+          <td >{{ row.defaultAccountId?.name }}</td>
+          <td >{{ row.defaultCurrency?.name }}</td>
+          <td >{{ row.debitName }}</td>
+          <td >{{ row.creditName }}</td>
+          <td class="text-nowrap">
+            <button type="button" (click)="deleteItem(row)" title="delete row"
+              class="text-red-600 hover:text-red-800 cursor-pointer">
+              DELETE
+            </button>
+            <button type="button" (click)="updateItem(row)" title="edit row"
+              class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer">
+              EDIT
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</cust-card>
