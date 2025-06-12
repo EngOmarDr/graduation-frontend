@@ -65,6 +65,14 @@ export const accountingRoutes: Routes = [
         canActivate: [authGuard],
       },
       {
+      path: 'journals',
+      loadComponent: () =>
+        import('./journal/components/show-all/show-journal-type.component').then(
+          (m) => m.ShowJournalsComponent
+        ),
+      canActivate: [authGuard],
+    },
+      {
         path: 'accounts',
         loadComponent: () =>
           import(
