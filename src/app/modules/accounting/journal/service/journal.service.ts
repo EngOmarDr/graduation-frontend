@@ -21,12 +21,12 @@ export class JournalService {
     return this.http.post<CreateJournalResponse>(this.apiUrl, data);
   }
 
-  getVouchers(): Observable<Voucher[]> {
-    return this.http.get<Voucher[]>(`${this.apiUrl}/vouchers`);
+  getJournals(): Observable<Voucher[]> {
+    return this.http.get<Voucher[]>(`${this.apiUrl}`);
   }
 
-  deleteVoucher(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/vouchers/${id}`);
+  deleteJournal(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
 }

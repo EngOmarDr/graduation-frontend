@@ -79,7 +79,7 @@ export class ShowJournalsComponent {
 
 
   ngOnInit(): void {
-    this.service.getVouchers().subscribe((data) => {
+    this.service.getJournals().subscribe((data) => {
       this.vouchers.set(data);
     });
   }
@@ -87,7 +87,7 @@ export class ShowJournalsComponent {
 
   deleteItem(voucher: Voucher): void {
     if (confirm('هل أنت متأكد من حذف هذا السند؟')) {
-      this.service.deleteVoucher(voucher.id).subscribe(() => {
+      this.service.deleteJournal(voucher.id).subscribe(() => {
         this.vouchers.update((old) => old.filter((v) => v.id !== voucher.id));
       });
     }
