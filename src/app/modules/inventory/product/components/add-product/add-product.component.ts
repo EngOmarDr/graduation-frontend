@@ -28,7 +28,10 @@ import { CardComponent } from '../../../../shared/components/card-form.component
 })
 export class AddProductComponent {
   private fb = inject(NonNullableFormBuilder);
-
+  readonly productType = [
+    { key: '0', value: 'service' },
+    { key: '1', value: 'warehouse' },
+  ];
   barcodesColumns = ['#', 'unitItem', 'barcode', 'actions'];
 
   file: any;

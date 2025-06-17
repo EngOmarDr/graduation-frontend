@@ -1,0 +1,68 @@
+<cust-card titleText="Add Warehouse">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
+    <cust-form-field
+      [control]="form.controls.code"
+      inputId="code"
+      label="Code"
+    />
+
+    <cust-form-field
+      [control]="form.controls.name"
+      inputId="name"
+      label="Name"
+    />
+
+    <div>
+      <label
+        for="primaryAccount"
+        class="cust-input-label"
+        [ngClass]="{
+          'cust-label-disable': form.controls.parentWarehouse.disabled
+        }"
+        >Parent Warehouse
+      </label>
+      <ng-select
+        id="primaryAccount"
+        [items]="warehouses$ | async"
+        bindLabel="name"
+        bindValue="id"
+        [searchFn]="searchFn"
+        [formControl]="form.controls.parentWarehouse"
+        class="cust-input"
+      >
+        <ng-template
+          ng-option-tmp
+          let-item="item"
+          let-index="index"
+          let-search="searchTerm"
+        >
+          <div>{{ item.name + "-" + item.code }}</div>
+        </ng-template>
+      </ng-select>
+      <app-validation-message
+        [control]="form.controls.parentWarehouse"
+        [customMessage]="null"
+        name="Parent Warehouse"
+      />
+    </div>
+
+    <cust-form-field
+      [control]="form.controls.address"
+      inputId="address"
+      label="Address"
+    />
+
+    <cust-form-field
+      [control]="form.controls.note"
+      inputId="note"
+      label="Note"
+    />
+
+    <div class="col-span-full grid grid-cols-4">
+      <button type="submit" class="btn">Add</button>
+    </div>
+  </form>
+  <div>
+    {{ form.value | json }}
+  </div>
+</cust-card>

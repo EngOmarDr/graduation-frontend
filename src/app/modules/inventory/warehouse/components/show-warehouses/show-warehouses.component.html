@@ -1,0 +1,58 @@
+<cust-card titleText="Warehouse" [titlePadding]="false">
+  <div class="flex justify-end items-center">
+    <button
+      type="button"
+      class="py-1.5 px-2.5 mb-3 btn"
+      routerLink="/add-warehouse"
+    >
+      Add Warehouse
+    </button>
+  </div>
+
+  <div class="overflow-auto max-h-80 relative">
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let col of displayedColumns">
+            {{ col }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @if ( warehouses().length == 0) {
+        <tr>
+          <td [attr.colspan]="displayedColumns.length + 2">No Data Found</td>
+        </tr>
+        }
+        <tr *ngFor="let row of warehouses(); let i = index">
+          <td>
+            {{ i + 1 }}
+          </td>
+          <td class="text-nowrap">{{ row.code }}</td>
+          <td>{{ row.name }}</td>
+          <td>{{ row.parentWarehouse?.name }}</td>
+          <td>{{ row.address }}</td>
+          <td>{{ row.notes }}</td>
+          <td class="text-nowrap">
+            <button
+              type="button"
+              (click)="deleteWarehouse(row)"
+              title="delete row"
+              class="text-red-600 hover:text-red-800 cursor-pointer"
+            >
+              DELETE
+            </button>
+            <button
+              type="button"
+              (click)="updateWarehouse(row)"
+              title="edit row"
+              class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
+            >
+              EDIT
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</cust-card>

@@ -158,54 +158,14 @@ export const routes: Routes = [
             path: 'warehouses',
             loadComponent: () =>
               import(
-                './modules/inventory/warehouse/show-warehouses/show-warehouses.component'
+                './modules/inventory/warehouse/components/show-warehouses/show-warehouses.component'
               ).then((m) => m.ShowWarehousesComponent),
           },
           {
             path: 'add-warehouse',
             loadComponent: () =>
               import(
-                './modules/inventory/warehouse/add-warehouse/add-warehouse.component'
-              ).then((m) => m.AddWarehouseComponent),
-          },
-        ],
-      },
-      {
-        path: '',
-        canActivate: [authGuard],
-        children: [
-          {
-            path: 'purchases',
-            loadComponent: () =>
-              import(
-                './modules/inventory/purchases/show-purchases/show-purchases.component'
-              ).then((m) => m.ShowPurchasesComponent),
-          },
-          {
-            path: 'add-warehouse',
-            loadComponent: () =>
-              import(
-                './modules/inventory/warehouse/add-warehouse/add-warehouse.component'
-              ).then((m) => m.AddWarehouseComponent),
-          },
-        ],
-      },
-      {
-        path: '',
-        canActivate: [authGuard],
-        children: [
-          {
-            path: 'sales',
-            loadComponent: () =>
-              import(
-                './modules/inventory/sales/show-sales/show-sales.component'
-              ).then((m) => m.ShowSalesComponent),
-          },
-          {
-            path: 'add-warehouse',
-            loadComponent: () =>
-              import(
-                './modules/inventory/warehouse/add-warehouse/add-warehouse.component'
+                './modules/inventory/warehouse/components/add-warehouse/add-warehouse.component'
               ).then((m) => m.AddWarehouseComponent),
           },
         ],
