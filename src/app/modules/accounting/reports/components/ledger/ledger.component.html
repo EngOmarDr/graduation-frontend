@@ -1,0 +1,21 @@
+<cust-card titleText="Ledger" >
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
+    <cust-form-field
+      [control]="form.controls.account"
+      inputId="account"
+      label="account"
+    />
+    <div class="col-span-full">
+      <button type="submit" class="btn" [disabled]="!form.valid">Preview</button>
+    </div>
+  </form>
+
+  <div class="w-full">
+    <!-- <app-custom-table
+      [data]="accounts$ | async"
+      [columns]="displayedColumns"
+      (updateRowEvent)="updateAccount($event)"
+      (deleteRowEvent)="deleteAccount($event)"
+    /> -->
+  </div>
+</cust-card>

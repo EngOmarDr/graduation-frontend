@@ -65,13 +65,13 @@ export const accountingRoutes: Routes = [
         canActivate: [authGuard],
       },
       {
-      path: 'journals',
-      loadComponent: () =>
-        import('./journal/components/show-all/show-journal-type.component').then(
-          (m) => m.ShowJournalsComponent
-        ),
-      canActivate: [authGuard],
-    },
+        path: 'journals',
+        loadComponent: () =>
+          import(
+            './journal/components/show-all/show-journal-type.component'
+          ).then((m) => m.ShowJournalsComponent),
+        canActivate: [authGuard],
+      },
       {
         path: 'accounts',
         loadComponent: () =>
@@ -120,6 +120,14 @@ export const accountingRoutes: Routes = [
     ],
   },
 
+  {
+    path: 'ledger',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./reports/components/ledger/ledger.component').then(
+        (m) => m.LedgerComponent
+      ),
+  },
   {
     path: 'paymentVoucher',
     canActivate: [authGuard],

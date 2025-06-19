@@ -3,16 +3,13 @@ import {
   Component,
   inject,
   OnInit,
-  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Observable, of } from 'rxjs';
 import { JournalTypesService } from 'app/modules/accounting/journal-type/services/journal-types.service';
-import {JournalTypeResponse} from 'app/modules/accounting/journal-type/models/response/journal-type-response.model'
-
+import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -142,6 +139,11 @@ import {JournalTypeResponse} from 'app/modules/accounting/journal-type/models/re
               [ngClass]="{ 'max-h-0': !item?.attr(), 'max-h-96': item?.attr() }"
             >
               <li *ngFor="let subItem of item.children">
+                @if (subItem.name=='br') {
+                <!-- <hr> -->
+                <div class="bg-zinc-300 w-full h-[1px]"></div>
+                }@else {
+
                 <a
                   [routerLink]="[subItem.routerLink]"
                   [state]="{ journalType: subItem.state }"
@@ -165,6 +167,7 @@ import {JournalTypeResponse} from 'app/modules/accounting/journal-type/models/re
                   ></svg>
                   <span *ngIf="!isCollapseded">{{ subItem.name }}</span>
                 </a>
+                }
               </li>
             </ul>
           </div>
@@ -232,7 +235,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.service.getJournalTypes().subscribe((next: JournalTypeResponse[]) => {
       this.journalTypes.set(next);
-      this.routes[2].children?.push(
+      this.routes[5].children?.push(
         ...this.journalTypes().map((next) => ({
           name: next.name,
           routerLink: `/cust-journal/${next.name}`,
@@ -246,6 +249,7 @@ export class SidebarComponent implements OnInit {
   isSidebarOpen = false;
   isCollapseded = false;
   isProductsExpanded = signal(false);
+  isVouchersExpanded = signal(false);
   isAccountsExpanded = signal(false);
   isPurchasesExpanded = signal(false);
   isSalesExpanded = signal(false);
@@ -267,6 +271,9 @@ export class SidebarComponent implements OnInit {
   }
   toggleProducts() {
     this.isProductsExpanded.update((v) => !v);
+  }
+  toggleVouchers() {
+    this.isVouchersExpanded.update((v) => !v);
   }
 
   togglePurchases() {
@@ -320,11 +327,32 @@ export class SidebarComponent implements OnInit {
       attr: this.isAccountsExpanded,
       children: [
         { name: 'Accounts', icon: 'wallet-card', routerLink: '/accounts' },
+        { name: 'br', icon: 'wallet-card' },
+        { name: 'Journal', icon: 'wallet-card', routerLink: '/journal' },
+        { name: 'Ledger', icon: 'wallet-card', routerLink: '/ledger' },
+        {
+          name: 'Trail Balance',
+          icon: 'wallet-card',
+          routerLink: '/trail-balance',
+        },
       ],
     },
     { name: 'Branches', icon: 'git-branch', routerLink: '/branches' },
     { name: 'Currencies', icon: 'coins', routerLink: '/currencies' },
-    { name: 'Journals', icon: 'book-text', routerLink: 'journal/journals' },
+    {
+      name: 'Vouchers',
+      icon: 'book-text',
+      fun: () => this.toggleVouchers(),
+      attr: this.isVouchersExpanded,
+      children: [
+        {
+          name: 'Journal Entry',
+          icon: 'book-text',
+          routerLink: 'journal/journals',
+        },
+        { name: 'br', icon: '' },
+      ],
+    },
     { name: 'Payment Voucher', icon: 'receipt', routerLink: '/paymentVoucher' },
     {
       name: 'Purchases',

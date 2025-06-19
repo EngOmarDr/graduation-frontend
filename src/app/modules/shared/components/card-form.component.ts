@@ -10,7 +10,7 @@ import { filter } from 'rxjs';
     <div class="card">
       <div
         class="flex items-center gap-x-2"
-        [ngClass]="{ 'pb-7': titlePadding() }"
+        [ngClass]="{ 'pb-4': titlePadding() }"
       >
         <!-- <mat-icon
           aria-hidden="false"
