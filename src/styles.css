@@ -205,12 +205,16 @@
     padding: 8px calc(var(--spacing) * 2.5);
     border-bottom: 1px solid var(--color-zinc-200);
   }
+  .ng-select{
+    padding: 7px 3px;
+    border-color: var(--color-gray-300);
+  }
   .ng-dropdown-panel-items {
     width: 100%;
-    transform: translateX(calc(var(--spacing) * -2.5))
-      translateY(calc(var(--spacing) * 2.5));
+    /* transform: translateX(calc(var(--spacing) * -2.5))
+      translateY(calc(var(--spacing) * 2.5)); */
     /* margin-left: calc(var(--spacing) * -4); */
-    /* padding: calc(var(--spacing) * 2.5); */
+    /* height: min-content !important; */
     background-color: var(--color-gray-50);
     border-style: var(--tw-border-style);
     border-width: 1px;
@@ -237,6 +241,7 @@
     padding: calc(var(--spacing) * 2); /* 0.5rem = 8px */
     text-align: center;
     position: relative;
+    text-transform: uppercase;
   }
   thead > tr > th::after {
     content: "";

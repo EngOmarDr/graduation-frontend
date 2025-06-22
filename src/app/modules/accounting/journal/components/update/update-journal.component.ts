@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
 import {
   FormArray,
   FormGroup,
@@ -22,10 +22,10 @@ import { CustomFieldComponent } from '@shared/components/custom-field.component'
 import { CustomSelectComponent } from '@shared/components/custom-select.component';
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
 import { CreateJournalRequest } from '../../models/request/create-journal-request.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-add-journal',
-  standalone: true,
+  selector: 'app-update-journal',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -36,19 +36,21 @@ import { CreateJournalRequest } from '../../models/request/create-journal-reques
     NgSelectModule,
     ValidationMessageComponent,
   ],
-  templateUrl: './add-journal.component.html',
+  templateUrl: './update-journal.component.html',
 })
-export class AddJournalComponent implements OnInit {
-  private readonly fb = inject(NonNullableFormBuilder);
-  private readonly currencyService = inject(CurrencyService);
-  private readonly accountService = inject(AccountService);
-  private readonly journalService = inject(JournalService);
-  private readonly branchService = inject(BranchService);
+export class UpdateJournalComponent implements OnInit {
+  private fb = inject(NonNullableFormBuilder);
+  private activatedRoute = inject(ActivatedRoute);
+  private location = inject(Location);
+  private currencyService = inject(CurrencyService);
+  private accountService = inject(AccountService);
+  private journalService = inject(JournalService);
+  private branchService = inject(BranchService);
 
   branches: BranchResponse[] = [];
   currencies: Currency[] = [];
   searchAccounts$: Observable<Account[]> = this.accountService.getAccounts();
-
+  journalId = 0;
   form = this.fb.group({
     date: [this.getCurrentDate(), Validators.required],
     branchId: [1, Validators.required],
@@ -59,11 +61,35 @@ export class AddJournalComponent implements OnInit {
     journalItems: this.fb.array<FormGroup<any>>([], Validators.required),
   });
 
-  sumDebit = 0;
-  sumCredit = 0;
-  minus = 0;
+  sumDebit = signal(0);
+  sumCredit = signal(0);
+  minus = computed(() => this.sumDebit() - this.sumCredit());
 
   ngOnInit(): void {
+    let id = this.activatedRoute.snapshot.paramMap.get('id');
+    if (!id) {
+      this.location.back();
+    } else {
+      this.journalId = Number.parseInt(id);
+    }
+    const navigation = window.history.state;
+    if (navigation.object) {
+      this.form.patchValue(navigation.object);
+
+      navigation.object.journalItems.map((e: any) => {
+        this.addRow(e);
+      });
+    } else {
+      this.journalService.getJournalsById(this.journalId).subscribe({
+        next: (next) => {
+          this.form.patchValue(next);
+        },
+        error: () => {
+          this.location.back();
+        },
+      });
+    }
+
     this.currencyService.getCurrencies().subscribe((data) => {
       this.currencies = data;
       this.form.controls.currencyId.setValue(data[0]?.id! ?? 1);
@@ -86,8 +112,7 @@ export class AddJournalComponent implements OnInit {
     this.form.controls.currencyValue.valueChanges.subscribe((_) => {
       this.calculateSum();
     });
-
-    this.addRow();
+    this.calculateSum()
   }
 
   get branchOptions() {
@@ -95,8 +120,6 @@ export class AddJournalComponent implements OnInit {
   }
 
   getCurrentDate(): string {
-    console.log(new Date(Date.now()).toISOString().slice(0, 16));
-
     return new Date().toISOString().slice(0, 16);
   }
 
@@ -104,7 +127,7 @@ export class AddJournalComponent implements OnInit {
     return this.form.get('journalItems') as FormArray<FormGroup>;
   }
 
-  createItemRow(): FormGroup {
+  createItemRow(e: any): FormGroup {
     const row = this.fb.group({
       accountId: this.fb.control<number | undefined>(
         undefined,
@@ -117,6 +140,9 @@ export class AddJournalComponent implements OnInit {
       currencyValue: this.fb.control<number | undefined>(undefined),
       date: [],
     });
+    if (e) {
+      row.patchValue(e);
+    }
 
     row.controls.debit.valueChanges.subscribe(() => {
       row.controls.credit.setValue(0, { emitEvent: false });
@@ -137,8 +163,8 @@ export class AddJournalComponent implements OnInit {
     return row;
   }
 
-  addRow() {
-    this.journalItems.push(this.createItemRow());
+  addRow(e: any | undefined) {
+    this.journalItems.push(this.createItemRow(e));
   }
 
   removeRow(i: number) {
@@ -147,19 +173,16 @@ export class AddJournalComponent implements OnInit {
   }
 
   calculateSum() {
-    this.sumDebit = 0;
-    this.sumCredit = 0;
-    this.journalItems.controls.forEach((g) => {
-      this.sumDebit +=
-        +g.get('debit')?.value *
-        (g.get('currencyValue')?.value ??
-          this.form.controls.currencyValue.value);
-      this.sumCredit +=
-        +g.get('credit')?.value *
-        (g.get('currencyValue')?.value ??
-          this.form.controls.currencyValue.value);
+    let totalDebit = 0;
+    let totalCredit = 0;
+    this.journalItems.controls.forEach((control) => {
+      const currencyValue =
+        control.value.currencyValue ?? this.form.value.currencyValue;
+      totalDebit += (control.value.debit || 0) * currencyValue;
+      totalCredit += (control.value.credit || 0) * currencyValue;
     });
-    this.minus = this.sumDebit - this.sumCredit;
+    this.sumCredit.set(totalCredit)
+    this.sumDebit.set(totalDebit)
   }
 
   toOption() {
@@ -179,14 +202,12 @@ export class AddJournalComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    console.log('valid');
-
     let data: CreateJournalRequest = {
       date: this.form.controls.date.value,
       branchId: this.form.controls.branchId.value,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value,
-      parentType: this.form.controls.parentType.value,
+      parentType: 0,
       isPosted: this.form.controls.isPosted.value,
       journalItems: this.form.controls.journalItems.getRawValue().map((e) => ({
         accountId: e!['accountId']!,
@@ -198,8 +219,8 @@ export class AddJournalComponent implements OnInit {
         date: e!['date'],
       })),
     };
-    this.journalService.createJournal(data).subscribe({
-      next: (_) => this.form.reset(),
+    this.journalService.updateJournal(data,this.journalId).subscribe({
+      next: (_) => this.location.back(),
       error: (err) => console.error(err),
     });
   }

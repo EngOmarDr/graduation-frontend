@@ -1,4 +1,4 @@
-<cust-card titleText="Add Journal">
+<cust-card titleText="Update Journal">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls['date']"
@@ -144,37 +144,37 @@
                 </button>
               </td>
             </tr>
-            <!-- <tr>
+            <tr>
               <td [attr.colspan]="9" class="text-center w-full">
+                <button
+                  type="button"
+                  class="w-fit self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
+                  (click)="addRow(undefined)"
+                >
+                  <img src="assets/icons/add.png" alt="add" />
+                </button>
               </td>
-            </tr> -->
+            </tr>
           </tbody>
         </table>
         <app-validation-message
-        *ngIf="journalItems.errors"
-        [control]="this.journalItems"
-        [customMessage]="null"
-        name="journalItems"
-        class="col-span-full flex justify-start"
+          *ngIf="journalItems.errors"
+          [control]="this.journalItems"
+          [customMessage]="null"
+          name="journalItems"
+          class="col-span-full flex justify-start"
         />
-        <button
-          type="button"
-          class="w-fit my-1.5 self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
-          (click)="addRow()"
-        >
-          <img src="assets/icons/add.png" alt="add" />
-        </button>
       </div>
     </div>
 
     <div class="col-span-full mt-4">
-      <p>Total Debit: {{ sumDebit }}</p>
-      <p>Total Credit: {{ sumCredit }}</p>
-      <p>Difference: {{ minus }}</p>
+      <p>Total Debit: {{ sumDebit() }}</p>
+      <p>Total Credit: {{ sumCredit() }}</p>
+      <p>Difference: {{ minus() }}</p>
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn">Add</button>
+      <button type="submit" class="btn">Update</button>
     </div>
   </form>
 </cust-card>

@@ -33,7 +33,7 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
         'w-20': isCollapseded
       }"
     >
-      <button
+      <!-- <button
         (click)="toggleCollapse()"
         class="p-2"
         class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -63,7 +63,7 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
             />
           </ng-template>
         </svg>
-      </button>
+      </button> -->
 
       <!-- Logo -->
       <div
@@ -351,37 +351,42 @@ export class SidebarComponent implements OnInit {
           routerLink: 'journal/journals',
         },
         { name: 'br', icon: '' },
-      ],
-    },
-    { name: 'Payment Voucher', icon: 'receipt', routerLink: '/paymentVoucher' },
-    {
-      name: 'Purchases',
-      icon: 'shopping-cart',
-      fun: () => this.togglePurchases(),
-      attr: this.isPurchasesExpanded,
-      children: [
-        { name: 'Purchases', icon: 'shopping-bag', routerLink: '/purchases' },
         {
-          name: 'Purchases Returns',
-          icon: 'rotate-ccw',
-          routerLink: '/purchasesReturns',
+          name: 'Journal Type',
+          icon: '',
+          routerLink: 'journal-types',
         },
       ],
     },
-    {
-      name: 'Sales',
-      icon: 'shopping-basket',
-      fun: () => this.toggleSales(),
-      attr: this.isSalesExpanded,
-      children: [
-        { name: 'Sales', icon: 'badge-dollar-sign', routerLink: '/sales' },
-        {
-          name: 'Sales Returns',
-          icon: 'rotate-ccw',
-          routerLink: '/salesReturns',
-        },
-      ],
-    },
+    // { name: 'Payment Voucher', icon: 'receipt', routerLink: '/paymentVoucher' },
+    // {
+    //   name: 'Purchases',
+    //   icon: 'shopping-cart',
+    //   fun: () => this.togglePurchases(),
+    //   attr: this.isPurchasesExpanded,
+    //   children: [
+    //     { name: 'Purchases', icon: 'shopping-bag', routerLink: '/purchases' },
+    //     {
+    //       name: 'Purchases Returns',
+    //       icon: 'rotate-ccw',
+    //       routerLink: '/purchasesReturns',
+    //     },
+    //   ],
+    // },
+    // {
+    //   name: 'Sales',
+    //   icon: 'shopping-basket',
+    //   fun: () => this.toggleSales(),
+    //   attr: this.isSalesExpanded,
+    //   children: [
+    //     { name: 'Sales', icon: 'badge-dollar-sign', routerLink: '/sales' },
+    //     {
+    //       name: 'Sales Returns',
+    //       icon: 'rotate-ccw',
+    //       routerLink: '/salesReturns',
+    //     },
+    //   ],
+    // },
     { name: 'Roles/Permissions', icon: 'lock-keyhole', routerLink: '/roles' },
     { name: 'Settings', icon: 'settings', routerLink: '/settings' },
   ];
