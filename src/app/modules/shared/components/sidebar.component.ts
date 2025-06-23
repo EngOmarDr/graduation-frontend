@@ -238,7 +238,7 @@ export class SidebarComponent implements OnInit {
       this.routes[5].children?.push(
         ...this.journalTypes().map((next) => ({
           name: next.name,
-          routerLink: `/cust-journal/${next.name}`,
+          routerLink: `/show-custom-journal/${next.name}`,
           icon: '',
           state: next,
         }))

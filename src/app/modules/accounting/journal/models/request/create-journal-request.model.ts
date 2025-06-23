@@ -7,10 +7,10 @@ export interface CreateJournalRequest {
   isPosted: boolean;
   // postDate: Date;
   // notes: string;
-  journalItems: CreateJournalItemRequest[]
+  journalItems: CreateJournalItemRequest[];
 }
 
-interface CreateJournalItemRequest {
+export interface CreateJournalItemRequest {
   accountId: number;
   debit: number;
   credit: number;

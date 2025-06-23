@@ -72,7 +72,7 @@ export class AddJournalTypeComponent {
 
   onSubmit() {
     this.service.createJournalType(this.form.getRawValue()).subscribe({
-      next: (n) => {
+      next: () => {
         this.form.reset();
       },
     });

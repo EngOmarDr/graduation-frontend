@@ -129,11 +129,19 @@ export const accountingRoutes: Routes = [
       ),
   },
   {
-    path: 'cust-journal/:name',
+    path: 'add-cust-journal/:name',
     canActivate: [authGuard],
     loadComponent: () =>
       import(
         './custom-journal/components/add/add-custom-journal.component'
       ).then((m) => m.AddCustomJournalComponent),
+  },
+  {
+    path: 'show-custom-journal/:name',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import(
+        './custom-journal/components/show/show-custom-journal.component'
+      ).then((m) => m.ShowCustomJournalsComponent),
   },
 ];

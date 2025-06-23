@@ -66,6 +66,14 @@ export class UpdateJournalComponent implements OnInit {
   minus = computed(() => this.sumDebit() - this.sumCredit());
 
   ngOnInit(): void {
+    this.currencyService.getCurrencies().subscribe((data) => {
+      this.currencies = data;
+    });
+
+    this.branchService.getBranches().subscribe((data) => {
+      this.branches = data;
+    });
+
     let id = this.activatedRoute.snapshot.paramMap.get('id');
     if (!id) {
       this.location.back();
@@ -90,18 +98,6 @@ export class UpdateJournalComponent implements OnInit {
       });
     }
 
-    this.currencyService.getCurrencies().subscribe((data) => {
-      this.currencies = data;
-      this.form.controls.currencyId.setValue(data[0]?.id! ?? 1);
-    });
-
-    this.branchService.getBranches().subscribe((data) => {
-      this.branches = data;
-      if (data.length) {
-        this.form.controls.branchId.setValue(data[0].id);
-      }
-    });
-
     this.form.controls.currencyId.valueChanges.subscribe((value) => {
       const curr = this.currencies.find((c) => c.id === value);
       this.form.controls.currencyValue.setValue(curr?.currencyValue ?? 1, {
@@ -112,7 +108,7 @@ export class UpdateJournalComponent implements OnInit {
     this.form.controls.currencyValue.valueChanges.subscribe((_) => {
       this.calculateSum();
     });
-    this.calculateSum()
+    this.calculateSum();
   }
 
   get branchOptions() {
@@ -181,8 +177,8 @@ export class UpdateJournalComponent implements OnInit {
       totalDebit += (control.value.debit || 0) * currencyValue;
       totalCredit += (control.value.credit || 0) * currencyValue;
     });
-    this.sumCredit.set(totalCredit)
-    this.sumDebit.set(totalDebit)
+    this.sumCredit.set(totalCredit);
+    this.sumDebit.set(totalDebit);
   }
 
   toOption() {
@@ -219,7 +215,7 @@ export class UpdateJournalComponent implements OnInit {
         date: e!['date'],
       })),
     };
-    this.journalService.updateJournal(data,this.journalId).subscribe({
+    this.journalService.updateJournal(data, this.journalId).subscribe({
       next: (_) => this.location.back(),
       error: (err) => console.error(err),
     });

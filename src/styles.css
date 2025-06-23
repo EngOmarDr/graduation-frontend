@@ -191,7 +191,7 @@
   .card {
     background-color: white;
     padding: 1.75rem;
-    margin: 1.75rem;
+    /* margin: 1.75rem; */
     border-radius: 0.375rem;
     box-shadow: var(--shadow-primary);
   }
@@ -204,10 +204,15 @@
     /* background-color: red; */
     padding: 8px calc(var(--spacing) * 2.5);
     border-bottom: 1px solid var(--color-zinc-200);
+    white-space: wrap !important;
   }
-  .ng-select{
+  .ng-select {
     padding: 7px 3px;
     border-color: var(--color-gray-300);
+  }
+  .ng-dropdown-panel {
+    left: 0;
+    top: calc(100% + 3px);
   }
   .ng-dropdown-panel-items {
     width: 100%;
@@ -242,6 +247,7 @@
     text-align: center;
     position: relative;
     text-transform: uppercase;
+    text-wrap: nowrap;
   }
   thead > tr > th::after {
     content: "";

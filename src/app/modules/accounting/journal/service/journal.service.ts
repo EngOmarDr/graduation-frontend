@@ -23,8 +23,14 @@ export class JournalService {
     return this.http.put<JournalResponse>(this.apiUrl + `/${id}`, object);
   }
 
-  getJournals(): Observable<JournalResponse[]> {
-    return this.http.get<JournalResponse[]>(`${this.apiUrl}`);
+  getJournals(parentType?: number): Observable<JournalResponse[]> {
+    const option = parentType
+      ? {
+          params: { parentType: parentType?.toString() },
+        }
+      : undefined;
+    const url = parentType ? `${this.apiUrl}/search` : `${this.apiUrl}`;
+    return this.http.get<JournalResponse[]>(url, option);
   }
 
   getJournalsById(id: number): Observable<JournalResponse> {

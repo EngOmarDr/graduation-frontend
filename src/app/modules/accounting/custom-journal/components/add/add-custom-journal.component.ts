@@ -1,4 +1,10 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormArray,
@@ -8,22 +14,29 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Currency } from 'app/modules/accounting/currency/models/currency.model';
 import { CurrencyService } from 'app/modules/accounting/currency/services/currency.service';
-import { CardComponent } from '../../../../shared/components/card-form.component';
-import { CustomFieldComponent } from '../../../../shared/components/custom-field.component';
-import { CustomSelectComponent } from '../../../../shared/components/custom-select.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
 import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
 import { Account } from 'app/modules/accounting/account/models/account';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
+import { CardComponent } from '@shared/components/card-form.component';
+import { CustomFieldComponent } from '@shared/components/custom-field.component';
+import { CustomSelectComponent } from '@shared/components/custom-select.component';
+import { JournalService } from 'app/modules/accounting/journal/service/journal.service';
+import { BranchService } from 'app/modules/branch/services/branch.service';
+import { ValidationMessageComponent } from '@shared/components/validation-message.component';
+import { BranchResponse } from 'app/modules/branch/models/response/branch-response';
+import {
+  CreateJournalItemRequest,
+  CreateJournalRequest,
+} from 'app/modules/accounting/journal/models/request/create-journal-request.model';
 
 @Component({
-  selector: 'app-journal',
+  selector: 'app-add-custom-journal',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -35,191 +48,234 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
     ValidationMessageComponent,
   ],
   templateUrl: './add-custom-journal.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddCustomJournalComponent implements OnInit, OnDestroy {
-  private fb = inject(NonNullableFormBuilder);
-  private currencyService = inject(CurrencyService);
-  private accountService = inject(AccountService);
+  private readonly fb = inject(NonNullableFormBuilder);
+  private readonly currencyService = inject(CurrencyService);
+  private readonly accountService = inject(AccountService);
+  private readonly journalService = inject(JournalService);
+  private readonly branchService = inject(BranchService);
   private activatedRoute = inject(ActivatedRoute);
-  private router = inject(Router);
 
+  branches: BranchResponse[] = [];
   currencies: Currency[] = [];
-  searchAccounts$: Observable<Account[]> = of();
+  searchAccounts$: Observable<Account[]> = this.accountService.getAccounts();
+  journalType!: JournalTypeResponse;
+  private subscriptions = new Subscription();
+
   form = this.fb.group({
-    date: [this.getCurrentDate(), [Validators.required]],
-    postDate: this.fb.control<string | undefined>(undefined),
-    isPosted: [false],
-    currency: ['1', [Validators.required]],
-    equality: this.fb.control<number | undefined>(
+    date: [this.currentDateTime, Validators.required],
+    branchId: this.fb.control<number | undefined>(
       undefined,
       Validators.required
     ),
-    notes: [''],
+    currencyId: [1, Validators.required],
+    currencyValue: [1, Validators.required],
+    parentType: [-1],
+    isPosted: [false],
     account: this.fb.control<AccountResponse | undefined>(undefined),
-    items: this.fb.array<FormGroup<any>>(
-      [
-        // this.fb.group({
-        //   account: ['', Validators.required],
-        //   notes: [''],
-        //   debit: ['', [Validators.min(0), Validators.required]],
-        //   credit: ['', [Validators.min(0), Validators.required]],
-        //   currency: ['', [Validators.required]],
-        //   balance: this.fb.control<number>(1, Validators.required),
-        //   equality: this.fb.control<number>(1, Validators.required),
-        //   date: ['', [Validators.required]],
-        // }),
-      ],
-      Validators.required
-    ),
+    journalItems: this.fb.array<FormGroup<any>>([], Validators.required),
   });
 
   sumDebit = 0;
   sumCredit = 0;
   minus = 0;
 
-  journalType: JournalTypeResponse | undefined;
-  private subscriptions = new Subscription();
-
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.activatedRoute.paramMap.subscribe(() => {
-        this.journalType = history.state?.['journalType'];
-        this.form = this.fb.group({
-          date: [this.getCurrentDate(), [Validators.required]],
-          postDate: this.fb.control({
-            value: this.journalType?.autoPost
-              ? this.getCurrentDate()
-              : undefined,
-            disabled: !!this.journalType?.autoPost,
-          }),
-          isPosted: [{ value: false, disabled: !!this.journalType?.autoPost }],
-          currency: ['1', [Validators.required]],
-          equality: this.fb.control<number | undefined>(undefined, [
-            Validators.required,
-          ]),
-          notes: [''],
-          account: this.fb.control({
-            value: this.journalType?.defaultAccountId,
-            disabled: !this.journalType?.defaultAccountId,
-          }),
-          items: this.fb.array([this.createItemRow()]),
-        });
-      })
-    );
-    this.currencyService.getCurrencies().subscribe({
-      next: (data) => {
-        this.currencies = data;
-        this.form.controls.currency.setValue(data[0]?.id?.toString() ?? '1');
-      },
+    this.activatedRoute.paramMap.subscribe(() => {
+      this.journalType = history.state?.['journalType'];
+      console.log(this.journalType);
+
+      this.form = this.fb.group({
+        date: [this.currentDateTime, Validators.required],
+        branchId: this.fb.control<number | undefined>(
+          undefined,
+          Validators.required
+        ),
+        currencyId: [
+          this.journalType.defaultCurrency?.id ?? 1,
+          Validators.required,
+        ],
+        currencyValue: [
+          this.journalType.defaultCurrency?.currencyValue ?? 1,
+          Validators.required,
+        ],
+        parentType: [this.journalType.id],
+        isPosted: [this.journalType.autoPost],
+        account: this.fb.control<AccountResponse | undefined>(
+          this.journalType.defaultAccountId,
+          this.journalType.defaultAccountId ? Validators.required : undefined
+        ),
+        journalItems: this.fb.array<FormGroup<any>>([], Validators.required),
+      });
     });
-    this.searchAccounts$ = this.accountService.getAccounts();
-    this.form.controls.currency.valueChanges.subscribe((value) => {
-      this.form.controls.equality.setValue(
-        this.currencies.find((currnecy) => `${currnecy.id}` == value)
-          ?.currencyValue,
-        { emitEvent: false }
-      );
+
+    this.form.controls.currencyId.valueChanges.subscribe((value) => {
+      const curr = this.currencies.find((c) => c.id === value);
+      this.form.controls.currencyValue.setValue(curr?.currencyValue ?? 1, {
+        emitEvent: false,
+      });
     });
+
+    this.form.controls.currencyValue.valueChanges.subscribe(() => {
+      this.calculateSum();
+    });
+
+    this.currencyService.getCurrencies().subscribe((data) => {
+      this.currencies = data;
+      if (!this.journalType.defaultCurrency) {
+        this.form.controls.currencyId.setValue(data[0]?.id!);
+      }
+    });
+
+    this.branchService.getBranches().subscribe((data) => {
+      this.branches = data;
+      if (data.length) {
+        this.form.controls.branchId.setValue(data[0].id);
+      }
+    });
+
+    // this.searchAccounts$ = this.accountService.getAccounts();
+
+    this.addRow();
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
-  getCurrentDate(): string {
-    const date = new Date();
-    // return date.toISOString();
-    return date.toISOString().split('T')[0];
-  }
-
   onSubmit() {
-    console.log(this.form.value);
-  }
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    if (this.sumDebit == 0 && this.sumCredit == 0) {
+      alert('enter some journal items');
+      return;
+    }
 
-  get items(): FormArray<FormGroup> {
-    return this.form.get('items') as FormArray<FormGroup>;
+    let data: CreateJournalRequest = {
+      date: this.form.controls.date.value,
+      branchId: this.form.controls.branchId.value!,
+      currencyId: this.form.controls.currencyId.value,
+      currencyValue: this.form.controls.currencyValue.value!,
+      parentType: this.journalType.id,
+      isPosted: this.form.controls.isPosted.value,
+      journalItems: this.form.controls.journalItems
+        .getRawValue()
+        .map<CreateJournalItemRequest>((e) => ({
+          accountId: e['accountId']!,
+          notes: this.journalType.fieldNotes ? e['notes'] : null,
+          debit: this.journalType.fieldDebit ? e['debit'] : 0,
+          credit: this.journalType.fieldCredit ? e['credit'] : 0,
+          currencyId: this.journalType.fieldCurrencyName
+            ? e['currencyId']
+            : undefined,
+          currencyValue: this.journalType.fieldCurrencyEquilty
+            ? e['currencyValue']
+            : e['currencyId']
+            ? this.currencies.filter((i) => i.id == e['currencyId'])[0]
+                .currencyValue
+            : undefined,
+          date: this.journalType.fieldDate ? e['date'] : null,
+        })),
+    };
+    if (this.journalType.defaultAccountId && this.minus != 0) {
+      console.log('here');
+
+      data.journalItems.push({
+        accountId: this.journalType.defaultAccountId.id,
+        notes: undefined,
+        debit:
+          this.minus > 0
+            ? 0
+            : Math.abs(this.minus) / this.form.controls.currencyValue.value,
+        credit:
+          this.minus > 0
+            ? Math.abs(this.minus) / this.form.controls.currencyValue.value
+            : 0,
+      });
+      console.log(data.journalItems);
+    }
+    this.journalService.createJournal(data).subscribe({
+      next: (_) => this.form.reset(),
+      error: (err) => console.error(err),
+    });
   }
 
   createItemRow(): FormGroup<any> {
-    const newRow = this.fb.group({
-      account: ['', Validators.required],
+    const row = this.fb.group({
+      accountId: this.fb.control<number | undefined>(
+        undefined,
+        Validators.required
+      ),
       notes: [{ value: '', disabled: !this.journalType?.fieldNotes }],
-      debit: [
-        { value: 0, disabled: !this.journalType?.fieldDebit },
-        Validators.min(0),
-      ],
-      credit: [
-        { value: 0, disabled: !this.journalType?.fieldCredit },
-        Validators.min(0),
-      ],
-      currency: [{ value: '', disabled: !this.journalType?.fieldCurrencyName }],
-      balance: this.fb.control<number>({
-        value: 1,
+      debit: this.fb.control<number | null>(
+        { value: null, disabled: !this.journalType?.fieldDebit },
+        Validators.min(0)
+      ),
+      credit: this.fb.control<number | null>(
+        { value: null, disabled: !this.journalType?.fieldCredit },
+        Validators.min(0)
+      ),
+      currencyId: this.fb.control<number | undefined>({
+        value: undefined,
         disabled: !this.journalType?.fieldCurrencyName,
       }),
-      equality: this.fb.control<number>({
-        value: 1,
-        disabled: !this.journalType?.fieldCurrencyEquilty,
+      currencyValue: this.fb.control<number | undefined>({
+        value: undefined,
+        disabled: !this.journalType?.fieldCurrencyName,
       }),
-      date: [{ value: '', disabled: !this.journalType?.fieldDate }],
-    });
-    newRow.controls.currency.valueChanges.subscribe((value) => {
-      newRow.controls.equality.setValue(
-        this.currencies.find((currnecy) => `${currnecy.id}` == value)
-          ?.currencyValue ?? 0,
-        { emitEvent: false }
-      );
-      newRow.controls.balance.setValue(
-        parseFloat((1 / newRow.controls.equality.value).toFixed(5)),
-        {
-          emitEvent: false,
-        }
-      );
+      date: [{ value: undefined, disabled: !this.journalType?.fieldDate }],
     });
 
-    newRow.controls.debit.valueChanges.subscribe((_) => {
-      newRow.controls.credit.setValue(0, { emitEvent: false });
+    row.controls.debit.valueChanges.subscribe(() => {
+      row.controls.credit.setValue(0, { emitEvent: false });
       this.calculateSum();
     });
-    newRow.controls.credit.valueChanges.subscribe((_) => {
-      newRow.controls.debit.setValue(0, { emitEvent: false });
+    row.controls.credit.valueChanges.subscribe(() => {
+      row.controls.debit.setValue(0, { emitEvent: false });
+      this.calculateSum();
+    });
+    row.controls.currencyId.valueChanges.subscribe((value) => {
+      const curr = this.currencies.find((c) => c.id == value);
+      console.log(curr);
+      console.log(value);
+
+      row.controls.currencyValue.setValue(curr?.currencyValue, {
+        emitEvent: false,
+      });
       this.calculateSum();
     });
 
-    newRow.controls.balance.valueChanges.subscribe((balance) => {
-      const newValue =
-        balance != 0 ? (1 / (balance ?? 0)).toFixed(5) : '0.00000';
-      newRow.controls.equality.setValue(parseFloat(newValue), {
-        emitEvent: false,
-      });
+    row.controls.currencyValue.valueChanges.subscribe(() => {
+      this.calculateSum();
     });
 
-    newRow.controls.equality.valueChanges.subscribe((eq) => {
-      const newBalance = (1 / (eq ?? 0)).toFixed(5);
-      newRow.controls.balance.setValue(parseFloat(newBalance), {
-        emitEvent: false,
-      });
-    });
-    return newRow;
+    return row;
   }
 
-  addRow(): void {
-    const newItem = this.createItemRow();
-    this.items.push(newItem);
+  addRow() {
+    this.journalItems.push(this.createItemRow());
   }
 
-  removeRow(index: number): void {
-    this.items.removeAt(index);
-
-    this.items.at(0).controls['fact'].setValue(1);
+  removeRow(i: number) {
+    this.journalItems.removeAt(i);
+    this.calculateSum();
   }
 
   calculateSum() {
-    this.sumDebit = this.sumCredit = 0;
-    this.items.controls.forEach((group: FormGroup) => {
-      const amountDebit = group.get('debit')?.value ?? 0;
-      const amountCredit = group.get('credit')?.value ?? 0;
-      this.sumDebit += amountDebit;
-      this.sumCredit += amountCredit;
+    this.sumDebit = 0;
+    this.sumCredit = 0;
+    this.journalItems.controls.forEach((g) => {
+      this.sumDebit +=
+        +g.get('debit')?.value *
+        (g.get('currencyValue')?.value ??
+          this.form.controls.currencyValue.value);
+      this.sumCredit +=
+        +g.get('credit')?.value *
+        (g.get('currencyValue')?.value ??
+          this.form.controls.currencyValue.value);
     });
     this.minus = this.sumDebit - this.sumCredit;
   }
@@ -236,13 +292,25 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
     return a.id >= b.id;
   }
 
-  toOption(): {
-    key: number;
-    value: string;
-  }[] {
-    return this.currencies.map((e) => ({
-      key: e.id!,
-      value: e.name,
-    }));
+  get journalItems(): FormArray<FormGroup> {
+    return this.form.get('journalItems') as FormArray<FormGroup>;
+  }
+  get currentDateTime(): string {
+    return new Date().toISOString().slice(0, 16);
+  }
+  get currencyOptions() {
+    let curr = this.currencies.map((b) => ({ key: b.id, value: b.name }));
+    return curr;
+  }
+  get currencyOptionsWithNull() {
+    let curr = this.currencies.map((b) => ({ key: b.id, value: b.name }));
+    curr.push({ key: undefined, value: 'no currency' });
+    curr.sort((a, b) => {
+      return (a.key ?? 0) - (b.key ?? 0);
+    });
+    return curr;
+  }
+  get branchOptions() {
+    return this.branches.map((b) => ({ key: b.id, value: b.name }));
   }
 }

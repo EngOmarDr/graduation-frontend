@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-show-journal-types',
-  imports: [CardComponent, CommonModule,RouterModule],
+  imports: [CardComponent, CommonModule, RouterModule],
   templateUrl: './show-journal-type.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -20,19 +20,10 @@ export class ShowJournalTypesComponent {
   private readonly service = inject(JournalTypesService);
   private readonly router = inject(Router);
 
-  displayedColumns: (keyof JournalTypeResponse)[] = [
-    'name',
-    'defaultAccountId',
-    'defaultCurrency',
-    'debitName',
-    'creditName',
-  ];
   journalTypes = signal<JournalTypeResponse[]>([]);
 
   ngOnInit(): void {
     this.service.getJournalTypes().subscribe((next) => {
-      console.log(next);
-
       this.journalTypes.set(next);
     });
   }
