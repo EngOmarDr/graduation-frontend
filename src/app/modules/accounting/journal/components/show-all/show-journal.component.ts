@@ -11,7 +11,7 @@ import { JournalService } from '../../service/journal.service';
 import { JournalResponse } from '../../models/reponse/journal-response.model';
 
 @Component({
-  selector: 'app-show-journal-types',
+  selector: 'app-show-journals',
   imports: [CardComponent, CommonModule, RouterModule],
   templateUrl: './show-journal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

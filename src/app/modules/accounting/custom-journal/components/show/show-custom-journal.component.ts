@@ -49,8 +49,8 @@ export class ShowCustomJournalsComponent {
   }
 
   updateItem(object: JournalResponse): void {
-    this.router.navigate(['journal/update-journal', object.id], {
-      state: { object },
+    this.router.navigate(['update-custom-journal', object.id], {
+      state: { object, journalType: this.journalType },
     });
   }
 }

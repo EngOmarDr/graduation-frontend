@@ -62,31 +62,20 @@ export const accountingRoutes: Routes = [
           import('./journal/components/add-journal/add-journal.component').then(
             (m) => m.AddJournalComponent
           ),
-        canActivate: [authGuard],
       },
       {
         path: 'journals',
         loadComponent: () =>
-          import(
-            './journal/components/show-all/show-journal.component'
-          ).then((m) => m.ShowJournalsComponent),
-        canActivate: [authGuard],
+          import('./journal/components/show-all/show-journal.component').then(
+            (m) => m.ShowJournalsComponent
+          ),
       },
       {
         path: 'update-journal/:id',
         loadComponent: () =>
-          import(
-            './journal/components/update/update-journal.component'
-          ).then((m) => m.UpdateJournalComponent),
-        canActivate: [authGuard],
-      },
-      {
-        path: 'update-account/:id',
-        loadComponent: () =>
-          import(
-            './account/components/update-account/update-account.component'
-          ).then((m) => m.UpdateAccountComponent),
-        canActivate: [authGuard],
+          import('./journal/components/update/update-journal.component').then(
+            (m) => m.UpdateJournalComponent
+          ),
       },
     ],
     canActivate: [authGuard],
@@ -143,5 +132,13 @@ export const accountingRoutes: Routes = [
       import(
         './custom-journal/components/show/show-custom-journal.component'
       ).then((m) => m.ShowCustomJournalsComponent),
+  },
+  {
+    path: 'update-custom-journal/:id',
+    loadComponent: () =>
+      import('./custom-journal/components/update/update-custom-journal.component').then(
+        (m) => m.UpdateCustomJournalComponent
+      ),
+    canActivate: [authGuard],
   },
 ];

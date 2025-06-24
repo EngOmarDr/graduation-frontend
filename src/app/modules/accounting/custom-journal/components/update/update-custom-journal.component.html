@@ -1,4 +1,4 @@
-<cust-card titleText="Add {{ journalType.name }}">
+<cust-card titleText="Update {{ journalType.name }}">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select
       [control]="form.controls.branchId"
@@ -37,7 +37,6 @@
         bindLabel="name"
         bindValue="id"
         [searchFn]="searchFn"
-        [compareWith]="compareFn"
         [formControl]="form.controls.account"
         class="border border-gray-300 bg-gray-50 p-2.5 h-10"
       >
@@ -114,11 +113,14 @@
             </tr>
           </thead>
           <tbody>
+            @for (row of journalItems.controls; track $index) {
             <tr
-              *ngFor="let row of journalItems.controls; let i = index"
+              *ngIf="
+                row.get('accountId')!.value != form.controls.account.value
+              "
               [formGroup]="row"
             >
-              <td>{{ i + 1 }}</td>
+              <td>{{ $index + 1 }}</td>
               <td>
                 <ng-select
                   id="Account"
@@ -207,7 +209,7 @@
                   class="cursor-pointer"
                   title="edit"
                   type="button"
-                  (click)="removeRow(i)"
+                  (click)="removeRow($index)"
                 >
                   <svg
                     class="fill-red-500"
@@ -225,12 +227,13 @@
                 </button>
               </td>
             </tr>
+            }
             <tr>
               <td [attr.colspan]="9" class="text-center w-full">
                 <button
                   type="button"
                   class="w-fit self-center mx-auto my-1 cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
-                  (click)="addRow()"
+                  (click)="addRow(undefined)"
                 >
                   <img src="assets/icons/add.png" alt="add" />
                 </button>
@@ -249,16 +252,13 @@
     </div>
 
     <div class="col-span-full mt-4">
-      <p>Total Debit: {{ sumDebit }}</p>
-      <p>Total Credit: {{ sumCredit }}</p>
-      <p>Difference: {{ minus }}</p>
+      <p>Total Debit: {{ sumDebit() }}</p>
+      <p>Total Credit: {{ sumCredit() }}</p>
+      <p>Difference: {{ minus() }}</p>
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn" [disabled]="!form.valid">Add</button>
+      <button type="submit" class="btn" [disabled]="!form.valid">Update</button>
     </div>
   </form>
-  <div>
-    {{ form.value | json }}
-  </div>
 </cust-card>

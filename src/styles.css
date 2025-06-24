@@ -246,7 +246,7 @@
     padding: calc(var(--spacing) * 2); /* 0.5rem = 8px */
     text-align: center;
     position: relative;
-    text-transform: uppercase;
+    text-transform: capitalize;
     text-wrap: nowrap;
   }
   thead > tr > th::after {
