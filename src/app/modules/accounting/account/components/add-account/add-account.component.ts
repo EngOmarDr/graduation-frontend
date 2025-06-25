@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -12,8 +12,9 @@ import { AccountService } from '../../service/account-service.service';
 import { Observable, of, Subject } from 'rxjs';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { AcccountSearchModalComponent } from "../acccount-search-modal/acccount-search-modal.component";
+import { AcccountSearchModalComponent } from '../acccount-search-modal/acccount-search-modal.component';
 import { AccountResponse } from '../../models/response/account-response.model';
+import { CreateAccountRequest } from '../../models/request/create_account_request';
 
 @Component({
   selector: 'app-add-account',
@@ -25,8 +26,8 @@ import { AccountResponse } from '../../models/response/account-response.model';
     CommonModule,
     ValidationMessageComponent,
     NgSelectModule,
-    AcccountSearchModalComponent
-],
+    AcccountSearchModalComponent,
+  ],
   templateUrl: './add-account.component.html',
 })
 export class AddAccountComponent implements OnInit {
@@ -38,11 +39,13 @@ export class AddAccountComponent implements OnInit {
   form = this.fb.group({
     code: ['', [Validators.required]],
     name: ['', [Validators.required]],
-    parentId: this.fb.control<number | undefined>(undefined),
+    parentId: this.fb.control<AccountResponse | null>(null),
     finalAccount: [1, [Validators.required]],
   });
 
   accounts$: Observable<AccountResponse[]> = of();
+  accounts: AccountResponse[] = [];
+  isLoadingSearch = signal(false);
 
   finalAccounts = [
     { key: 1, value: 'الميزانية' },
@@ -50,11 +53,10 @@ export class AddAccountComponent implements OnInit {
     { key: 3, value: 'المتاجرة' },
   ];
 
-  showModal = true;
+  showModal = false;
 
-  onAccountSelected(group: any) {
-    console.log('Selected group:', group);
-    // Handle the selected group
+  onAccountSelected(object: any) {
+    this.form.controls.parentId.setValue(object);
   }
 
   ngOnInit(): void {
@@ -69,7 +71,13 @@ export class AddAccountComponent implements OnInit {
     );
   }
   onSubmit() {
-    this.service.createAccount(this.form.value!).subscribe({
+    let data: CreateAccountRequest = {
+      code: this.form.controls.code.value,
+      name: this.form.controls.name.value,
+      finalAccount: this.form.controls.finalAccount.value,
+      parentId: this.form.controls.parentId.value?.id,
+    };
+    this.service.createAccount(data).subscribe({
       next: () => {
         this.location.back();
       },
@@ -78,5 +86,40 @@ export class AddAccountComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+
+  submitSearch() {
+    if (
+      (this.form.controls.parentId.value?.toString().trim().length ?? 0) == 0
+    ) {
+      alert('enter value to search');
+      return;
+    }
+    this.isLoadingSearch.set(true);
+    this.service
+      .searchAccount(this.form.controls.parentId.value?.toString())
+      .subscribe({
+        next: (next) => {
+          this.accounts = next;
+          this.isLoadingSearch.set(false);
+          if (next.length == 1) {
+            this.form.controls.parentId.setValue(next[0]);
+          } else {
+            this.showModal = true;
+          }
+        },
+      });
+    console.log(this.form.controls.parentId.value);
+  }
+
+  get parentAccountValue() {
+    if (this.form.controls.parentId.value?.code == undefined) {
+      return '';
+    }
+    return (
+      this.form.controls.parentId.value?.code +
+      '-' +
+      this.form.controls.parentId.value?.name
+    );
   }
 }

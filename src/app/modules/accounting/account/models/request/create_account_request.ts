@@ -1,6 +1,6 @@
 export interface CreateAccountRequest {
   name: string;
   code: string;
-  primaryAccount?: string;
+  parentId?: number;
   finalAccount: number;
 }

@@ -1,0 +1,41 @@
+  isLoadingSearch = signal(false);
+  showModal = false;
+
+onAccountSelected(object: any) {
+    this.form.controls.parentId.setValue(object);
+  }
+
+  submitSearch() {
+    if (
+      (this.form.controls.parentId.value?.toString().trim().length ?? 0) == 0
+    ) {
+      alert('enter value to search');
+      return;
+    }
+    this.isLoadingSearch.set(true);
+    this.service
+      .searchAccount(this.form.controls.parentId.value?.toString())
+      .subscribe({
+        next: (next) => {
+          this.accounts = next;
+          this.isLoadingSearch.set(false);
+          if (next.length == 1) {
+            this.form.controls.parentId.setValue(next[0]);
+          } else {
+            this.showModal = true;
+          }
+        },
+      });
+    console.log(this.form.controls.parentId.value);
+  }
+
+  get parentAccountValue() {
+    if (this.form.controls.parentId.value?.code == undefined) {
+      return '';
+    }
+    return (
+      this.form.controls.parentId.value?.code +
+      '-' +
+      this.form.controls.parentId.value?.name
+    );
+  }

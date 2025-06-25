@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   inject,
+  Input,
   Output,
   signal,
 } from '@angular/core';
@@ -30,17 +31,19 @@ export class AcccountSearchModalComponent {
 
   @Output() accountSelected = new EventEmitter<AccountResponse>();
   @Output() closed = new EventEmitter<void>();
+  @Input() searchTerm = '';
+  @Input() accounts: AccountResponse[] = [];
 
-  accounts: AccountResponse[] = [];
-  filteredAccounts = signal<AccountResponse[]>([]);
-  searchTerm = '';
+  filteredAccounts = signal<AccountResponse[]>(this.accounts);
   sortByName = false;
   isLoading = signal(false);
   selectedAccount: AccountResponse | null = null;
   private searchTerms = new Subject<string>();
 
   ngOnInit() {
-    this.loadGroups();
+    if (this.accounts.length == 0) {
+      this.loadData();
+    }
 
     this.searchTerms
       .pipe(
@@ -48,38 +51,36 @@ export class AcccountSearchModalComponent {
         distinctUntilChanged(),
         switchMap((term: string) =>
           this.searchAccounts(term).pipe(
-            catchError((error) => {
-              console.error('Search error:', error);
+            catchError(() => {
               this.isLoading.set(false);
-              return of([]); // Return empty array on error
+              return of([]);
             })
           )
         )
       )
       .subscribe({
-        next: (groups) => {
-          this.filteredAccounts.set(groups);
-          this.sortGroups();
+        next: (data) => {
+          this.filteredAccounts.set(data);
+          this.sortData();
           this.isLoading.set(false);
         },
         error: (err) => {
-          console.error('Error searching groups:', err);
+          console.error('Error searching data:', err);
           this.isLoading.set(false);
         },
       });
   }
 
-  loadGroups() {
+  loadData() {
     this.isLoading.set(true);
     this.service.searchAccount(this.searchTerm).subscribe({
-      next: (groups) => {
-        this.accounts = groups;
-        this.filteredAccounts.set([...groups]);
-        this.sortGroups();
+      next: (value) => {
+        this.filteredAccounts.set([...value]);
+        this.sortData();
         this.isLoading.set(false);
       },
       error: (err) => {
-        console.error('Error loading groups:', err);
+        console.error('Error loading data:', err);
         this.isLoading.set(false);
       },
     });
@@ -99,10 +100,10 @@ export class AcccountSearchModalComponent {
 
   toggleSort() {
     this.sortByName = !this.sortByName;
-    this.sortGroups();
+    this.sortData();
   }
 
-  sortGroups() {
+  sortData() {
     this.filteredAccounts.update((old) =>
       old.sort((a, b) => {
         if (this.sortByName) {
@@ -113,7 +114,7 @@ export class AcccountSearchModalComponent {
     );
   }
 
-  selectGroup(account: AccountResponse) {
+  selectAccount(account: AccountResponse) {
     this.selectedAccount = account;
   }
 

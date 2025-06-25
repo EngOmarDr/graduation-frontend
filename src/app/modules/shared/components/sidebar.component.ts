@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   computed,
-  effect,
   inject,
-  OnInit,
   Signal,
   signal,
   WritableSignal,
@@ -12,7 +10,6 @@ import {
 import { RouterLink, RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { JournalTypesService } from 'app/modules/accounting/journal-type/services/journal-types.service';
-import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -32,67 +29,13 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
       [ngClass]="{
         '-translate-x-full ease-in': !isSidebarOpen,
         'translate-x-0 ease-out': isSidebarOpen,
-        'w-64': !isCollapseded,
-        'w-20': isCollapseded
       }"
     >
-      <!-- <button
-        (click)="toggleCollapse()"
-        class="p-2"
-        class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-        [ngClass]="{
-          'justify-center': isCollapseded,
-          'gap-2 text-left': !isCollapseded
-        }"
-      >
-        <svg
-          class="w-6 h-6 text-gray-700 dark:text-white"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-        >
-          <path
-            *ngIf="isCollapseded; else expandedIcon"
-            d="M9 5l7 7-7 7"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <ng-template #expandedIcon>
-            <path
-              d="M15 19l-7-7 7-7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </ng-template>
-        </svg>
-      </button> -->
-
       <!-- Logo -->
       <div
-        class="flex items-center justify-center h-16 border-b border-gray-200 dark:border-gray-700"
+        class="flex items-center justify-center h-16 border-b-2 border-primary"
       >
-        <h2
-          *ngIf="!isCollapseded"
-          class="text-2xl font-bold text-primary dark:text-white"
-        >
-          🧾 STC
-        </h2>
-        <svg
-          *ngIf="isCollapseded"
-          class="w-6 h-6 text-primary"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-        >
-          <path
-            d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <h2 class="text-2xl font-bold text-primary dark:text-white">🧾 STC</h2>
       </div>
 
       <nav class="p-4 space-y-2">
@@ -100,11 +43,6 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
           <div *ngIf="item.children; else noChildren">
             <button
               (click)="item?.fun()"
-              class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-              [ngClass]="{
-                'justify-center': isCollapseded,
-                'gap-2 text-left': !isCollapseded
-              }"
               class="flex items-center justify-between w-full px-3 py-2 rounded-lg text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             >
               <span class="flex items-center gap-2">
@@ -118,7 +56,7 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
                   stroke-linejoin="round"
                   [innerHTML]="getLucideIcon(item.icon)"
                 ></svg>
-                <span *ngIf="!isCollapseded">{{ item.name }}</span>
+                <span>{{ item.name }}</span>
               </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -150,13 +88,9 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
                 <a
                   [routerLink]="[subItem.routerLink]"
                   [state]="{ journalType: subItem.state }"
-                  [ngClass]="{
-                    'justify-center': isCollapseded,
-                    'gap-2 text-left': !isCollapseded
-                  }"
-                  [tabIndex]="!isCollapseded ? -1 : null"
+                  [tabIndex]="!item?.attr() ? -1 : 0"
                   class="flex items-center gap-2 mx-3 px-3 py-1 rounded-md text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-                  >
+                >
                   <!-- [routerLinkActiveOptions]="{ exact: true }" -->
                   <!-- routerLinkActive="bg-primary text-white dark:bg-primary" -->
                   <!-- <svg
@@ -169,7 +103,7 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
                     stroke-linejoin="round"
                     [innerHTML]="getLucideIcon(subItem.icon)"
                   ></svg> -->
-                  <span *ngIf="!isCollapseded">{{ subItem.name }}</span>
+                  <span>{{ subItem.name }}</span>
                 </a>
                 }
               </li>
@@ -179,10 +113,6 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
           <ng-template #noChildren>
             <a
               routerLink="{{ item.routerLink }}"
-              [ngClass]="{
-                'justify-center': isCollapseded,
-                'gap-2 text-left': !isCollapseded
-              }"
               class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 hover:text-black dark:hover:bg-gray-700 transition"
               routerLinkActive="bg-primary text-white dark:bg-primary"
             >
@@ -197,35 +127,10 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
                 stroke-linejoin="round"
                 [innerHTML]="getLucideIcon(item.icon)"
               ></svg>
-              <span *ngIf="!isCollapseded">{{ item.name }}</span>
+              <span>{{ item.name }}</span>
             </a>
           </ng-template>
         </ng-container>
-
-        <!-- <hr class="my-4 border-gray-300 dark:border-gray-600" />
-
-        <a
-          routerLink="/settings"
-          class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-          [ngClass]="{
-            'justify-center': isCollapseded,
-            'gap-2 text-left': !isCollapseded
-          }"
-          class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-          routerLinkActive="bg-primary text-white dark:bg-primary"
-        >
-          <svg
-            class="w-5 h-5 text-primary"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            [innerHTML]="getLucideIcon('settings')"
-          ></svg>
-          Settings
-        </a> -->
       </nav>
     </aside>
   `,
@@ -236,16 +141,11 @@ export class SidebarComponent {
   journalTypes = this.service.journalTypes;
 
   isSidebarOpen = false;
-  isCollapseded = false;
   isProductsExpanded = signal(false);
   isVouchersExpanded = signal(false);
   isAccountsExpanded = signal(false);
   isPurchasesExpanded = signal(false);
   isSalesExpanded = signal(false);
-
-  toggleCollapse() {
-    this.isCollapseded = !this.isCollapseded;
-  }
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;

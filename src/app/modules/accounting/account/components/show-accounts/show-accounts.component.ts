@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AccountService } from '../../service/account-service.service';
 import { CardComponent } from '../../../../shared/components/card-form.component';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import { CustomTableComponent } from '../../../../shared/components/cust-table.component';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -38,9 +38,11 @@ export class ShowAccountsComponent {
   }
 
   updateAccount(account: AccountResponse) {
-    this.router.navigate(['update-account', account.id], {
-      state: { account },
-    });
+    this.accounts$.subscribe((accounts)=>{
+      this.router.navigate(['update-account', account.id], {
+        state: { account, accounts },
+      });
+    })
   }
 
   deleteAccount(object: AccountResponse) {

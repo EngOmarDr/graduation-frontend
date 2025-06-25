@@ -116,7 +116,7 @@
     padding-block: calc(var(--spacing) * 2) /* 0.5rem = 8px */;
     padding-inline: calc(var(--spacing) * 2.5) /* 0.625rem = 10px */;
     color: var(--color-white);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     background-color: var(--color-primary);
     /* transition: box-shadow ease-in-out 150ms; */
   }
@@ -133,7 +133,7 @@
     border-color: var(--color-red-500);
   }
   .btn:focus {
-    --tw-ring-shadow: 0 0 1px 3px black;
+    --tw-ring-shadow: 0 0 1px 2px black;
     box-shadow: var(--tw-ring-shadow);
     background-color: var(--color-primary);
     border-color: var(--color-primary);
