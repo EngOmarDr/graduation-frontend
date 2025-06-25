@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
 import { Currency } from 'app/modules/accounting/currency/models/currency.model';
 import { CurrencyService } from 'app/modules/accounting/currency/services/currency.service';
 import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
-import { Account } from 'app/modules/accounting/account/models/account';
 import { JournalService } from '../../service/journal.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BranchService } from '../../../../branch/services/branch.service';
@@ -23,6 +22,7 @@ import { CustomSelectComponent } from '@shared/components/custom-select.componen
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
 import { CreateJournalRequest } from '../../models/request/create-journal-request.model';
 import { ActivatedRoute } from '@angular/router';
+import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
 
 @Component({
   selector: 'app-update-journal',
@@ -49,7 +49,7 @@ export class UpdateJournalComponent implements OnInit {
 
   branches: BranchResponse[] = [];
   currencies: Currency[] = [];
-  searchAccounts$: Observable<Account[]> = this.accountService.getAccounts();
+  searchAccounts$: Observable<AccountResponse[]> = this.accountService.getAccounts();
   journalId = 0;
   form = this.fb.group({
     date: [this.getCurrentDate(), Validators.required],

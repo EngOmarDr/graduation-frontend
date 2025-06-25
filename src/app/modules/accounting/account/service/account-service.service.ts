@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { Account } from '../models/account';
 import { CreateAccountRequest } from '../models/request/create_account_request';
+import { AccountResponse } from '../models/response/account-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,26 +13,30 @@ export class AccountService {
 
   private http = inject(HttpClient);
 
-  getAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(this.apiUrl);
+  getAccounts(): Observable<AccountResponse[]> {
+    return this.http.get<AccountResponse[]>(this.apiUrl);
   }
 
-  getAccountById(id: number): Observable<Account> {
-    return this.http.get<Account>(`${this.apiUrl}/${id}`);
+  getAccountById(id: number): Observable<AccountResponse> {
+    return this.http.get<AccountResponse>(`${this.apiUrl}/${id}`);
   }
 
-  createAccount(Account: Partial<CreateAccountRequest>) {
-    return this.http.post<Account>(this.apiUrl, Account);
+  createAccount(AccountResponse: Partial<CreateAccountRequest>) {
+    return this.http.post<AccountResponse>(this.apiUrl, AccountResponse);
   }
 
   updateAccount(
     id: String,
-    Account: Partial<CreateAccountRequest>
-  ): Observable<Account> {
-    return this.http.put<Account>(`${this.apiUrl}/${id}`, Account);
+    AccountResponse: Partial<CreateAccountRequest>
+  ): Observable<AccountResponse> {
+    return this.http.put<AccountResponse>(`${this.apiUrl}/${id}`, AccountResponse);
   }
 
   deleteAccount(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  searchAccount(term: string = ''): Observable<AccountResponse[]> {
+    return this.http.get<AccountResponse[]>(`${this.apiUrl}/search?q=${term}`);
   }
 }

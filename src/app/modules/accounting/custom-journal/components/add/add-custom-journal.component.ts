@@ -19,7 +19,6 @@ import { Currency } from 'app/modules/accounting/currency/models/currency.model'
 import { CurrencyService } from 'app/modules/accounting/currency/services/currency.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
-import { Account } from 'app/modules/accounting/account/models/account';
 import { ActivatedRoute } from '@angular/router';
 import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
@@ -60,7 +59,7 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
 
   branches: BranchResponse[] = [];
   currencies: Currency[] = [];
-  searchAccounts$: Observable<Account[]> = this.accountService.getAccounts();
+  searchAccounts$: Observable<AccountResponse[]> = this.accountService.getAccounts();
   journalType!: JournalTypeResponse;
   private subscriptions = new Subscription();
 

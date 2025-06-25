@@ -31,7 +31,13 @@
           <td>{{ i + 1 }}</td>
           <td>{{ journal.branchId }}</td>
           <td>{{ journal.totalCredit }}</td>
-          <td>{{ journal.parentType == 0 ? "journal" : "custom journal" }}</td>
+          <td>
+            {{
+              journal.parentType == 0
+                ? "journal"
+                : getJournalTypeName(journal.parentType)
+            }}
+          </td>
           <td>{{ journal.isPosted }}</td>
           <td>{{ journal.date | date : "yyyy-MM-dd" }}</td>
           <td class="text-nowrap">

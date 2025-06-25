@@ -6,7 +6,6 @@ import {
 } from '@angular/forms';
 import { CommonModule, Location } from '@angular/common';
 import { Observable, of } from 'rxjs';
-import { Account } from 'app/modules/accounting/account/models/account';
 import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CurrencyService } from 'app/modules/accounting/currency/services/currency.service';
@@ -17,6 +16,7 @@ import { CardComponent } from '@shared/components/card-form.component';
 import { CustomFieldComponent } from '@shared/components/custom-field.component';
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
 import { JournalTypesService } from '../../services/journal-types.service';
+import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
 
 @Component({
   selector: 'app-update-journalType',
@@ -57,7 +57,7 @@ export class UpdateJournalTypeComponent {
     defaultAccountId: this.fb.control<number | undefined>(undefined),
   });
 
-  accounts$: Observable<Account[]> = of();
+  accounts$: Observable<AccountResponse[]> = of();
   currencies$: Observable<Currency[]> = of();
 
   ngOnInit(): void {

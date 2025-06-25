@@ -46,6 +46,15 @@
         name="Primary Account"
       />
     </div>
+    <div>
+
+      <!-- <button (click)="showModal = true">Open Group Search</button> -->
+      <app-account-search-modal
+        *ngIf="showModal"
+        (accountSelected)="onAccountSelected($event)"
+        (closed)="showModal = false"
+      ></app-account-search-modal>
+    </div>
 
     <cust-select
       [control]="form.controls.finalAccount"

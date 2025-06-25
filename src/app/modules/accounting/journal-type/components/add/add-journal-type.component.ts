@@ -10,11 +10,11 @@ import { CardComponent } from '../../../../shared/components/card-form.component
 import { CustomFieldComponent } from '../../../../shared/components/custom-field.component';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
 import { Observable, of } from 'rxjs';
-import { Account } from 'app/modules/accounting/account/models/account';
 import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CurrencyService } from 'app/modules/accounting/currency/services/currency.service';
 import { Currency } from 'app/modules/accounting/currency/models/currency.model';
+import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
 
 @Component({
   selector: 'app-add-journalType',
@@ -50,7 +50,7 @@ export class AddJournalTypeComponent {
     defaultAccountId: [],
   });
 
-  accounts$: Observable<Account[]> = of();
+  accounts$: Observable<AccountResponse[]> = of();
   currencies$: Observable<Currency[]> = of();
 
   ngOnInit(): void {

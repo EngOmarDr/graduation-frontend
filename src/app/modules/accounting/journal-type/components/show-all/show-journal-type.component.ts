@@ -20,13 +20,11 @@ export class ShowJournalTypesComponent {
   private readonly service = inject(JournalTypesService);
   private readonly router = inject(Router);
 
-  journalTypes = signal<JournalTypeResponse[]>([]);
+  journalTypes = this.service.journalTypes;
 
-  ngOnInit(): void {
-    this.service.getJournalTypes().subscribe((next) => {
-      this.journalTypes.set(next);
-    });
-  }
+  // ngOnInit(): void {
+  //   this.service.getJournalTypes().subscribe();
+  // }
 
   updateItem(object: JournalTypeResponse) {
     this.router.navigate([

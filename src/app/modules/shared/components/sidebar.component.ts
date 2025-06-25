@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  computed,
+  effect,
   inject,
   OnInit,
+  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { JournalTypesService } from 'app/modules/accounting/journal-type/services/journal-types.service';
 import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
@@ -14,7 +17,7 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, RouterModule],
   template: `
     <!-- overlay -->
     <div
@@ -93,7 +96,7 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
       </div>
 
       <nav class="p-4 space-y-2">
-        <ng-container *ngFor="let item of routes">
+        <ng-container *ngFor="let item of routes()">
           <div *ngIf="item.children; else noChildren">
             <button
               (click)="item?.fun()"
@@ -138,7 +141,7 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
               class="mt-1 pl-4 overflow-hidden space-y-1 transition-all"
               [ngClass]="{ 'max-h-0': !item?.attr(), 'max-h-96': item?.attr() }"
             >
-              <li *ngFor="let subItem of item.children">
+              <li *ngFor="let subItem of item.children" class="my-1">
                 @if (subItem.name=='br') {
                 <!-- <hr> -->
                 <div class="bg-zinc-300 w-full h-[1px]"></div>
@@ -147,15 +150,16 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
                 <a
                   [routerLink]="[subItem.routerLink]"
                   [state]="{ journalType: subItem.state }"
-                  class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                   [ngClass]="{
                     'justify-center': isCollapseded,
                     'gap-2 text-left': !isCollapseded
                   }"
-                  class="flex items-center gap-2 px-3 py-1 rounded-md text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-                  routerLinkActive="bg-primary text-white dark:bg-primary"
-                >
-                  <svg
+                  [tabIndex]="!isCollapseded ? -1 : null"
+                  class="flex items-center gap-2 mx-3 px-3 py-1 rounded-md text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                  >
+                  <!-- [routerLinkActiveOptions]="{ exact: true }" -->
+                  <!-- routerLinkActive="bg-primary text-white dark:bg-primary" -->
+                  <!-- <svg
                     class="w-4 h-4 text-primary"
                     viewBox="0 0 24 24"
                     fill="none"
@@ -164,7 +168,7 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     [innerHTML]="getLucideIcon(subItem.icon)"
-                  ></svg>
+                  ></svg> -->
                   <span *ngIf="!isCollapseded">{{ subItem.name }}</span>
                 </a>
                 }
@@ -175,16 +179,16 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
           <ng-template #noChildren>
             <a
               routerLink="{{ item.routerLink }}"
-              class="flex items-center transition-all duration-300 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
               [ngClass]="{
                 'justify-center': isCollapseded,
                 'gap-2 text-left': !isCollapseded
               }"
-              class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+              class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 hover:text-black dark:hover:bg-gray-700 transition"
               routerLinkActive="bg-primary text-white dark:bg-primary"
             >
               <svg
                 class="w-5 h-5 text-primary"
+                routerLinkActive="bg-primary text-white dark:bg-primary"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -226,25 +230,10 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
     </aside>
   `,
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
+  private readonly sanitizer = inject(DomSanitizer);
   private service = inject(JournalTypesService);
-  journalTypes = signal<JournalTypeResponse[]>([]);
-
-  constructor(private sanitizer: DomSanitizer) {}
-
-  ngOnInit(): void {
-    this.service.getJournalTypes().subscribe((next: JournalTypeResponse[]) => {
-      this.journalTypes.set(next);
-      this.routes[5].children?.push(
-        ...this.journalTypes().map((next) => ({
-          name: next.name,
-          routerLink: `/show-custom-journal/${next.name}`,
-          icon: '',
-          state: next,
-        }))
-      );
-    });
-  }
+  journalTypes = this.service.journalTypes;
 
   isSidebarOpen = false;
   isCollapseded = false;
@@ -284,23 +273,25 @@ export class SidebarComponent implements OnInit {
     this.isSalesExpanded.update((v) => !v);
   }
 
-  routes: {
-    name: string;
-    icon: string;
-    fun?: () => void;
-    attr?: WritableSignal<boolean>;
-    routerLink?: string;
-    children?: {
+  routes: Signal<
+    {
       name: string;
       icon: string;
+      fun?: () => void;
+      attr?: WritableSignal<boolean>;
       routerLink?: string;
-      fun?: undefined;
-      attr?: undefined;
-      children?: undefined;
-      state?: any;
-    }[];
-  }[] = [
-    { name: 'Dashboard', icon: 'home', routerLink: '' },
+      children?: {
+        name: string;
+        icon: string;
+        routerLink?: string;
+        fun?: undefined;
+        attr?: undefined;
+        children?: undefined;
+        state?: any;
+      }[];
+    }[]
+  > = computed(() => [
+    { name: 'Dashboard', icon: 'home', routerLink: '/dashboard' },
     {
       name: 'Products',
       icon: 'package-search',
@@ -356,6 +347,12 @@ export class SidebarComponent implements OnInit {
           icon: '',
           routerLink: 'journal-types',
         },
+        ...this.journalTypes().map((next) => ({
+          name: next.name,
+          routerLink: `/show-custom-journal/${next.name}`,
+          icon: '',
+          state: next,
+        })),
       ],
     },
     // { name: 'Payment Voucher', icon: 'receipt', routerLink: '/paymentVoucher' },
@@ -389,7 +386,7 @@ export class SidebarComponent implements OnInit {
     // },
     { name: 'Roles/Permissions', icon: 'lock-keyhole', routerLink: '/roles' },
     { name: 'Settings', icon: 'settings', routerLink: '/settings' },
-  ];
+  ]);
 
   getLucideIcon(name: string): SafeHtml {
     const icons: { [key: string]: string } = {

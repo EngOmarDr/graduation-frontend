@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
 import { Currency } from 'app/modules/accounting/currency/models/currency.model';
 import { CurrencyService } from 'app/modules/accounting/currency/services/currency.service';
 import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
-import { Account } from 'app/modules/accounting/account/models/account';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BranchResponse } from 'app/modules/branch/models/response/branch-response';
 import { CardComponent } from '@shared/components/card-form.component';
@@ -54,7 +53,7 @@ export class UpdateCustomJournalComponent implements OnInit {
 
   branches: BranchResponse[] = [];
   currencies: Currency[] = [];
-  searchAccounts$: Observable<Account[]> = this.accountService.getAccounts();
+  searchAccounts$: Observable<AccountResponse[]> = this.accountService.getAccounts();
   journalType!: JournalTypeResponse;
   journalId = 0;
 

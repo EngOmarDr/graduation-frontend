@@ -10,10 +10,10 @@ import { CustomFieldComponent } from '../../../../shared/components/custom-field
 import { CustomSelectComponent } from '../../../../shared/components/custom-select.component';
 import { AccountService } from '../../service/account-service.service';
 import { Observable, of, Subject } from 'rxjs';
-import { Account } from '../../models/account';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AccountResponse } from '../../models/response/account-response.model';
 
 @Component({
   selector: 'app-update-account',
@@ -36,7 +36,7 @@ export class UpdateAccountComponent implements OnInit {
   private activeRoute = inject(ActivatedRoute);
 
   accountId: String = '';
-  account: Account | undefined;
+  account: AccountResponse | undefined;
 
   error: any;
   searchInput$ = new Subject<string>();
@@ -47,7 +47,7 @@ export class UpdateAccountComponent implements OnInit {
     finalAccount: [0, [Validators.required]],
   });
 
-  accounts$: Observable<Account[]> = of();
+  accounts$: Observable<AccountResponse[]> = of();
 
   finalAccounts = [
     { key: 1, value: 'الميزانية' },
