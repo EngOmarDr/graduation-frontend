@@ -148,6 +148,13 @@ export const routes: Routes = [
                 './modules/inventory/product/components/add-product/add-product.component'
               ).then((m) => m.AddProductComponent),
           },
+          {
+            path: 'update-product/:id',
+            loadComponent: () =>
+              import(
+                './modules/inventory/product/components/update-product/update-product.component'
+              ).then((m) => m.UpdateProductComponent),
+          },
         ],
       },
       {

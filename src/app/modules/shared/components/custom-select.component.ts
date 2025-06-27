@@ -3,7 +3,7 @@ import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   inject,
-  input
+  input,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -36,7 +36,9 @@ import { ValidationMessageComponent } from './validation-message.component';
       >
       <select [id]="inputId()" [formControl]="formControl" class="cust-input">
         @for(option of options(); track $index){
-        <option [value]="option.key">{{ option.value }}</option>
+        <option [value]="option.key ?? option.id">
+          {{ option.value ?? option.name }}
+        </option>
         }
       </select>
       <app-validation-message

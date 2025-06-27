@@ -1,4 +1,4 @@
-<cust-card titleText="Add Product">
+<cust-card titleText="Update Product">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls.code"
@@ -41,6 +41,8 @@
       (change)="uploadImage($event)"
     />
 
+    <img [src]="imgSrc()" height="100" width="100" class="object-cover" alt="product image" />
+
     <cust-form-field
       [control]="form.controls.minQty"
       type="number"
@@ -73,8 +75,8 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Price Type</th>
             <th>Unit Name</th>
+            <th>Price Type</th>
             <th>price</th>
             <th>Actions</th>
           </tr>
@@ -87,20 +89,20 @@
             <td>{{ i + 1 }}</td>
             <td>
               <cust-select
-                [control]="row.controls['priceId']"
-                [showLabel]="false"
-                label="price"
-                inputId="price"
-                [options]="this.pricesList()"
-              />
-            </td>
-            <td>
-              <cust-select
                 [control]="row.controls['unitItemId']"
                 [showLabel]="false"
                 label="price"
                 inputId="price"
                 [options]="this.unitItems()"
+              />
+            </td>
+            <td>
+              <cust-select
+                [control]="row.controls['priceId']"
+                [showLabel]="false"
+                label="price"
+                inputId="price"
+                [options]="this.pricesList()"
               />
             </td>
             <td>
@@ -162,7 +164,7 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Unit Item</th>
+            <th>Unit Name</th>
             <th>barcode</th>
             <th>Actions</th>
           </tr>
@@ -176,9 +178,9 @@
             <td>
               <cust-select
                 [control]="row.controls['unitItemId']"
-                label="unitItem"
+                label="unit Name"
                 [showLabel]="false"
-                inputId="unitItem"
+                inputId="unit Name"
                 [options]="this.unitItems()"
               />
             </td>
@@ -236,7 +238,7 @@
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn">Add</button>
+      <button type="submit" class="btn">Update</button>
     </div>
   </form>
 </cust-card>
