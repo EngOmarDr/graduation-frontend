@@ -1,30 +1,34 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, linkedSignal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { CardComponent } from '@shared/components/card-form.component';
-import { CustomTableComponent } from '@shared/components/cust-table.component';
 import { ProductResponse } from '../../models/response/product-response';
+import { ProductService } from '../../services/product.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-show-products',
-  imports: [CardComponent, RouterModule, CommonModule, CustomTableComponent],
+  imports: [CardComponent, RouterModule, CommonModule, NgOptimizedImage],
   templateUrl: './show-products.component.html',
 })
 export class ShowProductsComponent {
-  readonly router = inject(Router);
+  private readonly router = inject(Router);
+  private readonly service = inject(ProductService);
 
-  displayedColumns: (keyof ProductResponse)[] = [
-    'id',
-    'name',
-    'code',
-    'groupName',
-    'unitName',
-  ];
+  productsReadonly = toSignal(this.service.getProducts(), { initialValue: [] });
+  products = linkedSignal(() => this.productsReadonly());
+  displayColumns = ['code', 'name', 'quantity', 'image'];
 
-  products$ = new Observable<ProductResponse[]>();
+  updateProduct(object: ProductResponse) {
+    this.router.navigate(['update-product', object.id], {
+      state: { object },
+    });
+  }
 
-  updateProduct(product: ProductResponse | number) {}
-
-  deleteProduct(product: ProductResponse | number) {}
+  deleteProduct(object: ProductResponse) {
+    this.service.deleteProduct(object.id).subscribe(() => {
+      this.products.update((old) => old.filter((e) => e.id !== object.id));
+    });
+  }
 }

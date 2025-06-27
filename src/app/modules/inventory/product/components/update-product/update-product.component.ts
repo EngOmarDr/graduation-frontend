@@ -1,4 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -6,7 +13,7 @@ import {
   FormGroup,
   FormArray,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { PriceService } from 'app/modules/inventory/price/services/price.service';
 import { UnitService } from 'app/modules/inventory/unit/services/unit.service';
@@ -18,9 +25,12 @@ import { ValidationMessageComponent } from '@shared/components/validation-messag
 import { CustomSelectComponent } from '@shared/components/custom-select.component';
 import { GroupService } from 'app/modules/inventory/group/services/group.service';
 import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/unit-item-response.model';
+import { ActivatedRoute } from '@angular/router';
+import { ProductResponse } from '../../models/response/product-response';
+import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'app-add-product',
+  selector: 'app-update-product',
   imports: [
     ReactiveFormsModule,
     CommonModule,
@@ -29,18 +39,19 @@ import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/uni
     ValidationMessageComponent,
     CustomSelectComponent,
   ],
-  templateUrl: './add-product.component.html',
+  templateUrl: './update-product.component.html',
 })
-export class AddProductComponent {
+export class UpdateProductComponent implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly service = inject(ProductService);
   private readonly priceService = inject(PriceService);
   private readonly unitService = inject(UnitService);
   private readonly groupService = inject(GroupService);
+  private readonly location = inject(Location);
+  private readonly activeRoute = inject(ActivatedRoute);
 
   pricesList = toSignal(this.priceService.getPrices(), { initialValue: [] });
   unitsList = toSignal(this.unitService.getUnits(), { initialValue: [] });
-  unitItems = signal<UnitItemResponse[]>([]);
   groupsList = toSignal(this.groupService.getGroups(), { initialValue: [] });
 
   readonly productType = [
@@ -50,17 +61,18 @@ export class AddProductComponent {
   barcodesColumns = ['#', 'unitItem', 'barcode', 'actions'];
 
   file: File | undefined;
+  // productId: number | undefined;
 
   form = this.fb.group({
     code: ['', Validators.required],
     name: ['', Validators.required],
-    image: [undefined],
-    groupId: [null, Validators.required],
-    defaultUnitId: [null, Validators.required],
-    minQty: [undefined, Validators.min(0)],
-    maxQty: [undefined, Validators.min(0)],
-    orderQty: [undefined, Validators.min(0)],
-    notes: [undefined],
+    image: [''],
+    groupId: this.fb.control<number | null>(null, Validators.required),
+    defaultUnitId: this.fb.control<number | null>(null, Validators.required),
+    minQty: this.fb.control<number | null>(null, Validators.required),
+    maxQty: this.fb.control<number | null>(null, Validators.required),
+    orderQty: this.fb.control<number | null>(null, Validators.required),
+    notes: this.fb.control<string | undefined>(undefined),
     type: [0, Validators.required],
     prices: this.fb.array<FormGroup>(
       [
@@ -82,13 +94,19 @@ export class AddProductComponent {
       Validators.required
     ),
   });
+  unitId = signal<number | null>(null);
+  unitItems = computed(
+    () => this.unitsList().find((e) => e.id == this.unitId())?.unitItems ?? []
+  );
+  imgSrc = signal<string | ArrayBuffer | null>(null);
 
+  productState!: ProductResponse;
   ngOnInit() {
-    this.form.controls.defaultUnitId.valueChanges.subscribe((next) => {
-      this.unitItems.set(
-        this.unitsList().find((e) => e.id == next)?.unitItems ?? []
-      );
-    });
+    this.loadStates();
+    this.form.controls.defaultUnitId.valueChanges.subscribe((next) =>
+      this.unitId.set(next)
+    );
+    this.form.controls.defaultUnitId.setValue(this.productState.defaultUnitId);
   }
 
   get prices(): FormArray<FormGroup> {
@@ -156,9 +174,9 @@ export class AddProductComponent {
         barcodes: this.form.controls.barcodes.value,
         prices: this.form.controls.prices.value,
       };
-      console.log(object);
-
-      this.service.createProduct(object).subscribe(() => this.form.reset());
+      this.service
+        .updateProduct(window.history.state.object.id!, object)
+        .subscribe(() => this.location.back());
     } else {
       this.form.markAllAsTouched();
     }
@@ -166,5 +184,76 @@ export class AddProductComponent {
 
   uploadImage(event: any) {
     this.file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imgSrc.set(e.target?.result ?? null);
+    };
+    reader.readAsDataURL(event.target.files[0]); // Read the file as a data URL
+  }
+
+  loadStates() {
+    const objectState = window.history.state.object as ProductResponse;
+    this.productState = objectState;
+    if (objectState) {
+      this.form = this.fb.group({
+        code: [objectState.code, Validators.required],
+        name: [objectState.name, Validators.required],
+        image: [''],
+        groupId: this.fb.control<number | null>(
+          objectState.groupId,
+          Validators.required
+        ),
+        defaultUnitId: this.fb.control<number | null>(
+          null,
+          Validators.required
+        ),
+        minQty: this.fb.control<number | null>(
+          objectState.minQty,
+          Validators.required
+        ),
+        maxQty: this.fb.control<number | null>(
+          objectState.maxQty,
+          Validators.required
+        ),
+        orderQty: this.fb.control<number | null>(
+          objectState.orderQty,
+          Validators.required
+        ),
+        notes: this.fb.control<string | undefined>(objectState.notes),
+        type: [objectState.type, Validators.required],
+        prices: this.fb.array<FormGroup>(
+          objectState.prices.map((e) =>
+            this.fb.group({
+              priceId: [e.priceId, Validators.required],
+              unitItemId: [e.unitItemId, Validators.required],
+              price: [e.price, [Validators.required, Validators.min(0)]],
+            })
+          ),
+
+          Validators.required
+        ),
+        barcodes: this.fb.array<FormGroup>(
+          objectState.barcodes.map((e) =>
+            this.fb.group({
+              unitItemId: [e.unitItemId, Validators.required],
+              barcode: [e.barcode, Validators.required],
+            })
+          ),
+          Validators.required
+        ),
+      });
+      this.imgSrc.set('http://localhost:8080' + objectState.image);
+    } else {
+      this.service
+        .getProductById(this.activeRoute.snapshot.paramMap.get('id')!)
+        .subscribe({
+          next: (next) => {
+            this.form.patchValue(next);
+          },
+          error: () => {
+            this.location.back();
+          },
+        });
+    }
   }
 }

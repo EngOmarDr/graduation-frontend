@@ -9,10 +9,10 @@ import { CardComponent } from '../../../../shared/components/card-form.component
 import { CustomFieldComponent } from '../../../../shared/components/custom-field.component';
 import { CustomSelectComponent } from '../../../../shared/components/custom-select.component';
 import { AccountService } from '../../service/account-service.service';
-import { find, Observable, of, Subject, tap } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AccountResponse } from '../../models/response/account-response.model';
 import { AcccountSearchModalComponent } from '../acccount-search-modal/acccount-search-modal.component';
 import { CreateAccountRequest } from '../../models/request/create_account_request';
@@ -35,7 +35,6 @@ export class UpdateAccountComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
   private service = inject(AccountService);
   private location = inject(Location);
-  private router = inject(Router);
   private activeRoute = inject(ActivatedRoute);
 
   accountId: String = '';
