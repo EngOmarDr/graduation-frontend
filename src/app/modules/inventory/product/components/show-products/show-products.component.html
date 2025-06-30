@@ -1,5 +1,4 @@
 <cust-card titleText="Product" [titlePadding]="false">
-<cust-card titleText="Product" [titlePadding]="false">
   <div class="flex justify-end items-center">
     <button type="button" class="mb-3 btn" routerLink="/add-product">
       Add Product
@@ -34,7 +33,7 @@
           <td>
             <img
               *ngIf="row.image"
-              ngSrc="{{'http://localhost:8080' + row.image }}"
+              ngSrc="{{ 'http://localhost:8080' + row.image }}"
               class="object-contain"
               fill
               alt="{{ row.name }}"
@@ -43,7 +42,11 @@
           <td>
             <button
               type="button"
-              (click)="deleteProduct(row)"
+              [swal]="[
+                'Delete',
+                'Are you sure want to delete ' + row.name,
+              ]"
+              (confirm)="deleteProduct(row)"
               title="delete row"
               class="text-red-600 hover:text-red-800 cursor-pointer"
             >

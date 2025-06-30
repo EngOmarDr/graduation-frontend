@@ -242,7 +242,9 @@ export class UpdateProductComponent implements OnInit {
           Validators.required
         ),
       });
-      this.imgSrc.set('http://localhost:8080' + objectState.image);
+      objectState.image
+        ? this.imgSrc.set('http://localhost:8080' + objectState.image)
+        : null;
     } else {
       this.service
         .getProductById(this.activeRoute.snapshot.paramMap.get('id')!)

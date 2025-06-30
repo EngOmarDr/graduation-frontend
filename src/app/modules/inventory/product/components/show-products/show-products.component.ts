@@ -5,11 +5,17 @@ import { CardComponent } from '@shared/components/card-form.component';
 import { ProductResponse } from '../../models/response/product-response';
 import { ProductService } from '../../services/product.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map, tap } from 'rxjs';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-show-products',
-  imports: [CardComponent, RouterModule, CommonModule, NgOptimizedImage],
+  imports: [
+    CardComponent,
+    RouterModule,
+    CommonModule,
+    NgOptimizedImage,
+    SweetAlert2Module,
+  ],
   templateUrl: './show-products.component.html',
 })
 export class ShowProductsComponent {

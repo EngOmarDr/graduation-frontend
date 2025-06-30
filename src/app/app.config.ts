@@ -11,6 +11,7 @@ import {
 import { tokenInterceptor } from './core/interceptors/token.interceptor';
 import { provideToastr } from 'ngx-toastr';
 import { errorToastrInterceptor } from './core/interceptors/error-toastr.interceptor';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -32,5 +33,16 @@ export const appConfig: ApplicationConfig = {
       progressBar: true,
       timeOut: 10000,
     }),
+    ...SweetAlert2Module.forRoot({
+      provideSwal: () =>
+        import('sweetalert2').then(({ default: swal }) =>
+          swal.mixin({
+            showCancelButton: true,
+            showCloseButton: true,
+            cancelButtonColor: 'var(--color-primary)',
+            confirmButtonColor: 'var(--color-red-500)'
+          })
+        ),
+    }).providers!,
   ],
 };

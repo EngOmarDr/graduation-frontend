@@ -41,7 +41,15 @@
       (change)="uploadImage($event)"
     />
 
-    <img [src]="imgSrc()" height="100" width="100" class="object-cover" alt="product image" />
+    @if(imgSrc()){
+    <img
+      [src]="imgSrc()"
+      height="100"
+      width="100"
+      class="object-cover"
+      alt="product image"
+    />
+    }
 
     <cust-form-field
       [control]="form.controls.minQty"
