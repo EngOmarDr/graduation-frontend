@@ -1,0 +1,49 @@
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { UserService } from '../../service/user.service';
+import { CardComponent } from '@shared/components/card-form.component';
+import { CustomFieldComponent } from '@shared/components/custom-field.component';
+import { CustomSelectComponent } from '@shared/components/custom-select.component';
+import { RouterModule } from '@angular/router';
+import { BranchService } from 'app/modules/branch/services/branch.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+
+@Component({
+  selector: 'app-add-user',
+  imports: [
+    CardComponent,
+    CustomFieldComponent,
+    CustomSelectComponent,
+    ReactiveFormsModule,
+    RouterModule,
+  ],
+  templateUrl: './add-user.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AddUserComponent {
+  private readonly fb = inject(NonNullableFormBuilder);
+  private readonly service = inject(UserService);
+  private readonly branchService = inject(BranchService);
+  branches = toSignal(this.branchService.getBranches(), { initialValue: [] });
+
+  form = this.fb.group({
+    firstname: ['', [Validators.required]],
+    lastname: ['', [Validators.required]],
+    username: ['', [Validators.required]],
+    password: ['', [Validators.required]],
+    branchId: [-1, [Validators.required]],
+    role: this.fb.control<'USER'>('USER', [Validators.required]),
+  });
+
+  onSubmit() {
+    this.service.createUser(this.form.getRawValue()).subscribe({
+      next: () => {
+        this.form.reset();
+      },
+    });
+  }
+}

@@ -4,7 +4,7 @@ import type {
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { CookieKeys } from '../constants/cookie-keys';
+import { StorageKeys } from '../constants/storage-keys';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const cookieService = inject(CookieService);
   const router = inject(Router);
 
-  const authToken = cookieService.get(CookieKeys.TOKEN);
+  const authToken = cookieService.get(StorageKeys.TOKEN);
   let authReq = req;
 
   if (authToken) {

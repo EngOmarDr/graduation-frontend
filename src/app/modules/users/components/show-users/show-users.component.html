@@ -1,0 +1,59 @@
+<cust-card titleText="Users" [titlePadding]="false">
+  <div class="flex justify-end items-center">
+    <button
+      type="button"
+      class="py-1.5 px-2.5 mb-3 btn"
+      routerLink="/add-user"
+    >
+      Add User
+    </button>
+  </div>
+
+  <div class="overflow-auto max-h-80 relative">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>first name</th>
+          <th>last name</th>
+          <th>username</th>
+          <th>role</th>
+          <th>branch name</th>
+          <th>action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="users().length === 0">
+          <td [attr.colspan]="7" class="text-center">No Data</td>
+        </tr>
+
+        <tr *ngFor="let item of users(); let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.firstName }}</td>
+          <td>{{ item.lastName }}</td>
+          <td>{{ item.username }}</td>
+          <td>{{ item.role }}</td>
+          <td>{{ item.branchId }}</td>
+          <td class="text-nowrap">
+            <button
+              type="button"
+              (click)="deleteItem(item)"
+              title="delete"
+              class="text-red-600 hover:text-red-800 cursor-pointer"
+            >
+              DELETE
+            </button>
+            <button
+              type="button"
+              (click)="updateItem(item)"
+              title="update"
+              class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
+            >
+              EDIT
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</cust-card>

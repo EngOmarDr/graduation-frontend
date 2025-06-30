@@ -48,7 +48,7 @@ import { AccountingReportsKeys } from 'app/core/constants/constant';
             >
               <span class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-primary"
+                  class="w-5 h-5 "
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -115,11 +115,11 @@ import { AccountingReportsKeys } from 'app/core/constants/constant';
             <a
               routerLink="{{ item.routerLink }}"
               class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 hover:text-black dark:hover:bg-gray-700 transition"
-              routerLinkActive="bg-primary text-white dark:bg-primary"
+              routerLinkActive="text-primary"
             >
               <svg
-                class="w-5 h-5 text-primary"
-                routerLinkActive="bg-primary text-white dark:bg-primary"
+                class="w-5 h-5 text-black"
+                routerLinkActive="text-primary"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -264,7 +264,7 @@ export class SidebarComponent {
         })),
       ],
     },
-    { name: 'Roles/Permissions', icon: 'lock-keyhole', routerLink: '/roles' },
+    { name: 'users', icon: 'lock-keyhole', routerLink: '/users' },
     { name: 'Settings', icon: 'settings', routerLink: '/settings' },
   ]);
 

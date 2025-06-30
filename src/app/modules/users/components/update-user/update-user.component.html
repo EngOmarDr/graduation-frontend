@@ -1,0 +1,48 @@
+<cust-card titleText="Update User">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
+    <cust-form-field
+      [control]="form.controls.firstname"
+      inputId="firstname"
+      label="First Name"
+    />
+
+    <cust-form-field
+      [control]="form.controls.lastname"
+      inputId="lastname"
+      label="Last Name"
+    />
+
+    <cust-form-field
+      [control]="form.controls.username"
+      inputId="username"
+      label="Username"
+    />
+
+    <cust-form-field
+      [control]="form.controls.password"
+      inputId="password"
+      label="Password"
+      type="password"
+    />
+
+    <cust-select
+      [control]="form.controls.branchId"
+      [options]="branches()"
+      inputId="branch"
+      label="branch"
+    />
+
+    <cust-select
+      [control]="form.controls.role"
+      [options]="[
+        { key: 'USER', value: 'USER' },
+      ]"
+      inputId="role"
+      label="Role"
+    />
+
+    <div class="col-span-full grid grid-cols-4">
+      <button type="submit" class="btn" [disabled]="!form.valid">Update</button>
+    </div>
+  </form>
+</cust-card>

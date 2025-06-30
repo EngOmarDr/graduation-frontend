@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { accountingRoutes } from '../app/modules/accounting/accounting.routes';
 import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -71,7 +72,7 @@ export const routes: Routes = [
             path: 'update-branch/:id',
             loadComponent: () =>
               import(
-                './modules/branch/components/update-branch/update-branch.component'
+                './modules/branch/components/update-user/update-branch.component'
               ).then((m) => m.UpdateBranchComponent),
           },
         ],
@@ -187,6 +188,33 @@ export const routes: Routes = [
               import(
                 './modules/inventory/barcode/barcode-print.component'
               ).then((m) => m.BarcodePrintComponent),
+          },
+        ],
+      },
+      {
+        path: '',
+        canActivate: [authGuard,adminGuard],
+        children: [
+          {
+            path: 'users',
+            loadComponent: () =>
+              import(
+                './modules/users/components/show-users/show-users.component'
+              ).then((m) => m.ShowUsersComponent),
+          },
+          {
+            path: 'add-user',
+            loadComponent: () =>
+              import(
+                './modules/users/components/add-user/add-user.component'
+              ).then((m) => m.AddUserComponent),
+          },
+          {
+            path: 'update-user/:id',
+            loadComponent: () =>
+              import(
+                './modules/users/components/update-user/update-user.component'
+              ).then((m) => m.UpdateUserComponent),
           },
         ],
       },
