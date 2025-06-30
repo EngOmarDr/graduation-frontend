@@ -11,7 +11,8 @@ export const errorToastrInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      error.error != null ? toastr.error(error.error.message) : null;
+      toastr.clear();
+      error.error?.message != null ? toastr.error(error.error.message) : toastr.error(error.message);
       return throwError(() => error);
     })
   );

@@ -1,0 +1,209 @@
+<cust-card [titleText]="typeReport">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
+    @if(form.get('accountId')){
+    <form [formGroup]="form" (submit)="submitAccountSearch()">
+      <label for="account" class="cust-input-label">Account </label>
+      <div class="flex">
+        <input
+          type="search"
+          formControlName="accountName"
+          class="cust-input rounded-e-none"
+          id="account"
+        />
+
+        <button class="btn rounded-s-none" type="submit">
+          @if (isLoadingAccounts()) {
+          <div role="status">
+            <svg
+              aria-hidden="true"
+              class="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              viewBox="0 0 100 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
+          </div>
+          }@else {
+
+          <span class="[&>svg]:h-5 [&>svg]:w-5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </span>
+          }
+        </button>
+      </div>
+      <app-validation-message
+        [control]="form.get('accountId')!"
+        name="Account"
+      />
+      <div>
+        <app-account-search-modal
+          *ngIf="showModalAccount"
+          [searchTerm]="
+            form.get('accountName')!.value?.toString().split(' - ')[1] ??
+            form.get('accountName')!.value?.toString()
+          "
+          (accountSelected)="onAccountSelected($event)"
+          (closed)="showModalAccount = false"
+        ></app-account-search-modal>
+      </div>
+    </form>
+    }
+    <cust-form-field
+      [control]="form.get('startDate')!"
+      inputId="Start Date"
+      label="Start Date"
+      type="date"
+    />
+    <cust-form-field
+      [control]="form.get('endDate')!"
+      inputId="End Date"
+      label="End Date"
+      type="date"
+    />
+    <div class="space-x-2">
+      <button type="submit" class="btn mt-[22px] mb-3" [disabled]="!form.valid">
+        Preview
+      </button>
+      <button type="button" class="btn mt-[22px] mb-3" (click)="printReport()" [disabled]="!generalJournal && !ledger && !trailBalance">
+        print
+      </button>
+    </div>
+
+  </form>
+
+  <div class="w-full">
+    @if(generalJournal){
+    <div class="overflow-auto max-h-96 relative col-span-full" id="report">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Account</th>
+            <th>Debit</th>
+            <th>Credit</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (generalJournal.length == 0) {
+          <tr>
+            <td [attr.colspan]="generalJournal.length + 2">No Data Found</td>
+          </tr>
+          } @for (row of generalJournal; track $index) {
+          <tr class="bg-primary/20">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ row.date }}</td>
+            <td></td>
+            <td>{{ row.totalDebit }}</td>
+            <td>{{ row.totalCredit }}</td>
+            <td></td>
+          </tr>
+          <tr *ngFor="let entry of row.entries; let i = index">
+            <td></td>
+            <td></td>
+            <td>{{ entry.accountName }}</td>
+            <td>{{ entry.debit }}</td>
+            <td>{{ entry.credit }}</td>
+            <td>{{ entry.notes }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @if (trailBalance) {
+    <div class="overflow-auto max-h-96 relative col-span-full" id="report">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Account</th>
+            <th>Debit</th>
+            <th>Credit</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (trailBalance.entries.length == 0) {
+          <tr>
+            <td [attr.colspan]="10">No Data Found</td>
+          </tr>
+          } @for (row of trailBalance.entries; track $index) {
+          <tr>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ row.accountCode + "-" + row.accountName }}</td>
+            <td>{{ row.debit }}</td>
+            <td>{{ row.credit }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @if (ledger) {
+    <div class="col-span-full" id="report">
+      <div class="overflow-auto max-h-96 relative" >
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Notes</th>
+              <th>Debit</th>
+              <th>Credit</th>
+              <th>balance</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (ledger.entries.length == 0) {
+            <tr>
+              <td [attr.colspan]="10">No Data Found</td>
+            </tr>
+            } @for (row of ledger.entries; track $index) {
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ row.notes }}</td>
+              <td>{{ row.debit }}</td>
+              <td>{{ row.credit }}</td>
+              <td>{{ row.debit - row.credit }}</td>
+              <td>{{ row.date }}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid">
+        <div>Total Debit: {{ ledger.totalDebit }}</div>
+        <div>Total Credit: {{ ledger.totalCredit }}</div>
+        <div>Balance: {{ ledger.closingBalance }}</div>
+      </div>
+    </div>
+
+    }
+    <!-- <app-custom-table
+      [data]="accounts$ | async"
+      [columns]="displayedColumns"
+      (updateRowEvent)="updateAccount($event)"
+      (deleteRowEvent)="deleteAccount($event)"
+    /> -->
+  </div>
+</cust-card>

@@ -122,6 +122,8 @@ export class AcccountSearchModalComponent {
     if (account) {
       this.selectedAccount = account;
     }
+    console.log(this.selectAccount);
+
     if (this.selectedAccount) {
       this.accountSelected.emit(this.selectedAccount);
       this.closeModal();

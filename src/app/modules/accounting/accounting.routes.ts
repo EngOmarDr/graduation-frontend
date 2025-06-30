@@ -110,11 +110,11 @@ export const accountingRoutes: Routes = [
   },
 
   {
-    path: 'ledger',
+    path: 'accounting-reports/:name',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./reports/components/ledger/ledger.component').then(
-        (m) => m.LedgerComponent
+      import('./reports/components/accounting-reports.component').then(
+        (m) => m.AccountingReportsComponent
       ),
   },
   {

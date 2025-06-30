@@ -10,6 +10,7 @@ import {
 import { RouterLink, RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { JournalTypesService } from 'app/modules/accounting/journal-type/services/journal-types.service';
+import { AccountingReportsKeys } from 'app/core/constants/constant';
 
 @Component({
   selector: 'app-sidebar',
@@ -219,12 +220,20 @@ export class SidebarComponent {
       children: [
         { name: 'Accounts', icon: 'wallet-card', routerLink: '/accounts' },
         { name: 'br', icon: 'wallet-card' },
-        { name: 'Journal', icon: 'wallet-card', routerLink: '/journal' },
-        { name: 'Ledger', icon: 'wallet-card', routerLink: '/ledger' },
+        {
+          name: 'General Journal',
+          icon: '',
+          routerLink: `accounting-reports/${AccountingReportsKeys.GENERALJOURNAL}`,
+        },
+        {
+          name: 'Ledger',
+          icon: '',
+          routerLink: `accounting-reports/${AccountingReportsKeys.LEDGER}`,
+        },
         {
           name: 'Trail Balance',
-          icon: 'wallet-card',
-          routerLink: '/trail-balance',
+          icon: '',
+          routerLink: `accounting-reports/${AccountingReportsKeys.TRAILBALANCE}`,
         },
       ],
     },
@@ -255,35 +264,6 @@ export class SidebarComponent {
         })),
       ],
     },
-    // { name: 'Payment Voucher', icon: 'receipt', routerLink: '/paymentVoucher' },
-    // {
-    //   name: 'Purchases',
-    //   icon: 'shopping-cart',
-    //   fun: () => this.togglePurchases(),
-    //   attr: this.isPurchasesExpanded,
-    //   children: [
-    //     { name: 'Purchases', icon: 'shopping-bag', routerLink: '/purchases' },
-    //     {
-    //       name: 'Purchases Returns',
-    //       icon: 'rotate-ccw',
-    //       routerLink: '/purchasesReturns',
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: 'Sales',
-    //   icon: 'shopping-basket',
-    //   fun: () => this.toggleSales(),
-    //   attr: this.isSalesExpanded,
-    //   children: [
-    //     { name: 'Sales', icon: 'badge-dollar-sign', routerLink: '/sales' },
-    //     {
-    //       name: 'Sales Returns',
-    //       icon: 'rotate-ccw',
-    //       routerLink: '/salesReturns',
-    //     },
-    //   ],
-    // },
     { name: 'Roles/Permissions', icon: 'lock-keyhole', routerLink: '/roles' },
     { name: 'Settings', icon: 'settings', routerLink: '/settings' },
   ]);
