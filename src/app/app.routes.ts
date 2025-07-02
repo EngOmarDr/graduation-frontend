@@ -176,6 +176,13 @@ export const routes: Routes = [
                 './modules/inventory/warehouse/components/add-warehouse/add-warehouse.component'
               ).then((m) => m.AddWarehouseComponent),
           },
+          {
+            path: 'update-warehouse/:id',
+            loadComponent: () =>
+              import(
+                './modules/inventory/warehouse/components/update-warehouse/update-warehouse.component'
+              ).then((m) => m.UpdateWarehouseComponent),
+          },
         ],
       },
       {
@@ -193,7 +200,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        canActivate: [authGuard,adminGuard],
+        canActivate: [authGuard, adminGuard],
         children: [
           {
             path: 'users',
@@ -216,6 +223,33 @@ export const routes: Routes = [
                 './modules/users/components/update-user/update-user.component'
               ).then((m) => m.UpdateUserComponent),
           },
+        ],
+      },
+      {
+        path: '',
+        canActivate: [authGuard],
+        children: [
+          {
+            path: 'invoice-types',
+            loadComponent: () =>
+              import(
+                './modules/inventory/invoice-type/components/show-all/show-invoice-types.component'
+              ).then((m) => m.ShowInvoiceTypesComponent),
+          },
+          {
+            path: 'add-invoice-type',
+            loadComponent: () =>
+              import(
+                './modules/inventory/invoice-type/components/add/add-invoice-type.component'
+              ).then((m) => m.AddInvoiceTypeComponent),
+          },
+          // {
+          //   path: 'update-invoice-type/:id',
+          //   loadComponent: () =>
+          //     import(
+          //       './journal-type/components/update/update-journal-type.component'
+          //     ).then((m) => m.UpdateJournalTypeComponent),
+          // },
         ],
       },
       ...accountingRoutes,

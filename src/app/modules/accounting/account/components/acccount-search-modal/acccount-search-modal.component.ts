@@ -6,6 +6,8 @@ import {
   Input,
   Output,
   signal,
+  input,
+  linkedSignal,
 } from '@angular/core';
 import { AccountResponse } from '../../models/response/account-response.model';
 import {
@@ -32,31 +34,37 @@ export class AcccountSearchModalComponent {
   @Output() accountSelected = new EventEmitter<AccountResponse>();
   @Output() closed = new EventEmitter<void>();
   @Input() searchTerm = '';
-  @Input() accounts: AccountResponse[] = [];
+  readonly accounts = input<AccountResponse[]>([]);
 
-  filteredAccounts = signal<AccountResponse[]>(this.accounts);
+  filteredAccounts = linkedSignal<AccountResponse[]>(() => this.accounts());
   sortByName = false;
   isLoading = signal(false);
   selectedAccount: AccountResponse | null = null;
   private searchTerms = new Subject<string>();
 
   ngOnInit() {
-    if (this.accounts.length == 0) {
-      this.loadData();
-    }
+    // if (this.accounts.length == 0) {
+    //   this.loadData();
+    // }
+    console.log(this.accounts());
+    console.log(this.filteredAccounts());
 
     this.searchTerms
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
-        switchMap((term: string) =>
-          this.searchAccounts(term).pipe(
+        switchMap((term: string) => {
+          if (term.trim().length == 0) {
+            return [];
+          }
+          this.isLoading.set(true);
+          return this.service.searchAccount(term).pipe(
             catchError(() => {
               this.isLoading.set(false);
               return of([]);
             })
-          )
-        )
+          );
+        })
       )
       .subscribe({
         next: (data) => {
@@ -84,14 +92,6 @@ export class AcccountSearchModalComponent {
         this.isLoading.set(false);
       },
     });
-  }
-
-  searchAccounts(term: string) {
-    this.isLoading.set(true);
-    if (!term.trim()) {
-      return this.service.searchAccount();
-    }
-    return this.service.searchAccount(term);
   }
 
   onSearchChange(term: string) {

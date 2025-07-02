@@ -1,4 +1,4 @@
-<cust-card titleText="Add Warehouse">
+<cust-card titleText="Update Warehouse">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls.code"
@@ -44,7 +44,7 @@
           let-index="index"
           let-search="searchTerm"
         >
-          <div>{{ item.name + "-" + item.code }}</div>
+          <div>{{ item.name  }}</div>
         </ng-template>
       </ng-select>
       <app-validation-message
@@ -101,8 +101,8 @@
       label="Notes"
     />
 
-    <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn">Add</button>
+    <div class="self-center">
+      <button type="submit" class="btn">Update</button>
     </div>
   </form>
 </cust-card>

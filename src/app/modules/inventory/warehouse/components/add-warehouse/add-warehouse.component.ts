@@ -9,8 +9,12 @@ import { CardComponent } from '@shared/components/card-form.component';
 import { CustomFieldComponent } from '@shared/components/custom-field.component';
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
 import { Observable, of } from 'rxjs';
-import { WarehouseResponse } from '../../models/response/warehouse-response.models';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { WarehouseResponse } from '../../models/response/warehouse-response';
+import { WarehouseService } from '../../services/warehouse.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { CustomSelectComponent } from "../../../../shared/components/custom-select.component";
+import { BranchService } from 'app/modules/branch/services/branch.service';
 
 @Component({
   selector: 'app-add-warehouse',
@@ -21,27 +25,34 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgSelectModule,
     CustomFieldComponent,
     ValidationMessageComponent,
+    CustomSelectComponent,
   ],
   templateUrl: './add-warehouse.component.html',
 })
-export class AddWarehouseComponent implements OnInit {
+export class AddWarehouseComponent {
   private fb = inject(NonNullableFormBuilder);
-
-  results = [];
+  private service = inject(WarehouseService);
+  private branchService = inject(BranchService);
 
   form = this.fb.group({
-    code: ['', [Validators.required]],
-    name: ['', [Validators.required]],
-    parentWarehouse: [''],
+    code: ['', Validators.required],
+    name: ['', Validators.required],
+    type: this.fb.control<'POS' | 'WAREHOUSE'>('WAREHOUSE'),
+    active: [false],
+    branchId: [Validators.required],
+    parentId: [undefined],
+    phone: [''],
     address: [''],
-    note: [''],
+    notes: [''],
   });
 
-  warehouses$: Observable<WarehouseResponse[]> = of();
+  types = [
+    { key: 'POS', value: 'Pos' },
+    { key: 'WAREHOUSE', value: 'Warehouse' },
+  ];
 
-  ngOnInit(): void {
-    // this.warehouses$ = this.service.getwarehouses();
-  }
+  warehouses = toSignal(this.service.getAll(), { initialValue: [] });
+  branches = toSignal(this.branchService.getBranches(), { initialValue: [] });
 
   searchFn(term: string, item: any) {
     term = term.toLowerCase();
@@ -52,6 +63,14 @@ export class AddWarehouseComponent implements OnInit {
   }
 
   onSubmit() {
-    alert(this.form.valid);
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    this.service.create(this.form.getRawValue()).subscribe({
+      next: () => {
+        this.form.reset();
+      },
+    });
   }
 }

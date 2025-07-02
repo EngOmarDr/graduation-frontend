@@ -30,7 +30,9 @@ export class ShowBranchesComponent implements OnInit {
   }
 
   updateBranch(object: BranchResponse) {
-    this.router.navigate(['update-branch', object.id], { state: { object } });
+    this.router.navigate(['branches/update-branch', object.id], {
+      state: { object },
+    });
   }
 
   deleteBranch(object: BranchResponse) {

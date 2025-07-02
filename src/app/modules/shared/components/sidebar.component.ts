@@ -21,12 +21,12 @@ import { AccountingReportsKeys } from 'app/core/constants/constant';
     <div
       class="fixed inset-0 z-30 transition-opacity bg-black opacity-50 lg:hidden"
       *ngIf="isSidebarOpen"
-      (click)="closeSidebar()"
+      (click)="toggleSidebar(false)"
     ></div>
 
     <!-- sidebar -->
     <aside
-      class="fixed start-0 top-0 z-40 h-svh bg-white dark:bg-dark-card-surface shadow-lg transition-transform duration-300 lg:sticky lg:translate-x-0 overflow-y-auto"
+      class="fixed start-0 top-0 min-w-56 z-40 h-svh bg-white dark:bg-dark-card-surface shadow-lg transition-transform duration-300 lg:sticky lg:translate-x-0 overflow-y-auto"
       [ngClass]="{
         '-translate-x-full ease-in': !isSidebarOpen,
         'translate-x-0 ease-out': isSidebarOpen,
@@ -142,62 +142,28 @@ export class SidebarComponent {
   journalTypes = this.service.journalTypes;
 
   isSidebarOpen = false;
-  isProductsExpanded = signal(false);
-  isVouchersExpanded = signal(false);
-  isAccountsExpanded = signal(false);
-  isPurchasesExpanded = signal(false);
-  isSalesExpanded = signal(false);
+  isExpanded = {
+    products: signal(false),
+    accounts: signal(false),
+    invoices: signal(false),
+    vouchers: signal(false),
+  };
 
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
-
-  closeSidebar() {
-    this.isSidebarOpen = false;
+  toggleSidebar(isOpen?: boolean) {
+    this.isSidebarOpen = isOpen ?? !this.isSidebarOpen;
   }
 
-  toggleAccounts() {
-    this.isAccountsExpanded.update((v) => !v);
-  }
-  toggleProducts() {
-    this.isProductsExpanded.update((v) => !v);
-  }
-  toggleVouchers() {
-    this.isVouchersExpanded.update((v) => !v);
+  toggleSection(section: keyof typeof this.isExpanded) {
+    this.isExpanded[section].update((v) => !v);
   }
 
-  togglePurchases() {
-    this.isPurchasesExpanded.update((v) => !v);
-  }
-
-  toggleSales() {
-    this.isSalesExpanded.update((v) => !v);
-  }
-
-  routes: Signal<
-    {
-      name: string;
-      icon: string;
-      fun?: () => void;
-      attr?: WritableSignal<boolean>;
-      routerLink?: string;
-      children?: {
-        name: string;
-        icon: string;
-        routerLink?: string;
-        fun?: undefined;
-        attr?: undefined;
-        children?: undefined;
-        state?: any;
-      }[];
-    }[]
-  > = computed(() => [
+  routes: Signal<any> = computed(() => [
     { name: 'Dashboard', icon: 'home', routerLink: '/dashboard' },
     {
       name: 'Products',
       icon: 'package-search',
-      fun: () => this.toggleProducts(),
-      attr: this.isProductsExpanded,
+      fun: () => this.toggleSection('products'),
+      attr: this.isExpanded.products,
       children: [
         {
           name: 'Products',
@@ -215,8 +181,8 @@ export class SidebarComponent {
     {
       name: 'Accounts',
       icon: 'wallet-cards',
-      fun: () => this.toggleAccounts(),
-      attr: this.isAccountsExpanded,
+      fun: () => this.toggleSection('accounts'),
+      attr: this.isExpanded.accounts,
       children: [
         { name: 'Accounts', icon: 'wallet-card', routerLink: '/accounts' },
         { name: 'br', icon: 'wallet-card' },
@@ -242,8 +208,8 @@ export class SidebarComponent {
     {
       name: 'Vouchers',
       icon: 'book-text',
-      fun: () => this.toggleVouchers(),
-      attr: this.isVouchersExpanded,
+      fun: () => this.toggleSection('vouchers'),
+      attr: this.isExpanded.vouchers,
       children: [
         {
           name: 'Journal Entry',
@@ -262,6 +228,25 @@ export class SidebarComponent {
           icon: '',
           state: next,
         })),
+      ],
+    },
+    {
+      name: 'Invoices',
+      icon: '',
+      fun: () => this.toggleSection('invoices'),
+      attr: this.isExpanded.invoices,
+      children: [
+        {
+          name: 'Invoice Entry',
+          icon: 'book-text',
+          routerLink: 'invoice/invoices',
+        },
+        { name: 'br', icon: '' },
+        {
+          name: 'Invoice Type',
+          icon: '',
+          routerLink: 'invoice-types',
+        },
       ],
     },
     { name: 'users', icon: 'lock-keyhole', routerLink: '/users' },
