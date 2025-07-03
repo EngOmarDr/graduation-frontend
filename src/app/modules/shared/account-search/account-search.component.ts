@@ -11,6 +11,7 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 import {
+  AbstractControl,
   ControlContainer,
   FormControl,
   NonNullableFormBuilder,
@@ -33,7 +34,10 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<form [formGroup]="form" (submit)="submitAccountSearch()">
+    @if(label()){
+
     <label [for]="label()" class="cust-input-label">{{ label() }} </label>
+    }
     <div class="flex">
       <input
         type="search"
@@ -83,8 +87,8 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
       </button>
     </div>
     <app-validation-message
-      [control]="form.controls.accountId"
-      name="Account"
+      [control]="control!"
+      [name]="label() ?? 'this'"
     />
     <div>
       <app-account-search-modal
@@ -110,9 +114,9 @@ export class AccountSearchComponent implements OnInit {
     accountName: [''],
     accountId: [''],
   });
-  readonly label = input.required<string>();
+  readonly label = input<string>();
 
-  @Input() control?: FormControl;
+  @Input({required:true}) control!: AbstractControl;
   @Output() accountSelected = new EventEmitter<any>();
 
   isLoadingAccounts = signal(false);

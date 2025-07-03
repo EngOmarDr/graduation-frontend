@@ -14,14 +14,15 @@ import { CurrencyService } from 'app/modules/accounting/currency/services/curren
 import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
 import { JournalService } from '../../service/journal.service';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { BranchService } from '../../../../branch/services/branch.service';
-import { BranchResponse } from 'app/modules/branch/models/response/branch-response';
 import { CardComponent } from '@shared/components/card-form.component';
 import { CustomFieldComponent } from '@shared/components/custom-field.component';
 import { CustomSelectComponent } from '@shared/components/custom-select.component';
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
 import { CreateJournalRequest } from '../../models/request/create-journal-request.model';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
+import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
+import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
+import { AccountSearchComponent } from '../../../../shared/account-search/account-search.component';
 
 @Component({
   selector: 'app-add-journal',
@@ -35,6 +36,7 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
     CustomSelectComponent,
     NgSelectModule,
     ValidationMessageComponent,
+    AccountSearchComponent,
   ],
   templateUrl: './add-journal.component.html',
 })
@@ -43,15 +45,19 @@ export class AddJournalComponent implements OnInit {
   private readonly currencyService = inject(CurrencyService);
   private readonly accountService = inject(AccountService);
   private readonly journalService = inject(JournalService);
-  private readonly branchService = inject(BranchService);
+  private readonly warehouseService = inject(WarehouseService);
 
-  branches: BranchResponse[] = [];
+  warehouses: WarehouseResponse[] = [];
   currencies: Currency[] = [];
-  searchAccounts$: Observable<AccountResponse[]> = this.accountService.getAccounts();
+  searchAccounts$: Observable<AccountResponse[]> =
+    this.accountService.getAccounts();
 
   form = this.fb.group({
     date: [this.getCurrentDate(), Validators.required],
-    branchId: [1, Validators.required],
+    warehouseId: this.fb.control<undefined | number>(
+      undefined,
+      Validators.required
+    ),
     currencyId: [1, Validators.required],
     currencyValue: [1, Validators.required],
     parentType: [0],
@@ -69,10 +75,10 @@ export class AddJournalComponent implements OnInit {
       this.form.controls.currencyId.setValue(data[0]?.id! ?? 1);
     });
 
-    this.branchService.getBranches().subscribe((data) => {
-      this.branches = data;
+    this.warehouseService.getAll().subscribe((data) => {
+      this.warehouses = data;
       if (data.length) {
-        this.form.controls.branchId.setValue(data[0].id);
+        this.form.controls.warehouseId.setValue(data[0].id);
       }
     });
 
@@ -88,10 +94,6 @@ export class AddJournalComponent implements OnInit {
     });
 
     this.addRow();
-  }
-
-  get branchOptions() {
-    return this.branches.map((b) => ({ key: b.id, value: b.name }));
   }
 
   getCurrentDate(): string {
@@ -115,7 +117,7 @@ export class AddJournalComponent implements OnInit {
       credit: this.fb.control<number | null>(null, Validators.min(0)),
       currencyId: this.fb.control<number | undefined>(undefined),
       currencyValue: this.fb.control<number | undefined>(undefined),
-      date: [],
+      // date: [],
     });
 
     row.controls.debit.valueChanges.subscribe(() => {
@@ -183,7 +185,7 @@ export class AddJournalComponent implements OnInit {
 
     let data: CreateJournalRequest = {
       date: this.form.controls.date.value,
-      branchId: this.form.controls.branchId.value,
+      warehouseId: this.form.controls.warehouseId.value ?? 0,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value,
       parentType: this.form.controls.parentType.value,
@@ -195,7 +197,7 @@ export class AddJournalComponent implements OnInit {
         credit: e!['credit']!,
         currencyId: e!['currencyId'],
         currencyValue: e!['currencyValue'],
-        date: e!['date'],
+        // date: e!['date'],
       })),
     };
     this.journalService.createJournal(data).subscribe({

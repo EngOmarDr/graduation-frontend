@@ -14,8 +14,6 @@ import { CurrencyService } from 'app/modules/accounting/currency/services/curren
 import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
 import { JournalService } from '../../service/journal.service';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { BranchService } from '../../../../branch/services/branch.service';
-import { BranchResponse } from 'app/modules/branch/models/response/branch-response';
 import { CardComponent } from '@shared/components/card-form.component';
 import { CustomFieldComponent } from '@shared/components/custom-field.component';
 import { CustomSelectComponent } from '@shared/components/custom-select.component';
@@ -23,6 +21,8 @@ import { ValidationMessageComponent } from '@shared/components/validation-messag
 import { CreateJournalRequest } from '../../models/request/create-journal-request.model';
 import { ActivatedRoute } from '@angular/router';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
+import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
+import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
 
 @Component({
   selector: 'app-update-journal',
@@ -45,15 +45,16 @@ export class UpdateJournalComponent implements OnInit {
   private currencyService = inject(CurrencyService);
   private accountService = inject(AccountService);
   private journalService = inject(JournalService);
-  private branchService = inject(BranchService);
+  private warehouseService = inject(WarehouseService);
 
-  branches: BranchResponse[] = [];
+  warehouses: WarehouseResponse[] = [];
   currencies: Currency[] = [];
-  searchAccounts$: Observable<AccountResponse[]> = this.accountService.getAccounts();
+  searchAccounts$: Observable<AccountResponse[]> =
+    this.accountService.getAccounts();
   journalId = 0;
   form = this.fb.group({
     date: [this.getCurrentDate(), Validators.required],
-    branchId: [1, Validators.required],
+    warehouseId: [1, Validators.required],
     currencyId: [1, Validators.required],
     currencyValue: [1, Validators.required],
     parentType: [0],
@@ -70,8 +71,8 @@ export class UpdateJournalComponent implements OnInit {
       this.currencies = data;
     });
 
-    this.branchService.getBranches().subscribe((data) => {
-      this.branches = data;
+    this.warehouseService.getAll().subscribe((data) => {
+      this.warehouses = data;
     });
 
     let id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -109,10 +110,6 @@ export class UpdateJournalComponent implements OnInit {
       this.calculateSum();
     });
     this.calculateSum();
-  }
-
-  get branchOptions() {
-    return this.branches.map((b) => ({ key: b.id, value: b.name }));
   }
 
   getCurrentDate(): string {
@@ -200,7 +197,7 @@ export class UpdateJournalComponent implements OnInit {
     }
     let data: CreateJournalRequest = {
       date: this.form.controls.date.value,
-      branchId: this.form.controls.branchId.value,
+      warehouseId: this.form.controls.warehouseId.value,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value,
       parentType: 0,

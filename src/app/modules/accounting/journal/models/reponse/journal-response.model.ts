@@ -1,6 +1,6 @@
 export interface JournalResponse {
   id: number;
-  branchId: number;
+  warehouseId: number;
   date: string;
   totalDebit: number;
   totalCredit: number;
@@ -21,6 +21,6 @@ interface JournalItemResponse {
   credit: number;
   currencyId: number;
   currencyValue: number;
-  date: string;
+  // date: string;
   notes: string;
 }

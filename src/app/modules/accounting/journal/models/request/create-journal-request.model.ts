@@ -1,5 +1,5 @@
 export interface CreateJournalRequest {
-  branchId: number;
+  warehouseId: number;
   date: string;
   currencyId: number;
   currencyValue: number;
@@ -16,6 +16,6 @@ export interface CreateJournalItemRequest {
   credit: number;
   currencyId?: number;
   currencyValue?: number;
-  date?: string;
+  // date?: string;
   notes?: string;
 }

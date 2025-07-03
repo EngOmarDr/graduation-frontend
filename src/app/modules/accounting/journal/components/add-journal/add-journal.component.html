@@ -8,10 +8,10 @@
     />
 
     <cust-select
-      [control]="form.controls['branchId']"
-      [options]="branchOptions"
-      inputId="branchId"
-      label="Branch"
+      [control]="form.controls.warehouseId"
+      [options]="warehouses"
+      inputId="Warehouse"
+      label="Warehouse"
     />
 
     <cust-select
@@ -37,8 +37,8 @@
       />
     </label>
 
-    <div class="parentSelect col-span-full relative">
-      <div class="overflow-auto max-h-80 add-table">
+    <div class="parentSelect col-span-full relative overflow-auto">
+      <div class="max-h-80 add-table relative">
         <table formArrayName="journalItems">
           <thead>
             <tr>
@@ -49,7 +49,7 @@
               <th>Credit</th>
               <th>Currency</th>
               <th>Currency Value</th>
-              <th>Date</th>
+              <!-- <th>Date</th> -->
               <th>Actions</th>
             </tr>
           </thead>
@@ -60,23 +60,7 @@
             >
               <td>{{ i + 1 }}</td>
               <td>
-                <ng-select
-                  [items]="searchAccounts$ | async"
-                  bindLabel="name"
-                  bindValue="id"
-                  appendTo=".parentSelect"
-                  [searchFn]="searchFn"
-                  formControlName="accountId"
-                  class="w-40 border bg-gray-50"
-                >
-                  <ng-template ng-option-tmp let-item="item">
-                    {{ item.name }} - {{ item.code }}
-                  </ng-template>
-                </ng-select>
-                <app-validation-message
-                  [control]="row.get('accountId')!"
-                  name="Account"
-                />
+                <app-account-search [control]="row.get('accountId')!" />
               </td>
               <td>
                 <input formControlName="notes" class="cust-input" />
@@ -113,13 +97,13 @@
                   class="cust-input"
                 />
               </td>
-              <td>
+              <!-- <td>
                 <input
                   formControlName="date"
                   type="datetime-local"
                   class="cust-input"
                 />
-              </td>
+              </td> -->
 
               <td>
                 <button
@@ -151,11 +135,11 @@
           </tbody>
         </table>
         <app-validation-message
-        *ngIf="journalItems.errors"
-        [control]="this.journalItems"
-        [customMessage]="null"
-        name="journalItems"
-        class="col-span-full flex justify-start"
+          *ngIf="journalItems.errors"
+          [control]="this.journalItems"
+          [customMessage]="null"
+          name="journalItems"
+          class="col-span-full flex justify-start"
         />
         <button
           type="button"

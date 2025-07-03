@@ -13,13 +13,11 @@ import { Currency } from 'app/modules/accounting/currency/models/currency.model'
 import { CurrencyService } from 'app/modules/accounting/currency/services/currency.service';
 import { AccountService } from 'app/modules/accounting/account/service/account-service.service';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { BranchResponse } from 'app/modules/branch/models/response/branch-response';
 import { CardComponent } from '@shared/components/card-form.component';
 import { CustomFieldComponent } from '@shared/components/custom-field.component';
 import { CustomSelectComponent } from '@shared/components/custom-select.component';
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
 import { ActivatedRoute } from '@angular/router';
-import { BranchService } from 'app/modules/branch/services/branch.service';
 import { JournalService } from 'app/modules/accounting/journal/service/journal.service';
 import {
   CreateJournalItemRequest,
@@ -27,6 +25,8 @@ import {
 } from 'app/modules/accounting/journal/models/request/create-journal-request.model';
 import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
+import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
+import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
 
 @Component({
   selector: 'app-update-custom-journal',
@@ -47,19 +47,20 @@ export class UpdateCustomJournalComponent implements OnInit {
   private readonly currencyService = inject(CurrencyService);
   private readonly accountService = inject(AccountService);
   private readonly journalService = inject(JournalService);
-  private readonly branchService = inject(BranchService);
+  private readonly warehouseService = inject(WarehouseService);
   private activatedRoute = inject(ActivatedRoute);
   private location = inject(Location);
 
-  branches: BranchResponse[] = [];
+  warehouses: WarehouseResponse[] = [];
   currencies: Currency[] = [];
-  searchAccounts$: Observable<AccountResponse[]> = this.accountService.getAccounts();
+  searchAccounts$: Observable<AccountResponse[]> =
+    this.accountService.getAccounts();
   journalType!: JournalTypeResponse;
   journalId = 0;
 
   form = this.fb.group({
     date: [this.currentDateTime, Validators.required],
-    branchId: this.fb.control<number | undefined>(
+    warehouseId: this.fb.control<number | undefined>(
       undefined,
       Validators.required
     ),
@@ -83,8 +84,8 @@ export class UpdateCustomJournalComponent implements OnInit {
       }
     });
 
-    this.branchService.getBranches().subscribe((data) => {
-      this.branches = data;
+    this.warehouseService.getAll().subscribe((data) => {
+      this.warehouses = data;
       if (data.length) {
         // this.form.controls.branchId.setValue(data[0].id);
       }
@@ -210,7 +211,7 @@ export class UpdateCustomJournalComponent implements OnInit {
     }
     let data: CreateJournalRequest = {
       date: this.form.controls.date.value,
-      branchId: this.form.controls.branchId.value!,
+      warehouseId: this.form.controls.warehouseId.value!,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value!,
       parentType: this.journalType.id,
@@ -312,8 +313,5 @@ export class UpdateCustomJournalComponent implements OnInit {
       return (a.key ?? 0) - (b.key ?? 0);
     });
     return curr;
-  }
-  get branchOptions() {
-    return this.branches.map((b) => ({ key: b.id, value: b.name }));
   }
 }

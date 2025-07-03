@@ -1,8 +1,8 @@
 <cust-card titleText="Update {{ journalType.name }}">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select
-      [control]="form.controls.branchId"
-      [options]="branchOptions"
+      [control]="form.controls.warehouseId"
+      [options]="warehouses"
       inputId="branchId"
       label="Branch"
     />

@@ -8,8 +8,8 @@
     />
 
     <cust-select
-      [control]="form.controls['branchId']"
-      [options]="branchOptions"
+      [control]="form.controls.warehouseId"
+      [options]="warehouses"
       inputId="branchId"
       label="Branch"
     />
@@ -49,7 +49,7 @@
               <th>Credit</th>
               <th>Currency</th>
               <th>Currency Value</th>
-              <th>Date</th>
+              <!-- <th>Date</th> -->
               <th>Actions</th>
             </tr>
           </thead>
@@ -113,13 +113,13 @@
                   class="cust-input"
                 />
               </td>
-              <td>
+              <!-- <td>
                 <input
                   formControlName="date"
                   type="datetime-local"
                   class="cust-input"
                 />
-              </td>
+              </td> -->
 
               <td>
                 <button

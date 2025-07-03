@@ -26,13 +26,13 @@ import { CardComponent } from '@shared/components/card-form.component';
 import { CustomFieldComponent } from '@shared/components/custom-field.component';
 import { CustomSelectComponent } from '@shared/components/custom-select.component';
 import { JournalService } from 'app/modules/accounting/journal/service/journal.service';
-import { BranchService } from 'app/modules/branch/services/branch.service';
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
-import { BranchResponse } from 'app/modules/branch/models/response/branch-response';
 import {
   CreateJournalItemRequest,
   CreateJournalRequest,
 } from 'app/modules/accounting/journal/models/request/create-journal-request.model';
+import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
+import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
 
 @Component({
   selector: 'app-add-custom-journal',
@@ -54,18 +54,19 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
   private readonly currencyService = inject(CurrencyService);
   private readonly accountService = inject(AccountService);
   private readonly journalService = inject(JournalService);
-  private readonly branchService = inject(BranchService);
+  private readonly warehouseService = inject(WarehouseService);
   private activatedRoute = inject(ActivatedRoute);
 
-  branches: BranchResponse[] = [];
+  warehouses: WarehouseResponse[] = [];
   currencies: Currency[] = [];
-  searchAccounts$: Observable<AccountResponse[]> = this.accountService.getAccounts();
+  searchAccounts$: Observable<AccountResponse[]> =
+    this.accountService.getAccounts();
   journalType!: JournalTypeResponse;
   private subscriptions = new Subscription();
 
   form = this.fb.group({
     date: [this.currentDateTime, Validators.required],
-    branchId: this.fb.control<number | undefined>(
+    warehouseId: this.fb.control<number | undefined>(
       undefined,
       Validators.required
     ),
@@ -88,7 +89,7 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
 
       this.form = this.fb.group({
         date: [this.currentDateTime, Validators.required],
-        branchId: this.fb.control<number | undefined>(
+        warehouseId: this.fb.control<number | undefined>(
           undefined,
           Validators.required
         ),
@@ -128,10 +129,10 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.branchService.getBranches().subscribe((data) => {
-      this.branches = data;
+    this.warehouseService.getAll().subscribe((data) => {
+      this.warehouses = data;
       if (data.length) {
-        this.form.controls.branchId.setValue(data[0].id);
+        this.form.controls.warehouseId.setValue(data[0].id);
       }
     });
 
@@ -155,7 +156,7 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
 
     let data: CreateJournalRequest = {
       date: this.form.controls.date.value,
-      branchId: this.form.controls.branchId.value!,
+      warehouseId: this.form.controls.warehouseId.value!,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value!,
       parentType: this.journalType.id,
@@ -308,8 +309,5 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
       return (a.key ?? 0) - (b.key ?? 0);
     });
     return curr;
-  }
-  get branchOptions() {
-    return this.branches.map((b) => ({ key: b.id, value: b.name }));
   }
 }
