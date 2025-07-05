@@ -11,6 +11,7 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { JournalTypesService } from 'app/modules/accounting/journal-type/services/journal-types.service';
 import { AccountingReportsKeys } from 'app/core/constants/constant';
+import { InvoiceTypeService } from 'app/modules/inventory/invoice-type/services/invoice-type.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -138,8 +139,10 @@ import { AccountingReportsKeys } from 'app/core/constants/constant';
 })
 export class SidebarComponent {
   private readonly sanitizer = inject(DomSanitizer);
-  private service = inject(JournalTypesService);
-  journalTypes = this.service.journalTypes;
+  private journalService = inject(JournalTypesService);
+  private invoiceService = inject(InvoiceTypeService);
+  journalTypes = this.journalService.journalTypes;
+  invoiceTypes = this.invoiceService.invoiceTypes;
 
   isSidebarOpen = false;
   isExpanded = {
@@ -247,6 +250,12 @@ export class SidebarComponent {
           icon: '',
           routerLink: 'invoice-types',
         },
+        ...this.invoiceTypes().map((next) => ({
+          name: next.name,
+          routerLink: `/show-custom-invoice/${next.name}`,
+          icon: '',
+          state: next,
+        })),
       ],
     },
     { name: 'users', icon: 'lock-keyhole', routerLink: '/users' },

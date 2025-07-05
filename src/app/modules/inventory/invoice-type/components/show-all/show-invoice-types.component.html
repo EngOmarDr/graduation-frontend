@@ -1,47 +1,51 @@
-<cust-card titleText="Journal Types" [titlePadding]="false">
+<cust-card titleText="Invoice Types" [titlePadding]="false">
   <div class="flex justify-end items-center">
     <button
       type="button"
       class="py-1.5 px-2.5 mb-3 btn"
-      routerLink="/add-journal-type"
+      routerLink="/add-invoice-type"
     >
-      Add Journal Type
+      Add Invoice Type
     </button>
   </div>
 
-  <div class="overflow-auto max-h-80 relative">
-    <table>
+  <div class="overflow-auto max-h-80">
+    <table class="w-full">
       <thead>
         <tr>
           <th>#</th>
-
           <th>name</th>
-          <th>default Account Id</th>
-          <th>default Currency</th>
-          <th>debit Name</th>
-          <th>credit Name</th>
+          <th>type</th>
+          <th>Default Price</th>
+          <th>Default Warehouse</th>
+          <th>Default Currency</th>
+          <th>No Post</th>
+          <th>Auto Post</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        @if (journalTypes().length == 0) {
+        @if (types().length == 0) {
         <tr>
           <td colspan="10">No Data Found</td>
         </tr>
         }
-        <tr *ngFor="let row of journalTypes(); let i = index">
+        <tr *ngFor="let row of types(); let i = index">
           <td>
             {{ i + 1 }}
           </td>
-          <td class="text-nowrap">{{ row.name }}</td>
-          <td>{{ row.defaultAccountId?.name }}</td>
-          <td>{{ row.defaultCurrency?.name }}</td>
-          <td>{{ row.debitName }}</td>
-          <td>{{ row.creditName }}</td>
+          <td>{{ row.name }}</td>
+          <td>{{ row.type }}</td>
+          <td>{{ row.defaultPriceId }}</td>
+          <td>{{ row.defaultWarehouseId }}</td>
+          <td>{{ row.defaultCurrencyId }}</td>
+          <td>{{ row.isNoPost }}</td>
+          <td>{{ row.isAutoPost }}</td>
           <td class="text-nowrap">
             <button
               type="button"
-              (click)="deleteItem(row)"
+              [swal]="['Delete', 'Are you sure want to delete ' + row.name]"
+              (confirm)="deleteItem(row)"
               title="delete row"
               class="text-red-600 hover:text-red-800 cursor-pointer"
             >

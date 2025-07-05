@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
   linkedSignal,
 } from '@angular/core';
@@ -24,7 +25,10 @@ export class ShowUsersComponent {
   usersReadonly = toSignal(this.service.getAllUsers(), { initialValue: [] });
   users = linkedSignal(() => this.usersReadonly());
 
-  ngOnInit(): void {}
+constructor(){
+  effect(() =>console.log(
+   this.users()));
+}
 
   deleteItem(object: UserResponse): void {
     if (confirm('are you sure you want to delete ?')) {

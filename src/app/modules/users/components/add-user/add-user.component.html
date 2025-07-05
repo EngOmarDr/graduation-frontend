@@ -1,13 +1,13 @@
 <cust-card titleText="Add User">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
-      [control]="form.controls.firstname"
+      [control]="form.controls.firstName"
       inputId="firstname"
       label="First Name"
     />
 
     <cust-form-field
-      [control]="form.controls.lastname"
+      [control]="form.controls.lastName"
       inputId="lastname"
       label="Last Name"
     />
@@ -26,10 +26,10 @@
     />
 
     <cust-select
-      [control]="form.controls.branchId"
-      [options]="branches()"
-      inputId="branch"
-      label="branch"
+      [control]="form.controls.warehouseId"
+      [options]="warehouses()"
+      inputId="Warehouse"
+      label="Warehouse"
     />
 
     <cust-select

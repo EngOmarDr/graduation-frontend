@@ -243,13 +243,13 @@ export const routes: Routes = [
                 './modules/inventory/invoice-type/components/add/add-invoice-type.component'
               ).then((m) => m.AddInvoiceTypeComponent),
           },
-          // {
-          //   path: 'update-invoice-type/:id',
-          //   loadComponent: () =>
-          //     import(
-          //       './journal-type/components/update/update-journal-type.component'
-          //     ).then((m) => m.UpdateJournalTypeComponent),
-          // },
+          {
+            path: 'update-invoice-type/:id',
+            loadComponent: () =>
+              import(
+                './modules/inventory/invoice-type/components/update/update-invoice-type.component'
+              ).then((m) => m.UpdateInvoiceTypeComponent),
+          },
         ],
       },
       ...accountingRoutes,

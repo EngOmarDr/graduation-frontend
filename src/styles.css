@@ -232,6 +232,9 @@
   }
 
   /* table */
+  div > table {
+    overflow: auto;
+  }
   table > thead {
     background-color: var(--color-gray-100);
     position: sticky;

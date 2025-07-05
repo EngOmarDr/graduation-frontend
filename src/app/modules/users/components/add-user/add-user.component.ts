@@ -11,6 +11,7 @@ import { CustomSelectComponent } from '@shared/components/custom-select.componen
 import { RouterModule } from '@angular/router';
 import { BranchService } from 'app/modules/branch/services/branch.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 
 @Component({
   selector: 'app-add-user',
@@ -27,15 +28,15 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class AddUserComponent {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly service = inject(UserService);
-  private readonly branchService = inject(BranchService);
-  branches = toSignal(this.branchService.getBranches(), { initialValue: [] });
+  private readonly warehouseService = inject(WarehouseService);
+  warehouses = toSignal(this.warehouseService.getAll(), { initialValue: [] });
 
   form = this.fb.group({
-    firstname: ['', [Validators.required]],
-    lastname: ['', [Validators.required]],
+    firstName: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
-    branchId: [-1, [Validators.required]],
+    warehouseId: [undefined, [Validators.required]],
     role: this.fb.control<'USER'>('USER', [Validators.required]),
   });
 

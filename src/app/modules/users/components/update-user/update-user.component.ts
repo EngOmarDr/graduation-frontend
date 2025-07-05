@@ -13,6 +13,7 @@ import { CustomSelectComponent } from '../../../shared/components/custom-select.
 import { UserService } from '../../service/user.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UserResponse } from '../../models/response/user-response';
+import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 
 @Component({
   selector: 'app-update-branch',
@@ -28,20 +29,20 @@ import { UserResponse } from '../../models/response/user-response';
 export class UpdateUserComponent implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly service = inject(UserService);
-  private readonly branchService = inject(BranchService);
+  private readonly warehouseService = inject(WarehouseService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly location = inject(Location);
 
-  branches = toSignal(this.branchService.getBranches(), { initialValue: [] });
+  warehouses = toSignal(this.warehouseService.getAll(), { initialValue: [] });
   object: UserResponse | undefined = window.history.state.object;
   id: number | null = +this.activatedRoute.snapshot.paramMap.get('id')!;
 
   form = this.fb.group({
-    firstname: ['', [Validators.required]],
-    lastname: ['', [Validators.required]],
+    firstName: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
-    branchId: [-1, [Validators.required]],
+    warehouseId: [-1, [Validators.required]],
     role: this.fb.control<'USER' | 'ADMIN'>('USER', [Validators.required]),
   });
 

@@ -1,0 +1,29 @@
+export interface InvoiceTypeRequest {
+  type: number;
+  name: string;
+  defaultPriceId?: number;
+  minDefaultPriceId?: number;
+  isAffectCostPrice: boolean;
+  isAffectLastPrice: boolean;
+  isAffectCustPrice: boolean;
+  isAffectProfit: boolean;
+  isDiscAffectCost: boolean;
+  isExtraAffectCost: boolean;
+  isNoEntry: boolean;
+  isAutoEntry: boolean;
+  isAutoEntryPost: boolean;
+  isNoPost: boolean;
+  isAutoPost: boolean;
+  defaultWarehouseId?: number;
+  defaultBillAccId?: number;
+  defaultCashAccId?: number;
+  defaultDiscAccId?: number;
+  defaultExtraAccId?: number;
+  defaultCostAccId?: number;
+  defaultStockAccId?: number;
+  isShortEntry: boolean;
+  isCashBill: boolean;
+  printAfterInsert: boolean;
+  isBarcode: boolean;
+  defaultCurrencyId?: number;
+}

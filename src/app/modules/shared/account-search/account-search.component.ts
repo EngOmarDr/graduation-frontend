@@ -115,6 +115,7 @@ export class AccountSearchComponent implements OnInit {
     accountId: [''],
   });
   readonly label = input<string>();
+  readonly fetch = input<boolean>(false);
 
   @Input({required:true}) control!: AbstractControl;
   @Output() accountSelected = new EventEmitter<any>();
@@ -124,6 +125,15 @@ export class AccountSearchComponent implements OnInit {
   accounts = signal<AccountResponse[]>([]);
 
   ngOnInit(): void {
+    if (this.fetch() && this.control.value) {
+      this.isLoadingAccounts.set(true);
+      this.accountService
+        .getAccountById(this.control.value)
+        .subscribe((next) => {
+          this.onAccountSelected(next);
+          this.isLoadingAccounts.set(false);
+        });
+    }
     this.form.controls.accountName.valueChanges.subscribe((value) => {
       if (value.toString().trim().length == 0) {
         this.control?.setValue(undefined);
@@ -153,7 +163,6 @@ export class AccountSearchComponent implements OnInit {
 
     this.isLoadingAccounts.set(true);
 
-    console.log(searchValue);
     this.accountService.searchAccount(searchValue).subscribe({
       next: (next) => {
         this.accounts.set(next);

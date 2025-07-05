@@ -1,8 +1,8 @@
 export interface UserRequest {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   username: string;
   password: string;
   role: 'USER' | 'ADMIN';
-  branchId: number;
+  warehouseId?: number;
 }

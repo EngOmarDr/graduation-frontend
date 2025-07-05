@@ -4,5 +4,5 @@ export interface UserResponse {
   lastName: string;
   username: string;
   role: 'USER' | 'ADMIN';
-  branchId?: number;
+  warehouseId?: number;
 }

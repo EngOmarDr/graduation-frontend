@@ -6,7 +6,7 @@ import { StorageKeys } from '../constants/storage-keys';
 export const authGuard: CanActivateFn = () => {
   const cookieService = inject(CookieService);
   const router = inject(Router);
-  const token = cookieService.get(StorageKeys.TOKEN);
+  const token = cookieService.get(StorageKeys.USER);
 
   if (token) {
     return true;
