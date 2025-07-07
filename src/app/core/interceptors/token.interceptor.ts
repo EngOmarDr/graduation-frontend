@@ -3,16 +3,15 @@ import type {
   HttpInterceptorFn,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { StorageKeys } from '../constants/storage-keys';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { StorageService } from '../services/storage.service';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  const cookieService = inject(CookieService);
+  const storageService = inject(StorageService);
   const router = inject(Router);
 
-  const authToken = cookieService.get(StorageKeys.TOKEN);
+  const authToken = storageService.token;
   let authReq = req;
 
   if (authToken) {

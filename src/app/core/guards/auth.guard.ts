@@ -1,12 +1,11 @@
 import { inject } from '@angular/core';
 import { Router, type CanActivateFn } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { StorageKeys } from '../constants/storage-keys';
+import { StorageService } from '../services/storage.service';
 
 export const authGuard: CanActivateFn = () => {
-  const cookieService = inject(CookieService);
+  const storageService = inject(StorageService);
   const router = inject(Router);
-  const token = cookieService.get(StorageKeys.USER);
+  const token = storageService.token;
 
   if (token) {
     return true;

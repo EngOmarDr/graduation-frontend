@@ -1,18 +1,16 @@
 import { inject } from '@angular/core';
-import { Router, type CanActivateFn } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { StorageKeys } from '../constants/storage-keys';
+import { type CanActivateFn } from '@angular/router';
 import { Location } from '@angular/common';
+import { StorageService } from '../services/storage.service';
 
 export const adminGuard: CanActivateFn = () => {
-  const cookieService = inject(CookieService);
+  const storageService = inject(StorageService);
   const location = inject(Location);
-  const token = cookieService.get(StorageKeys.USER);
-  const user = JSON.parse(localStorage.getItem(StorageKeys.USER) ?? '') ;
-  if (user.role == 'ADMIN') {
+
+  if (storageService.role == 'ADMIN') {
     return true;
   } else {
-    // location.back()
+    location.back();
     return false;
   }
 };

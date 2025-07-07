@@ -30,13 +30,14 @@ export class LoginComponent {
   form = this.fb.group({
     username: ['', [Validators.required]],
     password: ['', Validators.required],
+    rememberMe: [false],
   });
 
   ngOnInit() {}
 
   login() {
     if (this.form.valid) {
-      this.loginService.login(this.form.value).subscribe({
+      this.loginService.login(this.form.getRawValue()).subscribe({
         next: () => {
           this.router.navigate(['/']);
         },

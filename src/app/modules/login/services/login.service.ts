@@ -5,24 +5,25 @@ import { CookieService } from 'ngx-cookie-service';
 import { StorageKeys } from '../../../core/constants/storage-keys';
 import { environment } from 'environments/environment';
 import { LoginResponse } from '../models/response/login-response';
+import { StorageService } from 'app/core/services/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   private http = inject(HttpClient);
-  private cookieService = inject(CookieService);
+  private storageService = inject(StorageService);
 
-  login(data: Partial<{ username: string; password: string }>) {
+  login(data: { username: string; password: string; rememberMe: boolean }) {
     return this.http
       .post<LoginResponse>(`${environment.apiUrl}/auth/login`, data)
       .pipe(
         tap((response) => {
-          console.log(response);
-          localStorage.setItem(StorageKeys.USER, JSON.stringify(response));
-          this.cookieService.set(StorageKeys.USER, JSON.stringify(response), {
-            sameSite: 'Strict',
-          });
+          if (data.rememberMe) {
+            this.storageService.storageInLocal(response);
+          } else {
+            this.storageService.storageInCookie(response);
+          }
         })
       );
   }
