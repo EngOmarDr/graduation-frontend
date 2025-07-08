@@ -23,6 +23,11 @@ export class StorageService {
     });
   }
 
+  clearStorage() {
+    localStorage.removeItem(StorageKeys.USER);
+    this.cookieService.delete(StorageKeys.USER);
+  }
+
   get isAdmin() {
     return this.user?.role == 'ADMIN';
   }
@@ -31,5 +36,8 @@ export class StorageService {
   }
   get token() {
     return this.user?.token;
+  }
+  get warehouseId() {
+    return this.user?.warehouseId;
   }
 }

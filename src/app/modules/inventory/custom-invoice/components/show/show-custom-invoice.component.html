@@ -1,0 +1,58 @@
+<cust-card titleText="{{ invoiceType.name }}" [titlePadding]="false">
+  <div class="flex justify-end items-center">
+    <button
+      type="button"
+      class="py-1.5 px-2.5 mb-3 btn"
+      [routerLink]="'/add-custom-invoice/' + invoiceType.name"
+      [state]="{ object: invoiceType }"
+    >
+      Add {{ invoiceType.name }}
+    </button>
+  </div>
+
+  <div class="overflow-auto max-h-80 relative">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>branch</th>
+          <th>total</th>
+          <th *ngIf="!invoiceType.isAutoPost">is posted</th>
+          <th>date</th>
+          <th>action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="journals().length === 0">
+          <td [attr.colspan]="7" class="text-center">No Data</td>
+        </tr>
+
+        <tr *ngFor="let journal of journals(); let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ journal.warehouseId }}</td>
+          <td>{{ journal.totalCredit }}</td>
+          <td *ngIf="!invoiceType.isAutoPost">{{ journal.isPosted }}</td>
+          <td>{{ journal.date | date : "yyyy-MM-dd" }}</td>
+          <td class="text-nowrap">
+            <button
+              type="button"
+              (click)="deleteItem(journal)"
+              title="delete"
+              class="text-red-600 hover:text-red-800 cursor-pointer"
+            >
+              DELETE
+            </button>
+            <button
+              type="button"
+              (click)="updateItem(journal)"
+              title="update"
+              class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
+            >
+              EDIT
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</cust-card>

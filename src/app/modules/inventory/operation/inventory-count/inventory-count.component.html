@@ -1,0 +1,92 @@
+<cust-card titleText="Inventory Count">
+  <!-- <div class="flex justify-end items-center">
+    <button
+      type="button"
+      class="py-1.5 px-2.5 mb-3 btn"
+      routerLink="/add-user"
+    >
+      Add User
+    </button>
+     <div class="flex space-x-2">
+      <button
+        (click)="saveCount()"
+        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+      >
+        حفظ السند
+      </button>
+      <button
+        (click)="printExcelReport()"
+        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+      >
+        تصدير إلى Excel
+      </button>
+      <label
+        class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition cursor-pointer"
+      >
+        تحميل ملف الجرد
+        <input
+          type="file"
+          accept=".txt,.xlsx,.csv"
+          (change)="onFileSelected($event)"
+          class="hidden"
+        />
+      </label>
+    </div>
+  </div> -->
+  <form [formGroup]="form" class="cust-grid mb-4">
+    <cust-select
+      *ngIf="isAdmin"
+      [control]="form.controls.warehouseId"
+      [options]="warehouses()"
+      [canBeNull]="true"
+      label="Warehouse"
+    />
+    <cust-select
+      [control]="form.controls.productId"
+      [options]="products()"
+      [canBeNull]="true"
+      label="Product"
+    />
+    <cust-select
+      [control]="form.controls.groupId"
+      [options]="groups()"
+      [canBeNull]="true"
+      label="Group"
+    />
+    <div class="self-end">
+      <button class="btn">Preview</button>
+    </div>
+  </form>
+  <form [formGroup]="quantityForm" class="col-span-full">
+    <div class="overflow-auto max-h-80 relative add-table w-full">
+      <table formArrayName="quantityCounted">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Current Quantity</th>
+            <th>Quantity counted</th>
+            <th>Difference</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="inventoryItems.length === 0">
+            <td [attr.colspan]="7" class="text-center">
+              you don't have product
+            </td>
+          </tr>
+
+          <tr *ngFor="let item of inventoryItems; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.productName }}</td>
+            <td>{{ item.currentQuantity }}</td>
+            <td>
+              <input [formControlName]="i" class="cust-input" type="number" />
+            </td>
+            <td>{{ item.currentQuantity - quantityCounted.at(i).value }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</cust-card>

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { accountingRoutes } from '../app/modules/accounting/accounting.routes';
 import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
+import { inventoryRoutes } from './modules/inventory/inventory.routes';
 
 export const routes: Routes = [
   {
@@ -252,7 +253,35 @@ export const routes: Routes = [
           },
         ],
       },
+      {
+        path: '',
+        canActivate: [authGuard],
+        children: [
+          {
+            path: 'invoice/:name',
+            loadComponent: () =>
+              import(
+                './modules/inventory/custom-invoice/components/show/show-custom-invoice.component'
+              ).then((m) => m.ShowCustomInvoicesComponent),
+          },
+          {
+            path: 'add-custom-invoice/:name',
+            loadComponent: () =>
+              import(
+                './modules/inventory/custom-invoice/components/add/add-custom-invoice.component'
+              ).then((m) => m.AddCustomInvoiceComponent),
+          },
+          // {
+          //   path: 'update-custom-invoice/:id',
+          //   loadComponent: () =>
+          //     import(
+          //       './custom-journal/components/update/update-custom-journal.component'
+          //     ).then((m) => m.UpdateCustomJournalComponent),
+          // },
+        ],
+      },
       ...accountingRoutes,
+      ...inventoryRoutes,
     ],
   },
 ];

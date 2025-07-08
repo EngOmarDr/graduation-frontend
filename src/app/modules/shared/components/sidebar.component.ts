@@ -12,6 +12,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { JournalTypesService } from 'app/modules/accounting/journal-type/services/journal-types.service';
 import { AccountingReportsKeys } from 'app/core/constants/constant';
 import { InvoiceTypeService } from 'app/modules/inventory/invoice-type/services/invoice-type.service';
+import { StorageService } from 'app/core/services/storage.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -82,7 +83,7 @@ import { InvoiceTypeService } from 'app/modules/inventory/invoice-type/services/
               [ngClass]="{ 'max-h-0': !item?.attr(), 'max-h-96': item?.attr() }"
             >
               <li *ngFor="let subItem of item.children" class="my-1">
-                @if (subItem.name=='br') {
+                @if (subItem?.name=='br') {
                 <!-- <hr> -->
                 <div class="bg-zinc-300 w-full h-[1px]"></div>
                 }@else {
@@ -141,6 +142,7 @@ export class SidebarComponent {
   private readonly sanitizer = inject(DomSanitizer);
   private journalService = inject(JournalTypesService);
   private invoiceService = inject(InvoiceTypeService);
+  private storageService = inject(StorageService);
   journalTypes = this.journalService.journalTypes;
   invoiceTypes = this.invoiceService.invoiceTypes;
 
@@ -157,7 +159,13 @@ export class SidebarComponent {
   }
 
   toggleSection(section: keyof typeof this.isExpanded) {
-    this.isExpanded[section].update((v) => !v);
+    for (const [key, signal] of Object.entries(this.isExpanded)) {
+      if (key == section) {
+        signal.update((v) => !v);
+      } else {
+        signal.set(false);
+      }
+    }
   }
 
   routes: Signal<any> = computed(() => [
@@ -252,10 +260,20 @@ export class SidebarComponent {
         },
         ...this.invoiceTypes().map((next) => ({
           name: next.name,
-          routerLink: `/show-custom-invoice/${next.name}`,
+          routerLink: `/invoice/${next.name}`,
           icon: '',
           state: next,
         })),
+        ...this.storageService.isAdmin
+          ? [
+              { name: 'br', icon: '' },
+              {
+                name: 'Transfer process',
+                icon: '',
+                routerLink: 'transfers',
+              },
+            ]
+          : [],
       ],
     },
     { name: 'users', icon: 'lock-keyhole', routerLink: '/users' },

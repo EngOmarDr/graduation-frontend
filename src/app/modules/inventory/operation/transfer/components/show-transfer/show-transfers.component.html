@@ -1,0 +1,63 @@
+<cust-card titleText="Transfers" [titlePadding]="false">
+  <div class="flex justify-end items-center">
+    <button
+      type="button"
+      class="py-1.5 px-2.5 mb-3 btn"
+      routerLink="/add-transfer"
+    >
+      Add Transfer
+    </button>
+  </div>
+
+  <div class="overflow-auto max-w-full max-h-80">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>From Warehouse</th>
+          <th>To Warehouse</th>
+          <th>Date</th>
+          <th>Number Item</th>
+          <th>Notes</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if ( transfers().length == 0) {
+        <tr>
+          <td [attr.colspan]="10">No Data Found</td>
+        </tr>
+        }
+        <tr *ngFor="let row of transfers(); let i = index">
+          <td>
+            {{ i + 1 }}
+          </td>
+          <td>{{ row.fromWarehouseName }}</td>
+          <td>{{ row.toWarehouseName }}</td>
+          <td>{{ row.date }}</td>
+          <td>{{ row.items.length }}</td>
+          <td>{{ row.notes }}</td>
+          <td class="text-nowrap">
+            <button
+              type="button"
+              [swal]="['Delete', 'Are you sure want to delete ?']"
+              (confirm)="delete(row)"
+              title="delete row"
+              class="text-red-600 hover:text-red-800 cursor-pointer"
+            >
+              DELETE
+            </button>
+            <button
+              type="button"
+              (click)="update(row)"
+              title="edit row"
+              class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
+            >
+              EDIT
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</cust-card>

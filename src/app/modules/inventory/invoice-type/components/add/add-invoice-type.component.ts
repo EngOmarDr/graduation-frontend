@@ -68,15 +68,15 @@ export class AddInvoiceTypeComponent {
     name: ['', Validators.required],
     defaultPriceId: this.fb.control(undefined),
     minDefaultPriceId: [undefined],
-    isAffectCostPrice: [false, Validators.required],
-    isAffectLastPrice: [false, Validators.required],
-    isAffectCustPrice: [false, Validators.required],
+    isAffectCostPrice: [true, Validators.required],
+    isAffectLastPrice: [true, Validators.required],
+    isAffectCustPrice: [true, Validators.required],
     isAffectProfit: [false, Validators.required],
-    isDiscAffectCost: [false, Validators.required],
-    isExtraAffectCost: [false, Validators.required],
+    isDiscAffectCost: [true, Validators.required],
+    isExtraAffectCost: [true, Validators.required],
     isNoEntry: [false, Validators.required],
     isAutoEntry: [false, Validators.required],
-    isAutoEntryPost: [false, Validators.required],
+    isAutoEntryPost: [true, Validators.required],
     isNoPost: [false, Validators.required],
     isAutoPost: [false, Validators.required],
     defaultWarehouseId: [undefined],
@@ -86,12 +86,75 @@ export class AddInvoiceTypeComponent {
     defaultExtraAccId: [undefined],
     defaultCostAccId: [undefined],
     defaultStockAccId: [undefined],
-    isShortEntry: [false],
-    isCashBill: [false],
-    printAfterInsert: [false],
-    isBarcode: [false],
+    isShortEntry: [true],
+    isCashBill: [true],
+    printAfterInsert: [true],
+    isBarcode: [true],
     defaultCurrencyId: [undefined],
   });
+
+  ngOnInit() {
+    this.form.controls.type.valueChanges.subscribe((v) => {
+      switch (+v) {
+        case 1: {
+          this.form.controls.isAutoEntryPost.setValue(true);
+          this.form.controls.isAffectCustPrice.setValue(true);
+          this.form.controls.isAffectLastPrice.setValue(true);
+          this.form.controls.isAffectCostPrice.setValue(true);
+          this.form.controls.isDiscAffectCost.setValue(true);
+          this.form.controls.isExtraAffectCost.setValue(true);
+          this.form.controls.isCashBill.setValue(true);
+          this.form.controls.isShortEntry.setValue(true);
+          this.form.controls.isBarcode.setValue(true);
+          this.form.controls.printAfterInsert.setValue(true);
+          break;
+        }
+        case 2: {
+          this.form.controls.isAutoEntryPost.setValue(true);
+          this.form.controls.isAffectCustPrice.setValue(true);
+          this.form.controls.isAffectCostPrice.setValue(false);
+          this.form.controls.isDiscAffectCost.setValue(false);
+          this.form.controls.isExtraAffectCost.setValue(false);
+          this.form.controls.isCashBill.setValue(true);
+          this.form.controls.isShortEntry.setValue(true);
+          break;
+        }
+        case 3: {
+          this.form.controls.isAutoEntryPost.setValue(true);
+          this.form.controls.isAffectCostPrice.setValue(false);
+          this.form.controls.isDiscAffectCost.setValue(false);
+          this.form.controls.isExtraAffectCost.setValue(false);
+          this.form.controls.isCashBill.setValue(true);
+          this.form.controls.isShortEntry.setValue(true);
+          this.form.controls.printAfterInsert.setValue(true);
+          break;
+        }
+        case 4: {
+          this.form.controls.isAutoEntryPost.setValue(true);
+          this.form.controls.isDiscAffectCost.setValue(true);
+          this.form.controls.isExtraAffectCost.setValue(true);
+          this.form.controls.isCashBill.setValue(true);
+          this.form.controls.isShortEntry.setValue(true);
+          this.form.controls.printAfterInsert.setValue(true);
+          break;
+        }
+        case 5: {
+          this.form.controls.isAutoEntryPost.setValue(true);
+          this.form.controls.isCashBill.setValue(true);
+          this.form.controls.isShortEntry.setValue(true);
+          this.form.controls.printAfterInsert.setValue(true);
+          break;
+        }
+        case 6: {
+          this.form.controls.isAutoEntryPost.setValue(true);
+          this.form.controls.isCashBill.setValue(true);
+          this.form.controls.isShortEntry.setValue(true);
+          this.form.controls.printAfterInsert.setValue(true);
+          break;
+        }
+      }
+    });
+  }
 
   onSubmit() {
     console.log(this.form.value);

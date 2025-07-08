@@ -19,6 +19,7 @@ export class LoginService {
       .post<LoginResponse>(`${environment.apiUrl}/auth/login`, data)
       .pipe(
         tap((response) => {
+          this.storageService.clearStorage();
           if (data.rememberMe) {
             this.storageService.storageInLocal(response);
           } else {

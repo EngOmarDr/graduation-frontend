@@ -27,6 +27,51 @@
       inputId="Default Min Price"
     />
 
+    <cust-select
+      [control]="this.form.controls.defaultWarehouseId"
+      [options]="warehouses()"
+      inputId="Warehouse"
+      label="Warehouse"
+    />
+
+    <app-account-search
+      [control]="this.form.controls.defaultBillAccId"
+      ngDefaultControl
+      label="Bill Account"
+    />
+    <app-account-search
+      [control]="this.form.controls.defaultCashAccId"
+      ngDefaultControl
+      label="Cash Account"
+    />
+    <app-account-search
+      [control]="this.form.controls.defaultDiscAccId"
+      ngDefaultControl
+      label="Disc Account"
+    />
+    <app-account-search
+      [control]="this.form.controls.defaultExtraAccId"
+      ngDefaultControl
+      label="Extra Account"
+    />
+
+    <!-- <app-account-search
+      [control]="this.form.controls.defaultCostAccId"
+      label="Cost Account"
+    />
+    <app-account-search
+      [control]="this.form.controls.defaultStockAccId"
+      (accountSelected)="onAccountSelected($event)"
+      label="Stock Account"
+    /> -->
+
+    <cust-select
+      [control]="form.controls.defaultCurrencyId"
+      [options]="currencies()"
+      label="Default Currency"
+      inputId="Default Currency"
+    />
+
     <label class="self-center">
       <input
         type="checkbox"
@@ -51,13 +96,13 @@
       Affect Customer Price
     </label>
 
-    <label class="self-center">
+    <!-- <label class="self-center">
       <input
         type="checkbox"
         [formControl]="this.form.controls.isAffectProfit"
       />
       Affect Customer Profit
-    </label>
+    </label> -->
 
     <label class="self-center">
       <input
@@ -103,44 +148,6 @@
       Auto Post
     </label>
 
-    <cust-select
-      [control]="this.form.controls.defaultWarehouseId"
-      [options]="warehouses()"
-      inputId="Warehouse"
-      label="Warehouse"
-    />
-
-    <app-account-search
-      [control]="this.form.controls.defaultBillAccId"
-      ngDefaultControl
-      label="Bill Account"
-    />
-    <app-account-search
-      [control]="this.form.controls.defaultCashAccId"
-      ngDefaultControl
-      label="Cash Account"
-    />
-    <app-account-search
-      [control]="this.form.controls.defaultDiscAccId"
-      ngDefaultControl
-      label="Disc Account"
-    />
-    <app-account-search
-      [control]="this.form.controls.defaultExtraAccId"
-      ngDefaultControl
-      label="Extra Account"
-    />
-
-    <app-account-search
-      [control]="this.form.controls.defaultCostAccId"
-      label="Cost Account"
-    />
-    <app-account-search
-      [control]="this.form.controls.defaultStockAccId"
-      (accountSelected)="onAccountSelected($event)"
-      label="Stock Account"
-    />
-
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isShortEntry" />
       Short Entry
@@ -163,13 +170,6 @@
       <input type="checkbox" [formControl]="this.form.controls.isBarcode" />
       Is Barcode
     </label>
-
-    <cust-select
-      [control]="form.controls.defaultCurrencyId"
-      [options]="currencies()"
-      label="Default Currency"
-      inputId="Default Currency"
-    />
 
     <div class="col-span-full grid grid-cols-4">
       <button type="submit" class="btn" [disabled]="!form.valid">Add</button>

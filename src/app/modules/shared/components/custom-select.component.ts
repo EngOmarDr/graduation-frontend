@@ -26,7 +26,7 @@ import { ValidationMessageComponent } from './validation-message.component';
   template: `
     <div>
       <label
-        [for]="inputId()"
+        [for]="inputId() ?? label()"
         class="cust-input-label"
         *ngIf="showLabel()"
         [ngClass]="{
@@ -34,9 +34,15 @@ import { ValidationMessageComponent } from './validation-message.component';
         }"
         >{{ label() }}</label
       >
-      <select [id]="inputId()" [formControl]="formControl" class="cust-input">
-        @for(option of options(); track $index){
-        <option [value]="option.key ?? option.id">
+      <select
+        [id]="inputId() ?? label()"
+        [formControl]="formControl"
+        class="cust-input"
+      >
+        @if(canBeNull()){
+        <option [selected]="true" [ngValue]="undefined">Select {{ label() }}</option>
+        } @for(option of options(); track $index){
+        <option [ngValue]="option.key ?? option.id">
           {{ option.value ?? option.name }}
         </option>
         }
@@ -51,7 +57,8 @@ import { ValidationMessageComponent } from './validation-message.component';
 })
 export class CustomSelectComponent {
   readonly label = input.required<string>();
-  readonly inputId = input.required<string>();
+  readonly inputId = input<string | undefined>();
+  readonly canBeNull = input<boolean>(false);
   readonly control = input.required<AbstractControl>();
   readonly options = input.required<any[]>();
   readonly showLabel = input<boolean>(true);
