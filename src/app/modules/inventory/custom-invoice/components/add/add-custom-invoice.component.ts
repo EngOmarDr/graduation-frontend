@@ -31,6 +31,7 @@ import { WarehouseService } from 'app/modules/inventory/warehouse/services/wareh
 import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
 import { AccountSearchComponent } from '../../../../shared/account-search/account-search.component';
 import { InvoiceTypeResponse } from 'app/modules/inventory/invoice-type/models/response/invoice-type-response';
+import { ProductSearchComponent } from "../../../product/components/search-product/search-product.component";
 
 @Component({
   selector: 'app-add-custom-journal',
@@ -44,7 +45,8 @@ import { InvoiceTypeResponse } from 'app/modules/inventory/invoice-type/models/r
     NgSelectModule,
     ValidationMessageComponent,
     AccountSearchComponent,
-  ],
+    ProductSearchComponent
+],
   templateUrl: './add-custom-invoice.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -71,7 +73,7 @@ export class AddCustomInvoiceComponent implements OnInit, OnDestroy {
     isPosted: [0, Validators.required],
     total: [0],
     notes: [''],
-    clienAccountId: [],
+    clientAccountId: [],
     warehouseId: this.fb.control<number | undefined>(
       undefined,
       Validators.required

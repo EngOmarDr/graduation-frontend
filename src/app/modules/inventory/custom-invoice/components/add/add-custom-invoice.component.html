@@ -23,7 +23,7 @@
     /> -->
 
     <app-account-search
-      [control]="form.controls.clienAccountId"
+      [control]="form.controls.clientAccountId"
       label="Client Account"
     />
 
@@ -91,7 +91,11 @@
             [formGroup]="row"
           >
             <td>{{ i + 1 }}</td>
-            <td><!-- TODO: Select product form --></td>
+            <td>
+              <app-search-product
+              [control]="row.get('productId')!"
+              />
+            </td>
             <td>
               <input
                 formControlName="quantity"
