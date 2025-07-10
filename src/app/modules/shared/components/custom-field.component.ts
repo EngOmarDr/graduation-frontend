@@ -12,10 +12,16 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { ValidationMessageComponent } from './validation-message.component';
+import { NumberFormatDirective } from 'app/core/directives/number-format.directive';
 
 @Component({
   selector: 'cust-form-field',
-  imports: [CommonModule, ValidationMessageComponent, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ValidationMessageComponent,
+    ReactiveFormsModule,
+    NumberFormatDirective,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   viewProviders: [
     {
@@ -28,30 +34,46 @@ import { ValidationMessageComponent } from './validation-message.component';
       <label
         [for]="inputId()"
         class="cust-input-label"
+        *ngIf="label()"
         [ngClass]="{
           'cust-label-disable': control().disabled
         }"
         >{{ label() }}
       </label>
+      @if(type()=='number'){
+
       <input
         [id]="inputId()"
         [formControl]="formControl"
+        (click)="selectAllText($event)"
+        type="{{ type() }}"
+        class="cust-input"
+        [appNumberFormat]="numberFormat()"
+        [readOnly]="readOnly()"
+      />
+      }@else {
+      <input
+        [id]="inputId()"
+        [formControl]="formControl"
+        (click)="selectAllText($event)"
         type="{{ type() }}"
         class="cust-input"
         [readOnly]="readOnly()"
       />
+      }
       <app-validation-message
         [control]="control()"
         [customMessage]="customMessage()"
-        name="{{ label() }}"
+        name="{{ label() ?? inputId() }}"
       />
     </div>
   `,
 })
 export class CustomFieldComponent {
-  readonly label = input.required<string>();
+  readonly label = input<string>();
   readonly inputId = input.required<string>();
   readonly control = input.required<AbstractControl>();
+  readonly numberFormat = input<number>(2);
   readonly type = input<
     | 'button'
     | 'checkbox'
@@ -79,5 +101,12 @@ export class CustomFieldComponent {
   readonly customMessage = input<string | null>(null);
   get formControl(): FormControl {
     return this.control() as FormControl;
+  }
+
+  selectAllText(event: MouseEvent) {
+    if (this.type() == 'number') {
+      const input = event.target as HTMLInputElement;
+      input.select();
+    }
   }
 }

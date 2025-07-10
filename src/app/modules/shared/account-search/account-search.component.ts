@@ -86,10 +86,7 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
         }
       </button>
     </div>
-    <app-validation-message
-      [control]="control!"
-      [name]="label() ?? 'this'"
-    />
+    <app-validation-message [control]="control!" [name]="label() ?? 'this'" />
     <div>
       <app-account-search-modal
         *ngIf="showModalAccount"
@@ -117,7 +114,7 @@ export class AccountSearchComponent implements OnInit {
   readonly label = input<string>();
   readonly fetch = input<boolean>(false);
 
-  @Input({required:true}) control!: AbstractControl;
+  @Input({ required: true }) control!: AbstractControl;
   @Output() accountSelected = new EventEmitter<any>();
 
   isLoadingAccounts = signal(false);

@@ -5,7 +5,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import {
   FormArray,
   FormControl,
@@ -34,9 +34,10 @@ import { ProductResponse } from 'app/modules/inventory/product/models/response/p
 import { UnitService } from 'app/modules/inventory/unit/services/unit.service';
 import { UnitResponse } from 'app/modules/inventory/unit/models/response/unit-response.model';
 import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/unit-item-response.model';
+import { InvoiceResponse } from '../../models/response/invoice-response';
 
 @Component({
-  selector: 'app-add-custom-journal',
+  selector: 'app-update-custom-invoice',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -50,10 +51,10 @@ import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/uni
     ProductSearchComponent,
   ],
   providers: [NumberFormatDirective],
-  templateUrl: './add-custom-invoice.component.html',
+  templateUrl: './update-custom-invoice.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddCustomInvoiceComponent implements OnInit {
+export class UpdateCustomInvoiceComponent implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly currencyService = inject(CurrencyService);
   private readonly service = inject(InvoiceService);
@@ -61,6 +62,7 @@ export class AddCustomInvoiceComponent implements OnInit {
   private readonly unitService = inject(UnitService);
   private readonly storageService = inject(StorageService);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly location = inject(Location);
 
   warehouses = toSignal(this.warehouseService.getAll(), {
     initialValue: [],
@@ -68,65 +70,69 @@ export class AddCustomInvoiceComponent implements OnInit {
   currencies = toSignal(this.currencyService.getCurrencies(), {
     initialValue: [],
   });
+
+  id = window.history.state.object?.id ?? this.location.back();
+  oldInvoice = window.history.state.object as InvoiceResponse;
+
   isAdmin = this.storageService.isAdmin;
   invoiceType = signal<InvoiceTypeResponse>(window.history.state.invoiceType);
-  total = signal(0);
-  totalDisc = signal(0);
-  totalExtra = signal(0);
+  total = signal(
+    this.oldInvoice.total
+  );
+  totalDisc = signal(this.oldInvoice.totalDisc);
+  totalExtra = signal(this.oldInvoice.totalExtra);
 
   form = this.fb.group({
     warehouseId: this.fb.control<number>(
-      this.storageService.warehouseId ??
-        this.invoiceType().defaultWarehouseId ??
-        1,
+      this.oldInvoice.warehouseId,
       Validators.required
     ),
-    invoiceTypeId: [this.invoiceType().id],
-    date: [this.currentDateTime, Validators.required],
-    isSuspended: [false],
-    accountId: [this.invoiceType().defaultCashAccId],
-    currencyId: this.fb.control<number>(1, Validators.required),
-    currencyValue: this.fb.control<number>(1, Validators.required),
-    payType: [this.invoiceType().isCashBill ? 0 : 1, Validators.required],
-    isPosted: [this.invoiceType().isAutoPost, Validators.required],
-    postedDate: [
-      this.invoiceType().isNoPost ? undefined : this.currentDateTime,
-    ],
-    notes: [''],
-    invoiceItems: this.fb.array<
-      FormGroup<{
-        productId: FormControl<number>;
-        qty: FormControl<number>;
-        price: FormControl<number>;
-        total: FormControl<number>;
-        bonusQty: FormControl<number>;
-        unitItemId: FormControl<number | undefined>;
-        unitFact: FormControl<number | undefined>;
-        notes: FormControl<string>;
-      }>
-    >([], Validators.required),
-    invoiceDiscounts: this.fb.array<
-      FormGroup<{
-        account: FormControl<number>;
-        discount: FormControl<number>;
-        discountRate: FormControl<number>;
-        extra: FormControl<number>;
-        extraRate: FormControl<number>;
-        notes: FormControl<string>;
-      }>
-    >([]),
+    invoiceTypeId: [this.oldInvoice.invoiceTypeId],
+    date: [this.oldInvoice.date, Validators.required],
+    isSuspended: [this.oldInvoice.isSuspended],
+    accountId: [this.oldInvoice.accountId],
+    currencyId: this.fb.control<number>(
+      this.oldInvoice.currencyId,
+      Validators.required
+    ),
+    currencyValue: this.fb.control<number>(
+      this.oldInvoice.currencyValue,
+      Validators.required
+    ),
+    payType: [this.oldInvoice.payType, Validators.required],
+    isPosted: [this.oldInvoice.isPosted, Validators.required],
+    postedDate: [this.oldInvoice.postedDate],
+    notes: [this.oldInvoice.notes],
+    invoiceItems: this.fb.array(
+      this.oldInvoice.invoiceItems.map((item) => {
+        return this.fb.group({
+          productId: this.fb.control(item.productId),
+          qty: this.fb.control(item.qty),
+          price: this.fb.control(item.price),
+          total: this.fb.control(item.qty * item.price),
+          bonusQty: this.fb.control(item.bonusQty),
+          unitItemId: this.fb.control(item.unitItemId),
+          unitFact: this.fb.control(item.unitFact),
+          notes: this.fb.control(item.notes),
+        });
+      }),
+      Validators.required
+    ),
+    invoiceDiscounts: this.fb.array(
+      this.oldInvoice.invoiceDiscounts.map((item) => {
+        return this.fb.group({
+          account: [item.account],
+          discount: [item.discount],
+          discountRate: [this.total() / (item.discount * 100)],
+          extra: [item.extra],
+          extraRate: [this.total() / (item.extra * 100)],
+          notes: [item.notes],
+        });
+      })
+    ),
   });
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(() => {
-      const navigation = window.history.state.invoiceType;
-      if (navigation) {
-        this.invoiceType.set(navigation);
-      } else {
-        window.history.back();
-      }
-    });
-
     this.form.controls.currencyId.valueChanges.subscribe((value) => {
       const curr = this.currencies().find((c) => c.id === value);
       this.form.controls.currencyValue.setValue(curr?.currencyValue ?? 1, {
@@ -137,8 +143,6 @@ export class AddCustomInvoiceComponent implements OnInit {
     this.form.controls.currencyId.setValue(
       this.invoiceType().defaultCurrencyId ?? this.currencies()[0].id
     );
-    this.initTheInvoiceDiscountRows();
-    this.addInvoiceItem();
   }
 
   onSubmit() {
@@ -150,9 +154,9 @@ export class AddCustomInvoiceComponent implements OnInit {
       return;
     }
 
-    this.service.create(this.form.getRawValue()).subscribe({
-      next: (_) => this.form.reset(),
-      error: (err) => console.error(err),
+    this.service.update(this.id, this.form.getRawValue()).subscribe({
+      next: (_) => this.location.back(),
+      error: (err) => console.log(err),
     });
   }
 
@@ -349,4 +353,6 @@ export class AddCustomInvoiceComponent implements OnInit {
       );
     });
   }
+
+
 }

@@ -18,7 +18,7 @@ export interface InvoiceTypeResponse {
   defaultWarehouseId: number;
   defaultBillAccId: number;
   defaultCashAccId: number;
-  defaultDiscAccId: number;
+  defaultDiscAccId?: number;
   defaultExtraAccId: number;
   defaultCostAccId: number;
   defaultStockAccId: number;

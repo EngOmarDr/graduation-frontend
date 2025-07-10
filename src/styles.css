@@ -232,9 +232,6 @@
   }
 
   /* table */
-  div > table {
-    overflow: auto;
-  }
   table > thead {
     background-color: var(--color-gray-100);
     position: sticky;
@@ -314,17 +311,19 @@
     padding: 2px;
   }
   .add-table .cust-input {
-    min-width: 160px;
+    min-width: 100px;
   }
 }
 
 @layer base {
   table {
-    width: 100%;
+    width: max-content;
+    min-width: 100%;
   }
   th {
     font-weight: inherit;
     text-align: inherit;
+    white-space: nowrap;
   }
   td {
     text-wrap: nowrap;

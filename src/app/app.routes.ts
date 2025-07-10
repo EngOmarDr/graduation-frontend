@@ -226,60 +226,6 @@ export const routes: Routes = [
           },
         ],
       },
-      {
-        path: '',
-        canActivate: [authGuard],
-        children: [
-          {
-            path: 'invoice-types',
-            loadComponent: () =>
-              import(
-                './modules/inventory/invoice-type/components/show-all/show-invoice-types.component'
-              ).then((m) => m.ShowInvoiceTypesComponent),
-          },
-          {
-            path: 'add-invoice-type',
-            loadComponent: () =>
-              import(
-                './modules/inventory/invoice-type/components/add/add-invoice-type.component'
-              ).then((m) => m.AddInvoiceTypeComponent),
-          },
-          {
-            path: 'update-invoice-type/:id',
-            loadComponent: () =>
-              import(
-                './modules/inventory/invoice-type/components/update/update-invoice-type.component'
-              ).then((m) => m.UpdateInvoiceTypeComponent),
-          },
-        ],
-      },
-      {
-        path: '',
-        canActivate: [authGuard],
-        children: [
-          {
-            path: 'invoice/:name',
-            loadComponent: () =>
-              import(
-                './modules/inventory/custom-invoice/components/show/show-custom-invoice.component'
-              ).then((m) => m.ShowCustomInvoicesComponent),
-          },
-          {
-            path: 'add-custom-invoice/:name',
-            loadComponent: () =>
-              import(
-                './modules/inventory/custom-invoice/components/add/add-custom-invoice.component'
-              ).then((m) => m.AddCustomInvoiceComponent),
-          },
-          // {
-          //   path: 'update-custom-invoice/:id',
-          //   loadComponent: () =>
-          //     import(
-          //       './custom-journal/components/update/update-custom-journal.component'
-          //     ).then((m) => m.UpdateCustomJournalComponent),
-          // },
-        ],
-      },
       ...accountingRoutes,
       ...inventoryRoutes,
     ],

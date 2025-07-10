@@ -8,24 +8,29 @@ import { LoginResponse } from 'app/modules/login/models/response/login-response'
 })
 export class StorageService {
   private readonly cookieService = inject(CookieService);
-  user = JSON.parse(
-    localStorage.getItem(StorageKeys.USER) ??
-      this.cookieService.get(StorageKeys.USER)
-  ) as LoginResponse | undefined;
+  private localUser = localStorage.getItem(StorageKeys.USER);
+  private cookieUser = this.cookieService.get(StorageKeys.USER);
+  private user?: LoginResponse =
+    this.localUser || this.cookieUser
+      ? JSON.parse(this.localUser ?? this.cookieUser)
+      : undefined;
 
   storageInLocal(data: LoginResponse) {
     localStorage.setItem(StorageKeys.USER, JSON.stringify(data));
+    this.user = data;
   }
 
   storageInCookie(data: LoginResponse) {
     this.cookieService.set(StorageKeys.USER, JSON.stringify(data), {
       sameSite: 'Strict',
     });
+    this.user = data;
   }
 
   clearStorage() {
     localStorage.removeItem(StorageKeys.USER);
     this.cookieService.delete(StorageKeys.USER);
+    this.user = undefined;
   }
 
   get isAdmin() {

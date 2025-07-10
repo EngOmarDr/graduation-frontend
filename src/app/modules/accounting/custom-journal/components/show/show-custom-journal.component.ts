@@ -29,8 +29,8 @@ export class ShowCustomJournalsComponent {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(() => {
       const navigation = window.history.state;
-      if (navigation.journalType) {
-        this.journalType = navigation.journalType;
+      if (navigation.state) {
+        this.journalType = navigation.state;
       } else {
         this.location.back();
       }

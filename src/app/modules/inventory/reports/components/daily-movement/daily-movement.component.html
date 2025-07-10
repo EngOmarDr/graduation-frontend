@@ -1,0 +1,148 @@
+<cust-card [titleText]="typeReport">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
+
+    <app-search-product [control]="form.get('productId')!" />
+
+    <cust-form-field
+      [control]="form.get('startDate')!"
+      inputId="Start Date"
+      label="Start Date"
+      type="date"
+    />
+    <cust-form-field
+      [control]="form.get('endDate')!"
+      inputId="End Date"
+      label="End Date"
+      type="date"
+    />
+    <div class="space-x-2">
+      <button type="submit" class="btn mt-[22px] mb-3" [disabled]="!form.valid">
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn mt-[22px] mb-3"
+        (click)="printReport()"
+        [disabled]="!generalJournal && !ledger && !trailBalance"
+      >
+        print
+      </button>
+    </div>
+  </form>
+
+  <div class="w-full">
+    @if(generalJournal){
+    <div class="overflow-auto max-h-96 relative col-span-full" id="report">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Account</th>
+            <th>Debit</th>
+            <th>Credit</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (generalJournal.length == 0) {
+          <tr>
+            <td [attr.colspan]="generalJournal.length + 2">No Data Found</td>
+          </tr>
+          } @for (row of generalJournal; track $index) {
+          <tr class="bg-primary/20">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ row.date }}</td>
+            <td></td>
+            <td>{{ row.totalDebit }}</td>
+            <td>{{ row.totalCredit }}</td>
+            <td></td>
+          </tr>
+          <tr *ngFor="let entry of row.entries; let i = index">
+            <td></td>
+            <td></td>
+            <td>{{ entry.accountName }}</td>
+            <td>{{ entry.debit }}</td>
+            <td>{{ entry.credit }}</td>
+            <td>{{ entry.notes }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @if (trailBalance) {
+    <div class="overflow-auto max-h-96 relative col-span-full" id="report">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Account</th>
+            <th>Debit</th>
+            <th>Credit</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (trailBalance.entries.length == 0) {
+          <tr>
+            <td [attr.colspan]="10">No Data Found</td>
+          </tr>
+          } @for (row of trailBalance.entries; track $index) {
+          <tr>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ row.accountCode + "-" + row.accountName }}</td>
+            <td>{{ row.debit }}</td>
+            <td>{{ row.credit }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @if (ledger) {
+    <div class="col-span-full" id="report">
+      <div class="overflow-auto max-h-96 relative">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Notes</th>
+              <th>Debit</th>
+              <th>Credit</th>
+              <th>balance</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (ledger.entries.length == 0) {
+            <tr>
+              <td [attr.colspan]="10">No Data Found</td>
+            </tr>
+            } @for (row of ledger.entries; track $index) {
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ row.notes }}</td>
+              <td>{{ row.debit }}</td>
+              <td>{{ row.credit }}</td>
+              <td>{{ row.debit - row.credit }}</td>
+              <td>{{ row.date }}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid">
+        <div>Total Debit: {{ ledger.totalDebit }}</div>
+        <div>Total Credit: {{ ledger.totalCredit }}</div>
+        <div>Balance: {{ ledger.closingBalance }}</div>
+      </div>
+    </div>
+
+    }
+    <!-- <app-custom-table
+      [data]="accounts$ | async"
+      [columns]="displayedColumns"
+      (updateRowEvent)="updateAccount($event)"
+      (deleteRowEvent)="deleteAccount($event)"
+    /> -->
+  </div>
+</cust-card>

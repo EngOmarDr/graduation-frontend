@@ -1,6 +1,7 @@
 export interface JournalResponse {
   id: number;
   warehouseId: number;
+  branchId: number;
   date: string;
   totalDebit: number;
   totalCredit: number;

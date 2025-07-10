@@ -7,6 +7,9 @@
       type="search"
       [formControl]="form.controls.name"
       class="cust-input rounded-e-none"
+      [ngClass]="{
+        'border-red-500 ': control.invalid && form.controls.name.touched
+      }"
       id="{{ label() }}"
     />
 
@@ -47,7 +50,12 @@
       }
     </button>
   </div>
-  <app-validation-message [control]="control!" [name]="label() ?? 'this'" />
+  @if(control.invalid && (control.touched || control.dirty )){
+  @if(control.errors?.['required']){
+  <small class="validation-text">
+    {{ "Product is required" }}
+  </small>
+  }}
 
   <!-- search-modal.component.html -->
   <div *ngIf="showModal()">
@@ -108,7 +116,10 @@
               placeholder="type to search"
               class="cust-input rounded-sm"
             />
-            <span *ngIf="searchTerm.length==0 && !searchTerm" class="validation-text">
+            <span
+              *ngIf="searchTerm.length == 0 && !searchTerm"
+              class="validation-text"
+            >
               enter value to search
             </span>
           </div>

@@ -6,6 +6,8 @@ import {
   input,
   Input,
   OnInit,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -15,7 +17,6 @@ import {
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-import { ValidationMessageComponent } from '@shared/components/validation-message.component';
 import {
   catchError,
   debounceTime,
@@ -29,12 +30,7 @@ import { ProductResponse } from '../../models/response/product-response';
 
 @Component({
   selector: 'app-search-product',
-  imports: [
-    ReactiveFormsModule,
-    ValidationMessageComponent,
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './search-product.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -46,6 +42,7 @@ export class ProductSearchComponent implements OnInit {
   @Input({ required: true }) control!: AbstractControl;
   readonly label = input<string>();
   readonly fetch = input<boolean>(false); // to get object by id
+  @Output() productSelected = new EventEmitter<ProductResponse>();
 
   form = this.fb.group({
     name: [''],
@@ -65,6 +62,11 @@ export class ProductSearchComponent implements OnInit {
   private searchTerms = new Subject<string>();
 
   ngOnInit(): void {
+    this.control.valueChanges.subscribe((v) => {
+      if (!v) {
+        this.form.reset();
+      }
+    });
     if (this.fetch() && this.control.value) {
       this.isLoading.set(true);
       this.service.getProductById(this.control.value).subscribe((next) => {
@@ -118,6 +120,7 @@ export class ProductSearchComponent implements OnInit {
     );
     this.form.controls.id.setValue(this.selectedObject?.id);
     this.control.setValue(this.selectedObject?.id);
+    this.productSelected.emit(this.selectedObject);
     this.showModal.set(false);
   }
 

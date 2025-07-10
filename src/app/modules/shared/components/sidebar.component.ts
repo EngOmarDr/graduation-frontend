@@ -90,7 +90,7 @@ import { StorageService } from 'app/core/services/storage.service';
 
                 <a
                   [routerLink]="[subItem.routerLink]"
-                  [state]="{ journalType: subItem.state }"
+                  [state]="{ state: subItem.state }"
                   [tabIndex]="!item?.attr() ? -1 : 0"
                   class="flex items-center gap-2 mx-3 px-3 py-1 rounded-md text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition"
                 >

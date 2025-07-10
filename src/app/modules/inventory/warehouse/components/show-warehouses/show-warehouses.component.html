@@ -1,67 +1,69 @@
 <cust-card titleText="Warehouse" [titlePadding]="false">
-  <div class="flex justify-end items-center">
-    <button
-      type="button"
-      class="py-1.5 px-2.5 mb-3 btn"
-      routerLink="/add-warehouse"
-    >
-      Add Warehouse
-    </button>
-  </div>
+  <div class="cust-grid">
+    <div class="flex justify-end items-center col-span-full">
+      <button
+        type="button"
+        class="py-1.5 px-2.5 mb-3 btn"
+        routerLink="/add-warehouse"
+      >
+        Add Warehouse
+      </button>
+    </div>
 
-  <div class="overflow-auto max-w-full max-h-80">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Code</th>
-          <th>Name</th>
-          <th>type</th>
-          <th>branch name</th>
-          <th>active</th>
-          <th>address</th>
-          <th>notes</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        @if ( warehouses().length == 0) {
-        <tr>
-          <td [attr.colspan]="10">No Data Found</td>
-        </tr>
-        }
-        <tr *ngFor="let row of warehouses(); let i = index">
-          <td>
-            {{ i + 1 }}
-          </td>
-          <td>{{ row.code }}</td>
-          <td>{{ row.name }}</td>
-          <td>{{ row.type }}</td>
-          <td>{{ row.branchName }}</td>
-          <td>{{ row.isActive }}</td>
-          <td>{{ row.address }}</td>
-          <td>{{ row.notes }}</td>
-          <td class="text-nowrap">
-            <button
-              type="button"
-              [swal]="['Delete', 'Are you sure want to delete ' + row.name]"
-              (confirm)="deleteWarehouse(row)"
-              title="delete row"
-              class="text-red-600 hover:text-red-800 cursor-pointer"
-            >
-              DELETE
-            </button>
-            <button
-              type="button"
-              (click)="updateWarehouse(row)"
-              title="edit row"
-              class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
-            >
-              EDIT
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="overflow-auto max-w-full max-h-80 col-span-full">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>type</th>
+            <th>branch name</th>
+            <th>active</th>
+            <th>address</th>
+            <th>notes</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if ( warehouses().length == 0) {
+          <tr>
+            <td [attr.colspan]="10">No Data Found</td>
+          </tr>
+          }
+          <tr *ngFor="let row of warehouses(); let i = index">
+            <td>
+              {{ i + 1 }}
+            </td>
+            <td>{{ row.code }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.type }}</td>
+            <td>{{ row.branchName }}</td>
+            <td>{{ row.isActive }}</td>
+            <td>{{ row.address }}</td>
+            <td>{{ row.notes }}</td>
+            <td class="text-nowrap">
+              <button
+                type="button"
+                [swal]="['Delete', 'Are you sure want to delete ' + row.name]"
+                (confirm)="deleteWarehouse(row)"
+                title="delete row"
+                class="text-red-600 hover:text-red-800 cursor-pointer"
+              >
+                DELETE
+              </button>
+              <button
+                type="button"
+                (click)="updateWarehouse(row)"
+                title="edit row"
+                class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
+              >
+                EDIT
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </cust-card>
