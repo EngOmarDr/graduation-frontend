@@ -94,8 +94,7 @@ export class ProductSearchComponent implements OnInit {
             return [];
           }
           this.isLoading.set(true);
-          // TODO: searchProduct(term)
-          return this.service.getProducts().pipe(
+          return this.service.search(term).pipe(
             catchError(() => {
               this.isLoading.set(false);
               return of([]);
@@ -135,8 +134,7 @@ export class ProductSearchComponent implements OnInit {
     }
 
     this.isLoading.set(true);
-    // TODO: searchProduct(searchValue)
-    this.service.getProducts().subscribe({
+    this.service.search(this.searchTerm).subscribe({
       next: (next) => {
         this.data.set(next);
 
@@ -156,9 +154,8 @@ export class ProductSearchComponent implements OnInit {
   }
   loadData() {
     this.isLoading.set(true);
-    // TODO: searchProduct(this.searchTerm)
-    this.service.getProducts().subscribe({
-      next: (value) => {
+    this.service.search(this.searchTerm).subscribe({
+      next: () => {
         this.isLoading.set(false);
       },
       error: (err) => {

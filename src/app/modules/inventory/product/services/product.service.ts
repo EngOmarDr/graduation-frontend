@@ -20,6 +20,10 @@ export class ProductService {
     return this.http.get<ProductResponse>(`${this.apiUrl}/${id}`);
   }
 
+  search(search:string){
+    return this.http.get<ProductResponse[]>(`${this.apiUrl}/search?q=${search}`);
+  }
+
   createProduct(object: ProductRequest) {
     const formData = new FormData();
 
