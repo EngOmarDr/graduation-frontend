@@ -46,8 +46,6 @@ export class AcccountSearchModalComponent {
     // if (this.accounts.length == 0) {
     //   this.loadData();
     // }
-    console.log(this.accounts());
-    console.log(this.filteredAccounts());
 
     this.searchTerms
       .pipe(

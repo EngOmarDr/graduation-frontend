@@ -13,13 +13,12 @@ import { AccountingReportsService } from '../services/accounting-reports.service
 import { AccountingReportsKeys } from 'app/core/constants/constant';
 import { AccountResponse } from '../../account/models/response/account-response.model';
 import { AccountService } from '../../account/service/account-service.service';
-import { AcccountSearchModalComponent } from '../../account/components/acccount-search-modal/acccount-search-modal.component';
-import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { GeneralJournalReport } from '../models/general-journal-report';
 import { LedgerReport } from '../models/ledger-report';
 import { TrialBalanceReport } from '../models/trial-balance-report';
+import { AccountSearchComponent } from "@shared/account-search/account-search.component";
 
 @Component({
   selector: 'app-accounting-report',
@@ -28,10 +27,9 @@ import { TrialBalanceReport } from '../models/trial-balance-report';
     CardComponent,
     CustomFieldComponent,
     ReactiveFormsModule,
-    AcccountSearchModalComponent,
-    ValidationMessageComponent,
     CommonModule,
-  ],
+    AccountSearchComponent
+],
 })
 export class AccountingReportsComponent {
   private readonly service = inject(AccountingReportsService);
@@ -45,6 +43,7 @@ export class AccountingReportsComponent {
   generalJournal?: GeneralJournalReport[];
   ledger?: LedgerReport;
   trailBalance?: TrialBalanceReport;
+  balance: number[] = [0];
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
@@ -52,17 +51,23 @@ export class AccountingReportsComponent {
       this.ledger = undefined;
       this.trailBalance = undefined;
       this.typeReport = params['name'];
+      const date = new Date();
+      const currentDate = date.toISOString().split('T')[0];
+
+      const firstDayOfYear = new Date(date.getFullYear(), 0, 2)
+        .toISOString()
+        .split('T')[0];
+
       if (params['name'] == AccountingReportsKeys.LEDGER) {
         this.form = this.fb.group({
           accountId: ['', [Validators.required]],
-          accountName: ['', [Validators.required]],
-          startDate: ['', [Validators.required]],
-          endDate: ['', [Validators.required]],
+          startDate: [firstDayOfYear, [Validators.required]],
+          endDate: [currentDate, [Validators.required]],
         });
       } else {
         this.form = this.fb.group({
-          startDate: ['', [Validators.required]],
-          endDate: ['', [Validators.required]],
+          startDate: [firstDayOfYear, [Validators.required]],
+          endDate: [currentDate, [Validators.required]],
         });
       }
     });
@@ -78,6 +83,11 @@ export class AccountingReportsComponent {
         )
         .subscribe((e) => {
           this.ledger = e;
+
+          this.ledger.entries.map((e, i) => {
+            this.balance[i] =
+              (this.balance.at(i - 1) ?? 0) + (e.debit - e.credit);
+          });
         });
     } else if (this.typeReport == AccountingReportsKeys.GENERALJOURNAL) {
       this.service

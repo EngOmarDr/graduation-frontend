@@ -143,6 +143,8 @@ export class AccountSearchComponent implements OnInit {
     this.form.controls.accountName!.setValue(object.code + '-' + object.name);
     this.form.controls.accountId!.setValue(object.id);
     this.control?.setValue(object.id);
+    console.log(this.control.value);
+
     this.accountSelected.emit(object);
     this.showModalAccount = false;
   }
