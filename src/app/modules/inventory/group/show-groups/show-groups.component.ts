@@ -79,31 +79,28 @@ export class ShowGroupsComponent implements OnInit {
     });
   }
 
-  changeView() {
+  changeView(isViewTree: boolean) {
     if (this.treeData.length == 0) {
       this.service.getGroupsTree().subscribe((e) => {
-        this.treeData = this.convertGroupTreeToTreeNode(e);
-        this.viewTree.set(!this.viewTree());
+        this.treeData = this.convertToTreeNode(e);
+        this.viewTree.set(isViewTree);
       });
     } else {
-      this.viewTree.set(!this.viewTree());
+      this.viewTree.set(isViewTree);
     }
   }
-  viewDetails(group: Group) {
-    alert(`View Details for Group: ${group.id}`);
-  }
 
-  convertGroupTreeToTreeNode(groups: GroupTree[]): TreeNode[] {
+  convertToTreeNode(groups: GroupTree[]): TreeNode[] {
     return groups
       .filter((group) => group.id !== undefined) // Ensure id is defined since TreeNode requires id
       .map((group) => {
         const node: TreeNode = {
           id: group.id as number,
-          label: group.name,
+          label: group.code + '-' + group.name,
           expanded: false,
         };
         if (group.children && group.children.length > 0) {
-          node.children = this.convertGroupTreeToTreeNode(group.children);
+          node.children = this.convertToTreeNode(group.children);
         }
         return node;
       });

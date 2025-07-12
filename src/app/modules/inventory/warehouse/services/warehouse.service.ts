@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { WarehouseResponse } from '../models/response/warehouse-response';
 import { WarehouseRequest } from '../models/request/warehouse-request';
+import { WarehouseTreeResponse } from '../models/response/warehouse-tree-response';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,10 @@ export class WarehouseService {
 
   getAll() {
     return this.http.get<WarehouseResponse[]>(this.apiUrl);
+  }
+
+  getTree() {
+    return this.http.get<WarehouseTreeResponse[]>(this.apiUrl + '/tree');
   }
 
   getById(id: number) {

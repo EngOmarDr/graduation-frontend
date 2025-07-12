@@ -13,14 +13,28 @@ export interface TreeNode {
   selector: 'app-tree-view',
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="max-h-80 overflow-y-auto">
-      <input
+    <div class="max-h-80 overflow-y-auto py-1 ">
+      <!-- <input
         type="text"
         [(ngModel)]="filterText"
         placeholder="Filter..."
         class="m-0 mb-4 cust-input max-w-sm"
         (input)="applyFilter()"
-      />
+      /> -->
+      <!-- <div class="flex space-x-1 mb-1">
+        <button
+          (click)="expandAll()"
+          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Expand All
+        </button>
+        <button
+          (click)="collapseAll()"
+          class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Collapse All
+        </button>
+      </div> -->
 
       <ul class="select-none" *ngIf="filteredData.length; else noResults">
         <ng-container *ngFor="let node of filteredData">
@@ -49,7 +63,7 @@ export interface TreeNode {
                 class="text-gray-900 dark:text-gray-100"
                 [innerHTML]="highlightText(node.label, filterText)"
               ></span>
-              <button
+              <!-- <button
                 class="cursor-pointer ms-2"
                 title="edit"
                 type="button"
@@ -87,7 +101,7 @@ export interface TreeNode {
                     d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
                   />
                 </svg>
-              </button>
+              </button> -->
             </div>
             <ul
               *ngIf="node.children && node.expanded"
@@ -131,7 +145,7 @@ export interface TreeNode {
                 class="text-gray-900 dark:text-gray-100"
                 [innerHTML]="highlightText(child.label, filterText)"
               ></span>
-              <button
+              <!-- <button
                 class="cursor-pointer ms-2"
                 title="edit"
                 type="button"
@@ -169,7 +183,7 @@ export interface TreeNode {
                     d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
                   />
                 </svg>
-              </button>
+              </button> -->
             </div>
             <ul
               *ngIf="child.children && child.expanded"
@@ -205,9 +219,7 @@ export class TreeViewComponent implements OnInit {
   filterText: string = '';
 
   ngOnInit() {
-
     this.filteredData = this.cloneTree(this.treeData());
-    console.log(this.treeData());
   }
 
   toggleNode(node: TreeNode): void {
@@ -294,5 +306,28 @@ export class TreeViewComponent implements OnInit {
 
   delete(id: number) {
     this.onDelete.emit(id);
+  }
+
+  expandAll() {
+    this.setAllNodesExpanded(true);
+  }
+  collapseAll() {
+    this.setAllNodesExpanded(false);
+  }
+  private setAllNodesExpanded(expanded: boolean) {
+    this.filteredData.forEach((node) => {
+      node.expanded = expanded;
+      if (node.children) {
+        this.setChildrenExpanded(node.children, expanded);
+      }
+    });
+  }
+  private setChildrenExpanded(nodes: TreeNode[], expanded: boolean) {
+    nodes.forEach((node) => {
+      node.expanded = expanded;
+      if (node.children) {
+        this.setChildrenExpanded(node.children, expanded);
+      }
+    });
   }
 }

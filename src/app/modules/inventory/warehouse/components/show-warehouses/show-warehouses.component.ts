@@ -7,6 +7,8 @@ import { WarehouseResponse } from '../../models/response/warehouse-response';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { WarehouseService } from '../../services/warehouse.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { TreeNode, TreeViewComponent } from '@shared/components/tree-view.component';
+import { WarehouseTreeResponse } from '../../models/response/warehouse-tree-response';
 
 @Component({
   selector: 'app-show-warehouses',
@@ -17,7 +19,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ReactiveFormsModule,
     CommonModule,
     SweetAlert2Module,
-  ],
+    TreeViewComponent
+],
   templateUrl: './show-warehouses.component.html',
 })
 export class ShowWarehousesComponent {
@@ -39,5 +42,33 @@ export class ShowWarehousesComponent {
     this.service.delete(object.id).subscribe(() => {
       this.warehouses.update((old) => old.filter((e) => e.id !== object.id));
     });
+  }
+
+  treeView = false;
+  treeData: TreeNode[] = [];
+  changeView(treeView: boolean) {
+    if (this.treeData.length == 0) {
+      this.service.getTree().subscribe((e) => {
+        this.treeData = this.convertToTreeNode(e);
+        this.treeView = treeView;
+      });
+    } else {
+      this.treeView = treeView;
+    }
+  }
+
+  convertToTreeNode(tree: WarehouseTreeResponse[]): TreeNode[] {
+    return tree
+      .map((item) => {
+        const node: TreeNode = {
+          id: item.id ,
+          label: item.code + '-' + item.name,
+          expanded: false,
+        };
+        if (item.children && item.children.length > 0) {
+          node.children = this.convertToTreeNode(item.children);
+        }
+        return node;
+      });
   }
 }

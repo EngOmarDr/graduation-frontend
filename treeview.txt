@@ -1,16 +1,34 @@
-<cust-card titleText="Warehouse" [titlePadding]="false">
-  <div class="cust-grid">
-    <div class="flex justify-end items-center col-span-full">
-      <button
-        type="button"
-        class="py-1.5 px-2.5 mb-3 btn"
-        routerLink="/add-warehouse"
-      >
-        Add Warehouse
-      </button>
-    </div>
+// in ts
+  treeView = false;
+  treeData: TreeNode[] = [];
+ changeView(treeView: boolean) {
+    if (this.treeData.length==0 ) {
+      this.accountService.getAccountsTree().subscribe((e) => {
+        this.treeData = this.convertToTreeNode(e);
+        this.treeView = treeView;
+      });
+    } else {
+      this.treeView = treeView;
+    }
+  }
 
-    <div
+  convertToTreeNode(tree: WarehouseTreeResponse[]): TreeNode[] {
+    return tree
+      .map((item) => {
+        const node: TreeNode = {
+          id: item.id ,
+          label: item.code + '-' + item.name,
+          expanded: false,
+        };
+        if (item.children && item.children.length > 0) {
+          node.children = this.convertToTreeNode(item.children);
+        }
+        return node;
+      });
+  }
+
+  // in html
+  <div
       class="bg-zinc-100 dark:bg-gray-700 w-full rounded-sm p-2 flex space-x-2 col-span-full"
     >
       <button
@@ -79,65 +97,14 @@
       </button>
     </div>
 
-    <div class="overflow-auto max-h-80 col-span-full">
+
+<div class="col-span-full overflow-auto max-h-80">
       @if (treeView) {
-      <app-tree-view [treeData]="treeData" />
+      <app-tree-view
+        [treeData]="treeData"
+      />
       }@else {
 
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Code</th>
-            <th>Name</th>
-            <th>type</th>
-            <th>branch name</th>
-            <th>active</th>
-            <th>address</th>
-            <th>notes</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          @if ( warehouses().length == 0) {
-          <tr>
-            <td [attr.colspan]="10">No Data Found</td>
-          </tr>
-          }
-          <tr *ngFor="let row of warehouses(); let i = index">
-            <td>
-              {{ i + 1 }}
-            </td>
-            <td>{{ row.code }}</td>
-            <td>{{ row.name }}</td>
-            <td>{{ row.type }}</td>
-            <td>{{ row.branchName }}</td>
-            <td>{{ row.isActive }}</td>
-            <td>{{ row.address }}</td>
-            <td>{{ row.notes }}</td>
-            <td class="text-nowrap">
-              <button
-                type="button"
-                [swal]="['Delete', 'Are you sure want to delete ' + row.name]"
-                (confirm)="deleteWarehouse(row)"
-                title="delete row"
-                class="text-red-600 hover:text-red-800 cursor-pointer"
-              >
-                DELETE
-              </button>
-              <button
-                type="button"
-                (click)="updateWarehouse(row)"
-                title="edit row"
-                class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
-              >
-                EDIT
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      //table code
       }
     </div>
-  </div>
-</cust-card>

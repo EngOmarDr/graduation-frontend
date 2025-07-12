@@ -1,67 +1,70 @@
 <cust-card titleText="Invoice Types" [titlePadding]="false">
-  <div class="flex justify-end items-center">
-    <button
-      type="button"
-      class="py-1.5 px-2.5 mb-3 btn"
-      routerLink="/add-invoice-type"
-    >
-      Add Invoice Type
-    </button>
-  </div>
+  <div class="cust-grid">
 
-  <div class="overflow-auto max-h-80">
-    <table class="w-full">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>name</th>
-          <th>type</th>
-          <th>Default Price</th>
-          <th>Default Warehouse</th>
-          <th>Default Currency</th>
-          <th>No Post</th>
-          <th>Auto Post</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @if (types().length == 0) {
-        <tr>
-          <td colspan="10">No Data Found</td>
-        </tr>
-        }
-        <tr *ngFor="let row of types(); let i = index">
-          <td>
-            {{ i + 1 }}
-          </td>
-          <td>{{ row.name }}</td>
-          <td>{{ row.type }}</td>
-          <td>{{ row.defaultPriceId }}</td>
-          <td>{{ row.defaultWarehouseId }}</td>
-          <td>{{ row.defaultCurrencyId }}</td>
-          <td>{{ row.isNoPost }}</td>
-          <td>{{ row.isAutoPost }}</td>
-          <td class="text-nowrap">
-            <button
-              type="button"
-              [swal]="['Delete', 'Are you sure want to delete ' + row.name]"
-              (confirm)="deleteItem(row)"
-              title="delete row"
-              class="text-red-600 hover:text-red-800 cursor-pointer"
-            >
-              DELETE
-            </button>
-            <button
-              type="button"
-              (click)="updateItem(row)"
-              title="edit row"
-              class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
-            >
-              EDIT
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="flex justify-end items-center col-span-full">
+      <button
+        type="button"
+        class="py-1.5 px-2.5 btn"
+        routerLink="/add-invoice-type"
+      >
+        Add Invoice Type
+      </button>
+    </div>
+
+    <div class="overflow-auto max-h-80 col-span-full">
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>name</th>
+            <th>type</th>
+            <th>Default Price</th>
+            <th>Default Warehouse</th>
+            <th>Default Currency</th>
+            <th>No Post</th>
+            <th>Auto Post</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (types().length == 0) {
+          <tr>
+            <td colspan="10">No Data Found</td>
+          </tr>
+          }
+          <tr *ngFor="let row of types(); let i = index">
+            <td>
+              {{ i + 1 }}
+            </td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.type }}</td>
+            <td>{{ row.defaultPriceId }}</td>
+            <td>{{ row.defaultWarehouseId }}</td>
+            <td>{{ row.defaultCurrencyId }}</td>
+            <td>{{ row.isNoPost }}</td>
+            <td>{{ row.isAutoPost }}</td>
+            <td class="text-nowrap">
+              <button
+                type="button"
+                [swal]="['Delete', 'Are you sure want to delete ' + row.name]"
+                (confirm)="deleteItem(row)"
+                title="delete row"
+                class="text-red-600 hover:text-red-800 cursor-pointer"
+              >
+                DELETE
+              </button>
+              <button
+                type="button"
+                (click)="updateItem(row)"
+                title="edit row"
+                class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
+              >
+                EDIT
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </cust-card>
