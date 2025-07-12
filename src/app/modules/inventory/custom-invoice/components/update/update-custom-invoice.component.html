@@ -1,121 +1,3 @@
-<style>
-  /* Custom styles for the editable table */
-  .editable-table {
-    position: relative;
-    border-radius: 0.375rem;
-    overflow: hidden;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  }
-
-  .editable-table th {
-    text-align: left;
-    background-color: #f3f4f6;
-    padding: 0.75rem 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-  }
-
-  .editable-table td {
-    padding: 1rem;
-    border-bottom: 1px solid #e5e7eb;
-  }
-
-  .editable-table tr:last-child td {
-    border-bottom: none;
-  }
-
-  .editable-table tr:hover td {
-    background-color: #f9fafb;
-  }
-
-  .cell-editing {
-    background-color: #ebf5ff;
-    transition: all 0.2s;
-  }
-
-  .cell-input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.25rem;
-    font-size: 0.875rem;
-  }
-
-  .cell-input:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 1px #3b82f6;
-  }
-
-  .actions-cell {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .btn {
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.25rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-sm {
-    padding: 0.25rem 0.5rem;
-  }
-
-  .btn-primary {
-    background-color: #3b82f6;
-    color: white;
-    border: 1px solid #3b82f6;
-  }
-
-  .btn-primary:hover {
-    background-color: #2563eb;
-  }
-
-  .btn-outline {
-    background-color: transparent;
-    border: 1px solid #d1d5db;
-    color: #374151;
-  }
-
-  .btn-outline:hover {
-    background-color: #f3f4f6;
-  }
-
-  .btn-danger {
-    background-color: #ef4444;
-    color: white;
-    border: 1px solid #ef4444;
-  }
-
-  .btn-danger:hover {
-    background-color: #dc2626;
-  }
-
-  .pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border-top: 1px solid #e5e7eb;
-    background-color: #f9fafb;
-  }
-
-  .pagination-buttons {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .checkbox-cell {
-    text-align: center;
-    vertical-align: middle;
-  }
-</style>
 <cust-card titleText="Update {{ invoiceType().name }}">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select
@@ -176,6 +58,20 @@
       inputId="notes"
       label="notes"
     />
+
+    <!-- <div class="self-end">
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input
+          type="checkbox"
+          class="sr-only peer"
+          [formControl]="form.controls.isSuspended"
+        />
+        <div
+          class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+        ></div>
+        <span class="ml-3 text-gray-700">Is Suspended</span>
+      </label>
+    </div> -->
 
     <div *ngIf="!invoiceType().isAutoPost" class="self-end">
       <label class="relative inline-flex items-center cursor-pointer">

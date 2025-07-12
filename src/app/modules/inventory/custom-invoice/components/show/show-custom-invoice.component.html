@@ -20,6 +20,7 @@
             <th>total</th>
             <th>total Discount</th>
             <th>total Extra</th>
+            <!-- <th>Is Suspended</th> -->
             <th *ngIf="!invoiceType().isAutoPost">is posted</th>
             <th>notes</th>
             <th>date</th>
@@ -37,6 +38,7 @@
             <td>{{ item.total }}</td>
             <td>{{ item.totalDisc }}</td>
             <td>{{ item.totalExtra }}</td>
+            <!-- <td>{{ item.isSuspended ? "✅" : "❌" }}</td> -->
             <td *ngIf="!invoiceType().isAutoPost">
               {{ item.isPosted ? "✅" : "❌" }}
             </td>
