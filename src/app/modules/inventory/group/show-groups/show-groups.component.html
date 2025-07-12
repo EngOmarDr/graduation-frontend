@@ -1,7 +1,7 @@
 <cust-card titleText="Groups" [titlePadding]="false">
   <div class="cust-grid">
     <div class="flex justify-end items-center col-span-full">
-      <button type="button" class="btn" routerLink="/add-group">
+      <button type="button" class="btn" routerLink="/add-group" [state]="{code: code()}">
         Add Group
       </button>
     </div>
@@ -78,13 +78,11 @@
       @if (viewTree()) {
       <app-tree-view
         [treeData]="treeData"
-        (onDelete)="deleteGroup($event)"
-        (onUpdate)="updateGroup($event)"
       />
       }@else {
 
       <app-custom-table
-        [data]="groups$ | async"
+        [data]="groups()"
         [columns]="displayedColumns"
         (deleteRowEvent)="deleteGroup($event)"
         (updateRowEvent)="updateGroup($event)"

@@ -1,5 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  Component,
+  computed,
+  inject,
+  linkedSignal,
+  signal,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CardComponent } from '../../../shared/components/card-form.component';
 import { GroupService } from '../services/group.service';
@@ -10,8 +15,8 @@ import {
 } from '../../../shared/components/tree-view.component';
 import { GroupTree } from '../models/group-tree';
 import { CustomTableComponent } from '../../../shared/components/cust-table.component';
-import { filter, map, Observable, of, tap } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { HelperFunctionsService } from 'app/core/services/helper-functions.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-show-groups',
@@ -21,60 +26,37 @@ import { AsyncPipe } from '@angular/common';
     CardComponent,
     TreeViewComponent,
     CustomTableComponent,
-    AsyncPipe,
   ],
   templateUrl: './show-groups.component.html',
 })
-export class ShowGroupsComponent implements OnInit {
+export class ShowGroupsComponent {
   private service = inject(GroupService);
   private router = inject(Router);
+  private helper = inject(HelperFunctionsService);
 
   displayedColumns: (keyof Group)[] = ['code', 'name', 'parentName', 'notes'];
   viewTree = signal(false);
   treeData: TreeNode[] = [];
 
-  groups$!: Observable<Group[]>;
+  groups = linkedSignal(
+    toSignal(this.service.getGroups(), { initialValue: [] })
+  );
+  code = computed(() =>
+    this.helper.addOneToString(
+      this.groups().at(this.groups().length - 1)?.code ?? ''
+    )
+  );
 
-  ngOnInit(): void {
-    this.groups$ = this.service.getGroups();
+  updateGroup(group: Group) {
+    this.router.navigate(['/update-group', group.id], {
+      state: { groupData: group },
+    });
   }
 
-  updateGroup(group: Group | number) {
-    if (typeof group == 'number') {
-      // let data = this.dataSource.data
-      //   .filter((value) => {
-      //     return value.id == group;
-      //   })
-      //   .at(0);
-      // this.router.navigate(['/update-group', data!.id], {
-      //   state: { groupData: data },
-      // });
-    } else {
-      this.router.navigate(['/update-group', group.id], {
-        state: { groupData: group },
-      });
-    }
-  }
-
-  deleteGroup(group: Group | number) {
-    let data: Group;
-    if (typeof group == 'number') {
-      // data = this.dataSource.data
-      //   .filter((value) => {
-      //     return value.id == group;
-      //   })
-      //   .at(0)!;
-    } else {
-      data = group;
-    }
-    this.service.deleteGroup(data!.id!).subscribe({
+  deleteGroup(group: Group) {
+    this.service.deleteGroup(group.id!).subscribe({
       next: () => {
-        this.groups$
-          .pipe(
-            map((groups) => groups.filter((group) => group.id != data.id)),
-            tap((filteredItems) => (this.groups$ = of(filteredItems)))
-          )
-          .subscribe();
+        this.groups.update((old) => old.filter((item) => item.id != group.id));
       },
     });
   }

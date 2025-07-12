@@ -35,7 +35,7 @@ export class AddGroupComponent {
   results = [];
 
   form = this.fb.group({
-    code: this.fb.control('', {
+    code: this.fb.control(window.history.state.code, {
       validators: [Validators.required],
     }),
     name: ['', [Validators.required]],

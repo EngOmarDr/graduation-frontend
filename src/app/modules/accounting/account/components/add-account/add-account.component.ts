@@ -37,7 +37,7 @@ export class AddAccountComponent implements OnInit {
   error: any;
   searchInput$ = new Subject<string>();
   form = this.fb.group({
-    code: ['', [Validators.required]],
+    code: [window.history.state.code??'', [Validators.required]],
     name: ['', [Validators.required]],
     parentId: this.fb.control<AccountResponse | null>(null),
     finalAccount: [1, [Validators.required]],

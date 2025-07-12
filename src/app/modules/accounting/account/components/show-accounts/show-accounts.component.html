@@ -1,7 +1,12 @@
 <cust-card titleText="Accounts" [titlePadding]="false">
   <div class="cust-grid">
     <div class="flex justify-end items-center col-span-full">
-      <button type="button" class="py-1.5 px-2.5 btn" routerLink="/add-account">
+      <button
+        type="button"
+        class="py-1.5 px-2.5 btn"
+        routerLink="/add-account"
+        [state]="{ code: code() }"
+      >
         Add Account
       </button>
     </div>
@@ -80,7 +85,7 @@
       <app-tree-view [treeData]="treeData" />
       }@else {
       <app-custom-table
-        [data]="accounts$ | async"
+        [data]="accounts()"
         [columns]="displayedColumns"
         (updateRowEvent)="updateAccount($event)"
         (deleteRowEvent)="deleteAccount($event)"

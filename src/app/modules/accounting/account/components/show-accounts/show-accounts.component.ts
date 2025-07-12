@@ -1,10 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, linkedSignal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AccountService } from '../../service/account-service.service';
 import { CardComponent } from '../../../../shared/components/card-form.component';
-import { BehaviorSubject, map, tap } from 'rxjs';
 import { CustomTableComponent } from '../../../../shared/components/cust-table.component';
-import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AccountResponse } from '../../models/response/account-response.model';
 import {
@@ -12,6 +10,8 @@ import {
   TreeViewComponent,
 } from '@shared/components/tree-view.component';
 import { AccountTreeResponse } from '../../models/response/account-tree-response';
+import { HelperFunctionsService } from 'app/core/services/helper-functions.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-show-accounts',
@@ -19,7 +19,6 @@ import { AccountTreeResponse } from '../../models/response/account-tree-response
     CardComponent,
     RouterModule,
     CustomTableComponent,
-    AsyncPipe,
     FormsModule,
     TreeViewComponent,
   ],
@@ -28,6 +27,7 @@ import { AccountTreeResponse } from '../../models/response/account-tree-response
 export class ShowAccountsComponent {
   private accountService = inject(AccountService);
   private router = inject(Router);
+  private helper = inject(HelperFunctionsService);
 
   treeView = false;
   treeData: TreeNode[] = [];
@@ -38,30 +38,33 @@ export class ShowAccountsComponent {
     'parentId',
     'finalAccount',
   ];
-  private accountsSubject = new BehaviorSubject<AccountResponse[]>([]);
-  accounts$ = this.accountsSubject.asObservable();
-  filterValue: AccountResponse[] = [];
 
-  ngOnInit() {
-    this.accounts$ = this.accountService.getAccounts();
-  }
+  accounts = linkedSignal(
+    toSignal(this.accountService.getAccounts(), { initialValue: [] })
+  );
+  code = computed(() =>
+    this.helper.addOneToString(
+      this.accounts().at(this.accounts().length - 1)?.code ?? ''
+    )
+  );
 
   updateAccount(account: AccountResponse) {
-    this.accounts$.subscribe((accounts) => {
-      this.router.navigate(['update-account', account.id], {
-        state: { account, accounts },
-      });
+    this.router.navigate(['update-account', account.id], {
+      state: { account, accounts: this.accounts() },
     });
   }
 
   deleteAccount(object: AccountResponse) {
     this.accountService.deleteAccount(object.id).subscribe({
-      next: () => (this.accounts$ = this.accountService.getAccounts()),
+      next: () =>
+        this.accounts.update((old) => {
+          return old.filter((item) => item.id != object.id);
+        }),
     });
   }
 
   changeView(treeView: boolean) {
-    if (this.treeData.length==0 ) {
+    if (this.treeData.length == 0) {
       this.accountService.getAccountsTree().subscribe((e) => {
         this.treeData = this.convertAccountTreeToTreeNode(e);
         this.treeView = treeView;
@@ -77,7 +80,7 @@ export class ShowAccountsComponent {
       .map((account) => {
         const node: TreeNode = {
           id: account.id as number,
-          label: account.code+ '-' + account.name,
+          label: account.code + '-' + account.name,
           expanded: false,
         };
         if (account.children && account.children.length > 0) {
