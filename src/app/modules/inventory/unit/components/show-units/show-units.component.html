@@ -22,8 +22,33 @@
           <td [attr.colspan]="displayedColumns.length + 2">No Data Found</td>
         </tr>
         } @for (item of units(); track $index) {
+          <tr>
+            <td>
+              {{ $index + 1 }}
+            </td>
+            <td class="text-nowrap">{{ item.name }}</td>
+            <!-- <td>{{ item.unitItems.length }}</td> -->
+            <td class="text-nowrap">
+              <button
+                type="button"
+                (click)="deleteUnit(item)"
+                title="delete row"
+                class="text-red-600 hover:text-red-800 cursor-pointer"
+              >
+                DELETE
+              </button>
+              <button
+                type="button"
+                (click)="updateUnit(item)"
+                title="edit row"
+                class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
+              >
+                EDIT
+              </button>
+            </td>
+          </tr>
 
-        <tr *ngFor="let row of item.unitItems; let i = index">
+        <!-- <tr *ngFor="let row of item.unitItems; let i = index">
           <td>
             {{ $index + i + 1 }}
           </td>
@@ -49,7 +74,7 @@
               EDIT
             </button>
           </td>
-        </tr>
+        </tr> -->
         }
       </tbody>
     </table>

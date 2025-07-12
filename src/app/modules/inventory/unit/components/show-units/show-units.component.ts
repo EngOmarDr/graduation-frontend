@@ -17,7 +17,7 @@ export class ShowUnitsComponent implements OnInit {
   private readonly service = inject(UnitService);
   private readonly router = inject(Router);
 
-  displayedColumns = ['unit Name', 'item name', 'fact', 'isDef'];
+  displayedColumns = ['unit Name', ];
 
   units = signal<UnitResponse[]>([]);
   get unitItems(): UnitItemResponse[][] {
