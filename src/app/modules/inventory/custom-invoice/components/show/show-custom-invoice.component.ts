@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
   inject,
   linkedSignal,
   signal,
@@ -11,9 +10,10 @@ import { CardComponent } from '@shared/components/card-form.component';
 import { CommonModule, Location } from '@angular/common';
 import { InvoiceTypeResponse } from 'app/modules/inventory/invoice-type/models/response/invoice-type-response';
 import { InvoiceService } from '../../service/invoice.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { InvoiceResponse } from '../../models/response/invoice-response';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-show-custom-journal',
@@ -28,9 +28,16 @@ export class ShowCustomInvoicesComponent {
   private readonly location = inject(Location);
 
   invoiceType = signal<InvoiceTypeResponse>(window.history.state.state);
-  invoicesReadonly = toSignal(this.service.getAll(this.invoiceType()?.id), {
+  // Create an observable that reacts to invoiceType changes
+  invoices$ = toObservable(this.invoiceType).pipe(
+    switchMap((type) => this.service.getAll(type?.id))
+  );
+
+  // Convert to signal
+  invoicesReadonly = toSignal(this.invoices$, {
     initialValue: [],
   });
+
   invoices = linkedSignal(() => this.invoicesReadonly());
 
   ngOnInit(): void {
@@ -41,9 +48,6 @@ export class ShowCustomInvoicesComponent {
       } else {
         this.location.back();
       }
-      // this.service.getAll(this.invoiceType()?.id).subscribe((data) => {
-      //   this.invoices.set(data);
-      // });
     });
   }
 

@@ -11,8 +11,10 @@ export class InvoiceService {
   private readonly apiUrl = `${environment.apiUrl}/invoices`;
   private readonly http = inject(HttpClient);
 
-  getAll(invoiceTypeId?:number) {
-    return this.http.get<InvoiceResponse[]>(this.apiUrl);
+  getAll(id?: number) {
+    return this.http.get<InvoiceResponse[]>(
+      this.apiUrl + `/search-by-invoice-type-id?id=${id}`
+    );
   }
 
   getById(id: number) {
