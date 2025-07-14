@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { LoginService } from './services/login.service';
 import { CustomFieldComponent } from '../shared/components/custom-field.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ import { CustomFieldComponent } from '../shared/components/custom-field.componen
     ReactiveFormsModule,
     CustomFieldComponent,
     RouterModule,
+    TranslateModule,
   ],
   templateUrl: './login.component.html',
 })

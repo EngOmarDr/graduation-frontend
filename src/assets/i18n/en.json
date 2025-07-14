@@ -1,0 +1,11 @@
+{
+  "login": {
+    "title": "Login",
+    "subtitle": "Accounting System | Syrian Trading Company",
+    "username": "Username",
+    "password": "Password",
+    "rememberMe": "Remember Me",
+    "button": "Login",
+    "footer": "© 2025 Syrian Trading Company. All rights reserved."
+  }
+}

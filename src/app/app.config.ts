@@ -1,9 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
-
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, HttpClient } from '@angular/common/http';
 import {
   NgcCookieConsentConfig,
   provideNgcCookieConsent,
@@ -13,6 +12,14 @@ import { provideToastr } from 'ngx-toastr';
 import { errorToastrInterceptor } from './core/interceptors/error-toastr.interceptor';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
+
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+
+const httpLoaderFactory = (http: HttpClient) =>
+  new TranslateHttpLoader(http, './assets/i18n/', '.json');
+
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
     domain: 'http://localhost:4200',
@@ -20,6 +27,7 @@ const cookieConfig: NgcCookieConsentConfig = {
   theme: 'classic',
   type: 'opt-in',
 };
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -44,5 +52,15 @@ export const appConfig: ApplicationConfig = {
           })
         ),
     }).providers!,
+
+    importProvidersFrom(
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: httpLoaderFactory,
+          deps: [HttpClient],
+        },
+      })
+    ),
   ],
 };
