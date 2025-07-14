@@ -3,3 +3,9 @@ export const AccountingReportsKeys = {
   LEDGER: 'ledger',
   TRAILBALANCE: 'trail-balance',
 } as const;
+
+export const InventoryReportsKeys = {
+  ItemMovement: 'item-movement',
+  DailyMovement: 'daily-movement',
+  ItemStock: 'item-stock',
+} as const;

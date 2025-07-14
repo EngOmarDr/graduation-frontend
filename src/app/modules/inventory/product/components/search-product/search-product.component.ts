@@ -67,6 +67,11 @@ export class ProductSearchComponent implements OnInit {
         this.form.reset();
       }
     });
+    this.form.controls.name.valueChanges.subscribe((v) => {
+      if (!v) {
+        this.control.setValue(undefined, { emitEvent: false });
+      }
+    });
     if (this.fetch() && this.control.value) {
       this.isLoading.set(true);
       this.service.getProductById(this.control.value).subscribe((next) => {

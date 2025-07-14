@@ -343,7 +343,7 @@
 }
 
 @media print {
-  body * {
+  body {
     padding: 5px;
   }
 }

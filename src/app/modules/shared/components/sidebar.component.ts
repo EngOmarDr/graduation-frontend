@@ -10,7 +10,10 @@ import {
 import { RouterLink, RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { JournalTypesService } from 'app/modules/accounting/journal-type/services/journal-types.service';
-import { AccountingReportsKeys } from 'app/core/constants/constant';
+import {
+  AccountingReportsKeys,
+  InventoryReportsKeys,
+} from 'app/core/constants/constant';
 import { InvoiceTypeService } from 'app/modules/inventory/invoice-type/services/invoice-type.service';
 import { StorageService } from 'app/core/services/storage.service';
 
@@ -80,9 +83,12 @@ import { StorageService } from 'app/core/services/storage.service';
 
             <ul
               class="mt-1 pl-4 overflow-hidden space-y-1 transition-all"
-              [ngClass]="{ 'max-h-0': !item?.attr(), 'max-h-96': item?.attr() }"
+              [ngClass]="{
+                'max-h-0': !item?.attr(),
+                'max-h-svh': item?.attr()
+              }"
             >
-              <li *ngFor="let subItem of item.children" class="my-1">
+              <li *ngFor="let subItem of item.children">
                 @if (subItem?.name=='br') {
                 <!-- <hr> -->
                 <div class="bg-zinc-300 w-full h-[1px]"></div>
@@ -196,7 +202,7 @@ export class SidebarComponent {
       attr: this.isExpanded.accounts,
       children: [
         { name: 'Accounts', icon: 'wallet-card', routerLink: '/accounts' },
-        { name: 'br', icon: 'wallet-card' },
+        { name: 'br', icon: '' },
         {
           name: 'General Journal',
           icon: '',
@@ -264,16 +270,32 @@ export class SidebarComponent {
           icon: '',
           state: next,
         })),
-        ...this.storageService.isAdmin
+        { name: 'br', icon: '' },
+        ...(this.storageService.isAdmin
           ? [
-              { name: 'br', icon: '' },
               {
                 name: 'Transfer process',
                 icon: '',
                 routerLink: 'transfers',
               },
             ]
-          : [],
+          : []),
+        { name: 'br', icon: '' },
+        {
+          name: 'Item Movement',
+          icon: '',
+          routerLink: `inventory-reports/${InventoryReportsKeys.ItemMovement}`,
+        },
+        {
+          name: 'Daily Movement',
+          icon: '',
+          routerLink: `inventory-reports/${InventoryReportsKeys.DailyMovement}`,
+        },
+        {
+          name: 'Item Stock',
+          icon: '',
+          routerLink: `inventory-reports/${InventoryReportsKeys.ItemStock}`,
+        },
       ],
     },
     { name: 'users', icon: 'lock-keyhole', routerLink: '/users' },

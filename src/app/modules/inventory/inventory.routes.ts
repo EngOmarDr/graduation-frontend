@@ -81,20 +81,12 @@ export const inventoryRoutes: Routes = [
       ).then((m) => m.ShowTransfersComponent),
     canActivate: [adminGuard],
   },
-  // {
-  //   path: 'accounts',
-  //   loadComponent: () =>
-  //     import('./account/components/show-accounts/show-accounts.component').then(
-  //       (m) => m.ShowAccountsComponent
-  //     ),
-  //   canActivate: [authGuard],
-  // },
-  // {
-  //   path: 'update-account/:id',
-  //   loadComponent: () =>
-  //     import(
-  //       './account/components/update-account/update-account.component'
-  //     ).then((m) => m.UpdateAccountComponent),
-  //   canActivate: [authGuard],
-  // },
+  {
+    path: 'inventory-reports/:name',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import(
+        './reports/components/inventory-reports/inventory-reports.component'
+      ).then((m) => m.DailyMovementComponent),
+  },
 ];

@@ -2,7 +2,7 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select
       [control]="form.controls.warehouseId"
-      *ngIf="!isAdmin"
+      *ngIf="isAdmin"
       [options]="warehouses()"
       inputId="branchId"
       label="Branch"
