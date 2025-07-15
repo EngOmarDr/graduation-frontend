@@ -12,6 +12,7 @@ import {
 import { AccountTreeResponse } from '../../models/response/account-tree-response';
 import { HelperFunctionsService } from 'app/core/services/helper-functions.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-accounts',
@@ -21,6 +22,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     CustomTableComponent,
     FormsModule,
     TreeViewComponent,
+    TranslateModule
   ],
   templateUrl: './show-accounts.component.html',
 })

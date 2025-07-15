@@ -1,7 +1,7 @@
 <!-- update-currency.component.html -->
 <div class="bg-white dark:bg-[#1f2937] p-7 m-7 rounded-md">
   <h4 class="text-gray-700 pb-7 text-2xl font-bold dark:text-white">
-    Update Currency
+    {{ 'currency.updateTitle' | translate }}
   </h4>
 
   <form
@@ -12,39 +12,39 @@
     <cust-form-field
       [control]="editCurrencyForm.controls.code"
       inputId="code"
-      label="Code"
+      [label]="'currency.code' | translate"
     />
 
     <cust-form-field
       [control]="editCurrencyForm.controls.name"
       inputId="name"
-      label="Name"
+      [label]="'currency.name' | translate"
     />
 
     <cust-form-field
       [control]="editCurrencyForm.controls.balance"
       inputId="balance"
-      label="Currency Value"
+      [label]="'currency.value' | translate"
       type="number"
     />
 
     <cust-form-field
       [control]="editCurrencyForm.controls.partName"
       inputId="partName"
-      label="Part Name"
+      [label]="'currency.partName' | translate"
       type="text"
     />
 
     <cust-form-field
       [control]="editCurrencyForm.controls.partPrecision"
       inputId="partPrecision"
-      label="Part Precision"
+      [label]="'currency.partPrecision' | translate"
       type="number"
     />
 
     <div class="col-span-full grid grid-cols-4">
       <button type="submit" class="btn" [disabled]="!editCurrencyForm.valid">
-        Update
+        {{ 'currency.updateButton' | translate }}
       </button>
     </div>
   </form>

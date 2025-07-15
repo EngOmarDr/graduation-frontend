@@ -15,6 +15,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { AcccountSearchModalComponent } from '../acccount-search-modal/acccount-search-modal.component';
 import { AccountResponse } from '../../models/response/account-response.model';
 import { CreateAccountRequest } from '../../models/request/create_account_request';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-account',
@@ -27,6 +28,7 @@ import { CreateAccountRequest } from '../../models/request/create_account_reques
     ValidationMessageComponent,
     NgSelectModule,
     AcccountSearchModalComponent,
+    TranslateModule
   ],
   templateUrl: './add-account.component.html',
 })

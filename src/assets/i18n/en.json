@@ -7,5 +7,48 @@
     "rememberMe": "Remember Me",
     "button": "Login",
     "footer": "© 2025 Syrian Trading Company. All rights reserved."
+  },
+    "groupSearch": {
+    "title": "Search Account",
+    "searchPlaceholder": "Search",
+    "loading": "Loading...",
+    "noResults": "No results found",
+    "ok": "Ok",
+    "cancel": "Cancel",
+    "code": "Code",
+    "name": "Name"
+  },
+    "accountForm": {
+    "title": "Add Account",
+    "updateTitle": "Update Account",
+    "code": "Code",
+    "name": "Name",
+    "parentAccount": "Parent Account",
+    "parent": "Parent Account",
+    "finalAccount": "Final Account",
+    "addButton": "Add",
+    "updateButton": "Update"
+  },
+    "accountList": {
+    "title": "Accounts",
+    "addButton": "Add Account",
+    "tableView": "Table View",
+    "treeView": "Tree View"
+  },
+  "loading": "Loading...",
+    "currency": {
+    "addTitle": "Add Currency",
+    "code": "Code",
+    "name": "Name",
+    "value": "Currency Value",
+    "partName": "Part Name",
+    "partPrecision": "Part Precision",
+    "addButton": "Add",
+    "listTitle": "Currencies",
+    "updateTitle": "Update Currency",
+    "action": "Action",
+    "edit": "Edit",
+    "delete": "Delete",
+    "updateButton": "Update"
   }
 }

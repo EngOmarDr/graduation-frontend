@@ -10,7 +10,7 @@
   >
     <!-- Header -->
     <div class="border-b-2 border-b-zinc-300 px-5 py-3">
-      <h3 class="text-lg font-medium text-gray-900">Search Account</h3>
+      <h3 class="text-lg font-medium text-gray-900">{{ 'groupSearch.title' | translate }}</h3>
     </div>
 
     <!-- Body -->
@@ -21,7 +21,7 @@
           type="text"
           [(ngModel)]="searchTerm"
           (input)="onSearchChange(searchTerm)"
-          placeholder="search"
+          [placeholder]="'groupSearch.searchPlaceholder' | translate"
           class="cust-input"
         />
       </div>
@@ -44,8 +44,8 @@
         <table class="min-w-full">
           <thead>
             <tr>
-              <th scope="col">Code</th>
-              <th scope="col">Name</th>
+              <th scope="col">{{ 'groupSearch.code' | translate }}</th>
+              <th scope="col">{{ 'groupSearch.name' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -63,10 +63,10 @@
               </td>
             </tr>
             <tr *ngIf="isLoading()">
-              <td colspan="2">جاري التحميل...</td>
+              <td colspan="2">{{ 'groupSearch.loading' | translate }}</td>
             </tr>
             <tr *ngIf="!isLoading() && filteredAccounts().length === 0">
-              <td colspan="2">لا توجد نتائج</td>
+              <td colspan="2">ل{{ 'groupSearch.noResults' | translate }}</td>
             </tr>
           </tbody>
         </table>
@@ -82,14 +82,14 @@
         [class.opacity-50]="!selectedAccount"
         class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
-        Ok
+        {{ 'groupSearch.ok' | translate }}
       </button>
       <button
         type="button"
         (click)="closeModal()"
         class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
-        Cancel
+        {{ 'groupSearch.cancel' | translate }}
       </button>
     </div>
   </div>

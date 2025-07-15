@@ -21,10 +21,11 @@ import {
 import { AccountService } from '../../service/account-service.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-account-search-modal',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,TranslateModule],
   templateUrl: './account-search-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

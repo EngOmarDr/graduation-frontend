@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { CardComponent } from '../../../shared/components/card-form.component';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-currencies',
   standalone: true,
-  imports: [RouterLink, CardComponent, CommonModule],
+  imports: [RouterLink, CardComponent, CommonModule,TranslateModule],
   templateUrl: './show-currencies.component.html',
 })
 export class ShowCurrenciesComponent implements OnInit {

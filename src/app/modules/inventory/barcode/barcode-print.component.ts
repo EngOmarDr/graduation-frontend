@@ -5,6 +5,7 @@ import { NgxBarcode6Module } from 'ngx-barcode6';
 import { CardComponent } from '../../shared/components/card-form.component';
 import { CustomFieldComponent } from '../../shared/components/custom-field.component';
 import { CustomSelectComponent } from '../../shared/components/custom-select.component';
+import { ProductSearchComponent } from '../../../modules/inventory/product/components/search-product/search-product.component';
 
 @Component({
   selector: 'app-barcode-print',
@@ -16,29 +17,38 @@ import { CustomSelectComponent } from '../../shared/components/custom-select.com
     CustomFieldComponent,
     CustomSelectComponent,
     NgxBarcode6Module,
+    ProductSearchComponent
   ],
   templateUrl: './barcode-print.component.html',
 })
 export class BarcodePrintComponent {
   fb = inject(FormBuilder);
 
-  form: FormGroup = this.fb.group({
-    warehouse: new FormControl(''),
-    productCode: new FormControl(''),
-    showCompany: new FormControl(true),
-    showProduct: new FormControl(true),
-    showPrice: new FormControl(true),
-    paperSize: new FormControl('A4'),
-  });
+form: FormGroup = this.fb.group({
+  warehouse: [''],
+  productId: [null],
+  barcode: [null],
+  copies: [1],
+  paperSize: ['A4'],
+  showCompany: [true],
+  showProduct: [true],
+  showPrice: [true],
+});
+
+barcodes: { key: string, value: string }[] = [];
+
+selectedBarcodes: {
+  productId: number;
+  productName: string;
+  barcode: string;
+  copies: number;
+  price: number;
+}[] = [];
+
+
 
   productList = signal<any[]>([]);
   selectedProducts = signal<any[]>([]);
-
-  warehouses = [
-    { key: '', value: 'اختر المستودع' },
-    { key: '1', value: 'مستودع رقم 1' },
-    { key: '2', value: 'مستودع رقم 2' },
-  ];
 
   paperSizes = [
     { key: 'A4', value: 'A4' },
@@ -72,33 +82,119 @@ export class BarcodePrintComponent {
     this.selectedProducts.set([]);
   }
 
-  print() {
-    const printContents = document.getElementById('print-section')?.innerHTML;
-    if (!printContents) return;
+print() {
+  const printContents = document.getElementById('print-section')?.innerHTML;
+  const paperSize = this.form.value.paperSize;
 
-    const popupWindow = window.open('', '_blank', 'width=800,height=600');
-    if (popupWindow) {
-      popupWindow.document.open();
-      popupWindow.document.write(`
-        <html>
-          <head>
-            <title>طباعة الباركود</title>
-            <style>
-              body { font-family: Arial, sans-serif; padding: 20px; }
-              .barcode-item { margin-bottom: 30px; text-align: center; }
-            </style>
-          </head>
-          <body onload="window.print(); window.close();">
-            ${printContents}
-          </body>
-        </html>
-      `);
-      popupWindow.document.close();
+  if (!printContents) return;
+
+  const popupWindow = window.open('', '_blank', 'width=800,height=600');
+  if (popupWindow) {
+    let customStyle = `
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        direction: rtl;
+        text-align: center;
+      }
+      .barcode-item {
+        margin: 10px;
+        padding: 10px;
+        border: 1px dashed #ccc;
+        display: inline-block;
+        width: auto;
+      }
+      .barcode-label {
+        margin-top: 5px;
+        font-size: 12px;
+      }
+    `;
+
+    // تغيير النمط حسب حجم الورقة
+    switch (paperSize) {
+      case '80mm':
+        customStyle += `
+          .barcode-item {
+            width: 80mm;
+          }
+        `;
+        break;
+      case 'label':
+        customStyle += `
+          .barcode-item {
+            width: 50mm;
+            height: 30mm;
+          }
+        `;
+        break;
+      default:
+        // A4
+        customStyle += `
+          .barcode-item {
+            width: 180px;
+          }
+        `;
     }
-  }
 
+    popupWindow.document.open();
+    popupWindow.document.write(`
+      <html>
+        <head>
+          <title>طباعة الباركود</title>
+          <style>${customStyle}</style>
+        </head>
+        <body onload="window.print(); window.close();">
+          ${printContents}
+        </body>
+      </html>
+    `);
+    popupWindow.document.close();
+  }
+}
 
   preview() {
     alert('عرض مبدئي للباركود');
   }
+
+onProductSelected(product: any) {
+  this.form.controls['productId'].setValue(product.id);
+
+  this.barcodes = (product.barcodes || []).map((code: string) => ({
+    key: code,
+    value: code,
+  }));
+
+  this.form.controls['barcode'].setValue(product.barcodes?.[0]);
+}
+
+
+getProductNameById(id: number): string {
+  return 'اسم المنتج المؤقت';
+}
+
+addBarcodeToList() {
+  const productId = this.form.value.productId;
+  const barcode = this.form.value.barcode;
+  const copies = this.form.value.copies;
+
+  if (!productId || !barcode || !copies) return;
+
+  const productName = this.getProductNameById(productId);
+  const price = 15.75;
+
+  this.selectedBarcodes.push({
+    productId,
+    productName,
+    barcode,
+    copies,
+    price,
+  });
+
+  this.form.controls['barcode'].setValue(null);
+  this.form.controls['copies'].setValue(1);
+}
+
+removeSelectedBarcode(index: number) {
+  this.selectedBarcodes.splice(index, 1);
+}
 }

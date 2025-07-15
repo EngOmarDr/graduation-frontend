@@ -9,11 +9,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
 import { CurrencyService } from '../services/currency.service';
 import { Currency } from '../models/currency.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-currency',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CustomFieldComponent],
+  imports: [CommonModule, ReactiveFormsModule, CustomFieldComponent,TranslateModule],
   templateUrl: './update-currency.component.html',
 })
 export class UpdateCurrencyComponent implements OnInit {

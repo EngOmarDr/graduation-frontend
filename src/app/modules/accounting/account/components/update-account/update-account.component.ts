@@ -16,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AccountResponse } from '../../models/response/account-response.model';
 import { AcccountSearchModalComponent } from '../acccount-search-modal/acccount-search-modal.component';
 import { CreateAccountRequest } from '../../models/request/create_account_request';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-account',
@@ -28,6 +29,7 @@ import { CreateAccountRequest } from '../../models/request/create_account_reques
     ValidationMessageComponent,
     NgSelectModule,
     AcccountSearchModalComponent,
+    TranslateModule
   ],
   templateUrl: './update-account.component.html',
 })

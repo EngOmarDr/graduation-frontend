@@ -4,6 +4,7 @@ import { Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '@shared/components/sidebar.component';
 import { SettingbarComponent } from '@shared/components/settingbar.component';
+import { LanguageSwitcherComponent } from '@shared/components/language-switcher.component';
 
 @Component({
   selector: 'app-layout',
@@ -13,6 +14,7 @@ import { SettingbarComponent } from '@shared/components/settingbar.component';
     FormsModule,
     SidebarComponent,
     SettingbarComponent,
+    LanguageSwitcherComponent
   ],
   templateUrl: './layout.component.html',
 })

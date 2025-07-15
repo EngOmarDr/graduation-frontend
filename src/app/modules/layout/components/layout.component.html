@@ -44,8 +44,10 @@
         </h1>
       </div>
 
-      <!-- Settings Icon -->
-      <div class="flex items-center space-x-4">
+      <!-- Settings + Language Switcher -->
+      <div class="flex items-center gap-4">
+        <app-language-switcher></app-language-switcher>
+
         <button
           class="rounded-full p-1 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
           (click)="SettingbarComponent.showSetting()"

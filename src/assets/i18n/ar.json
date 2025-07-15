@@ -7,5 +7,48 @@
     "rememberMe": "تذكرني",
     "button": "تسجيل الدخول",
     "footer": "© 2025 المؤسسة السورية للتجارة. جميع الحقوق محفوظة."
+  },
+    "groupSearch": {
+    "title": "البحث عن الحساب",
+    "searchPlaceholder": "ابحث",
+    "loading": "جاري التحميل...",
+    "noResults": "لا توجد نتائج",
+    "ok": "موافق",
+    "cancel": "إلغاء",
+    "code": "الرمز",
+    "name": "الاسم"
+  },
+  "accountForm": {
+    "title": "إضافة حساب",
+    "updateTitle": "تعديل الحساب",
+    "code": "الرمز",
+    "name": "الاسم",
+    "parentAccount": "الحساب الرئيسي",
+    "parent": "الحساب الأب",
+    "finalAccount": "الحساب النهائي",
+    "addButton": "إضافة",
+    "updateButton": "تعديل"
+  },
+    "accountList": {
+    "title": "الحسابات",
+    "addButton": "إضافة حساب",
+    "tableView": "عرض كجدول",
+    "treeView": "عرض كشجرة"
+  },
+  "loading": "جارٍ التحميل...",
+    "currency": {
+    "addTitle": "إضافة عملة",
+    "code": "الرمز",
+    "name": "الاسم",
+    "value": "قيمة العملة",
+    "partName": "اسم الجزء",
+    "partPrecision": "دقة الجزء",
+    "addButton": "إضافة",
+    "listTitle": "العملات",
+    "updateTitle": "تعديل العملة",
+    "action": "الإجراء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "updateButton": "تعديل"
   }
 }

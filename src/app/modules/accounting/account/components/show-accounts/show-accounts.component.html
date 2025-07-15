@@ -1,4 +1,4 @@
-<cust-card titleText="Accounts" [titlePadding]="false">
+<cust-card [titleText]="'accountList.title' | translate" [titlePadding]="false">
   <div class="cust-grid">
     <div class="flex justify-end items-center col-span-full">
       <button
@@ -7,7 +7,7 @@
         routerLink="/add-account"
         [state]="{ code: code() }"
       >
-        Add Account
+        {{ 'accountList.addButton' | translate }}
       </button>
     </div>
 
@@ -15,7 +15,7 @@
       class="bg-zinc-100 dark:bg-gray-700 w-full rounded-sm p-2 flex space-x-2 col-span-full"
     >
       <button
-        title="table view"
+        [title]="'accountList.tableView' | translate"
         class="cursor-pointer"
         (click)="changeView(false)"
       >
@@ -40,7 +40,7 @@
       </button>
 
       <button
-        title="tree view"
+        [title]="'accountList.treeView' | translate"
         class="cursor-pointer"
         (click)="changeView(true)"
       >

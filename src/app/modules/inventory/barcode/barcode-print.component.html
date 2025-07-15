@@ -1,26 +1,28 @@
 <cust-card titleText="طباعة الباركود للمنتجات">
   <form [formGroup]="form" class="space-y-4 mt-4">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <app-search-product
+        [control]="form.controls['productId']"
+        [label]="'اختر المنتج'"
+        (productSelected)="onProductSelected($event)"
+      />
+
       <cust-select
-        [label]="'اختر المستودع'"
-        inputId="warehouse"
-        [control]="form.controls['warehouse']"
-        [options]="warehouses"
+        *ngIf="barcodes.length > 0"
+        [label]="'اختر الباركود'"
+        [control]="form.controls['barcode']"
+        [options]="barcodes"
       />
 
       <cust-form-field
-        [label]="'كود المنتج'"
-        inputId="productCode"
-        [control]="form.controls['productCode']"
-        (keyup.enter)="searchProduct()"
+        [label]="'عدد النسخ'"
+        inputId="copyCount"
+        [control]="form.controls['copies']"
       />
-      <button
-        type="button"
-        class="btn btn-primary mt-6"
-        (click)="searchProduct()"
-      >
-        بحث
-      </button>
+
+      <button type="button" class="btn btn-primary" (click)="addBarcodeToList()">
+  إضافة للطباعة
+</button>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
@@ -45,33 +47,31 @@
     />
 
     <div class="overflow-x-auto mt-4">
-      <table class="min-w-full text-sm text-left border">
-        <thead class="bg-gray-100 font-bold">
-          <tr>
-            <th class="p-2 border">Product</th>
-            <th class="p-2 border">Qty</th>
-            <th class="p-2 border">Barcode</th>
-            <th class="p-2 border">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let product of selectedProducts(); let i = index">
-            <td class="p-2 border">{{ product.name }}</td>
-            <td class="p-2 border">{{ product.qty }}</td>
-            <td class="p-2 border">
-              <ngx-barcode6
-                [bc-value]="product.code"
-                [bc-display-value]="true"
-              ></ngx-barcode6>
-            </td>
-            <td class="p-2 border">
-              <button class="text-red-600" (click)="removeProduct(i)">
-                حذف
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<table class="min-w-full text-sm text-left border mt-6">
+  <thead class="bg-gray-200 font-bold">
+    <tr>
+      <th class="p-2 border">المنتج</th>
+      <th class="p-2 border">الباركود</th>
+      <th class="p-2 border">عدد النسخ</th>
+      <th class="p-2 border">معاينة</th>
+      <th class="p-2 border">إجراء</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of selectedBarcodes; let i = index">
+      <td class="p-2 border">{{ item.productName }}</td>
+      <td class="p-2 border">{{ item.barcode }}</td>
+      <td class="p-2 border">{{ item.copies }}</td>
+      <td class="p-2 border">
+        <ngx-barcode6 [bc-value]="item.barcode" [bc-display-value]="true" />
+      </td>
+      <td class="p-2 border">
+        <button class="text-red-600" (click)="removeSelectedBarcode(i)">حذف</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
     </div>
 
     <div class="flex gap-4 justify-end mt-6">
@@ -92,18 +92,20 @@
   </div>
 
   <!-- قسم الطباعة فقط -->
-  <div id="print-section" class="hidden-print">
-    <div *ngFor="let product of selectedProducts()" class="barcode-item">
-      <ngx-barcode6
-        [bc-value]="product.code"
-        [bc-display-value]="form.value.showProduct ? true : false"
-      >
-      </ngx-barcode6>
-      <div *ngIf="form.value.showCompany">اسم الشركة</div>
-      <div *ngIf="form.value.showProduct">{{ product.name }}</div>
-      <div *ngIf="form.value.showPrice">
-        {{ product.price | currency : "SAR" }}
+<div id="print-section" class="hidden-print">
+  <ng-container *ngFor="let item of selectedBarcodes">
+    <ng-container *ngFor="let i of [].constructor(item.copies)">
+      <div class="barcode-item">
+        <ngx-barcode6 [bc-value]="item.barcode" [bc-display-value]="form.value.showProduct" />
+
+        <div class="barcode-label" *ngIf="form.value.showCompany">اسم الشركة</div>
+        <div class="barcode-label" *ngIf="form.value.showProduct">{{ item.productName }}</div>
+        <div class="barcode-label" *ngIf="form.value.showPrice">
+          {{ item.price | currency: 'SAR':'symbol-narrow' }}
+        </div>
       </div>
-    </div>
-  </div>
+    </ng-container>
+  </ng-container>
+</div>
+
 </cust-card>

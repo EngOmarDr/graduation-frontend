@@ -11,6 +11,7 @@ import { CardComponent } from '../../../shared/components/card-form.component';
 
 import { CurrencyService } from '../services/currency.service';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-currency',
@@ -19,6 +20,7 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     CustomFieldComponent,
     CardComponent,
+    TranslateModule
   ],
   templateUrl: './add-currency.component.html',
   standalone: true,

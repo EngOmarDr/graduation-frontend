@@ -1,11 +1,11 @@
-<cust-card titleText="Currencies" [titlePadding]="false">
+<cust-card [titleText]="'currency.listTitle' | translate" [titlePadding]="false">
   <div class="flex justify-end">
     <button
       type="button"
       class="py-1.5 px-2.5 mb-3 btn"
       routerLink="/add-currency"
     >
-      Add Currency
+      {{ 'currency.addButton' | translate }}
     </button>
   </div>
 
@@ -19,13 +19,13 @@
         class="bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-neutral-400 uppercase"
       >
         <tr>
-          <th class="px-6 py-3">Code</th>
-          <th class="px-6 py-3">Name</th>
+          <th class="px-6 py-3">{{ 'currency.code' | translate }}</th>
+          <th class="px-6 py-3">{{ 'currency.name' | translate }}</th>
           <!-- <th class="px-6 py-3">Balance</th> -->
-          <th class="px-6 py-3">currency Value</th>
-          <th class="px-6 py-3">Part</th>
-          <th class="px-6 py-3">part Precision</th>
-          <th class="px-6 py-3">Action</th>
+          <th class="px-6 py-3">{{ 'currency.value' | translate }}</th>
+          <th class="px-6 py-3">{{ 'currency.partName' | translate }}</th>
+          <th class="px-6 py-3">{{ 'currency.partPrecision' | translate }}</th>
+          <th class="px-6 py-3">{{ 'currency.action' | translate }}</th>
         </tr>
       </thead>
       <tbody
@@ -44,7 +44,7 @@
           <td class="px-6 py-4">
             <button
               class="cursor-pointer me-2"
-              title="edit"
+              [title]="'currency.edit' | translate"
               type="button"
               (click)="updateCurrency(currency)"
             >
@@ -52,7 +52,7 @@
             </button>
             <button
               class="cursor-pointer"
-              title="delete"
+              [title]="'currency.delete' | translate"
               type="button"
               (click)="currency.id !== undefined && deleteCurrency(currency.id)"
             >
