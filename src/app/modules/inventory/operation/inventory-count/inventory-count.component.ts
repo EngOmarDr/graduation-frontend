@@ -12,6 +12,7 @@ import {
   FormControl,
   NonNullableFormBuilder,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { StorageService } from 'app/core/services/storage.service';
 import { CustomSelectComponent } from '../../../shared/components/custom-select.component';
@@ -19,6 +20,7 @@ import { WarehouseService } from '../../warehouse/services/warehouse.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ProductService } from '../../product/services/product.service';
 import { GroupService } from '../../group/services/group.service';
+import { ProductSearchComponent } from "../../product/components/search-product/search-product.component";
 
 @Component({
   selector: 'app-inventory-count',
@@ -27,7 +29,8 @@ import { GroupService } from '../../group/services/group.service';
     CommonModule,
     CardComponent,
     CustomSelectComponent,
-  ],
+    ProductSearchComponent
+],
   templateUrl: './inventory-count.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -51,11 +54,11 @@ export class InventoryCountComponent implements OnInit {
   groups = toSignal(this.groupService.getGroups(), { initialValue: [] });
 
   form = this.fb.group({
-    warehouseId: this.fb.control<number | string>(
-      this.storageService.warehouseId ?? ''
+    warehouseId: this.fb.control<number | null>(
+      this.storageService.warehouseId ?? null, Validators.required
     ),
-    productId: this.fb.control(''),
-    groupId: this.fb.control(''),
+    productId: this.fb.control(null),
+    groupId: this.fb.control(null),
   });
   quantityForm = this.fb.group({
     quantityCounted: this.fb.array<FormControl>([]),
@@ -66,10 +69,8 @@ export class InventoryCountComponent implements OnInit {
 
   ngOnInit(): void {
     this.form.controls.productId.valueChanges.subscribe((value) => {
-      console.log(value);
-
       if (value) {
-        this.form.controls.groupId.disable({emitEvent:false});
+        this.form.controls.groupId.disable({ emitEvent: false });
       } else {
         this.form.controls.groupId.enable({ emitEvent: false });
       }
@@ -81,8 +82,7 @@ export class InventoryCountComponent implements OnInit {
         this.form.controls.productId.enable({ emitEvent: false });
       }
     });
-    this.loadDraftCount();
-    this.loadInventoryItems();
+
     for (let item of this.inventoryItems) {
       this.quantityForm.controls.quantityCounted.push(
         this.fb.control(item.currentQuantity)
@@ -91,46 +91,8 @@ export class InventoryCountComponent implements OnInit {
     console.log(this.form.value);
   }
 
-  loadInventoryItems(): void {
-    // this.countService.getInventoryItems().subscribe((items) => {
-    //   this.inventoryItems = items;
-    // });
+  onSubmit(){
+
   }
 
-  loadDraftCount(): void {
-    // this.countService.getDraftCount().subscribe((count) => {
-    //   this.currentCount = count || this.countService.createNewCount();
-    // });
-  }
-
-  onFileUpload(file: File): void {
-    // this.countService.importCountFromFile(file).then((items) => {
-    //   this.inventoryItems = items;
-    // });
-  }
-
-  saveCount(): void {
-    // this.countService.saveCount(this.currentCount).subscribe(() => {
-    //   alert('تم حفظ سند الجرد بنجاح');
-    // });
-  }
-
-  printExcelReport(): void {
-    // this.countService.exportToExcel(this.currentCount);
-  }
-
-  calculateDifferences(): void {
-    // this.countService.calculateDifferences(this.currentCount);
-  }
-
-  filterByCategory(event: string): void {
-    this.filterCategory = event;
-  }
-
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.onFileUpload(file);
-    }
-  }
 }

@@ -83,7 +83,7 @@ export class AccountingReportsComponent {
         )
         .subscribe((e) => {
           this.ledger = e;
-
+          this.balance = [0];
           this.ledger.entries.map((e, i) => {
             this.balance[i] =
               (this.balance.at(i - 1) ?? 0) + (e.debit - e.credit);

@@ -83,8 +83,9 @@ export class DailyMovementComponent {
       this.dailyMovement.set(undefined);
       this.itemMovement.set(undefined);
       this.itemStock.set(undefined);
+      this.balance=[0]
       this.typeReport.set(params['name']);
-      this.form.reset();
+
       if (this.typeReport() == InventoryReportsKeys.ItemMovement) {
         this.form.controls.productId.addValidators(Validators.required);
       } else {
@@ -123,7 +124,6 @@ export class DailyMovementComponent {
         .itemMovementReport(this.form.getRawValue())
         .subscribe((e) => {
           this.itemMovement.set(e);
-          this.balance = [0];
           this.itemMovement()
             ?.at(0)
             ?.items.map((e, i) => {

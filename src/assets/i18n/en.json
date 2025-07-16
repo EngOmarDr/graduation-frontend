@@ -74,6 +74,7 @@
     "invoice_entry": "Invoice Entry",
     "invoice_type": "Invoice Type",
     "transfer_process": "Transfer Process",
+    "inventory_count": "inventory count",
     "item_movement": "Item Movement",
     "daily_movement": "Daily Movement",
     "item_stock": "Item Stock",

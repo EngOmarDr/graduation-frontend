@@ -193,9 +193,17 @@ export class SidebarComponent {
         },
         { name: 'sidebar.groups', icon: 'layers', routerLink: '/groups' },
         { name: 'sidebar.units', icon: 'ruler', routerLink: '/units' },
-        { name: 'sidebar.warehouses', icon: 'warehouse', routerLink: '/warehouses' },
+        {
+          name: 'sidebar.warehouses',
+          icon: 'warehouse',
+          routerLink: '/warehouses',
+        },
         { name: 'sidebar.price', icon: 'tag', routerLink: '/prices' },
-        { name: 'sidebar.print_barcode', icon: 'barcode', routerLink: '/printBarcode' },
+        {
+          name: 'sidebar.print_barcode',
+          icon: 'barcode',
+          routerLink: '/printBarcode',
+        },
       ],
     },
     {
@@ -204,7 +212,11 @@ export class SidebarComponent {
       fun: () => this.toggleSection('accounts'),
       attr: this.isExpanded.accounts,
       children: [
-        { name: 'sidebar.accounts_list', icon: 'wallet-card', routerLink: '/accounts' },
+        {
+          name: 'sidebar.accounts_list',
+          icon: 'wallet-card',
+          routerLink: '/accounts',
+        },
         { name: 'br', icon: '' },
         {
           name: 'sidebar.general_journal',
@@ -279,15 +291,20 @@ export class SidebarComponent {
           state: next,
         })),
         this.storageService.isAdmin ? { name: 'br', icon: '' } : undefined,
-        ...(this.storageService.isAdmin
-          ? [
-            {
+
+        this.storageService.isAdmin
+          ? {
               name: 'sidebar.transfer_process',
               icon: '',
               routerLink: 'transfers',
-            },
-          ]
-          : []),
+            }
+          : undefined,
+        {
+          name: 'sidebar.inventory_count',
+          icon: '',
+          routerLink: 'inventory-count',
+        },
+        ,
         { name: 'br', icon: '' },
         {
           name: 'sidebar.item_movement',

@@ -40,7 +40,7 @@ import { ValidationMessageComponent } from './validation-message.component';
         class="cust-input"
       >
         @if(canBeNull()){
-        <option [selected]="true" [ngValue]="undefined">Select {{ label() }}</option>
+        <option [ngValue]="null">Select {{ label() }}</option>
         } @for(option of options(); track $index){
         <option [ngValue]="option.key ?? option.id">
           {{ option.value ?? option.name }}
