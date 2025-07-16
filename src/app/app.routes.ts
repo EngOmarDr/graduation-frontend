@@ -52,12 +52,26 @@ export const routes: Routes = [
         ],
       },
       {
-        path: 'price-display',
+        path: 'advertisements',
         canActivate: [authGuard],
-        loadComponent: () =>
-          import(
-            './modules/price-display/components/show-price/show-price-display.component'
-          ).then((m) => m.ShowPriceDisplayComponent),
+        children: [
+          {
+            path: 'add-advertisement',
+            loadComponent: () =>
+              import(
+                './modules/price-display/components/add-advertisement/add-advertisement-component.component'
+              ).then((m) => m.AddAdvertisementComponentComponent),
+          },
+          {
+            path: 'price-display',
+            canActivate: [authGuard],
+            loadComponent: () =>
+              import(
+                './modules/price-display/components/show-price/show-price-display.component'
+              ).then((m) => m.ShowPriceDisplayComponent),
+          },
+          // (يمكنك إضافة المزيد لاحقاً مثل عرض الإعلانات، تحديثها، حذفها... إلخ)
+        ],
       },
       {
         path: 'branches',

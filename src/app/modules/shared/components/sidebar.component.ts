@@ -226,7 +226,7 @@ export class SidebarComponent {
     {
       name: 'sidebar.price_display',
       icon: 'tag',
-      routerLink: '/price-display'
+      routerLink: '/advertisements/price-display'
     },
     { name: 'sidebar.branches', icon: 'git-branch', routerLink: '/branches' },
     { name: 'sidebar.currencies', icon: 'coins', routerLink: '/currencies' },
