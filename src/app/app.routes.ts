@@ -52,6 +52,14 @@ export const routes: Routes = [
         ],
       },
       {
+        path: 'price-display',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import(
+            './modules/price-display/components/show-price/show-price-display.component'
+          ).then((m) => m.ShowPriceDisplayComponent),
+      },
+      {
         path: 'branches',
         canActivate: [authGuard],
         children: [

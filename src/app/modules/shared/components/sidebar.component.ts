@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterModule,TranslateModule],
+  imports: [CommonModule, RouterLink, RouterModule, TranslateModule],
   template: `
     <!-- overlay -->
     <div
@@ -223,6 +223,11 @@ export class SidebarComponent {
         },
       ],
     },
+    {
+      name: 'sidebar.price_display',
+      icon: 'tag',
+      routerLink: '/price-display'
+    },
     { name: 'sidebar.branches', icon: 'git-branch', routerLink: '/branches' },
     { name: 'sidebar.currencies', icon: 'coins', routerLink: '/currencies' },
     {
@@ -276,12 +281,12 @@ export class SidebarComponent {
         this.storageService.isAdmin ? { name: 'br', icon: '' } : undefined,
         ...(this.storageService.isAdmin
           ? [
-              {
-                name: 'sidebar.transfer_process',
-                icon: '',
-                routerLink: 'transfers',
-              },
-            ]
+            {
+              name: 'sidebar.transfer_process',
+              icon: '',
+              routerLink: 'transfers',
+            },
+          ]
           : []),
         { name: 'br', icon: '' },
         {

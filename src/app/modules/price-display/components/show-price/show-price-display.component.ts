@@ -1,0 +1,41 @@
+import { Component, inject, linkedSignal } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { AdvertisementService } from '../../services/Advertisement.service';
+import { AdvertisementResponse } from '../../models/advertisement-response';
+import { CardComponent } from '@shared/components/card-form.component';
+
+@Component({
+  selector: 'app-show-price-display',
+  imports: [
+    CommonModule,
+    RouterModule,
+    SweetAlert2Module,
+    NgOptimizedImage,
+    CardComponent,
+  ],
+  templateUrl: './show-price-display.component.html',
+  styleUrl: './show-price-display.component.css'
+})
+export class ShowPriceDisplayComponent {
+  private readonly router = inject(Router);
+  private readonly service = inject(AdvertisementService);
+
+  adsReadonly = toSignal(this.service.getAll(), { initialValue: [] });
+  ads = linkedSignal(() => this.adsReadonly());
+  displayColumns = ['title', 'media', 'duration'];
+
+  updateAd(ad: AdvertisementResponse) {
+    this.router.navigate(['update-advertisement', ad.id], {
+      state: { ad },
+    });
+  }
+
+  deleteAd(ad: AdvertisementResponse) {
+    this.service.delete(ad.id).subscribe(() => {
+      this.ads.update((old) => old.filter((e) => e.id !== ad.id));
+    });
+  }
+}

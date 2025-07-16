@@ -1,0 +1,31 @@
+<cust-card titleText="Add Advertisement">
+  <form [formGroup]="form"  class="cust-grid">
+    <cust-form-field label="Title" inputId="title" [control]="form.controls.title" />
+
+    <div class="col-span-full flex gap-4 items-center">
+      <label class="flex items-center gap-2">
+        <input type="radio" formControlName="type" value="image"/> Image
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="radio" formControlName="type" value="video"/> Video
+      </label>
+    </div>
+
+    <cust-form-field
+      label="Media"
+      inputId="media"
+      type="file"
+      [control]="form.controls.media"
+      (change)="upload($event)"
+    />
+
+    <cust-form-field
+      label="Duration (sec)"
+      inputId="duration"
+      type="number"
+      [control]="form.controls.duration"
+    />
+
+    <button type="submit" class="col-span-full btn">Add Advertisement</button>
+  </form>
+</cust-card>

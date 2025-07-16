@@ -78,6 +78,7 @@
     "daily_movement": "Daily Movement",
     "item_stock": "Item Stock",
     "users": "Users",
-    "settings": "Settings"
+    "settings": "Settings",
+    "price_display": "Price Display"
   }
 }

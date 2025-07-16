@@ -1,0 +1,73 @@
+<cust-card titleText="Advertisements" [titlePadding]="false">
+  <div class="flex justify-end items-center">
+    <button type="button" class="mb-3 btn" routerLink="/add-advertisement">
+      Add Advertisement
+    </button>
+  </div>
+
+  <div class="overflow-auto max-h-96 relative">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th *ngFor="let col of displayColumns">{{ col }}</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (ads().length === 0) {
+        <tr>
+          <td [attr.colspan]="displayColumns.length + 2">
+            No Advertisements Found
+          </td>
+        </tr>
+        }
+        <tr *ngFor="let ad of ads(); let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ ad.title }}</td>
+          <td>
+            <ng-container [ngSwitch]="ad.type">
+              <img
+                *ngSwitchCase="'image'"
+                ngSrc="{{ 'http://localhost:8080' + ad.mediaUrl }}"
+                class="w-20 h-14 object-cover rounded"
+                alt="{{ ad.title }}"
+              />
+              <video
+                *ngSwitchCase="'video'"
+                class="w-28 h-20 rounded"
+                controls
+              >
+                <source
+                  [src]="'http://localhost:8080' + ad.mediaUrl"
+                  type="video/mp4"
+                />
+              </video>
+            </ng-container>
+          </td>
+          <td>{{ ad.duration }} sec</td>
+          <td>
+            <button
+              type="button"
+              [swal]="[
+                'Delete',
+                'Are you sure you want to delete ' + ad.title + '?'
+              ]"
+              (confirm)="deleteAd(ad)"
+              class="text-red-600 hover:text-red-800 cursor-pointer"
+            >
+              DELETE
+            </button>
+            <button
+              type="button"
+              (click)="updateAd(ad)"
+              class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
+            >
+              EDIT
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</cust-card>

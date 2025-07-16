@@ -78,6 +78,7 @@
     "daily_movement": "الحركة اليومية",
     "item_stock": "مخزون الصنف",
     "users": "المستخدمين",
-    "settings": "الإعدادات"
+    "settings": "الإعدادات",
+    "price_display": "عرض الأسعار"
   }
 }
