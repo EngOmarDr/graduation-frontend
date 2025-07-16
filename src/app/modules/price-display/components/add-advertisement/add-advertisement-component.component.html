@@ -1,13 +1,13 @@
 <cust-card titleText="Add Advertisement">
-  <form [formGroup]="form"  class="cust-grid">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field label="Title" inputId="title" [control]="form.controls.title" />
 
     <div class="col-span-full flex gap-4 items-center">
       <label class="flex items-center gap-2">
-        <input type="radio" formControlName="type" value="image"/> Image
+        <input type="radio" formControlName="type" value="image" /> Image
       </label>
       <label class="flex items-center gap-2">
-        <input type="radio" formControlName="type" value="video"/> Video
+        <input type="radio" formControlName="type" value="video" /> Video
       </label>
     </div>
 
