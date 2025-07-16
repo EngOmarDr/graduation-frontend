@@ -16,11 +16,12 @@ import {
 } from 'app/core/constants/constant';
 import { InvoiceTypeService } from 'app/modules/inventory/invoice-type/services/invoice-type.service';
 import { StorageService } from 'app/core/services/storage.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterModule],
+  imports: [CommonModule, RouterLink, RouterModule,TranslateModule],
   template: `
     <!-- overlay -->
     <div
@@ -63,7 +64,7 @@ import { StorageService } from 'app/core/services/storage.service';
                   stroke-linejoin="round"
                   [innerHTML]="getLucideIcon(item.icon)"
                 ></svg>
-                <span>{{ item.name }}</span>
+                <span>{{ item.name | translate }}</span>
               </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +116,7 @@ import { StorageService } from 'app/core/services/storage.service';
                         stroke-linejoin="round"
                         [innerHTML]="getLucideIcon(subItem.icon)"
                       ></svg> -->
-                  <span>{{ subItem.name }}</span>
+                  <span>{{ subItem.name | translate }}</span>
                 </a>
               </li>
               }}
@@ -138,7 +139,7 @@ import { StorageService } from 'app/core/services/storage.service';
               stroke-linejoin="round"
               [innerHTML]="getLucideIcon(item.icon)"
             ></svg>
-            <span>{{ item.name }}</span>
+            <span>{{ item.name | translate }}</span>
           </a>
           }
         </ng-container>
@@ -177,67 +178,67 @@ export class SidebarComponent {
   }
 
   routes: Signal<any> = computed(() => [
-    { name: 'Dashboard', icon: 'home', routerLink: '/dashboard' },
+    { name: 'sidebar.dashboard', icon: 'home', routerLink: '/dashboard' },
     {
-      name: 'Products',
+      name: 'sidebar.products',
       icon: 'package-search',
       fun: () => this.toggleSection('products'),
       attr: this.isExpanded.products,
       children: [
         {
-          name: 'Products',
+          name: 'sidebar.products_list',
           icon: 'box',
           routerLink: '/products',
           state: undefined,
         },
-        { name: 'Groups', icon: 'layers', routerLink: '/groups' },
-        { name: 'Units', icon: 'ruler', routerLink: '/units' },
-        { name: 'Warehouses', icon: 'warehouse', routerLink: '/warehouses' },
-        { name: 'Price', icon: 'tag', routerLink: '/prices' },
-        { name: 'Print Barcode', icon: 'barcode', routerLink: '/printBarcode' },
+        { name: 'sidebar.groups', icon: 'layers', routerLink: '/groups' },
+        { name: 'sidebar.units', icon: 'ruler', routerLink: '/units' },
+        { name: 'sidebar.warehouses', icon: 'warehouse', routerLink: '/warehouses' },
+        { name: 'sidebar.price', icon: 'tag', routerLink: '/prices' },
+        { name: 'sidebar.print_barcode', icon: 'barcode', routerLink: '/printBarcode' },
       ],
     },
     {
-      name: 'Accounts',
+      name: 'sidebar.accounts',
       icon: 'wallet-cards',
       fun: () => this.toggleSection('accounts'),
       attr: this.isExpanded.accounts,
       children: [
-        { name: 'Accounts', icon: 'wallet-card', routerLink: '/accounts' },
+        { name: 'sidebar.accounts_list', icon: 'wallet-card', routerLink: '/accounts' },
         { name: 'br', icon: '' },
         {
-          name: 'General Journal',
+          name: 'sidebar.general_journal',
           icon: '',
           routerLink: `accounting-reports/${AccountingReportsKeys.GENERALJOURNAL}`,
         },
         {
-          name: 'Ledger',
+          name: 'sidebar.ledger',
           icon: '',
           routerLink: `accounting-reports/${AccountingReportsKeys.LEDGER}`,
         },
         {
-          name: 'Trail Balance',
+          name: 'sidebar.trial_balance',
           icon: '',
           routerLink: `accounting-reports/${AccountingReportsKeys.TRAILBALANCE}`,
         },
       ],
     },
-    { name: 'Branches', icon: 'git-branch', routerLink: '/branches' },
-    { name: 'Currencies', icon: 'coins', routerLink: '/currencies' },
+    { name: 'sidebar.branches', icon: 'git-branch', routerLink: '/branches' },
+    { name: 'sidebar.currencies', icon: 'coins', routerLink: '/currencies' },
     {
-      name: 'Vouchers',
+      name: 'sidebar.vouchers',
       icon: 'book-text',
       fun: () => this.toggleSection('vouchers'),
       attr: this.isExpanded.vouchers,
       children: [
         {
-          name: 'Journal Entry',
+          name: 'sidebar.journal_entry',
           icon: 'book-text',
           routerLink: 'journal/journals',
         },
         { name: 'br', icon: '' },
         {
-          name: 'Journal Type',
+          name: 'sidebar.journal_type',
           icon: '',
           routerLink: 'journal-types',
         },
@@ -250,19 +251,19 @@ export class SidebarComponent {
       ],
     },
     {
-      name: 'Invoices',
+      name: 'sidebar.invoices',
       icon: '',
       fun: () => this.toggleSection('invoices'),
       attr: this.isExpanded.invoices,
       children: [
         {
-          name: 'Invoice Entry',
+          name: 'sidebar.invoice_entry',
           icon: 'book-text',
           routerLink: 'invoice/invoices',
         },
         { name: 'br', icon: '' },
         {
-          name: 'Invoice Type',
+          name: 'sidebar.invoice_type',
           icon: '',
           routerLink: 'invoice-types',
         },
@@ -276,7 +277,7 @@ export class SidebarComponent {
         ...(this.storageService.isAdmin
           ? [
               {
-                name: 'Transfer process',
+                name: 'sidebar.transfer_process',
                 icon: '',
                 routerLink: 'transfers',
               },
@@ -284,24 +285,24 @@ export class SidebarComponent {
           : []),
         { name: 'br', icon: '' },
         {
-          name: 'Item Movement',
+          name: 'sidebar.item_movement',
           icon: '',
           routerLink: `inventory-reports/${InventoryReportsKeys.ItemMovement}`,
         },
         {
-          name: 'Daily Movement',
+          name: 'sidebar.daily_movement',
           icon: '',
           routerLink: `inventory-reports/${InventoryReportsKeys.DailyMovement}`,
         },
         {
-          name: 'Item Stock',
+          name: 'sidebar.item_stock',
           icon: '',
           routerLink: `inventory-reports/${InventoryReportsKeys.ItemStock}`,
         },
       ],
     },
-    { name: 'users', icon: 'lock-keyhole', routerLink: '/users' },
-    { name: 'Settings', icon: 'settings', routerLink: '/settings' },
+    { name: 'sidebar.users', icon: 'lock-keyhole', routerLink: '/users' },
+    { name: 'sidebar.settings', icon: 'settings', routerLink: '/settings' },
   ]);
 
   getLucideIcon(name: string): SafeHtml {
