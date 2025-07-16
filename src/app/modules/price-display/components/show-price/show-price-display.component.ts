@@ -6,6 +6,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AdvertisementService } from '../../services/Advertisement.service';
 import { AdvertisementResponse } from '../../models/advertisement-response';
 import { CardComponent } from '@shared/components/card-form.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-show-price-display',
@@ -23,7 +24,18 @@ export class ShowPriceDisplayComponent {
   private readonly router = inject(Router);
   private readonly service = inject(AdvertisementService);
 
-  adsReadonly = toSignal(this.service.getAll(), { initialValue: [] });
+adsReadonly = toSignal(
+  this.service.getAll().pipe(
+    map((ads) =>
+      ads.map((ad: any) => ({
+        ...ad,
+        title: ad.name,
+        type: ad.mediaUrl.endsWith('.mp4') ? 'video' : 'image',
+      }))
+    )
+  ),
+  { initialValue: [] }
+);
   ads = linkedSignal(() => this.adsReadonly());
   displayColumns = ['title', 'media', 'duration'];
 

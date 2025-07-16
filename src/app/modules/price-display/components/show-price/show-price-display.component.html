@@ -24,15 +24,19 @@
         }
         <tr *ngFor="let ad of ads(); let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ ad.title }}</td>
+          <td>{{ ad.name }}</td>
           <td>
             <ng-container [ngSwitch]="ad.type">
               <img
                 *ngSwitchCase="'image'"
                 ngSrc="{{ 'http://localhost:8080' + ad.mediaUrl }}"
-                class="w-20 h-14 object-cover rounded"
+                width="80"
+                height="56"
+                class="object-cover rounded"
+                loading="lazy"
                 alt="{{ ad.title }}"
               />
+
               <video
                 *ngSwitchCase="'video'"
                 class="w-28 h-20 rounded"

@@ -38,7 +38,7 @@ export class UpdateAdvertisementComponentComponent implements OnInit {
     this.ad = history.state.ad as AdvertisementResponse;
     if (this.ad) {
       this.form.patchValue({
-        title: this.ad.title,
+        title: this.ad.name,
         type: this.ad.type,
         duration: this.ad.duration,
       });

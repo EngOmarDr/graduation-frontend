@@ -1,17 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 import { AdvertisementResponse } from '../models/advertisement-response';
 
 @Injectable({ providedIn: 'root' })
 export class AdvertisementService {
-  constructor(private http: HttpClient) {}
+  private apiUrl = `${environment.apiUrl}/advertisements`;
+  private http = inject(HttpClient);
 
-  getAll(): Observable<AdvertisementResponse[]> {
-    return this.http.get<AdvertisementResponse[]>('/api/ads');
+  getAll() {
+    return this.http.get<AdvertisementResponse[]>(this.apiUrl);
   }
 
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`/api/ads/${id}`);
+  delete(id: number) {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  // يمكنك لاحقًا إضافة:
+  // create(data: any, file: File) { ... }
+  // update(...) { ... }
 }

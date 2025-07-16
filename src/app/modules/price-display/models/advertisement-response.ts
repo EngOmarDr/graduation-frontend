@@ -1,7 +1,7 @@
 export interface AdvertisementResponse {
   id: number;
-  title: string;
+  name: string; // بدل title
   mediaUrl: string;
   duration: number;
-  type: 'image' | 'video'; // لتحديد نوع الملف
+  type?: 'image' | 'video';
 }
