@@ -63,6 +63,13 @@ export const routes: Routes = [
               ).then((m) => m.AddAdvertisementComponentComponent),
           },
           {
+            path: 'update-advertisement/:id',
+            loadComponent: () =>
+              import(
+                './modules/price-display/components/update-advertisement/update-advertisement-component.component'
+              ).then((m) => m.UpdateAdvertisementComponentComponent),
+          },
+          {
             path: 'price-display',
             canActivate: [authGuard],
             loadComponent: () =>

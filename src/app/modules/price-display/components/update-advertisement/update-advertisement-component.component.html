@@ -1,5 +1,5 @@
 <cust-card titleText="Update Advertisement">
-  <form [formGroup]="form"  class="cust-grid">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field label="Title" inputId="title" [control]="form.controls.title" />
 
     <div class="col-span-full flex gap-4 items-center">
@@ -15,15 +15,23 @@
       (change)="upload($event)"
     />
 
-    <p *ngIf="ad.mediaUrl">
-      Current media:
-      <ng-container *ngIf="ad.type==='image'">
-        <img src="{{ ad.mediaUrl }}" class="w-24 h-16 object-cover rounded"/>
-      </ng-container>
-      <ng-container *ngIf="ad.type==='video'">
-        <video src="{{ ad.mediaUrl }}" class="w-48 h-32" controls></video>
-      </ng-container>
-    </p>
+<p *ngIf="ad">
+  Current media:
+  <ng-container *ngIf="ad.type === 'image'">
+    <img
+      [src]="'http://localhost:8080' + ad.mediaUrl"
+      class="w-24 h-16 object-cover rounded"
+    />
+  </ng-container>
+  <ng-container *ngIf="ad.type === 'video'">
+    <video
+      [src]="'http://localhost:8080' + ad.mediaUrl"
+      class="w-48 h-32"
+      controls
+    ></video>
+  </ng-container>
+</p>
+
 
     <cust-form-field
       label="Duration (sec)"

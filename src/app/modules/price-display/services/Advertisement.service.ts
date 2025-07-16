@@ -21,13 +21,26 @@ export class AdvertisementService {
     const formData = new FormData();
     formData.append('name', data.name);
     formData.append('duration', data.duration.toString());
-    formData.append('mediaUrl', file, file.name); // اسم الملف مهم لرفع الملف
-
-    // إذا هناك حاجة لـ Authorization header، أضفها هنا:
-    // const headers = new HttpHeaders({ Authorization: 'Bearer YOUR_TOKEN_HERE' });
+    formData.append('mediaUrl', file, file.name);
 
     return this.http.post<AdvertisementResponse>(this.apiUrl, formData
-      // { headers } // إذا استعملت هيدر
     );
   }
+
+  update(id: number, data: { name: string; duration: number; type: string }, file?: File) {
+  const formData = new FormData();
+  formData.append('name', data.name);
+  formData.append('duration', data.duration.toString());
+  formData.append('type', data.type);
+
+  if (file) {
+    formData.append('mediaUrl', file);
+  }
+
+  return this.http.put<AdvertisementResponse>(`${this.apiUrl}/${id}`, formData);
+}
+
+getById(id: number) {
+  return this.http.get<AdvertisementResponse>(`${this.apiUrl}/${id}`);
+}
 }

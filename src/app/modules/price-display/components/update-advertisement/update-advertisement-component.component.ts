@@ -15,8 +15,7 @@ import { AdvertisementResponse } from '../../models/advertisement-response';
     ReactiveFormsModule,
     CommonModule,
     CardComponent,
-    CustomFieldComponent,
-    ValidationMessageComponent],
+    CustomFieldComponent,],
   templateUrl: './update-advertisement-component.component.html',
   styleUrl: './update-advertisement-component.component.css'
 })
@@ -34,30 +33,64 @@ export class UpdateAdvertisementComponentComponent implements OnInit {
     duration: [null as number | null, [Validators.required, Validators.min(1)]],
   });
 
-  ngOnInit() {
-    this.ad = history.state.ad as AdvertisementResponse;
-    if (this.ad) {
+ngOnInit() {
+  const id = Number(this.route.snapshot.paramMap.get('id'));
+  if (!id) {
+    alert('Invalid Advertisement ID');
+    return;
+  }
+
+  this.service.getById(id).subscribe({
+    next: (ad) => {
+      this.ad = {
+        ...ad,
+        type: ad.mediaUrl.endsWith('.mp4') ? 'video' : 'image',
+      };
+
       this.form.patchValue({
         title: this.ad.name,
         type: this.ad.type,
         duration: this.ad.duration,
       });
+    },
+    error: (err) => {
+      console.error('Failed to load ad:', err);
+      alert('Failed to load advertisement');
     }
-  }
+  });
+}
+
 
   upload(event: any) {
     const f = event.target.files?.[0];
     this.file = f || null;
-    this.form.patchValue({ media: f });
   }
 
-  // onSubmit() {
-  //   if (this.form.valid) {
-  //     this.service.update(this.ad.id, this.form.value, this.file).subscribe(() =>
-  //       this.loc.back()
-  //     );
-  //   } else {
-  //     this.form.markAllAsTouched();
-  //   }
-  // }
+onSubmit() {
+  if (this.form.valid) {
+    const title = this.form.value.title ?? '';
+    const duration = Number(this.form.value.duration);
+    const type = this.form.value.type ?? '';
+
+    if (!title || !duration || !type) {
+      alert('Please fill all fields correctly.');
+      return;
+    }
+
+    this.service.update(this.ad.id, { name: title, duration, type }, this.file ?? undefined).subscribe({
+      next: () => {
+        alert('Advertisement updated successfully!');
+        this.loc.back();
+      },
+      error: (err) => {
+        console.error('Error updating advertisement:', err);
+        alert('Failed to update advertisement. Please try again.');
+      },
+    });
+  } else {
+    this.form.markAllAsTouched();
+    alert('Please correct the validation errors before submitting.');
+  }
+}
+
 }

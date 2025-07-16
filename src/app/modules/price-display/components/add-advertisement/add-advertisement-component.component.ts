@@ -12,10 +12,8 @@ import { Router } from '@angular/router';
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    NgOptimizedImage,
     CardComponent,
     CustomFieldComponent,
-    ValidationMessageComponent,
   ],
   templateUrl: './add-advertisement-component.component.html',
   styleUrl: './add-advertisement-component.component.css',
@@ -56,7 +54,7 @@ onSubmit() {
         console.log('Advertisement added:', res);
         this.form.reset({ type: 'image' });
         this.file = null;
-        
+
         this.router.navigate(['/price-display']);
       },
       error: (err) => {

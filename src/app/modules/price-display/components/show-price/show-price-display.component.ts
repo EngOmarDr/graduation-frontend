@@ -39,11 +39,10 @@ adsReadonly = toSignal(
   ads = linkedSignal(() => this.adsReadonly());
   displayColumns = ['title', 'media', 'duration'];
 
-  updateAd(ad: AdvertisementResponse) {
-    this.router.navigate(['update-advertisement', ad.id], {
-      state: { ad },
-    });
-  }
+updateAd(ad: AdvertisementResponse) {
+  this.router.navigate(['advertisements/update-advertisement', ad.id]);
+}
+
 
   deleteAd(ad: AdvertisementResponse) {
     this.service.delete(ad.id).subscribe(() => {
