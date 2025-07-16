@@ -74,6 +74,7 @@
     "invoice_entry": "إدخال فاتورة",
     "invoice_type": "نوع الفاتورة",
     "transfer_process": "عملية التحويل",
+    "inventory_count": "سند الجرد",
     "item_movement": "حركة الصنف",
     "daily_movement": "الحركة اليومية",
     "item_stock": "مخزون الصنف",

@@ -1,52 +1,14 @@
 <cust-card titleText="Inventory Count">
-  <!-- <div class="flex justify-end items-center">
-    <button
-      type="button"
-      class="py-1.5 px-2.5 mb-3 btn"
-      routerLink="/add-user"
-    >
-      Add User
-    </button>
-     <div class="flex space-x-2">
-      <button
-        (click)="saveCount()"
-        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-      >
-        حفظ السند
-      </button>
-      <button
-        (click)="printExcelReport()"
-        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
-      >
-        تصدير إلى Excel
-      </button>
-      <label
-        class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition cursor-pointer"
-      >
-        تحميل ملف الجرد
-        <input
-          type="file"
-          accept=".txt,.xlsx,.csv"
-          (change)="onFileSelected($event)"
-          class="hidden"
-        />
-      </label>
-    </div>
-  </div> -->
-  <form [formGroup]="form" class="cust-grid mb-4">
+  <form [formGroup]="form" (submit)="onSubmit()" class="cust-grid mb-4">
+    @if(isAdmin){
     <cust-select
-      *ngIf="isAdmin"
       [control]="form.controls.warehouseId"
       [options]="warehouses()"
-      [canBeNull]="true"
       label="Warehouse"
     />
-    <cust-select
-      [control]="form.controls.productId"
-      [options]="products()"
-      [canBeNull]="true"
-      label="Product"
-    />
+    }
+    <app-search-product [control]="form.controls.productId" label="Product" />
+
     <cust-select
       [control]="form.controls.groupId"
       [options]="groups()"
@@ -57,8 +19,8 @@
       <button class="btn">Preview</button>
     </div>
   </form>
-  <form [formGroup]="quantityForm" class="col-span-full">
-    <div class="overflow-auto max-h-80 relative add-table w-full">
+  <form [formGroup]="quantityForm" class="col-span-full cust-grid">
+    <div class="overflow-auto max-h-80 relative add-table w-full col-span-full">
       <table formArrayName="quantityCounted">
         <thead>
           <tr>
