@@ -46,7 +46,8 @@ import { StorageService } from 'app/core/services/storage.service';
 
       <nav class="p-4 space-y-2">
         <ng-container *ngFor="let item of routes()">
-          <div *ngIf="item.children; else noChildren">
+          @if(item.children){
+          <div>
             <button
               (click)="item?.fun()"
               class="flex items-center justify-between w-full px-3 py-2 rounded-lg text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition"
@@ -88,12 +89,14 @@ import { StorageService } from 'app/core/services/storage.service';
                 'max-h-svh': item?.attr()
               }"
             >
-              <li *ngFor="let subItem of item.children">
-                @if (subItem?.name=='br') {
-                <!-- <hr> -->
+              @for(subItem of item.children;track $index){ @if(!subItem){ }
+              @else if(subItem?.name=='br'){
+              <li>
                 <div class="bg-zinc-300 w-full h-[1px]"></div>
-                }@else {
+              </li>
+              }@else {
 
+              <li>
                 <a
                   [routerLink]="[subItem.routerLink]"
                   [state]="{ state: subItem.state }"
@@ -103,42 +106,41 @@ import { StorageService } from 'app/core/services/storage.service';
                   <!-- [routerLinkActiveOptions]="{ exact: true }" -->
                   <!-- routerLinkActive="bg-primary text-white dark:bg-primary" -->
                   <!-- <svg
-                    class="w-4 h-4 text-primary"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    [innerHTML]="getLucideIcon(subItem.icon)"
-                  ></svg> -->
+                        class="w-4 h-4 text-primary"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        [innerHTML]="getLucideIcon(subItem.icon)"
+                      ></svg> -->
                   <span>{{ subItem.name }}</span>
                 </a>
-                }
               </li>
+              }}
             </ul>
           </div>
-
-          <ng-template #noChildren>
-            <a
-              routerLink="{{ item.routerLink }}"
-              class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 hover:text-black dark:hover:bg-gray-700 transition"
+          }@else {
+          <a
+            routerLink="{{ item.routerLink }}"
+            class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-white hover:bg-gray-100 hover:text-black dark:hover:bg-gray-700 transition"
+            routerLinkActive="text-primary"
+          >
+            <svg
+              class="w-5 h-5 text-black"
               routerLinkActive="text-primary"
-            >
-              <svg
-                class="w-5 h-5 text-black"
-                routerLinkActive="text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                [innerHTML]="getLucideIcon(item.icon)"
-              ></svg>
-              <span>{{ item.name }}</span>
-            </a>
-          </ng-template>
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              [innerHTML]="getLucideIcon(item.icon)"
+            ></svg>
+            <span>{{ item.name }}</span>
+          </a>
+          }
         </ng-container>
       </nav>
     </aside>
@@ -270,7 +272,7 @@ export class SidebarComponent {
           icon: '',
           state: next,
         })),
-        { name: 'br', icon: '' },
+        this.storageService.isAdmin ? { name: 'br', icon: '' } : undefined,
         ...(this.storageService.isAdmin
           ? [
               {

@@ -10,8 +10,6 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 })
 export class AppComponent {
   title = 'graduation-project';
-  name = 'Hamza';
-  currentLang = 'en'; 
 
   constructor(private translate: TranslateService) {
     translate.addLangs(['en', 'ar']);
@@ -24,7 +22,6 @@ export class AppComponent {
   }
 
   useLanguage(lang: string): void {
-    this.currentLang = lang;
     this.translate.use(lang);
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   }

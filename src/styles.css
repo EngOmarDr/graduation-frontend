@@ -254,7 +254,10 @@
     position: absolute;
     inset: 0;
     border-color: var(--color-gray-600);
-    border-width: 1px 0 1px 1px;
+    /* border-width: 1px 0 1px 1px; */
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-inline-start-width: 1px;
   }
   thead > tr > th:last-child:after {
     content: "";
@@ -285,7 +288,9 @@
     position: absolute;
     inset: 0;
     border-color: var(--color-gray-600);
-    border-width: 0px 0 1px 1px;
+    /* border-width: 0px 0 1px 1px; */
+    border-bottom-width: 1px;
+    border-inline-start-width: 1px;
     pointer-events: none; /* Allow clicks to pass through to the th */
   }
   tbody > tr > td:last-child::after {

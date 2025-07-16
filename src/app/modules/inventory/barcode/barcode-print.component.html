@@ -20,9 +20,15 @@
         [control]="form.controls['copies']"
       />
 
-      <button type="button" class="btn btn-primary" (click)="addBarcodeToList()">
-  إضافة للطباعة
-</button>
+      <div class="self-end">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="addBarcodeToList()"
+        >
+          إضافة للطباعة
+        </button>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
@@ -47,31 +53,35 @@
     />
 
     <div class="overflow-x-auto mt-4">
-<table class="min-w-full text-sm text-left border mt-6">
-  <thead class="bg-gray-200 font-bold">
-    <tr>
-      <th class="p-2 border">المنتج</th>
-      <th class="p-2 border">الباركود</th>
-      <th class="p-2 border">عدد النسخ</th>
-      <th class="p-2 border">معاينة</th>
-      <th class="p-2 border">إجراء</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of selectedBarcodes; let i = index">
-      <td class="p-2 border">{{ item.productName }}</td>
-      <td class="p-2 border">{{ item.barcode }}</td>
-      <td class="p-2 border">{{ item.copies }}</td>
-      <td class="p-2 border">
-        <ngx-barcode6 [bc-value]="item.barcode" [bc-display-value]="true" />
-      </td>
-      <td class="p-2 border">
-        <button class="text-red-600" (click)="removeSelectedBarcode(i)">حذف</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
+      <table class="min-w-full text-sm text-left border mt-6">
+        <thead class="bg-gray-200 font-bold">
+          <tr>
+            <th class="p-2 border">المنتج</th>
+            <th class="p-2 border">الباركود</th>
+            <th class="p-2 border">عدد النسخ</th>
+            <th class="p-2 border">معاينة</th>
+            <th class="p-2 border">إجراء</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of selectedBarcodes; let i = index">
+            <td class="p-2 border">{{ item.productName }}</td>
+            <td class="p-2 border">{{ item.barcode }}</td>
+            <td class="p-2 border">{{ item.copies }}</td>
+            <td class="p-2 border">
+              <ngx-barcode6
+                [bc-value]="item.barcode"
+                [bc-display-value]="true"
+              />
+            </td>
+            <td class="p-2 border">
+              <button class="text-red-600" (click)="removeSelectedBarcode(i)">
+                حذف
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="flex gap-4 justify-end mt-6">
@@ -92,20 +102,26 @@
   </div>
 
   <!-- قسم الطباعة فقط -->
-<div id="print-section" class="hidden-print">
-  <ng-container *ngFor="let item of selectedBarcodes">
-    <ng-container *ngFor="let i of [].constructor(item.copies)">
-      <div class="barcode-item">
-        <ngx-barcode6 [bc-value]="item.barcode" [bc-display-value]="form.value.showProduct" />
+  <div id="print-section" class="hidden-print">
+    <ng-container *ngFor="let item of selectedBarcodes">
+      <ng-container *ngFor="let i of [].constructor(item.copies)">
+        <div class="barcode-item">
+          <ngx-barcode6
+            [bc-value]="item.barcode"
+            [bc-display-value]="form.value.showProduct"
+          />
 
-        <div class="barcode-label" *ngIf="form.value.showCompany">اسم الشركة</div>
-        <div class="barcode-label" *ngIf="form.value.showProduct">{{ item.productName }}</div>
-        <div class="barcode-label" *ngIf="form.value.showPrice">
-          {{ item.price | currency: 'SAR':'symbol-narrow' }}
+          <div class="barcode-label" *ngIf="form.value.showCompany">
+            اسم الشركة
+          </div>
+          <div class="barcode-label" *ngIf="form.value.showProduct">
+            {{ item.productName }}
+          </div>
+          <div class="barcode-label" *ngIf="form.value.showPrice">
+            {{ item.price | currency : "SAR" : "symbol-narrow" }}
+          </div>
         </div>
-      </div>
+      </ng-container>
     </ng-container>
-  </ng-container>
-</div>
-
+  </div>
 </cust-card>

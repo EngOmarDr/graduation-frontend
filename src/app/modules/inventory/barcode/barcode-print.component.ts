@@ -1,11 +1,17 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { NgxBarcode6Module } from 'ngx-barcode6';
 import { CardComponent } from '../../shared/components/card-form.component';
 import { CustomFieldComponent } from '../../shared/components/custom-field.component';
 import { CustomSelectComponent } from '../../shared/components/custom-select.component';
 import { ProductSearchComponent } from '../../../modules/inventory/product/components/search-product/search-product.component';
+import { ProductResponse } from '../product/models/response/product-response';
 
 @Component({
   selector: 'app-barcode-print',
@@ -17,35 +23,33 @@ import { ProductSearchComponent } from '../../../modules/inventory/product/compo
     CustomFieldComponent,
     CustomSelectComponent,
     NgxBarcode6Module,
-    ProductSearchComponent
+    ProductSearchComponent,
   ],
   templateUrl: './barcode-print.component.html',
 })
 export class BarcodePrintComponent {
   fb = inject(FormBuilder);
 
-form: FormGroup = this.fb.group({
-  warehouse: [''],
-  productId: [null],
-  barcode: [null],
-  copies: [1],
-  paperSize: ['A4'],
-  showCompany: [true],
-  showProduct: [true],
-  showPrice: [true],
-});
+  form: FormGroup = this.fb.group({
+    warehouse: [''],
+    productId: [null],
+    barcode: [null],
+    copies: [1],
+    paperSize: ['A4'],
+    showCompany: [true],
+    showProduct: [true],
+    showPrice: [true],
+  });
 
-barcodes: { key: string, value: string }[] = [];
+  barcodes: { key: string; value: string }[] = [];
 
-selectedBarcodes: {
-  productId: number;
-  productName: string;
-  barcode: string;
-  copies: number;
-  price: number;
-}[] = [];
-
-
+  selectedBarcodes: {
+    productId: number;
+    productName: string;
+    barcode: string;
+    copies: number;
+    price: number;
+  }[] = [];
 
   productList = signal<any[]>([]);
   selectedProducts = signal<any[]>([]);
@@ -82,15 +86,15 @@ selectedBarcodes: {
     this.selectedProducts.set([]);
   }
 
-print() {
-  const printContents = document.getElementById('print-section')?.innerHTML;
-  const paperSize = this.form.value.paperSize;
+  print() {
+    const printContents = document.getElementById('print-section')?.innerHTML;
+    const paperSize = this.form.value.paperSize;
 
-  if (!printContents) return;
+    if (!printContents) return;
 
-  const popupWindow = window.open('', '_blank', 'width=800,height=600');
-  if (popupWindow) {
-    let customStyle = `
+    const popupWindow = window.open('', '_blank', 'width=800,height=600');
+    if (popupWindow) {
+      let customStyle = `
       body {
         font-family: Arial, sans-serif;
         padding: 20px;
@@ -110,34 +114,34 @@ print() {
       }
     `;
 
-    // تغيير النمط حسب حجم الورقة
-    switch (paperSize) {
-      case '80mm':
-        customStyle += `
+      // تغيير النمط حسب حجم الورقة
+      switch (paperSize) {
+        case '80mm':
+          customStyle += `
           .barcode-item {
             width: 80mm;
           }
         `;
-        break;
-      case 'label':
-        customStyle += `
+          break;
+        case 'label':
+          customStyle += `
           .barcode-item {
             width: 50mm;
             height: 30mm;
           }
         `;
-        break;
-      default:
-        // A4
-        customStyle += `
+          break;
+        default:
+          // A4
+          customStyle += `
           .barcode-item {
             width: 180px;
           }
         `;
-    }
+      }
 
-    popupWindow.document.open();
-    popupWindow.document.write(`
+      popupWindow.document.open();
+      popupWindow.document.write(`
       <html>
         <head>
           <title>طباعة الباركود</title>
@@ -148,53 +152,52 @@ print() {
         </body>
       </html>
     `);
-    popupWindow.document.close();
+      popupWindow.document.close();
+    }
   }
-}
 
   preview() {
     alert('عرض مبدئي للباركود');
   }
 
-onProductSelected(product: any) {
-  this.form.controls['productId'].setValue(product.id);
+  onProductSelected(product: ProductResponse) {
+    // this.form.controls['productId'].setValue(product.id);
 
-  this.barcodes = (product.barcodes || []).map((code: string) => ({
-    key: code,
-    value: code,
-  }));
+    this.barcodes = product.barcodes.map((item) => ({
+      key: item.barcode,
+      value: item.barcode,
+    }));
 
-  this.form.controls['barcode'].setValue(product.barcodes?.[0]);
-}
+    // this.form.controls['barcode'].setValue(product.barcodes?.[0]);
+  }
 
+  getProductNameById(id: number): string {
+    return 'اسم المنتج المؤقت';
+  }
 
-getProductNameById(id: number): string {
-  return 'اسم المنتج المؤقت';
-}
+  addBarcodeToList() {
+    const productId = this.form.value.productId;
+    const barcode = this.form.value.barcode;
+    const copies = this.form.value.copies;
 
-addBarcodeToList() {
-  const productId = this.form.value.productId;
-  const barcode = this.form.value.barcode;
-  const copies = this.form.value.copies;
+    if (!productId || !barcode || !copies) return;
 
-  if (!productId || !barcode || !copies) return;
+    const productName = this.getProductNameById(productId);
+    const price = 15.75;
 
-  const productName = this.getProductNameById(productId);
-  const price = 15.75;
+    this.selectedBarcodes.push({
+      productId,
+      productName,
+      barcode,
+      copies,
+      price,
+    });
 
-  this.selectedBarcodes.push({
-    productId,
-    productName,
-    barcode,
-    copies,
-    price,
-  });
+    this.form.controls['barcode'].setValue(null);
+    this.form.controls['copies'].setValue(1);
+  }
 
-  this.form.controls['barcode'].setValue(null);
-  this.form.controls['copies'].setValue(1);
-}
-
-removeSelectedBarcode(index: number) {
-  this.selectedBarcodes.splice(index, 1);
-}
+  removeSelectedBarcode(index: number) {
+    this.selectedBarcodes.splice(index, 1);
+  }
 }
