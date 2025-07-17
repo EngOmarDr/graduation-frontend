@@ -67,7 +67,7 @@
             <td class="p-2">{{ o }}</td>
             <td>ORD-00{{ 100 + o }}</td>
             <td>مستخدم{{ o }}</td>
-            <td>{{ o * 120 }} USD</td>
+            <td>{{ o * 120 }} ل.س</td>
             <td class="text-green-600 font-semibold">مكتمل</td>
           </tr>
         </tbody>
@@ -86,7 +86,7 @@
           <tr *ngFor="let t of recentTransactions" class="border-b">
             <td class="p-2">{{ t.type }}</td>
             <td>{{ t.id }}</td>
-            <td>{{ t.amount }} USD</td>
+            <td>{{ t.amount }} ل.س</td>
             <td class="font-medium text-blue-700">{{ t.status }}</td>
           </tr>
         </tbody>
