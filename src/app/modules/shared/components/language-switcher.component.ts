@@ -3,6 +3,7 @@ import {
   ElementRef,
   HostListener,
   inject,
+  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
@@ -72,9 +73,9 @@ import { TranslateService } from '@ngx-translate/core';
     `,
   ],
 })
-export class LanguageSwitcherComponent {
+export class LanguageSwitcherComponent implements OnInit {
   private translate = inject(TranslateService);
-  currentLang: string = this.translate.currentLang || 'en';
+  currentLang: string = 'en';
   dropdownOpen = false;
 
   constructor(private eRef: ElementRef) {
@@ -82,6 +83,17 @@ export class LanguageSwitcherComponent {
       this.currentLang = event.lang;
       this.setDocumentDir(event.lang);
     });
+  }
+
+  ngOnInit(): void {
+    const storedLang = localStorage.getItem('selectedLanguage');
+    const browserLang = this.translate.getBrowserLang();
+
+    const langToUse = storedLang || browserLang || 'en';
+
+    this.translate.use(langToUse);
+    this.currentLang = langToUse;
+    this.setDocumentDir(langToUse);
   }
 
   toggleDropdown() {
@@ -95,6 +107,7 @@ export class LanguageSwitcherComponent {
     }
 
     this.translate.use(lang);
+    localStorage.setItem('selectedLanguage', lang);
     this.currentLang = lang;
     this.setDocumentDir(lang);
     this.dropdownOpen = false;
