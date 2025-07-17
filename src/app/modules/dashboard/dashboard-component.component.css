@@ -1,0 +1,9 @@
+:host {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+i[class^="icon-"] {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}

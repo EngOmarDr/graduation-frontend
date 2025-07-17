@@ -29,6 +29,13 @@ export const routes: Routes = [
         path: '',
         children: [
           {
+            path: 'dashboard',
+            loadComponent: () =>
+              import('../app/modules/dashboard/dashboard-component.component').then(
+                (m) => m.DashboardComponentComponent
+              ),
+          },
+          {
             path: 'groups',
             loadComponent: () =>
               import(

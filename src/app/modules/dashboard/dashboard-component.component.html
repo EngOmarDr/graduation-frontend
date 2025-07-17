@@ -1,0 +1,102 @@
+<div class="p-6 space-y-6 bg-gray-100 min-h-screen">
+  <!-- بطاقات الإحصائيات -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div *ngFor="let s of stats" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-5 flex items-center">
+      <div [class]="'rounded-full p-3 text-' + s.color + '-600 bg-' + s.color + '-100'">
+        <i [class]="'icon-' + s.icon + ' text-2xl'"></i>
+      </div>
+      <div class="ml-4">
+        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ s.value }}</h3>
+        <p class="text-gray-500 dark:text-gray-400">{{ s.title }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- مخطط المبيعات وحالة الفروع -->
+  <!-- <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow">
+      <h4 class="font-semibold text-lg mb-3">📈 مبيعات الأشهر الماضية</h4>
+      <canvas id="salesChart" height="200"></canvas>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow">
+      <h4 class="font-semibold text-lg mb-3">🏢 حالة الفروع</h4>
+      <canvas id="branchesChart" height="200"></canvas>
+    </div>
+  </div> -->
+
+  <!-- المنتجات الأعلى مبيعًا والتنبيهات -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow">
+      <h4 class="font-semibold mb-3">🔥 أكثر المنتجات مبيعًا</h4>
+      <ul class="space-y-2">
+        <li *ngFor="let p of topProducts" class="flex justify-between border-b pb-2">
+          <span>{{ p.name }}</span>
+          <span class="text-green-600 font-bold">{{ p.sold }} مبيعات</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow">
+      <h4 class="font-semibold mb-3">🚨 التنبيهات</h4>
+      <ul class="space-y-2">
+        <li *ngFor="let alert of alerts"
+            [ngClass]="{
+              'bg-yellow-100 text-yellow-800': alert.level === 'warning',
+              'bg-red-100 text-red-800': alert.level === 'danger'
+            }"
+            class="rounded p-3">
+          {{ alert.message }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- جدول الطلبات والمعاملات -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow overflow-auto">
+      <h4 class="font-semibold mb-3">📋 أحدث الطلبات</h4>
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="p-2">#</th><th>رقم الطلب</th><th>المستخدم</th><th>الإجمالي</th><th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let o of [1,2,3,4,5]" class="border-b">
+            <td class="p-2">{{ o }}</td>
+            <td>ORD-00{{ 100 + o }}</td>
+            <td>مستخدم{{ o }}</td>
+            <td>{{ o * 120 }} USD</td>
+            <td class="text-green-600 font-semibold">مكتمل</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow overflow-auto">
+      <h4 class="font-semibold mb-3">💱 أحدث المعاملات</h4>
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="p-2">النوع</th><th>الرقم</th><th>القيمة</th><th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of recentTransactions" class="border-b">
+            <td class="p-2">{{ t.type }}</td>
+            <td>{{ t.id }}</td>
+            <td>{{ t.amount }} USD</td>
+            <td class="font-medium text-blue-700">{{ t.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ملخص اليوم -->
+  <div class="bg-blue-100 text-blue-900 p-5 rounded-xl shadow text-sm">
+    <h4 class="font-bold mb-1">📢 ملخص اليوم</h4>
+    <p>تمت 25 عملية بيع، و 3 عمليات شراء، ووردت 2 شكوى دعم.</p>
+  </div>
+</div>
