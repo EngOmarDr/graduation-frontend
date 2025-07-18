@@ -51,7 +51,7 @@ form = this.fb.group({
   cashAccountId: [1, Validators.required], // ثابت مؤقتًا
   expenseAccountId: [2, Validators.required], // ثابت مؤقتًا
   expenseValue: [50, Validators.required], // ثابت مؤقتًا
-  date: [new Date().toISOString().slice(0, 10), Validators.required],
+  date: [new Date().toISOString(), Validators.required],
   driverName: ['Ahmad Khaled', Validators.required], // مؤقتًا
   notes: [''],
   items: this.fb.array<FormGroup>([
