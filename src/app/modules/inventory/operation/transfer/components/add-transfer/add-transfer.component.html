@@ -20,18 +20,14 @@
       label="Date"
       type="date"
     />
-    <cust-form-field
+    <app-account-search
       [control]="form.controls.cashAccountId"
-      inputId="cashAccountId"
-      label="Cash Account ID"
-      type="number"
+      label="Cash Account"
     />
 
-    <cust-form-field
+    <app-account-search
       [control]="form.controls.expenseAccountId"
-      inputId="expenseAccountId"
-      label="Expense Account ID"
-      type="number"
+      label="Expense Account"
     />
 
     <cust-form-field
@@ -74,13 +70,10 @@
           >
             <td>{{ i + 1 }}</td>
             <td>
-              <cust-select
+              <app-search-product
                 [control]="row.controls['productId']"
-                [showLabel]="false"
-                label="product"
-                inputId="product"
-                [options]="this.pricesList()"
-              />
+                (productSelected)="onProductSelected($event, row)"
+              ></app-search-product>
             </td>
             <td>
               <input

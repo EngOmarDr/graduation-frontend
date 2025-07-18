@@ -5,6 +5,7 @@ import {
   Validators,
   FormGroup,
   FormArray,
+  AbstractControl,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PriceService } from 'app/modules/inventory/price/services/price.service';
@@ -19,6 +20,10 @@ import { ProductService } from 'app/modules/inventory/product/services/product.s
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 import { TransferService } from '../../transfer.service';
 import { TransferRequest } from '../../models/request/transfer-request';
+import { ProductSearchComponent } from 'app/modules/inventory/product/components/search-product/search-product.component';
+import { ProductResponse } from 'app/modules/inventory/product/models/response/product-response';
+import { AccountSearchComponent } from 'app/modules/shared/account-search/account-search.component';
+
 
 @Component({
   selector: 'app-add-transfer',
@@ -29,6 +34,8 @@ import { TransferRequest } from '../../models/request/transfer-request';
     CustomFieldComponent,
     ValidationMessageComponent,
     CustomSelectComponent,
+    ProductSearchComponent,
+    AccountSearchComponent
   ],
   templateUrl: './add-transfer.component.html',
 })
@@ -45,24 +52,25 @@ export class AddTransferComponent {
   unitItems = signal<UnitItemResponse[]>([]);
   warehouses = toSignal(this.warehouseService.getAll(), { initialValue: [] });
 
-form = this.fb.group({
-  fromWarehouseId: [null, Validators.required],
-  toWarehouseId: [null, Validators.required],
-  cashAccountId: [1, Validators.required], // ثابت مؤقتًا
-  expenseAccountId: [2, Validators.required], // ثابت مؤقتًا
-  expenseValue: [50, Validators.required], // ثابت مؤقتًا
-  date: [new Date().toISOString(), Validators.required],
-  driverName: ['Ahmad Khaled', Validators.required], // مؤقتًا
-  notes: [''],
-  items: this.fb.array<FormGroup>([
-    this.fb.group({
-      productId: [null, Validators.required],
-      qty: [null, Validators.required],
-      unitItemId: [1, Validators.required], // ثابت مؤقتًا
-      unitFact: [1, Validators.required], // ثابت مؤقتًا
-    }),
-  ]),
-});
+  form = this.fb.group({
+    fromWarehouseId: [null, Validators.required],
+    toWarehouseId: [null, Validators.required],
+    cashAccountId: [null, Validators.required],
+    expenseAccountId: [null, Validators.required],
+    expenseValue: [null, Validators.required],
+    date: [new Date().toISOString().split('.')[0]],
+    driverName: ['', Validators.required],
+    notes: [''],
+    items: this.fb.array<FormGroup>([
+      this.fb.group({
+        productId: [null, Validators.required],
+        qty: [null, Validators.required],
+        unitItemId: [1, Validators.required],
+        unitFact: [1, Validators.required],
+      }),
+    ]),
+  });
+
 
 
   get items(): FormArray<FormGroup> {
@@ -119,6 +127,14 @@ onSubmit(): void {
     }
   });
 }
+
+onProductSelected(product: ProductResponse, row: AbstractControl) {
+  row.get('productId')?.setValue(product.id);
+  if (product.defaultUnitId) {
+    row.get('unitItemId')?.setValue(product.defaultUnitId);
+  }
+}
+
 
 
 }
