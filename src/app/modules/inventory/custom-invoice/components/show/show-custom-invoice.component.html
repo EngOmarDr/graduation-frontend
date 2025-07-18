@@ -3,7 +3,7 @@
     <div class="flex justify-end items-center col-span-full">
       <button
         type="button"
-        class="py-1.5 px-2.5 mb-3 btn"
+        class="py-1.5 px-2.5 btn"
         [routerLink]="'/add-invoice/' + invoiceType().name"
         [state]="{ invoiceType: invoiceType() }"
       >
@@ -29,7 +29,7 @@
         </thead>
         <tbody>
           <tr *ngIf="invoices().length === 0">
-            <td [attr.colspan]="7" class="text-center">No Data</td>
+            <td [attr.colspan]="10" class="text-center">No Data</td>
           </tr>
 
           <tr *ngFor="let item of invoices(); let i = index">

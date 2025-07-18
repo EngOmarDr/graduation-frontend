@@ -1,15 +1,14 @@
-import { CommonModule, CurrencyPipe, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
   OnInit,
+  signal,
 } from '@angular/core';
 import { CardComponent } from '../../../shared/components/card-form.component';
 import { InventoryCountResponse } from '../models/inventory-count-response';
 import {
-  FormArray,
-  FormControl,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
@@ -20,7 +19,8 @@ import { WarehouseService } from '../../warehouse/services/warehouse.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ProductService } from '../../product/services/product.service';
 import { GroupService } from '../../group/services/group.service';
-import { ProductSearchComponent } from "../../product/components/search-product/search-product.component";
+import { ProductSearchComponent } from '../../product/components/search-product/search-product.component';
+import { OperationService } from '../services/operation.service';
 
 @Component({
   selector: 'app-inventory-count',
@@ -29,22 +29,21 @@ import { ProductSearchComponent } from "../../product/components/search-product/
     CommonModule,
     CardComponent,
     CustomSelectComponent,
-    ProductSearchComponent
-],
+    ProductSearchComponent,
+  ],
   templateUrl: './inventory-count.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InventoryCountComponent implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly warehouseService = inject(WarehouseService);
+  private readonly service = inject(OperationService);
   private readonly productService = inject(ProductService);
   private readonly groupService = inject(GroupService);
   private readonly storageService = inject(StorageService);
   isAdmin = this.storageService.isAdmin;
 
-  inventoryItems: InventoryCountResponse[] = [
-    { productId: 1, productName: 'prkd', currentQuantity: 5 },
-  ];
+  inventoryItems = signal<InventoryCountResponse | undefined>(undefined);
   currentCount: any;
   filterCategory: string = 'all';
   showUnprocessed: boolean = false;
@@ -55,22 +54,23 @@ export class InventoryCountComponent implements OnInit {
 
   form = this.fb.group({
     warehouseId: this.fb.control<number | null>(
-      this.storageService.warehouseId ?? null, Validators.required
+      this.storageService.warehouseId ?? null,
+      Validators.required
     ),
-    productId: this.fb.control(null),
-    groupId: this.fb.control(null),
+    productId: this.fb.control<number | null>(null),
+    groupId: this.fb.control<number | null>(null),
   });
   quantityForm = this.fb.group({
-    quantityCounted: this.fb.array<FormControl>([]),
+    quantityCounted: this.fb.array<number>([]),
   });
-  get quantityCounted(): FormArray<FormControl<any>> {
+  get quantityCounted() {
     return this.quantityForm.controls.quantityCounted;
   }
 
   ngOnInit(): void {
     this.form.controls.productId.valueChanges.subscribe((value) => {
       if (value) {
-        this.form.controls.groupId.disable({ emitEvent: false });
+        this.form.controls.groupId.setValue(null);
       } else {
         this.form.controls.groupId.enable({ emitEvent: false });
       }
@@ -82,17 +82,26 @@ export class InventoryCountComponent implements OnInit {
         this.form.controls.productId.enable({ emitEvent: false });
       }
     });
+  }
 
-    for (let item of this.inventoryItems) {
-      this.quantityForm.controls.quantityCounted.push(
-        this.fb.control(item.currentQuantity)
-      );
+  onSubmit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
     }
-    console.log(this.form.value);
+    this.service.getInventoryItems(this.form.getRawValue()).subscribe((e) => {
+      this.inventoryItems.set(e);
+
+      for (let index = 0; index < e.items.length; index++) {
+        this.quantityCounted.controls[index] = this.fb.control(
+          e.items[index].quantity < 0 ? 0 : e.items[index].quantity
+        );
+      }
+      // for (let item of e.items ?? []) {
+      //   this.quantityCounted.push(
+      //     this.fb.control(item.quantity < 0 ? 0 : item.quantity)
+      //   );
+      // }
+    });
   }
-
-  onSubmit(){
-
-  }
-
 }

@@ -1,9 +1,5 @@
 <cust-card [titleText]="'currency.addTitle' | translate">
-  <form
-    [formGroup]="currencyForm"
-    (ngSubmit)="onSubmit()"
-    class="cust-grid"
-  >
+  <form [formGroup]="currencyForm" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="currencyForm.controls.code"
       inputId="code"
@@ -23,7 +19,7 @@
       type="number"
     />
 
-        <cust-form-field
+    <cust-form-field
       [control]="currencyForm.controls.partName"
       inputId="part"
       [label]="'currency.partName' | translate"
@@ -38,12 +34,8 @@
 
     <div class="col-span-full grid grid-cols-4">
       <button type="submit" class="btn" [disabled]="!currencyForm.valid">
-        {{ 'currency.addButton' | translate }}
+        {{ "currency.addButton" | translate }}
       </button>
     </div>
   </form>
-
-  <div>
-    {{ currencyForm.value | json }}
-  </div>
 </cust-card>

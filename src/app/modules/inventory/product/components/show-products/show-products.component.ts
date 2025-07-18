@@ -24,7 +24,7 @@ export class ShowProductsComponent {
 
   productsReadonly = toSignal(this.service.getProducts(), { initialValue: [] });
   products = linkedSignal(() => this.productsReadonly());
-  displayColumns = ['code', 'name', 'quantity', 'image'];
+  displayColumns = ['code', 'name', 'image'];
 
   updateProduct(object: ProductResponse) {
     this.router.navigate(['update-product', object.id], {

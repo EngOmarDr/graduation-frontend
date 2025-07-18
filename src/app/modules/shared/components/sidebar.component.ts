@@ -273,12 +273,12 @@ export class SidebarComponent {
       fun: () => this.toggleSection('invoices'),
       attr: this.isExpanded.invoices,
       children: [
-        {
-          name: 'sidebar.invoice_entry',
-          icon: 'book-text',
-          routerLink: 'invoice/invoices',
-        },
-        { name: 'br', icon: '' },
+        // {
+        //   name: 'sidebar.invoice_entry',
+        //   icon: 'book-text',
+        //   routerLink: 'invoice/invoices',
+        // },
+        // { name: 'br', icon: '' },
         {
           name: 'sidebar.invoice_type',
           icon: '',

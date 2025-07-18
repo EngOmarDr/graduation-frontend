@@ -1,18 +1,30 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { InventoryCountResponse } from '../models/inventory-count-response';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OperationService {
-  // private apiUrl = 'api/inventoryCounts';
+  private readonly http = inject(HttpClient);
 
-  // constructor(private http: HttpClient) {}
-
-  // getInventoryItems(): Observable<InventoryItem[]> {
-  //   return this.http.get<InventoryItem[]>(`${this.apiUrl}/items`);
-  // }
+  getInventoryItems(request: {
+    warehouseId: number | null;
+    groupId: number | null;
+    productId: number | null;
+  }) {
+    let params = new HttpParams({
+      fromObject: {
+        productId: request.productId ?? '',
+        groupId: request.groupId ?? '',
+      },
+    });
+    return this.http.get<InventoryCountResponse>(
+      `${environment.apiUrl}/warehouses/${request.warehouseId}/stock`,
+      { params }
+    );
+  }
 
   // getDraftCount(): Observable<InventoryCount> {
   //   return this.http.get<InventoryCount>(`${this.apiUrl}/draft`);

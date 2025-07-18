@@ -15,37 +15,44 @@
       [canBeNull]="true"
       label="Group"
     />
-    <div class="self-end">
-      <button class="btn">Preview</button>
+    <div class="self-end flex items-center gap-x-1">
+      <button type="submit" class="btn">Preview</button>
+      @if(inventoryItems()?.items?.length){
+
+      <button type="button" class="btn">settlement</button>
+      }
     </div>
   </form>
   <form [formGroup]="quantityForm" class="col-span-full cust-grid">
     <div class="overflow-auto max-h-80 relative add-table w-full col-span-full">
+      <p class="mb-1">Warehouse: {{inventoryItems()?.warehouseName}}</p>
       <table formArrayName="quantityCounted">
         <thead>
           <tr>
             <th>#</th>
             <th>Product</th>
+            <th>Unit name</th>
             <th>Current Quantity</th>
             <th>Quantity counted</th>
             <th>Difference</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngIf="inventoryItems.length === 0">
+          <tr *ngIf="inventoryItems()?.items?.length == 0">
             <td [attr.colspan]="7" class="text-center">
               you don't have product
             </td>
           </tr>
 
-          <tr *ngFor="let item of inventoryItems; let i = index">
+          <tr *ngFor="let item of inventoryItems()?.items; let i = index">
             <td>{{ i + 1 }}</td>
             <td>{{ item.productName }}</td>
-            <td>{{ item.currentQuantity }}</td>
+            <td>{{ item.unitName }}</td>
+            <td>{{ item.quantity }}</td>
             <td>
               <input [formControlName]="i" class="cust-input" type="number" />
             </td>
-            <td>{{ item.currentQuantity - quantityCounted.at(i).value }}</td>
+            <td>{{ item.quantity - quantityCounted.at(i).value }}</td>
           </tr>
         </tbody>
       </table>

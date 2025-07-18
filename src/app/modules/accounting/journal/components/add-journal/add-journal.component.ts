@@ -60,7 +60,6 @@ export class AddJournalComponent implements OnInit {
     ),
     currencyId: [1, Validators.required],
     currencyValue: [1, Validators.required],
-    parentType: [0],
     isPosted: [true],
     journalItems: this.fb.array<FormGroup<any>>([], Validators.required),
   });
@@ -188,8 +187,11 @@ export class AddJournalComponent implements OnInit {
       warehouseId: this.form.controls.warehouseId.value ?? 0,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value,
-      parentType: this.form.controls.parentType.value,
+      kind: 0,
+      parentId: null,
+      parentTypeId: null,
       isPosted: this.form.controls.isPosted.value,
+
       journalItems: this.form.controls.journalItems.getRawValue().map((e) => ({
         accountId: e!['accountId']!,
         notes: e!['notes'],

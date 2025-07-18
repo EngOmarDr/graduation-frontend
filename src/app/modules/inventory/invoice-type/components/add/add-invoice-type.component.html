@@ -20,12 +20,12 @@
       inputId="Default Price"
     />
 
-    <cust-select
+    <!-- <cust-select
       [control]="form.controls.minDefaultPriceId"
       [options]="prices()"
       label="Default Min Price"
       inputId="Default Min Price"
-    />
+    /> -->
 
     <cust-select
       [control]="this.form.controls.defaultWarehouseId"
@@ -36,22 +36,18 @@
 
     <app-account-search
       [control]="this.form.controls.defaultBillAccId"
-      ngDefaultControl
       label="Bill Account"
     />
     <app-account-search
       [control]="this.form.controls.defaultCashAccId"
-      ngDefaultControl
       label="Cash Account"
     />
     <app-account-search
       [control]="this.form.controls.defaultDiscAccId"
-      ngDefaultControl
       label="Disc Account"
     />
     <app-account-search
       [control]="this.form.controls.defaultExtraAccId"
-      ngDefaultControl
       label="Extra Account"
     />
 
@@ -72,7 +68,7 @@
       inputId="Default Currency"
     />
 
-    <label class="self-center">
+    <!-- <label class="self-center">
       <input
         type="checkbox"
         [formControl]="this.form.controls.isAffectCostPrice"
@@ -94,7 +90,7 @@
         [formControl]="this.form.controls.isAffectCustPrice"
       />
       Affect Customer Price
-    </label>
+    </label> -->
 
     <!-- <label class="self-center">
       <input
@@ -104,7 +100,7 @@
       Affect Customer Profit
     </label> -->
 
-    <label class="self-center">
+    <!-- <label class="self-center">
       <input
         type="checkbox"
         [formControl]="this.form.controls.isDiscAffectCost"
@@ -118,7 +114,7 @@
         [formControl]="this.form.controls.isExtraAffectCost"
       />
       Extra Affect Cost
-    </label>
+    </label> -->
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isNoEntry" />
@@ -130,13 +126,13 @@
       Auto Entry
     </label>
 
-    <label class="self-center">
+    <!-- <label class="self-center">
       <input
         type="checkbox"
         [formControl]="this.form.controls.isAutoEntryPost"
       />
       Auto Entry Post
-    </label>
+    </label> -->
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isNoPost" />
@@ -148,17 +144,17 @@
       Auto Post
     </label>
 
-    <label class="self-center">
+    <!-- <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isShortEntry" />
       Short Entry
-    </label>
+    </label> -->
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isCashBill" />
       Cash Bill
     </label>
 
-    <label class="self-center">
+    <!-- <label class="self-center">
       <input
         type="checkbox"
         [formControl]="this.form.controls.printAfterInsert"
@@ -169,7 +165,7 @@
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isBarcode" />
       Is Barcode
-    </label>
+    </label> -->
 
     <div class="col-span-full grid grid-cols-4">
       <button type="submit" class="btn" [disabled]="!form.valid">Add</button>
