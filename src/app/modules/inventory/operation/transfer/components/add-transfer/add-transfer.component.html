@@ -85,10 +85,12 @@
               />
             </td>
             <td>
-              <input
-                formControlName="unitItemId"
-                type="number"
-                class="cust-input"
+              <cust-select
+                [control]="row.controls['unitItemId']"
+                [showLabel]="false"
+                label="Unit Item"
+                inputId="unitItem"
+                [options]="unitItemsMap()[row.controls['productId'].value] ?? []"
               />
             </td>
             <td>

@@ -51,6 +51,7 @@ export class AddTransferComponent {
   unitsList = toSignal(this.unitService.getUnits(), { initialValue: [] });
   unitItems = signal<UnitItemResponse[]>([]);
   warehouses = toSignal(this.warehouseService.getAll(), { initialValue: [] });
+  unitItemsMap = signal<Record<number, UnitItemResponse[]>>({});
 
   form = this.fb.group({
     fromWarehouseId: [null, Validators.required],
@@ -130,8 +131,15 @@ onSubmit(): void {
 
 onProductSelected(product: ProductResponse, row: AbstractControl) {
   row.get('productId')?.setValue(product.id);
+
   if (product.defaultUnitId) {
     row.get('unitItemId')?.setValue(product.defaultUnitId);
+  }
+
+  if (product.unitItems) {
+    const map = { ...this.unitItemsMap() };
+    map[product.id] = product.unitItems;
+    this.unitItemsMap.set(map);
   }
 }
 

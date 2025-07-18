@@ -1,3 +1,4 @@
+import { UnitItemResponse } from "app/modules/inventory/unit/models/response/unit-item-response.model";
 import { ProductBarcodeResponse } from "./product-barcode-response";
 import { ProductPriceResponse } from "./product-price-response";
 
@@ -16,4 +17,5 @@ export interface ProductResponse {
   notes: string;
   prices: ProductPriceResponse[];
   barcodes: ProductBarcodeResponse[];
+  unitItems?: UnitItemResponse[];
 }
