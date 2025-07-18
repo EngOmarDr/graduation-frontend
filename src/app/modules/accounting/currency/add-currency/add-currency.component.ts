@@ -36,7 +36,7 @@ export class AddCurrencyComponent implements OnInit {
     balance: this.fb.control<null | number>(null, [Validators.required, Validators.min(0)]),
     eq: this.fb.control<null | number>(null, [Validators.required, Validators.min(0)]),
     partName: [''],
-    partValue: ['', [Validators.required, Validators.min(0)]],
+    partValue: ['', [Validators.min(0)]],
   });
 
   ngOnInit(): void {

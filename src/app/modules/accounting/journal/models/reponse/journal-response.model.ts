@@ -7,10 +7,10 @@ export interface JournalResponse {
   totalCredit: number;
   currencyId: number;
   currencyValue: number;
-  isPosted: boolean ;
+  isPosted: boolean;
   parentType: number;
-  // postDate: string;
-  // notes: string | null;
+  parentId: number;
+  kind: string;
   items: JournalItemResponse[];
 }
 

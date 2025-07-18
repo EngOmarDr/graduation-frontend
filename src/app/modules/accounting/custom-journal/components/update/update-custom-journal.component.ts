@@ -216,7 +216,9 @@ export class UpdateCustomJournalComponent implements OnInit {
       warehouseId: this.form.controls.warehouseId.value!,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value!,
-      parentType: this.journalType.id,
+      kind: 0,
+      parentId: null,
+      parentTypeId: this.journalType.id,
       isPosted: this.form.controls.isPosted.value,
       journalItems:
         this.form.controls.journalItems.value.map<CreateJournalItemRequest>(

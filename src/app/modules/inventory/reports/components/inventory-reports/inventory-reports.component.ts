@@ -85,7 +85,7 @@ export class DailyMovementComponent {
       this.itemStock.set(undefined);
       this.balance=[0]
       this.typeReport.set(params['name']);
-
+      this.form.reset()
       if (this.typeReport() == InventoryReportsKeys.ItemMovement) {
         this.form.controls.productId.addValidators(Validators.required);
       } else {

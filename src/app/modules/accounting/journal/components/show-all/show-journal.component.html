@@ -33,8 +33,10 @@
           <td>{{ journal.totalCredit }}</td>
           <td>
             {{
-              journal.parentType == 0
+              journal.kind == "NORMAL"
                 ? "journal"
+                : journal.kind == "JOURNAL_TYPE"
+                ? getInvoiceTypeName(journal.parentType)
                 : getJournalTypeName(journal.parentType)
             }}
           </td>

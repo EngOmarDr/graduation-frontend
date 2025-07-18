@@ -1,5 +1,13 @@
 export interface InventoryCountResponse {
+  warehouseId: number;
+  warehouseName: string;
+  items: InventoryItem[];
+}
+
+interface InventoryItem {
   productId: number;
   productName: string;
-  currentQuantity: number;
+  unitId: number;
+  unitName: string;
+  quantity: number;
 }

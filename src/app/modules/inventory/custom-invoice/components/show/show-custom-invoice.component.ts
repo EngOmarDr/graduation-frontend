@@ -41,8 +41,12 @@ export class ShowCustomInvoicesComponent {
   invoices = linkedSignal(() => this.invoicesReadonly());
 
   ngOnInit(): void {
+    console.log(this.invoiceType());
+
     this.activatedRoute.params.subscribe(() => {
       const navigation = window.history.state;
+      console.log(window.history.state);
+
       if (navigation.state) {
         this.invoiceType.set(navigation.state);
       } else {

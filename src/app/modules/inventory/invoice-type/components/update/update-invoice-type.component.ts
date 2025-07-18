@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -31,7 +31,7 @@ import { InvoiceTypeResponse } from '../../models/response/invoice-type-response
   ],
   templateUrl: './update-invoice-type.component.html',
 })
-export class UpdateInvoiceTypeComponent {
+export class UpdateInvoiceTypeComponent implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly service = inject(InvoiceTypeService);
   private readonly currencyService = inject(CurrencyService);
@@ -59,12 +59,31 @@ export class UpdateInvoiceTypeComponent {
     { id: 6, name: 'output' },
   ];
 
+  convertToNum(value: string | number): number {
+    switch (value) {
+      case 'buy':
+        return 1;
+      case 'sale':
+        return 2;
+      case 'retrieve buy':
+        return 3;
+      case 'retrieve sale':
+        return 4;
+      case 'input':
+        return 5;
+      case 'output':
+        return 6;
+      default:
+        return 0;
+    }
+  }
+
   onAccountSelected(object: any) {
     this.form.controls.defaultStockAccId.setValue(object.id);
   }
 
   form = this.fb.group({
-    type: [this.state?.type, Validators.required],
+    type: [this.convertToNum(this.state?.type), Validators.required],
     name: [this.state?.name, Validators.required],
     defaultPriceId: this.fb.control(this.state?.defaultPriceId),
     minDefaultPriceId: [this.state?.minDefaultPriceId],
@@ -92,6 +111,31 @@ export class UpdateInvoiceTypeComponent {
     isBarcode: [this.state?.isBarcode],
     defaultCurrencyId: [this.state?.defaultCurrencyId],
   });
+
+  ngOnInit(): void {
+    console.log(this.form.controls.type.value);
+
+    this.form.controls.isNoEntry.valueChanges.subscribe((e) => {
+      if (e) {
+        this.form.controls.isAutoEntry.setValue(false, { emitEvent: false });
+      }
+    });
+    this.form.controls.isAutoEntry.valueChanges.subscribe((e) => {
+      if (e) {
+        this.form.controls.isNoEntry.setValue(false, { emitEvent: false });
+      }
+    });
+    this.form.controls.isNoPost.valueChanges.subscribe((e) => {
+      if (e) {
+        this.form.controls.isAutoPost.setValue(false, { emitEvent: false });
+      }
+    });
+    this.form.controls.isAutoPost.valueChanges.subscribe((e) => {
+      if (e) {
+        this.form.controls.isNoPost.setValue(false, { emitEvent: false });
+      }
+    });
+  }
 
   onSubmit() {
     console.log(this.state);

@@ -8,7 +8,10 @@
       [control]="form.get('warehouseId')!"
     />
 
-    <app-search-product label="Item*" [control]="form.get('productId')!" />
+    <app-search-product
+      [label]="typeReport() == 'item-movement' ? 'item*' : 'item'"
+      [control]="form.get('productId')!"
+    />
 
     <cust-select
       label="Group"

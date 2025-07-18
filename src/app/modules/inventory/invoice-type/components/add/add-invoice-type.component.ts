@@ -67,25 +67,25 @@ export class AddInvoiceTypeComponent {
     type: [1, Validators.required],
     name: ['', Validators.required],
     defaultPriceId: this.fb.control(undefined),
-    minDefaultPriceId: [undefined],
+    minDefaultPriceId: [1],
     isAffectCostPrice: [true, Validators.required],
     isAffectLastPrice: [true, Validators.required],
     isAffectCustPrice: [true, Validators.required],
     isAffectProfit: [false, Validators.required],
     isDiscAffectCost: [true, Validators.required],
     isExtraAffectCost: [true, Validators.required],
-    isNoEntry: [false, Validators.required],
+    isNoEntry: [true, Validators.required],
     isAutoEntry: [false, Validators.required],
     isAutoEntryPost: [true, Validators.required],
     isNoPost: [false, Validators.required],
-    isAutoPost: [false, Validators.required],
+    isAutoPost: [true, Validators.required],
     defaultWarehouseId: [undefined],
     defaultBillAccId: [undefined],
     defaultCashAccId: [undefined],
     defaultDiscAccId: [undefined],
     defaultExtraAccId: [undefined],
-    defaultCostAccId: [undefined],
-    defaultStockAccId: [undefined],
+    defaultCostAccId: [1],
+    defaultStockAccId: [1],
     isShortEntry: [true],
     isCashBill: [true],
     printAfterInsert: [true],
@@ -95,9 +95,11 @@ export class AddInvoiceTypeComponent {
 
   ngOnInit() {
     this.form.controls.type.valueChanges.subscribe((v) => {
-      switch (+v) {
+      switch (v) {
         case 1: {
           this.form.controls.isAutoEntryPost.setValue(true);
+          this.form.controls.isAutoEntry.setValue(true);
+          this.form.controls.isAutoPost.setValue(true);
           this.form.controls.isAffectCustPrice.setValue(true);
           this.form.controls.isAffectLastPrice.setValue(true);
           this.form.controls.isAffectCostPrice.setValue(true);
@@ -117,6 +119,8 @@ export class AddInvoiceTypeComponent {
           this.form.controls.isExtraAffectCost.setValue(false);
           this.form.controls.isCashBill.setValue(true);
           this.form.controls.isShortEntry.setValue(true);
+          this.form.controls.isAutoEntry.setValue(true);
+          this.form.controls.isAutoPost.setValue(true);
           break;
         }
         case 3: {
@@ -127,6 +131,8 @@ export class AddInvoiceTypeComponent {
           this.form.controls.isCashBill.setValue(true);
           this.form.controls.isShortEntry.setValue(true);
           this.form.controls.printAfterInsert.setValue(true);
+          this.form.controls.isAutoEntry.setValue(true);
+          this.form.controls.isAutoPost.setValue(true);
           break;
         }
         case 4: {
@@ -136,6 +142,8 @@ export class AddInvoiceTypeComponent {
           this.form.controls.isCashBill.setValue(true);
           this.form.controls.isShortEntry.setValue(true);
           this.form.controls.printAfterInsert.setValue(true);
+          this.form.controls.isAutoEntry.setValue(true);
+          this.form.controls.isAutoPost.setValue(true);
           break;
         }
         case 5: {
@@ -143,6 +151,8 @@ export class AddInvoiceTypeComponent {
           this.form.controls.isCashBill.setValue(true);
           this.form.controls.isShortEntry.setValue(true);
           this.form.controls.printAfterInsert.setValue(true);
+          this.form.controls.isAutoEntry.setValue(false);
+          this.form.controls.isAutoPost.setValue(true);
           break;
         }
         case 6: {
@@ -150,15 +160,35 @@ export class AddInvoiceTypeComponent {
           this.form.controls.isCashBill.setValue(true);
           this.form.controls.isShortEntry.setValue(true);
           this.form.controls.printAfterInsert.setValue(true);
+          this.form.controls.isAutoEntry.setValue(false);
+          this.form.controls.isAutoPost.setValue(true);
           break;
         }
+      }
+    });
+    this.form.controls.isNoEntry.valueChanges.subscribe((e) => {
+      if (e) {
+        this.form.controls.isAutoEntry.setValue(false, { emitEvent: false });
+      }
+    });
+    this.form.controls.isAutoEntry.valueChanges.subscribe((e) => {
+      if (e) {
+        this.form.controls.isNoEntry.setValue(false, { emitEvent: false });
+      }
+    });
+    this.form.controls.isNoPost.valueChanges.subscribe((e) => {
+      if (e) {
+        this.form.controls.isAutoPost.setValue(false, { emitEvent: false });
+      }
+    });
+    this.form.controls.isAutoPost.valueChanges.subscribe((e) => {
+      if (e) {
+        this.form.controls.isNoPost.setValue(false, { emitEvent: false });
       }
     });
   }
 
   onSubmit() {
-    console.log(this.form.value);
-
     this.service.create(this.form.getRawValue()).subscribe({
       next: () => {
         this.form.reset();
