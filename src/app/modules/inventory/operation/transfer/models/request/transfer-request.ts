@@ -1,12 +1,18 @@
 export interface TransferRequest {
   fromWarehouseId: number;
   toWarehouseId: number;
-  date: Date;
+  cashAccountId: number;
+  expenseAccountId: number;
+  expenseValue: number;
+  date: string; 
+  driverName: string;
   notes: string;
   items: TransferItem[];
 }
 
-interface TransferItem {
+export interface TransferItem {
   productId: number;
-  quantity: number;
+  qty: number;
+  unitItemId: number;
+  unitFact: number;
 }

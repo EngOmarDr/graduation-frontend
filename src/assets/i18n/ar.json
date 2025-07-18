@@ -81,5 +81,34 @@
     "users": "المستخدمين",
     "settings": "الإعدادات",
     "price_display": "الاعلانات"
-  }
+  },
+"journal": {
+  "addTitle": "إضافة {{name}}",
+  "updateTitle": "تحديث {{name}}",
+  "add": "إضافة",
+  "branch": "الفرع",
+  "total": "الإجمالي",
+  "date": "التاريخ",
+  "action": "الإجراء",
+  "isPosted": "تم الترحيل",
+  "noData": "لا توجد بيانات",
+  "delete": "حذف",
+  "edit": "تعديل",
+  "account": "الحساب",
+  "notes": "ملاحظات",
+  "debit": "مدين",
+  "credit": "دائن",
+  "currency": "العملة",
+  "currencyValue": "قيمة العملة",
+  "actions": "الإجراءات",
+  "removeRow": "حذف الصف",
+  "addRow": "إضافة صف",
+  "totalDebit": "إجمالي المدين",
+  "totalCredit": "إجمالي الدائن",
+  "difference": "الفرق",
+  "addButton": "إضافة",
+  "updateButton": "تحديث",
+  "title": "إضافة قيد",
+  "warehouse": "المخزن"
+}
 }

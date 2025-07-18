@@ -23,6 +23,7 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
 import { AccountSearchComponent } from '../../../../shared/account-search/account-search.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-journal',
@@ -37,6 +38,7 @@ import { AccountSearchComponent } from '../../../../shared/account-search/accoun
     NgSelectModule,
     ValidationMessageComponent,
     AccountSearchComponent,
+    TranslateModule
   ],
   templateUrl: './add-journal.component.html',
 })

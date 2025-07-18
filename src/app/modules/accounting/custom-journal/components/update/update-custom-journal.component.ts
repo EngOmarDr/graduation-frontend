@@ -27,6 +27,7 @@ import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-custom-journal',
@@ -39,6 +40,7 @@ import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/respon
     CustomSelectComponent,
     NgSelectModule,
     ValidationMessageComponent,
+    TranslateModule
   ],
   templateUrl: './update-custom-journal.component.html',
 })

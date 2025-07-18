@@ -10,10 +10,11 @@ import { CommonModule, Location } from '@angular/common';
 import { JournalService } from 'app/modules/accounting/journal/service/journal.service';
 import { JournalResponse } from 'app/modules/accounting/journal/models/reponse/journal-response.model';
 import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-custom-journal',
-  imports: [CardComponent, CommonModule, RouterModule],
+  imports: [CardComponent, CommonModule, RouterModule,TranslateModule],
   templateUrl: './show-custom-journal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

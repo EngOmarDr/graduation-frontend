@@ -34,7 +34,7 @@
           </td>
           <td>{{ row.fromWarehouseName }}</td>
           <td>{{ row.toWarehouseName }}</td>
-          <td>{{ row.date }}</td>
+          <td>{{ row.date | date: 'yyyy-MM-dd' }}</td>
           <td>{{ row.items.length }}</td>
           <td>{{ row.notes }}</td>
           <td class="text-nowrap">

@@ -34,6 +34,8 @@
             <th>#</th>
             <th>Product</th>
             <th>Quantity</th>
+            <th>Unit Item ID</th>
+            <th>Unit Fact</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -54,14 +56,28 @@
             </td>
             <td>
               <input
-                formControlName="quantity"
-                name="quantity"
-                id="quantity"
+                formControlName="qty"
+                name="qty"
+                id="qty"
                 type="number"
                 class="cust-input"
               />
             </td>
-
+            <td>
+              <input
+                formControlName="unitItemId"
+                type="number"
+                class="cust-input"
+              />
+            </td>
+            <td>
+              <input
+                formControlName="unitFact"
+                type="number"
+                class="cust-input"
+                step="0.01"
+              />
+            </td>
             <td>
               <button
                 class="cursor-pointer"
