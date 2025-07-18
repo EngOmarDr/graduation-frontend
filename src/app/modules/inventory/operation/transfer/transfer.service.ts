@@ -8,7 +8,7 @@ import { TransferRequest } from './models/request/transfer-request';
   providedIn: 'root',
 })
 export class TransferService {
-  private apiUrl = `${environment.apiUrl}/transfer`;
+  private apiUrl = `${environment.apiUrl}/transfers`;
   private http = inject(HttpClient);
 
   getAll() {

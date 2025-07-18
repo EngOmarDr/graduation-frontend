@@ -1,16 +1,16 @@
-<cust-card titleText="Add {{ journalType.name }}">
+<cust-card [titleText]="'journal.addTitle' | translate : { name: journalType.name }">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select
       [control]="form.controls.warehouseId"
       [options]="warehouses"
       inputId="branchId"
-      label="Branch"
+      [label]="'journal.branch' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.date"
       inputId="Date"
-      label="Date"
+      [label]="'journal.date' | translate"
       type="datetime-local"
     />
 
@@ -29,7 +29,7 @@
         [ngClass]="{
           'cust-label-disable': form.controls.account.disabled
         }"
-        >Account
+        >{{ 'journal.account' | translate }}
       </label>
       <ng-select
         id="Account"
@@ -81,7 +81,7 @@
         <div
           class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
         ></div>
-        <span class="ml-3 text-gray-700">Is Posted</span>
+        <span class="ml-3 text-gray-700">{{ 'journal.isPosted' | translate }}</span>
       </label>
     </div>
 
@@ -91,26 +91,26 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Account</th>
-              <th *ngIf="journalType?.fieldNotes">Notes</th>
+              <th>{{ 'journal.account' | translate }}</th>
+              <th *ngIf="journalType?.fieldNotes">{{ 'journal.notes' | translate }}</th>
               <th *ngIf="journalType?.fieldDebit">
                 {{
                   journalType.debitName.length == 0
-                    ? "Debit"
+                    ? ('journal.debit' | translate)
                     : journalType.debitName
                 }}
               </th>
               <th *ngIf="journalType?.fieldCredit">
                 {{
                   journalType.creditName.length == 0
-                    ? "Credit"
+                    ? ('journal.credit' | translate)
                     : journalType.creditName
                 }}
               </th>
-              <th *ngIf="journalType?.fieldCurrencyName">Currency</th>
-              <th *ngIf="journalType?.fieldCurrencyEquilty">Currency Value</th>
-              <th *ngIf="journalType?.fieldDate">Date</th>
-              <th>Actions</th>
+              <th *ngIf="journalType?.fieldCurrencyName">{{ 'journal.currency' | translate }}</th>
+              <th *ngIf="journalType?.fieldCurrencyEquilty">{{ 'journal.currencyValue' | translate }}</th>
+              <th *ngIf="journalType?.fieldDate">{{ 'journal.date' | translate }}</th>
+              <th>{{ 'journal.actions' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -232,7 +232,7 @@
                   class="w-fit self-center mx-auto my-1 cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
                   (click)="addRow()"
                 >
-                  <img src="assets/icons/add.png" alt="add" />
+                  <img src="assets/icons/add.png" alt="{{ 'journal.addRow' | translate }}" />
                 </button>
               </td>
             </tr>
@@ -249,13 +249,13 @@
     </div>
 
     <div class="col-span-full mt-4">
-      <p>Total Debit: {{ sumDebit }}</p>
-      <p>Total Credit: {{ sumCredit }}</p>
-      <p>Difference: {{ minus }}</p>
+      <p>{{ 'journal.totalDebit' | translate }}: {{ sumDebit }}</p>
+      <p>{{ 'journal.totalCredit' | translate }}: {{ sumCredit }}</p>
+      <p>{{ 'journal.difference' | translate }}: {{ minus }}</p>
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn" [disabled]="!form.valid">Add</button>
+      <button type="submit" class="btn" [disabled]="!form.valid">{{ 'journal.addButton' | translate }}</button>
     </div>
   </form>
   <div>

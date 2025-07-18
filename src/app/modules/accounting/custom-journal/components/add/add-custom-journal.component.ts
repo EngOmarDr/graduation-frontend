@@ -33,6 +33,7 @@ import {
 } from 'app/modules/accounting/journal/models/request/create-journal-request.model';
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-custom-journal',
@@ -45,6 +46,7 @@ import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/respon
     CustomSelectComponent,
     NgSelectModule,
     ValidationMessageComponent,
+    TranslateModule
   ],
   templateUrl: './add-custom-journal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

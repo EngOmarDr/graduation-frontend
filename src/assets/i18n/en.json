@@ -81,5 +81,34 @@
     "users": "Users",
     "settings": "Settings",
     "price_display": "Advertisement"
-  }
+  },
+"journal": {
+  "addTitle": "Add {{name}}",
+  "updateTitle": "Update {{name}}",
+  "add": "Add",
+  "branch": "Branch",
+  "total": "Total",
+  "date": "Date",
+  "action": "Action",
+  "isPosted": "Is Posted",
+  "noData": "No Data",
+  "delete": "Delete",
+  "edit": "Edit",
+  "account": "Account",
+  "notes": "Notes",
+  "debit": "Debit",
+  "credit": "Credit",
+  "currency": "Currency",
+  "currencyValue": "Currency Value",
+  "actions": "Actions",
+  "removeRow": "Remove Row",
+  "addRow": "Add Row",
+  "totalDebit": "Total Debit",
+  "totalCredit": "Total Credit",
+  "difference": "Difference",
+  "addButton": "Add",
+  "updateButton": "Update",
+  "title": "Add Journal",
+  "warehouse": "Warehouse"
+}
 }

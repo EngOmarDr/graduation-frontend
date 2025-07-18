@@ -1,4 +1,4 @@
-<cust-card titleText="{{ journalType.name }}" [titlePadding]="false">
+<cust-card [titleText]="'journal.' + journalType.name | translate" [titlePadding]="false">
   <div class="flex justify-end items-center">
     <button
       type="button"
@@ -6,7 +6,7 @@
       [routerLink]="'/add-cust-journal/' + journalType.name"
       [state]="{journalType}"
     >
-      Add {{ journalType.name }}
+      {{ 'journal.add' | translate }} {{ 'journal.' + journalType.name | translate }}
     </button>
   </div>
 
@@ -15,16 +15,16 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>branch</th>
-          <th>total</th>
-          <th *ngIf="!journalType.autoPost">is posted</th>
-          <th>date</th>
-          <th>action</th>
+          <th>{{ 'journal.branch' | translate }}</th>
+          <th>{{ 'journal.total' | translate }}</th>
+          <th *ngIf="!journalType.autoPost">{{ 'journal.isPosted' | translate }}</th>
+          <th>{{ 'journal.date' | translate }}</th>
+          <th>{{ 'journal.action' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngIf="journals().length === 0">
-          <td [attr.colspan]="7" class="text-center">No Data</td>
+          <td [attr.colspan]="7" class="text-center">{{ 'journal.noData' | translate }}</td>
         </tr>
 
         <tr *ngFor="let journal of journals(); let i = index">
@@ -37,18 +37,18 @@
             <button
               type="button"
               (click)="deleteItem(journal)"
-              title="delete"
+              [title]="'journal.delete' | translate"
               class="text-red-600 hover:text-red-800 cursor-pointer"
             >
-              DELETE
+              {{ 'journal.delete' | translate }}
             </button>
             <button
               type="button"
               (click)="updateItem(journal)"
-              title="update"
+              [title]="'journal.edit' | translate"
               class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
             >
-              EDIT
+              {{ 'journal.edit' | translate }}
             </button>
           </td>
         </tr>

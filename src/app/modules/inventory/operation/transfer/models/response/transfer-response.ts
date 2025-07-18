@@ -4,13 +4,20 @@ export interface TransferResponse {
   fromWarehouseName: string;
   toWarehouseId: number;
   toWarehouseName: string;
-  date: Date;
+  cashAccountId: number;
+  expenseAccountId: number;
+  expenseValue: number;
+  date: string;
+  driverName: string;
   notes: string;
   items: TransferItem[];
 }
 
-interface TransferItem {
+export interface TransferItem {
+  id: number;
   productId: number;
-  productName: number;
-  quantity: number;
+  productName: string;
+  qty: number;
+  unitItemId: number;
+  unitFact: number;
 }

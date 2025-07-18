@@ -20,6 +20,34 @@
       label="Date"
       type="date"
     />
+    <cust-form-field
+      [control]="form.controls.cashAccountId"
+      inputId="cashAccountId"
+      label="Cash Account ID"
+      type="number"
+    />
+
+    <cust-form-field
+      [control]="form.controls.expenseAccountId"
+      inputId="expenseAccountId"
+      label="Expense Account ID"
+      type="number"
+    />
+
+    <cust-form-field
+      [control]="form.controls.expenseValue"
+      inputId="expenseValue"
+      label="Expense Value"
+      type="number"
+      step="0.01"
+    />
+
+    <cust-form-field
+      [control]="form.controls.driverName"
+      inputId="driverName"
+      label="Driver Name"
+      type="text"
+    />
 
     <cust-form-field
       [control]="form.controls.notes"
@@ -34,6 +62,8 @@
             <th>#</th>
             <th>Product</th>
             <th>Quantity</th>
+            <th>Unit Item ID</th>
+            <th>Unit Fact</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -54,14 +84,28 @@
             </td>
             <td>
               <input
-                formControlName="quantity"
-                name="quantity"
-                id="quantity"
+                formControlName="qty"
+                name="qty"
+                id="qty"
                 type="number"
                 class="cust-input"
               />
             </td>
-
+            <td>
+              <input
+                formControlName="unitItemId"
+                type="number"
+                class="cust-input"
+              />
+            </td>
+            <td>
+              <input
+                formControlName="unitFact"
+                type="number"
+                class="cust-input"
+                step="0.01"
+              />
+            </td>
             <td>
               <button
                 class="cursor-pointer"
