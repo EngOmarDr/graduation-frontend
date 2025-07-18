@@ -20,6 +20,34 @@
       label="Date"
       type="date"
     />
+    <cust-form-field
+      [control]="form.controls.cashAccountId"
+      inputId="cashAccountId"
+      label="Cash Account ID"
+      type="number"
+    />
+
+    <cust-form-field
+      [control]="form.controls.expenseAccountId"
+      inputId="expenseAccountId"
+      label="Expense Account ID"
+      type="number"
+    />
+
+    <cust-form-field
+      [control]="form.controls.expenseValue"
+      inputId="expenseValue"
+      label="Expense Value"
+      type="number"
+      step="0.01"
+    />
+
+    <cust-form-field
+      [control]="form.controls.driverName"
+      inputId="driverName"
+      label="Driver Name"
+      type="text"
+    />
 
     <cust-form-field
       [control]="form.controls.notes"
