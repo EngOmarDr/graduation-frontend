@@ -6,11 +6,6 @@ import { inventoryRoutes } from './modules/inventory/inventory.routes';
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'products',
-    pathMatch: 'full',
-  },
-  {
     path: 'login',
     loadComponent: () =>
       import('../app/modules/login/login.component').then(
@@ -27,14 +22,14 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        loadComponent: () =>
+          import('../app/modules/dashboard/dashboard-component.component').then(
+            (m) => m.DashboardComponentComponent
+          ),
+      },
+      {
+        path: '',
         children: [
-          {
-            path: 'dashboard',
-            loadComponent: () =>
-              import('../app/modules/dashboard/dashboard-component.component').then(
-                (m) => m.DashboardComponentComponent
-              ),
-          },
           {
             path: 'groups',
             loadComponent: () =>
@@ -77,7 +72,7 @@ export const routes: Routes = [
               ).then((m) => m.UpdateAdvertisementComponentComponent),
           },
           {
-            path: 'price-display',
+            path: '',
             canActivate: [authGuard],
             loadComponent: () =>
               import(

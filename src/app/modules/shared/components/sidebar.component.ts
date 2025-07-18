@@ -178,7 +178,7 @@ export class SidebarComponent {
   }
 
   routes: Signal<any> = computed(() => [
-    { name: 'sidebar.dashboard', icon: 'home', routerLink: '/dashboard' },
+    { name: 'sidebar.dashboard', icon: 'home', routerLink: '/' },
     {
       name: 'sidebar.products',
       icon: 'package-search',
@@ -238,7 +238,7 @@ export class SidebarComponent {
     {
       name: 'sidebar.price_display',
       icon: 'tag',
-      routerLink: '/advertisements/price-display'
+      routerLink: '/advertisements/'
     },
     { name: 'sidebar.branches', icon: 'git-branch', routerLink: '/branches' },
     { name: 'sidebar.currencies', icon: 'coins', routerLink: '/currencies' },
