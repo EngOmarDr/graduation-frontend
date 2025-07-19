@@ -1,32 +1,32 @@
-<cust-card titleText="Add Branch">
+<cust-card [titleText]="'add_branch' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls.name"
       inputId="name"
-      label="Name"
+      [label]="'name' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.phone"
       inputId="phone"
-      label="Phone"
+      [label]="'phone' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.address"
       inputId="address"
-      label="Address"
+      [label]="'address' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.notes"
       inputId="notes"
-      label="Notes"
+      [label]="'notes' | translate"
       class="focus:ring-4 focus:ring-primary"
     />
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn" [disabled]="!form.valid">Add</button>
+      <button type="submit" class="btn" [disabled]="!form.valid">{{ 'add' | translate }}</button>
     </div>
   </form>
 </cust-card>

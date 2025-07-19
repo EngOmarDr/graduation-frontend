@@ -1,23 +1,23 @@
 <cust-card [titleText]="typeReport">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     @if(form.get('accountId')){
-    <app-account-search [control]="form.get('accountId')!" label="Account" />
+    <app-account-search [control]="form.get('accountId')!" [label]="'reports.account' | translate" />
     }
     <cust-form-field
       [control]="form.get('startDate')!"
       inputId="Start Date"
-      label="Start Date"
+      [label]="'reports.startDate' | translate"
       type="date"
     />
     <cust-form-field
       [control]="form.get('endDate')!"
       inputId="End Date"
-      label="End Date"
+      [label]="'reports.endDate' | translate"
       type="date"
     />
     <div class="space-x-2 mb-3 col-span-full">
       <button type="submit" class="btn" [disabled]="form.invalid">
-        Preview
+        {{ 'reports.preview' | translate }}
       </button>
       <button
         type="button"
@@ -25,7 +25,7 @@
         (click)="printReport()"
         [disabled]="!generalJournal && !ledger && !trailBalance"
       >
-        print
+        {{ 'reports.print' | translate }}
       </button>
     </div>
     <div class="w-full col-span-full overflow-auto max-h-96" id="report">
@@ -34,17 +34,17 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Date</th>
-            <th>Account</th>
-            <th>Debit</th>
-            <th>Credit</th>
-            <th>Notes</th>
+            <th>{{ 'reports.date' | translate }}</th>
+            <th>{{ 'reports.account' | translate }}</th>
+            <th>{{ 'reports.debit' | translate }}</th>
+            <th>{{ 'reports.credit' | translate }}</th>
+            <th>{{ 'reports.notes' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           @if (generalJournal.length == 0) {
           <tr>
-            <td [attr.colspan]="generalJournal.length + 2">No Data Found</td>
+            <td [attr.colspan]="generalJournal.length + 2">{{ 'reports.noDataFound' | translate }}</td>
           </tr>
           } @for (row of generalJournal; track $index) {
           <tr class="bg-primary/20">
@@ -72,15 +72,15 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Account</th>
-            <th>Debit</th>
-            <th>Credit</th>
+            <th>{{ 'reports.account' | translate }}</th>
+            <th>{{ 'reports.debit' | translate }}</th>
+            <th>{{ 'reports.credit' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           @if (trailBalance.entries.length == 0) {
           <tr>
-            <td [attr.colspan]="10">No Data Found</td>
+            <td [attr.colspan]="10">{{ 'reports.noDataFound' | translate }}</td>
           </tr>
           } @for (row of trailBalance.entries; track $index) {
           <tr>
@@ -98,17 +98,17 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Notes</th>
-              <th>Debit</th>
-              <th>Credit</th>
-              <th>balance</th>
-              <th>Date</th>
+              <th>{{ 'reports.notes' | translate }}</th>
+              <th>{{ 'reports.debit' | translate }}</th>
+              <th>{{ 'reports.credit' | translate }}</th>
+              <th>{{ 'reports.balance' | translate }}</th>
+              <th>{{ 'reports.date' | translate }}</th>
             </tr>
           </thead>
           <tbody>
             @if (ledger.entries.length == 0) {
             <tr>
-              <td [attr.colspan]="10">No Data Found</td>
+              <td [attr.colspan]="10">{{ 'reports.noDataFound' | translate }}</td>
             </tr>
             } @for (row of ledger.entries; track $index) {
             <tr>
@@ -125,9 +125,9 @@
 
 
       <div class="grid">
-        <div>Total Debit: {{ ledger.totalDebit }}</div>
-        <div>Total Credit: {{ ledger.totalCredit }}</div>
-        <div>Balance: {{ ledger.closingBalance }}</div>
+        <div>{{ 'reports.totalDebit' | translate }}: {{ ledger.totalDebit }}</div>
+        <div>{{ 'reports.totalCredit' | translate }}: {{ ledger.totalCredit }}</div>
+        <div>{{ 'reports.closingBalance' | translate }}: {{ ledger.closingBalance }}</div>
       </div>
 
       }

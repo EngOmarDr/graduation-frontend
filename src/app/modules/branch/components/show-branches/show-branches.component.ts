@@ -6,10 +6,11 @@ import { BranchService } from '../../services/branch.service';
 import { map, Observable, of, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { CustomTableComponent } from '@shared/components/cust-table.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-branches',
-  imports: [CardComponent, RouterModule, CustomTableComponent, AsyncPipe],
+  imports: [CardComponent, RouterModule, CustomTableComponent, AsyncPipe,TranslateModule],
   templateUrl: './show-branches.component.html',
 })
 export class ShowBranchesComponent implements OnInit {

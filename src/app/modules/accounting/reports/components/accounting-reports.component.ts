@@ -19,6 +19,7 @@ import { GeneralJournalReport } from '../models/general-journal-report';
 import { LedgerReport } from '../models/ledger-report';
 import { TrialBalanceReport } from '../models/trial-balance-report';
 import { AccountSearchComponent } from "@shared/account-search/account-search.component";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-accounting-report',
@@ -28,7 +29,8 @@ import { AccountSearchComponent } from "@shared/account-search/account-search.co
     CustomFieldComponent,
     ReactiveFormsModule,
     CommonModule,
-    AccountSearchComponent
+    AccountSearchComponent,
+    TranslateModule
 ],
 })
 export class AccountingReportsComponent {

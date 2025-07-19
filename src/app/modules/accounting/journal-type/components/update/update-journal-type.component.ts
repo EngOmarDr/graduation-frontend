@@ -17,6 +17,7 @@ import { CustomFieldComponent } from '@shared/components/custom-field.component'
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
 import { JournalTypesService } from '../../services/journal-types.service';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-journalType',
@@ -27,6 +28,7 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
     NgSelectModule,
     CustomFieldComponent,
     ValidationMessageComponent,
+    TranslateModule
   ],
   templateUrl: './update-journal-type.component.html',
 })

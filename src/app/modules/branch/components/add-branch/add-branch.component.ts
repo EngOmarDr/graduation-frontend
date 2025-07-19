@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../../shared/components/card-form.component';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
 import { BranchService } from '../../services/branch.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-branch',
@@ -17,6 +18,7 @@ import { BranchService } from '../../services/branch.service';
     CustomFieldComponent,
     ReactiveFormsModule,
     CommonModule,
+    TranslateModule
   ],
   templateUrl: './add-branch.component.html',
 })

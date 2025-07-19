@@ -34,6 +34,7 @@ import { ProductResponse } from 'app/modules/inventory/product/models/response/p
 import { UnitService } from 'app/modules/inventory/unit/services/unit.service';
 import { UnitResponse } from 'app/modules/inventory/unit/models/response/unit-response.model';
 import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/unit-item-response.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-custom-journal',
@@ -48,6 +49,7 @@ import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/uni
     ValidationMessageComponent,
     AccountSearchComponent,
     ProductSearchComponent,
+    TranslateModule
   ],
   providers: [NumberFormatDirective],
   templateUrl: './add-custom-invoice.component.html',

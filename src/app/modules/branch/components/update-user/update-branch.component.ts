@@ -11,6 +11,7 @@ import { CustomFieldComponent } from '../../../shared/components/custom-field.co
 import { BranchService } from '../../services/branch.service';
 import { BranchResponse } from '../../models/response/branch-response';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-branch',
@@ -19,6 +20,7 @@ import { ActivatedRoute } from '@angular/router';
     CustomFieldComponent,
     ReactiveFormsModule,
     CommonModule,
+    TranslateModule
   ],
   templateUrl: './update-branch.component.html',
 })

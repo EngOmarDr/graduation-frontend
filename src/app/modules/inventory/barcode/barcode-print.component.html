@@ -1,21 +1,21 @@
-<cust-card titleText="طباعة الباركود للمنتجات">
+<cust-card [titleText]="'print_product_barcodes' | translate">
   <form [formGroup]="form" class="space-y-4 mt-4">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <app-search-product
         [control]="form.controls['productId']"
-        [label]="'اختر المنتج'"
+        [label]="'select_product' | translate"
         (productSelected)="onProductSelected($event)"
       />
 
       <cust-select
         *ngIf="barcodes.length > 0"
-        [label]="'اختر الباركود'"
+        [label]="'select_barcode' | translate"
         [control]="form.controls['barcode']"
         [options]="barcodes"
       />
 
       <cust-form-field
-        [label]="'عدد النسخ'"
+        [label]="'copy_count' | translate"
         inputId="copyCount"
         [control]="form.controls['copies']"
       />
@@ -26,27 +26,25 @@
           class="btn btn-primary"
           (click)="addBarcodeToList()"
         >
-          إضافة للطباعة
+          {{ 'add_to_print' | translate }}
         </button>
       </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
       <label
-        ><input type="checkbox" formControlName="showCompany" /> Show Company
-        Name</label
+        ><input type="checkbox" formControlName="showCompany" /> {{ 'show_company_name' | translate }}</label
       >
       <label
-        ><input type="checkbox" formControlName="showProduct" /> Show Product
-        Name</label
+        ><input type="checkbox" formControlName="showProduct" /> {{ 'show_product_name' | translate }}</label
       >
       <label
-        ><input type="checkbox" formControlName="showPrice" /> Show Price</label
+        ><input type="checkbox" formControlName="showPrice" /> {{ 'show_price' | translate }}</label
       >
     </div>
 
     <cust-select
-      [label]="'حجم الورقة'"
+      [label]="'paper_size' | translate"
       inputId="paperSize"
       [control]="form.controls['paperSize']"
       [options]="paperSizes"
@@ -56,11 +54,11 @@
       <table class="min-w-full text-sm text-left border mt-6">
         <thead class="bg-gray-200 font-bold">
           <tr>
-            <th class="p-2 border">المنتج</th>
-            <th class="p-2 border">الباركود</th>
-            <th class="p-2 border">عدد النسخ</th>
-            <th class="p-2 border">معاينة</th>
-            <th class="p-2 border">إجراء</th>
+            <th class="p-2 border">{{ 'product' | translate }}</th>
+            <th class="p-2 border">{{ 'barcode' | translate }}</th>
+            <th class="p-2 border">{{ 'copy_count' | translate }}</th>
+            <th class="p-2 border">{{ 'preview' | translate }}</th>
+            <th class="p-2 border">{{ 'action' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -76,7 +74,7 @@
             </td>
             <td class="p-2 border">
               <button class="text-red-600" (click)="removeSelectedBarcode(i)">
-                حذف
+                {{ 'delete' | translate }}
               </button>
             </td>
           </tr>
@@ -86,22 +84,19 @@
 
     <div class="flex gap-4 justify-end mt-6">
       <button type="button" class="btn btn-green" (click)="print()">
-        Print
+        {{ 'print' | translate }}
       </button>
       <button type="button" class="btn btn-gray" (click)="reset()">
-        Reset
+        {{ 'reset' | translate }}
       </button>
       <button type="button" class="btn btn-blue" (click)="preview()">
-        Preview
+        {{ 'preview' | translate }}
       </button>
     </div>
   </form>
-  <!-- قسم عرض الباركودات للواجهة (العادي) -->
   <div class="overflow-x-auto mt-4" *ngIf="selectedProducts().length > 0">
-    <!-- الجدول الكامل كما في الكود الحالي -->
   </div>
 
-  <!-- قسم الطباعة فقط -->
   <div id="print-section" class="hidden-print">
     <ng-container *ngFor="let item of selectedBarcodes">
       <ng-container *ngFor="let i of [].constructor(item.copies)">
@@ -112,7 +107,7 @@
           />
 
           <div class="barcode-label" *ngIf="form.value.showCompany">
-            اسم الشركة
+            {{ 'company_name' | translate }}
           </div>
           <div class="barcode-label" *ngIf="form.value.showProduct">
             {{ item.productName }}

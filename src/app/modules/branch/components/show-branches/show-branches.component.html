@@ -1,11 +1,11 @@
-<cust-card titleText="Branches" [titlePadding]="false">
+<cust-card [titleText]="'branches' | translate" [titlePadding]="false">
   <div class="flex justify-end items-center">
     <button
       type="button"
       class="py-1.5 px-2.5 mb-3 btn"
       routerLink="add-branch"
     >
-      Add Branch
+      {{ 'add_branch' | translate }}
     </button>
   </div>
 

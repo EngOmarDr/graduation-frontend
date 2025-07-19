@@ -12,6 +12,7 @@ import { CustomFieldComponent } from '../../shared/components/custom-field.compo
 import { CustomSelectComponent } from '../../shared/components/custom-select.component';
 import { ProductSearchComponent } from '../../../modules/inventory/product/components/search-product/search-product.component';
 import { ProductResponse } from '../product/models/response/product-response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-barcode-print',
@@ -24,6 +25,7 @@ import { ProductResponse } from '../product/models/response/product-response';
     CustomSelectComponent,
     NgxBarcode6Module,
     ProductSearchComponent,
+    TranslateModule
   ],
   templateUrl: './barcode-print.component.html',
 })
