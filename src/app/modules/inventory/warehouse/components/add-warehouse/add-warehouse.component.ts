@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -8,12 +8,9 @@ import {
 import { CardComponent } from '@shared/components/card-form.component';
 import { CustomFieldComponent } from '@shared/components/custom-field.component';
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
-import { Observable, of } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { WarehouseResponse } from '../../models/response/warehouse-response';
 import { WarehouseService } from '../../services/warehouse.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CustomSelectComponent } from "../../../../shared/components/custom-select.component";
 import { BranchService } from 'app/modules/branch/services/branch.service';
 
 @Component({
@@ -25,7 +22,6 @@ import { BranchService } from 'app/modules/branch/services/branch.service';
     NgSelectModule,
     CustomFieldComponent,
     ValidationMessageComponent,
-    CustomSelectComponent,
   ],
   templateUrl: './add-warehouse.component.html',
 })
