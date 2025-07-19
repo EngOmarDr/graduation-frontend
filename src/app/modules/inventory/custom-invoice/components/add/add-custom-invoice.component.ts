@@ -87,7 +87,7 @@ export class AddCustomInvoiceComponent implements OnInit {
     accountId: [this.invoiceType().defaultCashAccId],
     currencyId: this.fb.control<number>(1, Validators.required),
     currencyValue: this.fb.control<number>(1, Validators.required),
-    payType: [this.invoiceType().isCashBill ? 0 : 1, Validators.required],
+    payType: [this.invoiceType().isCashBill ? 1 : 2, Validators.required],
     isPosted: [this.invoiceType().isAutoPost, Validators.required],
     postedDate: [
       this.invoiceType().isNoPost ? undefined : this.currentDateTime,

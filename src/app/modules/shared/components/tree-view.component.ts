@@ -35,35 +35,40 @@ export interface TreeNode {
           Collapse All
         </button>
       </div> -->
-
-      <ul class="select-none" *ngIf="filteredData.length; else noResults">
-        <ng-container *ngFor="let node of filteredData">
-          <li class="mb-1">
-            <div
-              class="flex items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1"
-              (click)="toggleNode(node)"
+      @if(!filteredData.length){
+      <p class="text-gray-500 dark:text-gray-400 text-center mt-4">
+        No matching items found.
+      </p>
+      }@else {
+      <ul class="select-none">
+        @for(node of filteredData; track $index){
+        <li class="mb-1">
+          <div
+            class="flex items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1"
+            (click)="toggleNode(node)"
+          >
+            @if(node.children?.length){
+            <svg
+              [class.rotate-90]="node.expanded"
+              class="w-4 h-4 mx-2 transform transition-transform duration-200 text-gray-600 dark:text-gray-300"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                *ngIf="node.children?.length"
-                [class.rotate-90]="node.expanded"
-                class="w-4 h-4 mr-2 transform transition-transform duration-200 text-gray-600 dark:text-gray-300"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 5l7 7-7 7"
-                ></path>
-              </svg>
-              <span
-                class="text-gray-900 dark:text-gray-100"
-                [innerHTML]="highlightText(node.label, filterText)"
-              ></span>
-              <!-- <button
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
+            }
+            <span
+              class="text-gray-900 dark:text-gray-100"
+              [innerHTML]="highlightText(node.label, filterText)"
+            ></span>
+            <!-- <button
                 class="cursor-pointer ms-2"
                 title="edit"
                 type="button"
@@ -102,21 +107,22 @@ export interface TreeNode {
                   />
                 </svg>
               </button> -->
-            </div>
-            <ul
-              *ngIf="node.children && node.expanded"
-              class="ml-6 border-l border-gray-300 dark:border-gray-600 pl-4 mt-1"
-            >
-              <ng-container
-                *ngTemplateOutlet="
-                  treeNodeTemplate;
-                  context: { nodes: node.children }
-                "
-              ></ng-container>
-            </ul>
-          </li>
-        </ng-container>
+          </div>
+          <ul
+            *ngIf="node.children && node.expanded"
+            class="ms-6 border-s border-gray-300 dark:border-gray-600 ps-4 mt-1"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+                treeNodeTemplate;
+                context: { nodes: node.children }
+              "
+            ></ng-container>
+          </ul>
+        </li>
+        }
       </ul>
+      }
 
       <ng-template #treeNodeTemplate let-nodes="nodes">
         <ng-container *ngFor="let child of nodes">
@@ -128,7 +134,7 @@ export interface TreeNode {
               <svg
                 *ngIf="child.children?.length"
                 [class.rotate-90]="child.expanded"
-                class="w-4 h-4 mr-2 transform transition-transform duration-200 text-gray-600 dark:text-gray-300"
+                class="w-4 h-4 mx-2 transform transition-transform duration-200 text-gray-600 dark:text-gray-300"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
@@ -187,7 +193,7 @@ export interface TreeNode {
             </div>
             <ul
               *ngIf="child.children && child.expanded"
-              class="ml-6 border-l border-gray-300 dark:border-gray-600 pl-4 mt-1"
+              class="ms-6 border-s border-gray-300 dark:border-gray-600 ps-4 mt-1"
             >
               <ng-container
                 *ngTemplateOutlet="
@@ -198,12 +204,6 @@ export interface TreeNode {
             </ul>
           </li>
         </ng-container>
-      </ng-template>
-
-      <ng-template #noResults>
-        <p class="text-gray-500 dark:text-gray-400 text-center mt-4">
-          No matching items found.
-        </p>
       </ng-template>
     </div>
   `,
