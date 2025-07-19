@@ -8,7 +8,7 @@
     "button": "تسجيل الدخول",
     "footer": "© 2025 المؤسسة السورية للتجارة. جميع الحقوق محفوظة."
   },
-    "groupSearch": {
+  "groupSearch": {
     "title": "البحث عن الحساب",
     "searchPlaceholder": "ابحث",
     "loading": "جاري التحميل...",
@@ -29,14 +29,14 @@
     "addButton": "إضافة",
     "updateButton": "تعديل"
   },
-    "accountList": {
+  "accountList": {
     "title": "الحسابات",
     "addButton": "إضافة حساب",
     "tableView": "عرض كجدول",
     "treeView": "عرض كشجرة"
   },
   "loading": "جارٍ التحميل...",
-    "currency": {
+  "currency": {
     "addTitle": "إضافة عملة",
     "code": "الرمز",
     "name": "الاسم",
@@ -51,7 +51,7 @@
     "delete": "حذف",
     "updateButton": "تعديل"
   },
-    "sidebar": {
+  "sidebar": {
     "dashboard": "لوحة التحكم",
     "products": "المنتجات",
     "products_list": "قائمة المنتجات",
@@ -82,33 +82,35 @@
     "settings": "الإعدادات",
     "price_display": "الاعلانات"
   },
-"journal": {
-  "addTitle": "إضافة {{name}}",
-  "updateTitle": "تحديث {{name}}",
-  "add": "إضافة",
-  "branch": "الفرع",
-  "total": "الإجمالي",
-  "date": "التاريخ",
-  "action": "الإجراء",
-  "isPosted": "تم الترحيل",
-  "noData": "لا توجد بيانات",
-  "delete": "حذف",
-  "edit": "تعديل",
-  "account": "الحساب",
-  "notes": "ملاحظات",
-  "debit": "مدين",
-  "credit": "دائن",
-  "currency": "العملة",
-  "currencyValue": "قيمة العملة",
-  "actions": "الإجراءات",
-  "removeRow": "حذف الصف",
-  "addRow": "إضافة صف",
-  "totalDebit": "إجمالي المدين",
-  "totalCredit": "إجمالي الدائن",
-  "difference": "الفرق",
-  "addButton": "إضافة",
-  "updateButton": "تحديث",
-  "title": "إضافة قيد",
-  "warehouse": "المخزن"
-}
+  "journal": {
+    "addTitle": "إضافة {{name}}",
+    "updateTitle": "تحديث {{name}}",
+    "add": "إضافة",
+    "branch": "الفرع",
+    "total": "الإجمالي",
+    "date": "التاريخ",
+    "action": "الإجراء",
+    "isPosted": "تم الترحيل",
+    "noData": "لا توجد بيانات",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "account": "الحساب",
+    "notes": "ملاحظات",
+    "debit": "مدين",
+    "credit": "دائن",
+    "currency": "العملة",
+    "currencyValue": "قيمة العملة",
+    "actions": "الإجراءات",
+    "removeRow": "حذف الصف",
+    "addRow": "إضافة صف",
+    "totalDebit": "إجمالي المدين",
+    "totalCredit": "إجمالي الدائن",
+    "difference": "الفرق",
+    "addButton": "إضافة",
+    "updateButton": "تحديث",
+    "title": "إضافة قيد",
+    "warehouse": "المخزن",
+    "titleJournal":"القيود",
+    "from": "من"
+  }
 }

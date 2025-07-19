@@ -8,7 +8,7 @@
     "button": "Login",
     "footer": "© 2025 Syrian Trading Company. All rights reserved."
   },
-    "groupSearch": {
+  "groupSearch": {
     "title": "Search Account",
     "searchPlaceholder": "Search",
     "loading": "Loading...",
@@ -18,7 +18,7 @@
     "code": "Code",
     "name": "Name"
   },
-    "accountForm": {
+  "accountForm": {
     "title": "Add Account",
     "updateTitle": "Update Account",
     "code": "Code",
@@ -29,14 +29,14 @@
     "addButton": "Add",
     "updateButton": "Update"
   },
-    "accountList": {
+  "accountList": {
     "title": "Accounts",
     "addButton": "Add Account",
     "tableView": "Table View",
     "treeView": "Tree View"
   },
   "loading": "Loading...",
-    "currency": {
+  "currency": {
     "addTitle": "Add Currency",
     "code": "Code",
     "name": "Name",
@@ -82,33 +82,35 @@
     "settings": "Settings",
     "price_display": "Advertisement"
   },
-"journal": {
-  "addTitle": "Add {{name}}",
-  "updateTitle": "Update {{name}}",
-  "add": "Add",
-  "branch": "Branch",
-  "total": "Total",
-  "date": "Date",
-  "action": "Action",
-  "isPosted": "Is Posted",
-  "noData": "No Data",
-  "delete": "Delete",
-  "edit": "Edit",
-  "account": "Account",
-  "notes": "Notes",
-  "debit": "Debit",
-  "credit": "Credit",
-  "currency": "Currency",
-  "currencyValue": "Currency Value",
-  "actions": "Actions",
-  "removeRow": "Remove Row",
-  "addRow": "Add Row",
-  "totalDebit": "Total Debit",
-  "totalCredit": "Total Credit",
-  "difference": "Difference",
-  "addButton": "Add",
-  "updateButton": "Update",
-  "title": "Add Journal",
-  "warehouse": "Warehouse"
-}
+  "journal": {
+    "addTitle": "Add {{name}}",
+    "updateTitle": "Update {{name}}",
+    "add": "Add",
+    "branch": "Branch",
+    "total": "Total",
+    "date": "Date",
+    "action": "Action",
+    "isPosted": "Is Posted",
+    "noData": "No Data",
+    "delete": "Delete",
+    "edit": "Edit",
+    "account": "Account",
+    "notes": "Notes",
+    "debit": "Debit",
+    "credit": "Credit",
+    "currency": "Currency",
+    "currencyValue": "Currency Value",
+    "actions": "Actions",
+    "removeRow": "Remove Row",
+    "addRow": "Add Row",
+    "totalDebit": "Total Debit",
+    "totalCredit": "Total Credit",
+    "difference": "Difference",
+    "addButton": "Add",
+    "updateButton": "Update",
+    "title": "Add Journal",
+    "warehouse": "Warehouse",
+    "titleJournal":"Journals",
+    "from": "From"
+  }
 }

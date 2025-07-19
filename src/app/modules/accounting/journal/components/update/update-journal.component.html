@@ -1,9 +1,9 @@
-<cust-card titleText="Update Journal">
+<cust-card [titleText]="'journal.updateTitle' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls['date']"
       inputId="date"
-      label="Date"
+      [label]="'journal.date' | translate"
       type="datetime-local"
     />
 
@@ -11,29 +11,29 @@
       [control]="form.controls.warehouseId"
       [options]="warehouses"
       inputId="branchId"
-      label="Branch"
+      [label]="'journal.branch' | translate"
     />
 
     <cust-select
       [control]="form.controls['currencyId']"
       [options]="toOption()"
       inputId="currencyId"
-      label="Currency"
+      [label]="'journal.currency' | translate"
     />
 
     <cust-form-field
       [control]="form.controls['currencyValue']"
       inputId="currencyValue"
-      label="Currency Value"
+      [label]="'journal.currencyValue' | translate"
       type="number"
     />
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isPosted" />
-      Is Posted
+      {{ 'journal.isPosted' | translate }}
       <app-validation-message
         [control]="this.form.controls.isPosted"
-        name="is posted"
+        [name]="'journal.isPosted' | translate"
       />
     </label>
 
@@ -43,14 +43,14 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Account</th>
-              <th>Notes</th>
-              <th>Debit</th>
-              <th>Credit</th>
-              <th>Currency</th>
-              <th>Currency Value</th>
+              <th>{{ 'journal.account' | translate }}</th>
+              <th>{{ 'journal.notes' | translate }}</th>
+              <th>{{ 'journal.debit' | translate }}</th>
+              <th>{{ 'journal.credit' | translate }}</th>
+              <th>{{ 'journal.currency' | translate }}</th>
+              <th>{{ 'journal.currencyValue' | translate }}</th>
               <!-- <th>Date</th> -->
-              <th>Actions</th>
+              <th>{{ 'journal.actions' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -75,7 +75,7 @@
                 </ng-select>
                 <app-validation-message
                   [control]="row.get('accountId')!"
-                  name="Account"
+                  [name]="'journal.account' | translate"
                 />
               </td>
               <td>
@@ -101,7 +101,7 @@
                   [options]="toOption()"
                   inputId="rowCurrency"
                   [showLabel]="false"
-                  [label]="'العملة'"
+                  [label]="'journal.currency' | translate"
                   class="min-w-[100px]"
                 ></cust-select>
               </td>
@@ -151,7 +151,7 @@
                   class="w-fit self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
                   (click)="addRow(undefined)"
                 >
-                  <img src="assets/icons/add.png" alt="add" />
+                  <img src="assets/icons/add.png" alt="{{ 'journal.addRow' | translate }}" />
                 </button>
               </td>
             </tr>
@@ -168,13 +168,13 @@
     </div>
 
     <div class="col-span-full mt-4">
-      <p>Total Debit: {{ sumDebit() }}</p>
-      <p>Total Credit: {{ sumCredit() }}</p>
-      <p>Difference: {{ minus() }}</p>
+      <p>{{ 'journal.totalDebit' | translate }}: {{ sumDebit() }}</p>
+      <p>{{ 'journal.totalCredit' | translate }}: {{ sumCredit() }}</p>
+      <p>{{ 'journal.difference' | translate }}: {{ minus() }}</p>
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn">Update</button>
+      <button type="submit" class="btn">{{ 'journal.updateButton' | translate }}</button>
     </div>
   </form>
 </cust-card>

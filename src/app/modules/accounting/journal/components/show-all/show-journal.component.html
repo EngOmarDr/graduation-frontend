@@ -1,11 +1,11 @@
-<cust-card titleText="Journals" [titlePadding]="false">
+<cust-card [titleText]="'journal.titleJournal' | translate"  [titlePadding]="false">
   <div class="flex justify-end items-center">
     <button
       type="button"
       class="py-1.5 px-2.5 mb-3 btn"
       routerLink="/journal/add-journal"
     >
-      Add Journal
+      {{ 'journal.add' | translate }}
     </button>
   </div>
 
@@ -16,7 +16,7 @@
           <th>#</th>
           <th>{{ 'journal.branch' | translate }}</th>
           <th>{{ 'journal.total' | translate }}</th>
-          <th>from</th>
+          <th>{{ 'journal.from' | translate }}</th>
           <th>{{ 'journal.isPosted' | translate }}</th>
           <th>{{ 'journal.date' | translate }}</th>
           <th>{{ 'journal.actions' | translate }}</th>

@@ -15,6 +15,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CurrencyService } from 'app/modules/accounting/currency/services/currency.service';
 import { Currency } from 'app/modules/accounting/currency/models/currency.model';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-journalType',
@@ -25,6 +26,7 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
     NgSelectModule,
     CustomFieldComponent,
     ValidationMessageComponent,
+    TranslateModule
   ],
   templateUrl: './add-journal-type.component.html',
 })

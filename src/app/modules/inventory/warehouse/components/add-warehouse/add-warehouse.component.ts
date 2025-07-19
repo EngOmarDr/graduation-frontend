@@ -24,9 +24,8 @@ import { BranchService } from 'app/modules/branch/services/branch.service';
     CardComponent,
     NgSelectModule,
     CustomFieldComponent,
-    ValidationMessageComponent,
-    CustomSelectComponent,
-  ],
+    ValidationMessageComponent
+],
   templateUrl: './add-warehouse.component.html',
 })
 export class AddWarehouseComponent {
