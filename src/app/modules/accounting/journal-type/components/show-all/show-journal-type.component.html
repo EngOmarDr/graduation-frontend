@@ -1,11 +1,11 @@
-<cust-card [titleText]="'journalTypes.title' | translate" [titlePadding]="false">
+<cust-card [titleText]="'journalType.title' | translate" [titlePadding]="false">
   <div class="flex justify-end items-center">
     <button
       type="button"
       class="py-1.5 px-2.5 mb-3 btn"
       routerLink="/add-journal-type"
     >
-      {{ 'journalTypes.addButton' | translate }}
+      {{ 'journalType.addButton' | translate }}
     </button>
   </div>
 
@@ -15,18 +15,18 @@
         <tr>
           <th>#</th>
 
-          <th>{{ 'journalTypes.name' | translate }}</th>
-          <th>{{ 'journalTypes.defaultAccount' | translate }}</th>
-          <th>{{ 'journalTypes.defaultCurrency' | translate }}</th>
-          <th>{{ 'journalTypes.debitName' | translate }}</th>
-          <th>{{ 'journalTypes.creditName' | translate }}</th>
-          <th>{{ 'journalTypes.actions' | translate }}</th>
+          <th>{{ 'journalType.name' | translate }}</th>
+          <th>{{ 'journalType.defaultAccount' | translate }}</th>
+          <th>{{ 'journalType.defaultCurrency' | translate }}</th>
+          <th>{{ 'journalType.debitName' | translate }}</th>
+          <th>{{ 'journalType.creditName' | translate }}</th>
+          <th>{{ 'journalType.actions' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         @if (journalTypes().length == 0) {
         <tr>
-          <td colspan="10">{{ 'journalTypes.noData' | translate }}</td>
+          <td colspan="10">{{ 'journalType.noData' | translate }}</td>
         </tr>
         }
         <tr *ngFor="let row of journalTypes(); let i = index">
@@ -45,7 +45,7 @@
               title="delete row"
               class="text-red-600 hover:text-red-800 cursor-pointer"
             >
-              {{ 'journalTypes.delete' | translate }}
+              {{ 'journalType.delete' | translate }}
             </button>
             <button
               type="button"
@@ -53,7 +53,7 @@
               title="edit row"
               class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
             >
-              {{ 'journalTypes.edit' | translate }}
+              {{ 'journalType.edit' | translate }}
             </button>
           </td>
         </tr>
