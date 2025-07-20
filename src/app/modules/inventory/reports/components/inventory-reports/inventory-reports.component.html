@@ -56,8 +56,9 @@
           <th>#</th>
           <th>Invoice</th>
           <th>Date</th>
-          <!-- <th>Product Name</th> -->
-          <th>Unit Name</th>
+          <th>Product</th>
+          <th>Unit Item Name</th>
+          <th>Quantity</th>
           <th>Individual</th>
           <th>Total</th>
         </tr>
@@ -72,8 +73,9 @@
           <td>{{ $index + 1 }}</td>
           <td>{{ row.invoiceName + ":" + row.invoiceHeaderId }}</td>
           <td>{{ row.date }}</td>
-          <!-- <td>{{ row.productName }}</td> -->
+          <td>{{ row.productName }}</td>
           <td>{{ row.unitName }}</td>
+          <td>{{ row.quantity }}</td>
           <td>{{ row.individualPrice }}</td>
           <td>{{ row.totalPrice }}</td>
         </tr>
@@ -97,10 +99,10 @@
         </tr>
         } @for (row of dailyMovement()?.sideItems; track $index) {
         <tr>
-          <td>{{ row.invoiceTypeName }}</td>
-          <td>{{ row.cashTotal - row.futureTotal }}</td>
-          <td>{{ row.cashTotal }}</td>
-          <td>{{ row.futureTotal }}</td>
+          <td>{{ row.invoiceName }}</td>
+          <td>{{ row.cashTotal - row.futureTotal | number : '1.2-2'}}</td>
+          <td>{{ row.cashTotal | number : '1.2-2'}}</td>
+          <td>{{ row.futureTotal | number : '1.2-2'}}</td>
         </tr>
         }
       </tbody>

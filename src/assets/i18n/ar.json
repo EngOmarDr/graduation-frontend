@@ -126,7 +126,7 @@
     "fieldCurrencyEquilty": "حقل قيمة العملة",
     "autoPost": "ترحيل تلقائي"
   },
-  "journalTypes": {
+  "journalType": {
     "title": "أنواع القيود",
     "addButton": "إضافة نوع قيد",
     "name": "الاسم",

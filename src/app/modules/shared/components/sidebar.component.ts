@@ -238,7 +238,7 @@ export class SidebarComponent {
     {
       name: 'sidebar.price_display',
       icon: 'tag',
-      routerLink: '/advertisements/'
+      routerLink: '/advertisements/',
     },
     { name: 'sidebar.branches', icon: 'git-branch', routerLink: '/branches' },
     { name: 'sidebar.currencies', icon: 'coins', routerLink: '/currencies' },
@@ -269,7 +269,7 @@ export class SidebarComponent {
     },
     {
       name: 'sidebar.invoices',
-      icon: '',
+      icon: 'invoice',
       fun: () => this.toggleSection('invoices'),
       attr: this.isExpanded.invoices,
       children: [
@@ -349,6 +349,9 @@ export class SidebarComponent {
       'badge-dollar-sign': `<path d="M12 1v22"/><path d="M17 5H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="M10 10h4M10 14h4"/>`,
       'lock-keyhole': `<rect x="3" y="11" width="18" height="11" rx="2"/><circle cx="12" cy="16" r="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>`,
       settings: `<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>`,
+      invoice: `
+<svg viewBox="0 0 44 44" id="b" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><defs><style>.c{fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;}</style></defs><path class="c" d="m10.7616,42.3349h21.2151c5.8118,0,10.5233-4.7114,10.5233-10.5233V5.6651h-21.2081c-2.9059,0-5.2616,2.3557-5.2616,5.2616l-.007,5.1001"></path><path class="c" d="m10.7616,16.0268h5.2616v21.0465c0,2.904-2.3577,5.2616-5.2616,5.2616h0c-2.904,0-5.2616-2.3577-5.2616-5.2616v-15.7849c0-2.904,2.3577-5.2616,5.2616-5.2616Z"></path><line class="c" x1="5.5" y1="25.3909" x2="16.0233" y2="25.3909"></line><line class="c" x1="22.437" y1="25.3909" x2="35.7983" y2="25.3909"></line><line class="c" x1="22.437" y1="32.177" x2="35.7983" y2="32.177"></line><rect class="c" x="22.437" y="13.3152" width="5.8377" height="5.8377"></rect></g>
+`,
     };
 
     return this.sanitizer.bypassSecurityTrustHtml(icons[name] || '');

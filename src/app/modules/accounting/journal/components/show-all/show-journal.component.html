@@ -14,7 +14,7 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>{{ 'journal.branch' | translate }}</th>
+          <th>{{ 'journal.warehouse' | translate }}</th>
           <th>{{ 'journal.total' | translate }}</th>
           <th>{{ 'journal.from' | translate }}</th>
           <th>{{ 'journal.isPosted' | translate }}</th>
@@ -29,7 +29,7 @@
 
         <tr *ngFor="let journal of journals(); let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ journal.branchId }}</td>
+          <td>{{ journal.warehouseId }}</td>
           <td>{{ journal.totalCredit }}</td>
           <td>
             {{

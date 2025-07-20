@@ -6,7 +6,6 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { JournalTypesService } from '../../services/journal-types.service';
-import { CardComponent } from '../../../../shared/components/card-form.component';
 import { CustomFieldComponent } from '../../../../shared/components/custom-field.component';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
 import { Observable, of } from 'rxjs';
@@ -16,6 +15,7 @@ import { CurrencyService } from 'app/modules/accounting/currency/services/curren
 import { Currency } from 'app/modules/accounting/currency/models/currency.model';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { CardComponent } from '@shared/components/card-form.component';
 
 @Component({
   selector: 'app-add-journalType',
@@ -26,7 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
     NgSelectModule,
     CustomFieldComponent,
     ValidationMessageComponent,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './add-journal-type.component.html',
 })

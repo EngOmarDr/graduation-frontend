@@ -9,6 +9,7 @@ export interface DailyMovementResponse {
 interface DailyMovementItemResponse {
   invoiceHeaderId: number;
   invoiceName: string;
+  productName: string;
   unitId: number;
   unitName: string;
   warehouseId: number;
@@ -22,5 +23,5 @@ interface SideItemResponse {
   cashTotal: number;
   futureTotal: number;
   invoiceTypeId: number;
-  invoiceTypeName: string;
+  invoiceName: string;
 }

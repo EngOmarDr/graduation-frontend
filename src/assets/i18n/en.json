@@ -126,7 +126,7 @@
     "fieldCurrencyEquilty": "Field Currency Equilty",
     "autoPost": "Auto Post"
   },
-  "journalTypes": {
+  "journalType": {
     "title": "Journal Types",
     "addButton": "Add Journal Type",
     "name": "Name",

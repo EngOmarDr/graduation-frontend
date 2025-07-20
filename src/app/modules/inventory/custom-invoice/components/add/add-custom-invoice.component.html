@@ -46,8 +46,8 @@
     <cust-select
       [control]="form.controls.payType"
       [options]="[
-        { value: ('monetary' | translate), key: 1 },
-        { value: ('delay' | translate), key: 2 }
+        { value: 'monetary', key: 0 },
+        { value: 'delay', key: 1 }
       ]"
       inputId="pay"
       [label]="'pay' | translate"
