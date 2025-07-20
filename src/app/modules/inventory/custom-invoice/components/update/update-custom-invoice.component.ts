@@ -35,6 +35,7 @@ import { UnitService } from 'app/modules/inventory/unit/services/unit.service';
 import { UnitResponse } from 'app/modules/inventory/unit/models/response/unit-response.model';
 import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/unit-item-response.model';
 import { InvoiceResponse } from '../../models/response/invoice-response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-custom-invoice',
@@ -49,6 +50,7 @@ import { InvoiceResponse } from '../../models/response/invoice-response';
     ValidationMessageComponent,
     AccountSearchComponent,
     ProductSearchComponent,
+    TranslateModule
   ],
   providers: [NumberFormatDirective],
   templateUrl: './update-custom-invoice.component.html',

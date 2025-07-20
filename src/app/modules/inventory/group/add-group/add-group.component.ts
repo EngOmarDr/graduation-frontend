@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Group } from '../models/group';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-group',
@@ -24,6 +25,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     CardComponent,
     NgSelectModule,
     AsyncPipe,
+    TranslateModule
   ],
   templateUrl: './add-group.component.html',
 })

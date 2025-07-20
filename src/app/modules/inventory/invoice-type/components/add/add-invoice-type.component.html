@@ -1,22 +1,22 @@
-<cust-card titleText="Add Invoice Type">
+<cust-card titleText="{{ 'invoiceType.addInvoiceType' | translate }}">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select
       [control]="form.controls.type"
       [options]="invoiceTypes"
-      label="Invoice Type"
+      [label]="'invoiceType.invoiceType' | translate"
       inputId="Invoice Type"
     />
 
     <cust-form-field
       [control]="form.controls.name"
       inputId="name"
-      label="Name"
+      [label]="'invoiceType.name' | translate"
     />
 
     <cust-select
       [control]="form.controls.defaultPriceId"
       [options]="prices()"
-      label="Default Price"
+      [label]="'invoiceType.defaultPrice' | translate"
       inputId="Default Price"
     />
 
@@ -31,24 +31,24 @@
       [control]="this.form.controls.defaultWarehouseId"
       [options]="warehouses()"
       inputId="Warehouse"
-      label="Warehouse"
+      [label]="'invoiceType.warehouse' | translate"
     />
 
     <app-account-search
       [control]="this.form.controls.defaultBillAccId"
-      label="Bill Account"
+      [label]="'invoiceType.billAccount' | translate"
     />
     <app-account-search
       [control]="this.form.controls.defaultCashAccId"
-      label="Cash Account"
+      [label]="'invoiceType.cashAccount' | translate"
     />
     <app-account-search
       [control]="this.form.controls.defaultDiscAccId"
-      label="Disc Account"
+      [label]="'invoiceType.discAccount' | translate"
     />
     <app-account-search
       [control]="this.form.controls.defaultExtraAccId"
-      label="Extra Account"
+      [label]="'invoiceType.extraAccount' | translate"
     />
 
     <!-- <app-account-search
@@ -64,7 +64,7 @@
     <cust-select
       [control]="form.controls.defaultCurrencyId"
       [options]="currencies()"
-      label="Default Currency"
+      [label]="'invoiceType.defaultCurrency' | translate"
       inputId="Default Currency"
     />
 
@@ -118,12 +118,12 @@
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isNoEntry" />
-      No Entry
+      {{ 'invoiceType.noEntry' | translate }}
     </label>
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isAutoEntry" />
-      Auto Entry
+      {{ 'invoiceType.autoEntry' | translate }}
     </label>
 
     <!-- <label class="self-center">
@@ -136,12 +136,12 @@
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isNoPost" />
-      No Post
+      {{ 'invoiceType.noPost' | translate }}
     </label>
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isAutoPost" />
-      Auto Post
+      {{ 'invoiceType.autoPost' | translate }}
     </label>
 
     <!-- <label class="self-center">
@@ -151,7 +151,7 @@
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isCashBill" />
-      Cash Bill
+      {{ 'invoiceType.cashBill' | translate }}
     </label>
 
     <!-- <label class="self-center">
@@ -168,7 +168,7 @@
     </label> -->
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn" [disabled]="!form.valid">Add</button>
+      <button type="submit" class="btn" [disabled]="!form.valid">{{ 'invoiceType.add' | translate }}</button>
     </div>
   </form>
 </cust-card>

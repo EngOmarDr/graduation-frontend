@@ -15,6 +15,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { ValidationMessageComponent } from '../../../shared/components/validation-message.component';
 import { Observable, of } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-group',
@@ -29,6 +30,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     CardComponent,
     NgSelectModule,
     AsyncPipe,
+    TranslateModule
   ],
   templateUrl: './update-group.component.html',
 })

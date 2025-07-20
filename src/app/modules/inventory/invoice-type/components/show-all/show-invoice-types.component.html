@@ -1,4 +1,4 @@
-<cust-card titleText="Invoice Types" [titlePadding]="false">
+<cust-card [titleText]="'invoiceType.invoiceType' | translate" [titlePadding]="false">
   <div class="cust-grid">
 
     <div class="flex justify-end items-center col-span-full">
@@ -7,7 +7,7 @@
         class="py-1.5 px-2.5 btn"
         routerLink="/add-invoice-type"
       >
-        Add Invoice Type
+        {{ 'invoiceType.addInvoiceType' | translate }}
       </button>
     </div>
 
@@ -16,20 +16,20 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>name</th>
+            <th>{{ 'invoiceType.name' | translate }}</th>
             <th>type</th>
-            <th>Default Price</th>
-            <th>Default Warehouse</th>
-            <th>Default Currency</th>
-            <th>No Post</th>
-            <th>Auto Post</th>
-            <th>Actions</th>
+            <th>{{ 'invoiceType.defaultPrice' | translate }}</th>
+            <th>{{ 'invoiceType.warehouse' | translate }}</th>
+            <th>{{ 'invoiceType.defaultCurrency' | translate }}</th>
+            <th>{{ 'invoiceType.noPost' | translate }}</th>
+            <th>{{ 'invoiceType.autoPost' | translate }}</th>
+            <th>{{ 'actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           @if (types().length == 0) {
           <tr>
-            <td colspan="10">No Data Found</td>
+            <td colspan="10">{{ 'noDataFound' | translate }}</td>
           </tr>
           }
           <tr *ngFor="let row of types(); let i = index">
@@ -46,20 +46,23 @@
             <td class="text-nowrap">
               <button
                 type="button"
-                [swal]="['Delete', 'Are you sure want to delete ' + row.name]"
+                [swal]="[
+                  'invoiceType.delete' | translate,
+                  ('invoiceType.confirmDelete' | translate) + ' ' + row.name
+                ]"
                 (confirm)="deleteItem(row)"
-                title="delete row"
+                [title]="'invoiceType.delete' | translate"
                 class="text-red-600 hover:text-red-800 cursor-pointer"
               >
-                DELETE
+                {{ 'invoiceType.delete' | translate }}
               </button>
               <button
                 type="button"
                 (click)="updateItem(row)"
-                title="edit row"
+                [title]="'invoiceType.edit' | translate"
                 class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
               >
-                EDIT
+                {{ 'invoiceType.edit' | translate }}
               </button>
             </td>
           </tr>

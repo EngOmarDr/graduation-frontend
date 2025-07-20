@@ -7,7 +7,7 @@
         [routerLink]="'/add-invoice/' + invoiceType().name"
         [state]="{ invoiceType: invoiceType() }"
       >
-        Add {{ invoiceType().name }}
+        {{ 'add_invoice' | translate:{ invoiceType: (invoiceType().name | translate) } }}
       </button>
     </div>
 
@@ -17,14 +17,14 @@
           <tr>
             <th>#</th>
             <th>Warehouse</th>
-            <th>total</th>
-            <th>total Discount</th>
-            <th>total Extra</th>
+            <th>{{ 'total' | translate }}</th>
+            <th>{{ 'total_discount' | translate }}</th>
+            <th>{{ 'total_extra' | translate }}</th>
             <!-- <th>Is Suspended</th> -->
             <th *ngIf="!invoiceType().isAutoPost">is posted</th>
-            <th>notes</th>
-            <th>date</th>
-            <th>action</th>
+            <th>{{ 'notes' | translate }}</th>
+            <th>{{ 'date' | translate }}</th>
+            <th>{{ 'action' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -49,18 +49,18 @@
                 type="button"
                 [swal]="['Delete', 'Are you sure want to delete ?']"
                 (confirm)="deleteItem(item)"
-                title="delete"
+                title="{{ 'delete' | translate }}"
                 class="text-red-600 hover:text-red-800 cursor-pointer"
               >
-                DELETE
+                {{ 'delete' | translate }}
               </button>
               <button
                 type="button"
                 (click)="updateItem(item)"
-                title="update"
+                title="{{ 'edit' | translate }}"
                 class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
               >
-                EDIT
+                {{ 'edit' | translate }}
               </button>
             </td>
           </tr>

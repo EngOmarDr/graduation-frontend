@@ -21,6 +21,7 @@ import { CustomSelectComponent } from '../../../../shared/components/custom-sele
 import { AcccountSearchModalComponent } from '../../../../accounting/account/components/acccount-search-modal/acccount-search-modal.component';
 import { AccountSearchComponent } from '../../../../shared/account-search/account-search.component';
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-invoiceType',
@@ -32,6 +33,7 @@ import { WarehouseService } from 'app/modules/inventory/warehouse/services/wareh
     CustomFieldComponent,
     CustomSelectComponent,
     AccountSearchComponent,
+    TranslateModule
   ],
   templateUrl: './add-invoice-type.component.html',
 })

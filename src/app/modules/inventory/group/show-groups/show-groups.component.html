@@ -1,15 +1,15 @@
-<cust-card titleText="Groups" [titlePadding]="false">
+<cust-card [titleText]="'groups.title' | translate" [titlePadding]="false">
   <div class="cust-grid">
     <div class="flex justify-end items-center col-span-full">
       <button type="button" class="btn" routerLink="/add-group" [state]="{code: code()}">
-        Add Group
+        {{ 'groupForm.addTitle' | translate }}
       </button>
     </div>
     <div
       class="bg-zinc-100 dark:bg-gray-700 w-full rounded-sm p-2 flex space-x-2 col-span-full"
     >
       <button
-        title="table view"
+        [title]="'groups.table_view' | translate"
         class="cursor-pointer"
         (click)="changeView(false)"
       >
@@ -34,7 +34,7 @@
       </button>
 
       <button
-        title="tree view"
+        [title]="'groups.tree_view' | translate"
         class="cursor-pointer"
         (click)="changeView(true)"
       >
@@ -48,7 +48,7 @@
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>tree-view</title>
+          <title>{{'groups.table_view' | translate}}</title>
           <path
             d="M15,32H11a1,1,0,0,1-1-1V27a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1v4A1,1,0,0,1,15,32Zm-3-2h2V28H12Z"
             class="clr-i-outline clr-i-outline-path-1"

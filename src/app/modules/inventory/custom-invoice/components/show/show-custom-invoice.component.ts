@@ -14,10 +14,11 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { InvoiceResponse } from '../../models/response/invoice-response';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { switchMap } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-custom-journal',
-  imports: [CardComponent, CommonModule, RouterModule, SweetAlert2Module],
+  imports: [CardComponent, CommonModule, RouterModule, SweetAlert2Module,TranslateModule],
   templateUrl: './show-custom-invoice.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

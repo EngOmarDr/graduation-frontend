@@ -1,15 +1,15 @@
-<cust-card titleText="Add Group">
+<cust-card [titleText]="'groupForm.addTitle' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls.code"
       inputId="code"
-      label="Code"
+      [label]="'groupForm.code' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.name"
       inputId="name"
-      label="Name"
+      [label]="'groupForm.name' | translate"
     />
 
     <div>
@@ -19,7 +19,7 @@
         [ngClass]="{
           'cust-label-disable': form.controls.parentId.disabled
         }"
-        >Parent Group
+        >{{ 'groupForm.parentGroup' | translate }}
       </label>
       <ng-select
         id="parentGroup"
@@ -42,19 +42,19 @@
       <app-validation-message
         [control]="form.controls.parentId"
         [customMessage]="null"
-        name="Parent Group"
+        [name]="'groupForm.parentGroup' | translate"
       />
     </div>
 
     <cust-form-field
       [control]="form.controls.notes"
       inputId="note"
-      label="Note"
+      [label]="'groupForm.notes' | translate"
       class="focus:ring-4 focus:ring-primary"
     />
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn" [disabled]="!form.valid">Add</button>
+      <button type="submit" class="btn" [disabled]="!form.valid">{{ 'groupForm.addButton' | translate }}</button>
     </div>
   </form>
   <div>

@@ -17,6 +17,7 @@ import { GroupTree } from '../models/group-tree';
 import { CustomTableComponent } from '../../../shared/components/cust-table.component';
 import { HelperFunctionsService } from 'app/core/services/helper-functions.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-groups',
@@ -26,6 +27,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     CardComponent,
     TreeViewComponent,
     CustomTableComponent,
+    TranslateModule
   ],
   templateUrl: './show-groups.component.html',
 })

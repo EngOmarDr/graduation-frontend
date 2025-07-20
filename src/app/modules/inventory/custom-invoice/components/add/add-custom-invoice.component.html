@@ -1,17 +1,17 @@
-<cust-card titleText="Add {{ invoiceType().name }}">
+<cust-card [titleText]="'add_invoice' | translate:{ invoiceType: invoiceType().name }">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select
       [control]="form.controls.warehouseId"
       *ngIf="isAdmin"
       [options]="warehouses()"
       inputId="branchId"
-      label="Branch"
+      label="{{ 'branch' | translate }}"
     />
 
     <cust-form-field
       [control]="form.controls.date"
       inputId="Date"
-      label="Date"
+      [label]="'date' | translate"
       type="datetime-local"
     />
 
@@ -26,37 +26,37 @@
     <app-account-search
       [control]="form.controls.accountId"
       [fetch]="true"
-      label="Cash Account"
+      [label]="'cash_account' | translate"
     />
 
     <cust-select
       [control]="form.controls.currencyId"
       [options]="currencies()"
       inputId="Currency"
-      label="Currency"
+      [label]="'currencyA' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.currencyValue"
       inputId="value"
-      label="value"
+      [label]="'value' | translate"
       type="number"
     />
 
     <cust-select
       [control]="form.controls.payType"
       [options]="[
-        { value: 'monetary', key: 1 },
-        { value: 'delay', key: 2 }
+        { value: ('monetary' | translate), key: 1 },
+        { value: ('delay' | translate), key: 2 }
       ]"
       inputId="pay"
-      label="pay"
+      [label]="'pay' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.notes"
       inputId="notes"
-      label="notes"
+      [label]="'notes' | translate"
     />
 
     <!-- <div class="self-end">
@@ -83,7 +83,7 @@
         <div
           class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
         ></div>
-        <span class="ml-3 text-gray-700">Is Posted</span>
+        <span class="ml-3 text-gray-700">{{ 'is_posted' | translate }}</span>
       </label>
     </div>
 
@@ -91,7 +91,7 @@
       [control]="form.controls.postedDate"
       *ngIf="!invoiceType().isAutoPost"
       inputId="Posted Date"
-      label="Posted Date"
+      [label]="'posted_date' | translate"
       type="datetime-local"
     />
 
@@ -100,14 +100,14 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>price</th>
-            <th>total</th>
-            <th>unit Item</th>
-            <th>unit Fact</th>
-            <th>notes</th>
-            <th>Actions</th>
+            <th>{{ 'product' | translate }}</th>
+            <th>{{ 'quantity' | translate }}</th>
+            <th>{{ 'price' | translate }}</th>
+            <th>{{ 'total' | translate }}</th>
+            <th>{{ 'unit_item' | translate }}</th>
+            <th>{{ 'unit_fact' | translate }}</th>
+            <th>{{ 'notes' | translate }}</th>
+            <th>{{ 'actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -214,13 +214,13 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Account</th>
-            <th>Discount</th>
-            <th>Discount Rate</th>
-            <th>Extra</th>
-            <th>Extra Rate</th>
-            <th>notes</th>
-            <th>Actions</th>
+            <th>{{ 'account' | translate }}</th>
+            <th>{{ 'discount' | translate }}</th>
+            <th>{{ 'discount_rate' | translate }}</th>
+            <th>{{ 'extra' | translate }}</th>
+            <th>{{ 'extra_rate' | translate }}</th>
+            <th>{{ 'notes' | translate }}</th>
+            <th>{{ 'actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -277,7 +277,7 @@
             <td>
               <button
                 class="cursor-pointer"
-                title="edit"
+                title="{{ 'delete' | translate }}"
                 type="button"
                 (click)="removeInvoiceDiscount(i)"
               >
@@ -314,21 +314,21 @@
         *ngIf="invoiceItems.errors"
         [control]="invoiceItems"
         [customMessage]="null"
-        name="journal Items"
+        [name]="'journal_items' | translate"
         class="col-span-full flex justify-start"
       />
     </div>
 
     <div class="col-span-full">
-      <p>Total Items: {{ total() }}</p>
-      <p>Total Extra: {{ totalExtra() }}</p>
-      <p>Total Discount: {{ totalDisc() }}</p>
+      <p>{{ 'total_items' | translate }}: {{ total() }}</p>
+      <p>{{ 'total_extra' | translate }}: {{ totalExtra() }}</p>
+      <p>{{ 'total_discount' | translate }}: {{ totalDisc() }}</p>
       <hr />
-      <p>Total: {{ +total() + +totalExtra() - +totalDisc() }}</p>
+      <p>{{ 'total' | translate }}: {{ +total() + +totalExtra() - +totalDisc() }}</p>
     </div>
 
     <div class="">
-      <button type="submit" class="btn">Add</button>
+      <button type="submit" class="btn">{{ 'add' | translate }}</button>
     </div>
   </form>
 </cust-card>
