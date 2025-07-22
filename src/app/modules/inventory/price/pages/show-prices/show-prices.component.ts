@@ -6,10 +6,11 @@ import { Price } from '../../models/price';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { CustomTableComponent } from '../../../../shared/components/cust-table.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-prices',
-  imports: [RouterModule, CardComponent, AsyncPipe, CustomTableComponent],
+  imports: [RouterModule, CardComponent, AsyncPipe, CustomTableComponent,TranslateModule],
   templateUrl: './show-prices.component.html',
 })
 export class ShowPricesComponent implements OnInit {

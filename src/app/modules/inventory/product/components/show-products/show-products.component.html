@@ -1,7 +1,7 @@
-<cust-card titleText="Product" [titlePadding]="false">
+<cust-card [titleText]="'productS.title' | translate" [titlePadding]="false">
   <div class="flex justify-end items-center">
     <button type="button" class="mb-3 btn" routerLink="/add-product">
-      Add Product
+      {{ 'productS.add' | translate }}
     </button>
   </div>
 
@@ -13,13 +13,13 @@
           <th *ngFor="let col of displayColumns">
             {{ col }}
           </th>
-          <th>Actions</th>
+          <th>{{ 'common.actions' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         @if (products().length == 0) {
         <tr>
-          <td [attr.colspan]="displayColumns.length + 2">No Data Found</td>
+          <td [attr.colspan]="displayColumns.length + 2">{{ 'productS.no_data' | translate }}</td>
         </tr>
         }
         <tr *ngFor="let row of products(); let i = index">
@@ -42,14 +42,14 @@
             <button
               type="button"
               [swal]="[
-                'Delete',
-                'Are you sure want to delete ' + row.name,
+                'common.delete' | translate,
+                ('productS.delete_confirm' | translate) + ' ' + row.name
               ]"
               (confirm)="deleteProduct(row)"
               title="delete row"
               class="text-red-600 hover:text-red-800 cursor-pointer"
             >
-              DELETE
+              {{ 'common.delete' | translate }}
             </button>
             <button
               type="button"
@@ -57,7 +57,7 @@
               title="edit row"
               class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
             >
-              EDIT
+              {{ 'common.edit' | translate }}
             </button>
           </td>
         </tr>

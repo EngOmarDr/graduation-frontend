@@ -52,7 +52,7 @@
   @if(control.invalid && (control.touched || control.dirty )){
   @if(control.errors?.['required']){
   <small class="validation-text">
-    {{ "Product is required" }}
+    {{ 'productA.required' | translate }}
   </small>
   }}
 
@@ -69,7 +69,7 @@
         <div
           class="border-b-2 border-b-zinc-300 px-5 py-3 relative flex items-center"
         >
-          <h3 class="text-lg font-medium text-gray-900 grow">Search Product</h3>
+          <h3 class="text-lg font-medium text-gray-900 grow">{{ 'search.title' | translate }}</h3>
           <div class="p-1 cursor-pointer" (click)="showModal.set(false)">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -112,14 +112,14 @@
               [(ngModel)]="searchTerm"
               [ngModelOptions]="{ standalone: true }"
               (input)="onSearchChange(searchTerm)"
-              placeholder="type to search"
+              [placeholder]="'search.placeholder' | translate"
               class="cust-input rounded-sm"
             />
             <span
               *ngIf="searchTerm.length == 0 && !searchTerm"
               class="validation-text"
             >
-              enter value to search
+              {{ 'search.empty' | translate }}
             </span>
           </div>
 
@@ -128,8 +128,8 @@
             <table class="min-w-full">
               <thead>
                 <tr>
-                  <th scope="col">Code</th>
-                  <th scope="col">Name</th>
+                  <th scope="col">{{ 'code' | translate }}</th>
+                  <th scope="col">{{ 'name' | translate }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -147,10 +147,10 @@
                   </td>
                 </tr>
                 <tr *ngIf="isLoading()">
-                  <td colspan="2">Loading ...</td>
+                  <td colspan="2">{{ 'search.loading' | translate }}</td>
                 </tr>
                 <tr *ngIf="!isLoading() && data().length === 0">
-                  <td colspan="2">Not found Data</td>
+                  <td colspan="2">{{ 'search.noData' | translate }}</td>
                 </tr>
               </tbody>
             </table>
@@ -166,14 +166,14 @@
             [class.opacity-50]="!selectedObject"
             class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Ok
+            {{ 'ok' | translate }}
           </button>
           <button
             type="button"
             (click)="onClickCancel()"
             class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Cancel
+            {{ 'cancel' | translate }}
           </button>
         </div>
       </div>

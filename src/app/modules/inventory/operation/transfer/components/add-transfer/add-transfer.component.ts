@@ -23,6 +23,7 @@ import { TransferRequest } from '../../models/request/transfer-request';
 import { ProductSearchComponent } from 'app/modules/inventory/product/components/search-product/search-product.component';
 import { ProductResponse } from 'app/modules/inventory/product/models/response/product-response';
 import { AccountSearchComponent } from 'app/modules/shared/account-search/account-search.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
@@ -35,7 +36,8 @@ import { AccountSearchComponent } from 'app/modules/shared/account-search/accoun
     ValidationMessageComponent,
     CustomSelectComponent,
     ProductSearchComponent,
-    AccountSearchComponent
+    AccountSearchComponent,
+    TranslateModule
   ],
   templateUrl: './add-transfer.component.html',
 })

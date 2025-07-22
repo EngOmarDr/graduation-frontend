@@ -28,6 +28,7 @@ import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/uni
 import { ActivatedRoute } from '@angular/router';
 import { ProductResponse } from '../../models/response/product-response';
 import { environment } from 'environments/environment';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-product',
@@ -38,6 +39,7 @@ import { environment } from 'environments/environment';
     CustomFieldComponent,
     ValidationMessageComponent,
     CustomSelectComponent,
+    TranslateModule
   ],
   templateUrl: './update-product.component.html',
 })

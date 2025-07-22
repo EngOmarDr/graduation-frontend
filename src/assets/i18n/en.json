@@ -229,13 +229,13 @@
     "updateTitle": "Update Group",
     "updateButton": "Update"
   },
-    "groups": {
+  "groups": {
     "title": "Groups",
     "add_group": "Add Group",
     "table_view": "Table View",
     "tree_view": "Tree View"
   },
-    "invoiceType": {
+  "invoiceType": {
     "addInvoiceType": "Add Invoice Type",
     "invoiceType": "Invoice Type",
     "name": "Name",
@@ -256,5 +256,97 @@
     "edit": "Edit",
     "confirmDelete": "Are you sure want to delete"
   },
-  "noDataFound": "No Data Found"
+  "noDataFound": "No Data Found",
+  "update_invoice_type": "Update Invoice Type",
+  "invoice_type": "Invoice Type",
+  "default_price": "Default Price",
+  "warehouse": "Warehouse",
+  "bill_account": "Bill Account",
+  "disc_account": "Discount Account",
+  "extra_account": "Extra Account",
+  "default_currency": "Default Currency",
+  "no_entry": "No Entry",
+  "auto_entry": "Auto Entry",
+  "no_post": "No Post",
+  "auto_post": "Auto Post",
+  "cash_bill": "Cash Bill",
+  "inventoryCount": {
+    "title": "Inventory Count",
+    "warehouse": "Warehouse",
+    "product": "Product",
+    "group": "Group",
+    "preview": "Preview",
+    "settlement": "Settlement",
+    "unitName": "Unit Name",
+    "currentQuantity": "Current Quantity",
+    "countedQuantity": "Quantity Counted",
+    "difference": "Difference",
+    "noProducts": "You don't have any products"
+  },
+    "transfer": {
+    "addTransfer": "Add Transfer",
+    "fromWarehouse": "From Warehouse",
+    "toWarehouse": "To Warehouse",
+    "date": "Date",
+    "cashAccount": "Cash Account",
+    "expenseAccount": "Expense Account",
+    "expenseValue": "Expense Value",
+    "driverName": "Driver Name",
+    "notes": "Notes",
+    "product": "Product",
+    "quantity": "Quantity",
+    "unitItemId": "Unit Item ID",
+    "unitFact": "Unit Factor",
+    "actions": "Actions",
+    "remove": "Remove",
+    "addRow": "Add Row",
+    "products": "Products",
+    "transfer": "Transfer",
+    "title": "Transfers",
+    "add": "Add Transfer",
+    "numberItem": "Number Item",
+    "action": "Action",
+    "noData": "No Data Found",
+    "delete": "DELETE",
+    "edit": "EDIT",
+    "confirmDelete": "Are you sure want to delete?"
+  },
+  "add_price": "Add Price",
+  "update_price": "Update Price",
+  "prices": "Prices",
+  "addProduct": "Add Product",
+  "code": "Code",
+  "type": "Type",
+  "group": "Group",
+  "unit": "Unit",
+  "image": "Image",
+  "minQty": "Min Qty",
+  "maxQty": "Max Qty",
+  "orderQty": "Order Qty",
+  "priceType": "Price Type",
+  "unitName": "Unit Name",
+  "unitItem": "Unit Item",
+    "productA": {
+    "required": "Product is required"
+  },
+  "search": {
+    "title": "Search Product",
+    "placeholder": "Type to search",
+    "empty": "Enter value to search",
+    "loading": "Loading ...",
+    "noData": "No data found"
+  },
+  "ok": "Ok",
+  "cancel": "Cancel",
+    "productS": {
+    "title": "Product",
+    "add": "Add Product",
+    "no_data": "No Data Found",
+    "delete_confirm": "Are you sure you want to delete"
+  },
+  "common": {
+    "actions": "Actions",
+    "delete": "Delete",
+    "edit": "Edit"
+  }
 }

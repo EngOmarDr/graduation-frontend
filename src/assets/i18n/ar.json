@@ -229,13 +229,13 @@
     "updateTitle": "تحديث المجموعة",
     "updateButton": "تحديث"
   },
- "groups": {
+  "groups": {
     "title": "المجموعات",
     "add_group": "إضافة مجموعة",
     "table_view": "عرض جدول",
     "tree_view": "عرض شجري"
   },
-    "invoiceType": {
+  "invoiceType": {
     "addInvoiceType": "إضافة نوع فاتورة",
     "invoiceType": "نوع الفاتورة",
     "name": "الاسم",
@@ -256,5 +256,97 @@
     "edit": "تعديل",
     "confirmDelete": "هل أنت متأكد من حذف"
   },
-  "noDataFound": "لم يتم العثور على بيانات"
+  "noDataFound": "لم يتم العثور على بيانات",
+  "update_invoice_type": "تحديث نوع الفاتورة",
+  "invoice_type": "نوع الفاتورة",
+  "default_price": "السعر الافتراضي",
+  "warehouse": "المستودع",
+  "bill_account": "حساب الفاتورة",
+  "disc_account": "حساب الخصم",
+  "extra_account": "حساب الإضافات",
+  "default_currency": "العملة الافتراضية",
+  "no_entry": "بدون قيد",
+  "auto_entry": "قيد تلقائي",
+  "no_post": "بدون ترحيل",
+  "auto_post": "ترحيل تلقائي",
+  "cash_bill": "فاتورة نقدية",
+  "inventoryCount": {
+    "title": "جرد المخزون",
+    "warehouse": "المستودع",
+    "product": "المنتج",
+    "group": "المجموعة",
+    "preview": "معاينة",
+    "settlement": "تسوية",
+    "unitName": "اسم الوحدة",
+    "currentQuantity": "الكمية الحالية",
+    "countedQuantity": "الكمية المحسوبة",
+    "difference": "الفرق",
+    "noProducts": "لا يوجد منتجات"
+  },
+    "transfer": {
+    "addTransfer": "إضافة تحويل",
+    "fromWarehouse": "من المستودع",
+    "toWarehouse": "إلى المستودع",
+    "date": "التاريخ",
+    "cashAccount": "حساب النقدية",
+    "expenseAccount": "حساب المصاريف",
+    "expenseValue": "قيمة المصاريف",
+    "driverName": "اسم السائق",
+    "notes": "ملاحظات",
+    "product": "المنتج",
+    "quantity": "الكمية",
+    "unitItemId": "معرف وحدة الصنف",
+    "unitFact": "عامل الوحدة",
+    "actions": "الإجراءات",
+    "remove": "حذف",
+    "addRow": "إضافة صف",
+    "products": "المنتجات",
+    "transfer": "تحويل",
+    "title": "التحويلات",
+    "add": "إضافة تحويل",
+    "numberItem": "عدد الأصناف",
+    "action": "الإجراء",
+    "noData": "لا توجد بيانات",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "confirmDelete": "هل أنت متأكد أنك تريد الحذف؟"
+  },
+  "add_price": "إضافة سعر",
+  "update_price": "تعديل السعر",
+  "prices": "الأسعار",
+  "addProduct": "إضافة منتج",
+  "code": "الكود",
+  "type": "النوع",
+  "group": "المجموعة",
+  "unit": "الوحدة",
+  "image": "الصورة",
+  "minQty": "الحد الأدنى",
+  "maxQty": "الحد الأقصى",
+  "orderQty": "الكمية المطلوبة",
+  "priceType": "نوع السعر",
+  "unitName": "اسم الوحدة",
+  "unitItem": "عنصر الوحدة",
+    "productA": {
+    "required": "المنتج مطلوب"
+  },
+  "search": {
+    "title": "بحث عن منتج",
+    "placeholder": "اكتب للبحث",
+    "empty": "أدخل قيمة للبحث",
+    "loading": "جارٍ التحميل ...",
+    "noData": "لا توجد بيانات"
+  },
+  "ok": "موافق",
+  "cancel": "إلغاء",
+    "productS": {
+    "title": "المنتج",
+    "add": "إضافة منتج",
+    "no_data": "لا توجد بيانات",
+    "delete_confirm": "هل أنت متأكد أنك تريد حذف"
+  },
+  "common": {
+    "actions": "الإجراءات",
+    "delete": "حذف",
+    "edit": "تعديل"
+  }
 }

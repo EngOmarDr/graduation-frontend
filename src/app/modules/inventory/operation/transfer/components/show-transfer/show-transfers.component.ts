@@ -6,6 +6,7 @@ import { CardComponent } from '@shared/components/card-form.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TransferService } from '../../transfer.service';
 import { TransferResponse } from '../../models/response/transfer-response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-transfers',
@@ -16,6 +17,7 @@ import { TransferResponse } from '../../models/response/transfer-response';
     ReactiveFormsModule,
     CommonModule,
     SweetAlert2Module,
+    TranslateModule
   ],
   templateUrl: './show-transfers.component.html',
 })

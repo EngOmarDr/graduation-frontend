@@ -27,10 +27,11 @@ import {
 } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { ProductResponse } from '../../models/response/product-response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search-product',
-  imports: [ReactiveFormsModule, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule,TranslateModule],
   templateUrl: './search-product.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

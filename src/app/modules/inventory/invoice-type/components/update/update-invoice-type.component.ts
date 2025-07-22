@@ -17,6 +17,7 @@ import { CustomSelectComponent } from '@shared/components/custom-select.componen
 import { AccountSearchComponent } from '@shared/account-search/account-search.component';
 import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
 import { InvoiceTypeResponse } from '../../models/response/invoice-type-response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-invoiceType',
@@ -28,6 +29,7 @@ import { InvoiceTypeResponse } from '../../models/response/invoice-type-response
     CustomFieldComponent,
     CustomSelectComponent,
     AccountSearchComponent,
+    TranslateModule
   ],
   templateUrl: './update-invoice-type.component.html',
 })

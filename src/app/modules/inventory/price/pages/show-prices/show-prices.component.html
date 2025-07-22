@@ -1,11 +1,11 @@
-<cust-card titleText="Prices" [titlePadding]="false">
+<cust-card [titleText]="'prices' | translate" [titlePadding]="false">
   <div class="flex justify-end">
     <button
       type="button"
       class="py-1.5 px-2.5 mb-3 rounded-lg text-white bg-primary cursor-pointer"
       routerLink="/add-price"
     >
-      Add Price
+      {{ 'add_price' | translate }}
     </button>
   </div>
   <app-custom-table

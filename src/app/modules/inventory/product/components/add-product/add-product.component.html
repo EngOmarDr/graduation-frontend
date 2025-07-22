@@ -1,34 +1,34 @@
-<cust-card titleText="Add Product">
+<cust-card [titleText]="'addProduct' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls.code"
       inputId="code"
-      label="code"
+      [label]="'code' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.name"
       inputId="name"
-      label="Name"
+      [label]="'name' | translate"
     />
 
     <cust-select
       [control]="form.controls.type"
       inputId="Type"
-      label="Type"
+      [label]="'type' | translate"
       [options]="productType"
     />
 
     <cust-select
       [control]="this.form.controls.groupId"
-      label="group"
+      [label]="'group' | translate"
       inputId="group"
       [options]="this.groupsList()"
     />
 
     <cust-select
       [control]="this.form.controls.defaultUnitId"
-      label="unit"
+      [label]="'unit' | translate"
       inputId="unit"
       [options]="this.unitsList()"
     />
@@ -37,7 +37,7 @@
       [control]="form.controls.image"
       type="file"
       inputId="image"
-      label="image"
+      [label]="'image' | translate"
       (change)="uploadImage($event)"
     />
 
@@ -45,27 +45,27 @@
       [control]="form.controls.minQty"
       type="number"
       inputId="Min Qty"
-      label="Min Qty"
+      [label]="'minQty' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.maxQty"
       type="number"
       inputId="Max Qty"
-      label="Max Qty"
+      [label]="'maxQty' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.orderQty"
       type="number"
       inputId="Order Qty"
-      label="Order Qty"
+      [label]="'orderQty' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.notes"
       inputId="Note"
-      label="Note"
+      [label]="'notes' | translate"
     />
 
     <div class="overflow-auto max-h-80 relative col-span-full add-table">
@@ -73,10 +73,10 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Price Type</th>
-            <th>Unit Name</th>
-            <th>price</th>
-            <th>Actions</th>
+            <th>{{ 'priceType' | translate }}</th>
+            <th>{{ 'unitName' | translate }}</th>
+            <th>{{ 'price' | translate }}</th>
+            <th>{{ 'actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -98,7 +98,7 @@
               <cust-select
                 [control]="row.controls['unitItemId']"
                 [showLabel]="false"
-                label="price"
+                [label]="'price' | translate"
                 inputId="price"
                 [options]="this.unitItems()"
               />
@@ -142,7 +142,7 @@
                 class="w-fit self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
                 (click)="addPriceRow()"
               >
-                <img src="assets/icons/add.png" alt="add" />
+                <img src="assets/icons/add.png" [alt]="'add' | translate" />
               </button>
             </td>
           </tr>
@@ -162,9 +162,9 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Unit Item</th>
-            <th>barcode</th>
-            <th>Actions</th>
+            <th>{{ 'unitItem' | translate }}</th>
+            <th>{{ 'barcode' | translate }}</th>
+            <th>{{ 'actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -176,7 +176,7 @@
             <td>
               <cust-select
                 [control]="row.controls['unitItemId']"
-                label="unitItem"
+                [label]="'unitItem' | translate"
                 [showLabel]="false"
                 inputId="unitItem"
                 [options]="this.unitItems()"
@@ -220,7 +220,7 @@
                 class="w-fit self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
                 (click)="addBarcodeRow()"
               >
-                <img src="assets/icons/add.png" alt="add" />
+                <img src="assets/icons/add.png" [alt]="'add' | translate" />
               </button>
             </td>
           </tr>
@@ -236,7 +236,7 @@
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn">Add</button>
+      <button type="submit" class="btn">{{ 'add' | translate }}</button>
     </div>
   </form>
 </cust-card>

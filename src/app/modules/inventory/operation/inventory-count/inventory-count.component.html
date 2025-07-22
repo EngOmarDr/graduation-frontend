@@ -1,46 +1,46 @@
-<cust-card titleText="Inventory Count">
+<cust-card [titleText]="'inventoryCount.title' | translate">
   <form [formGroup]="form" (submit)="onSubmit()" class="cust-grid mb-4">
     @if(isAdmin){
     <cust-select
       [control]="form.controls.warehouseId"
       [options]="warehouses()"
-      label="Warehouse"
+      [label]="'inventoryCount.warehouse' | translate"
     />
     }
-    <app-search-product [control]="form.controls.productId" label="Product" />
+    <app-search-product [control]="form.controls.productId" [label]="'inventoryCount.product' | translate" />
 
     <cust-select
       [control]="form.controls.groupId"
       [options]="groups()"
       [canBeNull]="true"
-      label="Group"
+      [label]="'inventoryCount.group' | translate"
     />
     <div class="self-end flex items-center gap-x-1">
-      <button type="submit" class="btn">Preview</button>
+      <button type="submit" class="btn">{{ 'inventoryCount.preview' | translate }}</button>
       @if(inventoryItems()?.items?.length){
 
-      <button type="button" class="btn">settlement</button>
+      <button type="button" class="btn">{{ 'inventoryCount.settlement' | translate }}</button>
       }
     </div>
   </form>
   <form [formGroup]="quantityForm" class="col-span-full cust-grid">
     <div class="overflow-auto max-h-80 relative add-table w-full col-span-full">
-      <p class="mb-1">Warehouse: {{inventoryItems()?.warehouseName}}</p>
+      <p class="mb-1">{{ 'inventoryCount.warehouse' | translate }}: {{inventoryItems()?.warehouseName}}</p>
       <table formArrayName="quantityCounted">
         <thead>
           <tr>
             <th>#</th>
-            <th>Product</th>
-            <th>Unit name</th>
-            <th>Current Quantity</th>
-            <th>Quantity counted</th>
-            <th>Difference</th>
+            <th>{{ 'inventoryCount.product' | translate }}</th>
+            <th>{{ 'inventoryCount.unitName' | translate }}</th>
+            <th>{{ 'inventoryCount.currentQuantity' | translate }}</th>
+            <th>{{ 'inventoryCount.countedQuantity' | translate }}</th>
+            <th>{{ 'inventoryCount.difference' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngIf="inventoryItems()?.items?.length == 0">
             <td [attr.colspan]="7" class="text-center">
-              you don't have product
+              {{ 'inventoryCount.noProducts' | translate }}
             </td>
           </tr>
 

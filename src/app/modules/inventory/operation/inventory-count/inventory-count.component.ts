@@ -21,6 +21,7 @@ import { ProductService } from '../../product/services/product.service';
 import { GroupService } from '../../group/services/group.service';
 import { ProductSearchComponent } from '../../product/components/search-product/search-product.component';
 import { OperationService } from '../services/operation.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-inventory-count',
@@ -30,6 +31,7 @@ import { OperationService } from '../services/operation.service';
     CardComponent,
     CustomSelectComponent,
     ProductSearchComponent,
+    TranslateModule
   ],
   templateUrl: './inventory-count.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

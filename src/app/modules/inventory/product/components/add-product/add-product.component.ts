@@ -18,6 +18,7 @@ import { ValidationMessageComponent } from '@shared/components/validation-messag
 import { CustomSelectComponent } from '@shared/components/custom-select.component';
 import { GroupService } from 'app/modules/inventory/group/services/group.service';
 import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/unit-item-response.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-product',
@@ -28,6 +29,7 @@ import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/uni
     CustomFieldComponent,
     ValidationMessageComponent,
     CustomSelectComponent,
+    TranslateModule
   ],
   templateUrl: './add-product.component.html',
 })

@@ -6,6 +6,7 @@ import { ProductResponse } from '../../models/response/product-response';
 import { ProductService } from '../../services/product.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-products',
@@ -15,6 +16,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     CommonModule,
     NgOptimizedImage,
     SweetAlert2Module,
+    TranslateModule
   ],
   templateUrl: './show-products.component.html',
 })

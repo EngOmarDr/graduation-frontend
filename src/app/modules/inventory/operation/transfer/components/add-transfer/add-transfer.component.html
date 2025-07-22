@@ -1,15 +1,15 @@
-<cust-card titleText="Add Transfer">
+<cust-card [titleText]="'transfer.addTransfer' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select
       [control]="this.form.controls.fromWarehouseId"
-      label="From Warehouse"
+      [label]="'transfer.fromWarehouse' | translate"
       inputId="group"
       [options]="this.warehouses()"
     />
 
     <cust-select
       [control]="this.form.controls.toWarehouseId"
-      label="To Warehouse"
+      [label]="'transfer.toWarehouse' | translate"
       inputId="To Warehouse"
       [options]="this.warehouses()"
     />
@@ -17,23 +17,23 @@
     <cust-form-field
       [control]="form.controls.date"
       inputId="Date"
-      label="Date"
+      [label]="'transfer.date' | translate"
       type="date"
     />
     <app-account-search
       [control]="form.controls.cashAccountId"
-      label="Cash Account"
+      [label]="'transfer.cashAccount' | translate"
     />
 
     <app-account-search
       [control]="form.controls.expenseAccountId"
-      label="Expense Account"
+      [label]="'transfer.expenseAccount' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.expenseValue"
       inputId="expenseValue"
-      label="Expense Value"
+      [label]="'transfer.expenseValue' | translate"
       type="number"
       step="0.01"
     />
@@ -41,14 +41,14 @@
     <cust-form-field
       [control]="form.controls.driverName"
       inputId="driverName"
-      label="Driver Name"
+      [label]="'transfer.driverName' | translate"
       type="text"
     />
 
     <cust-form-field
       [control]="form.controls.notes"
       inputId="Notes"
-      label="Notes"
+      [label]="'transfer.notes' | translate"
     />
 
     <div class="overflow-auto max-h-80 relative col-span-full add-table">
@@ -56,11 +56,11 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Unit Item ID</th>
-            <th>Unit Fact</th>
-            <th>Actions</th>
+            <th>{{ 'transfer.product' | translate }}</th>
+            <th>{{ 'transfer.quantity' | translate }}</th>
+            <th>{{ 'transfer.unitItemId' | translate }}</th>
+            <th>{{ 'transfer.unitFact' | translate }}</th>
+            <th>{{ 'actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -130,6 +130,7 @@
                 type="button"
                 class="w-fit self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
                 (click)="addRow()"
+                [title]="'transfer.addRow' | translate"
               >
                 <img src="assets/icons/add.png" alt="add" />
               </button>
@@ -140,13 +141,13 @@
       <app-validation-message
         *ngIf="items.errors"
         [control]="this.items"
-        name="products"
+        [name]="'transfer.products' | translate"
         class="col-span-full flex justify-start"
       />
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn">Transfer</button>
+      <button type="submit" class="btn">{{ 'transfer.transfer' | translate }}</button>
     </div>
   </form>
 </cust-card>

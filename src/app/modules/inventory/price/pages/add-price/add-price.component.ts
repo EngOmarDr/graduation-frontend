@@ -9,6 +9,7 @@ import { CustomFieldComponent } from '@shared/components/custom-field.component'
 import { CardComponent } from '@shared/components/card-form.component';
 import { PriceService } from '../../services/price.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-price',
@@ -17,6 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     CustomFieldComponent,
     CommonModule,
     CardComponent,
+    TranslateModule
   ],
   templateUrl: './add-price.component.html',
 })
