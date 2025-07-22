@@ -40,7 +40,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CustomSelectComponent,
     NgSelectModule,
     ValidationMessageComponent,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './update-custom-journal.component.html',
 })
@@ -62,7 +62,7 @@ export class UpdateCustomJournalComponent implements OnInit {
 
   form = this.fb.group({
     date: [this.currentDateTime, Validators.required],
-    warehouseId: this.fb.control<number | undefined>(
+    branchId: this.fb.control<number | undefined>(
       undefined,
       Validators.required
     ),
@@ -213,12 +213,12 @@ export class UpdateCustomJournalComponent implements OnInit {
     }
     let data: CreateJournalRequest = {
       date: this.form.controls.date.value,
-      warehouseId: this.form.controls.warehouseId.value!,
+      branchId: this.form.controls.branchId.value!,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value!,
-      kind: 0,
+      kind: 1,
       parentId: null,
-      parentTypeId: this.journalType.id,
+      parentType: this.journalType.id,
       isPosted: this.form.controls.isPosted.value,
       journalItems:
         this.form.controls.journalItems.value.map<CreateJournalItemRequest>(

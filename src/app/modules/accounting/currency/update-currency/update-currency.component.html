@@ -42,14 +42,10 @@
       type="number"
     />
 
-    <div class="col-span-full grid grid-cols-4">
+    <div class="col-span-full ">
       <button type="submit" class="btn" [disabled]="!editCurrencyForm.valid">
         {{ 'currency.updateButton' | translate }}
       </button>
     </div>
   </form>
-
-  <div>
-    {{ editCurrencyForm.value | json }}
-  </div>
 </div>

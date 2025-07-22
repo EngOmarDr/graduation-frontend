@@ -1,9 +1,9 @@
-<cust-card [titleText]="'journalType.addTitleJo' | translate">
+<cust-card [titleText]="'journal.addTitleJo' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls.name"
       inputId="name"
-      [label]="'journalType.name' | translate"
+      [label]="'journal.name' | translate"
     />
 
     <div>
@@ -13,7 +13,7 @@
         [ngClass]="{
           'cust-label-disable': form.controls.defaultAccountId.disabled
         }"
-        >{{ 'journalType.defaultAccount' | translate }}
+        >{{ 'journal.defaultAccount' | translate }}
       </label>
       <ng-select
         id="defAccount"
@@ -46,7 +46,7 @@
         [ngClass]="{
           'cust-label-disable': form.controls.defaultCurrencyId.disabled
         }"
-        >{{ 'journalType.defaultCurrency' | translate }}
+        >{{ 'journal.defaultCurrency' | translate }}
       </label>
       <ng-select
         id="defCurrency"
@@ -75,49 +75,49 @@
     <cust-form-field
       [control]="form.controls.creditName"
       inputId="Credit Name"
-      [label]="'journalType.creditName' | translate"
+      [label]="'journal.creditName' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.debitName"
       inputId="Debit Name"
-      [label]="'journalType.debitName' | translate"
+      [label]="'journal.debitName' | translate"
     />
 
     <label class="self-center">
       <input type="checkbox" [formControl]="formControls.fieldCredit" />
-      {{ 'journalType.fieldCredit' | translate }}
+      {{ 'journal.fieldCredit' | translate }}
     </label>
     <label>
       <input type="checkbox" [formControl]="formControls.fieldDebit" />
-      {{ 'journalType.fieldDebit' | translate }}
+      {{ 'journal.fieldDebit' | translate }}
     </label>
     <label>
       <input type="checkbox" [formControl]="formControls.fieldDate" />
-      {{ 'journalType.fieldDate' | translate }}
+      {{ 'journal.fieldDate' | translate }}
     </label>
     <label>
       <input type="checkbox" [formControl]="formControls.fieldNotes" />
-      {{ 'journalType.fieldNotes' | translate }}
+      {{ 'journal.fieldNotes' | translate }}
     </label>
     <label>
       <input type="checkbox" [formControl]="formControls.fieldCurrencyName" />
-      {{ 'journalType.fieldCurrencyName' | translate }}
+      {{ 'journal.fieldCurrencyName' | translate }}
     </label>
     <label>
       <input
         type="checkbox"
         [formControl]="formControls.fieldCurrencyEquilty"
       />
-      {{ 'journalType.fieldCurrencyEquilty' | translate }}
+      {{ 'journal.fieldCurrencyEquilty' | translate }}
     </label>
     <label>
       <input type="checkbox" [formControl]="formControls.autoPost" />
-      {{ 'journalType.autoPost' | translate }}
+      {{ 'journal.autoPost' | translate }}
     </label>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn" [disabled]="!form.valid">{{ 'journalType.addButton' | translate }}</button>
+      <button type="submit" class="btn" [disabled]="!form.valid">{{ 'journal.addButton' | translate }}</button>
     </div>
   </form>
 </cust-card>

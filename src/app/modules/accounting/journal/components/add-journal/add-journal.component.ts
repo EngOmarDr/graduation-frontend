@@ -38,7 +38,7 @@ import { TranslateModule } from '@ngx-translate/core';
     NgSelectModule,
     ValidationMessageComponent,
     AccountSearchComponent,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './add-journal.component.html',
 })
@@ -56,7 +56,7 @@ export class AddJournalComponent implements OnInit {
 
   form = this.fb.group({
     date: [this.getCurrentDate(), Validators.required],
-    warehouseId: this.fb.control<undefined | number>(
+    branchId: this.fb.control<undefined | number>(
       undefined,
       Validators.required
     ),
@@ -79,7 +79,7 @@ export class AddJournalComponent implements OnInit {
     this.warehouseService.getAll().subscribe((data) => {
       this.warehouses = data;
       if (data.length) {
-        this.form.controls.warehouseId.setValue(data[0].id);
+        this.form.controls.branchId.setValue(data[0].id);
       }
     });
 
@@ -186,12 +186,12 @@ export class AddJournalComponent implements OnInit {
 
     let data: CreateJournalRequest = {
       date: this.form.controls.date.value,
-      warehouseId: this.form.controls.warehouseId.value ?? 0,
+      branchId: this.form.controls.branchId.value ?? 0,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value,
       kind: 0,
       parentId: null,
-      parentTypeId: null,
+      parentType: null,
       isPosted: this.form.controls.isPosted.value,
 
       journalItems: this.form.controls.journalItems.getRawValue().map((e) => ({

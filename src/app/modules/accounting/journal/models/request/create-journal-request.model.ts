@@ -1,11 +1,11 @@
 export interface CreateJournalRequest {
-  warehouseId: number;
+  branchId: number;
   date: string;
   currencyId: number;
   currencyValue: number;
   kind: number|null;
   parentId: number|null;
-  parentTypeId: number|null;
+  parentType: number|null;
   isPosted: boolean;
   // postDate: Date;
   // notes: string;

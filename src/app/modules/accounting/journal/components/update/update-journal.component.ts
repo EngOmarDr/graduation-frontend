@@ -56,7 +56,7 @@ export class UpdateJournalComponent implements OnInit {
   journalId = 0;
   form = this.fb.group({
     date: [this.getCurrentDate(), Validators.required],
-    warehouseId: [1, Validators.required],
+    branchId: [1, Validators.required],
     currencyId: [1, Validators.required],
     currencyValue: [1, Validators.required],
     isPosted: [true],
@@ -198,12 +198,12 @@ export class UpdateJournalComponent implements OnInit {
     }
     let data: CreateJournalRequest = {
       date: this.form.controls.date.value,
-      warehouseId: this.form.controls.warehouseId.value,
+      branchId: this.form.controls.branchId.value,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value,
       kind: null,
       parentId: 0,
-      parentTypeId: 0,
+      parentType: 0,
       isPosted: this.form.controls.isPosted.value,
       journalItems: this.form.controls.journalItems.getRawValue().map((e) => ({
         accountId: e!['accountId']!,

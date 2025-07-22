@@ -29,7 +29,7 @@
             <ng-container [ngSwitch]="ad.type">
               <img
                 *ngSwitchCase="'image'"
-                ngSrc="{{ 'http://localhost:8080' + ad.mediaUrl }}"
+                ngSrc="{{ad.mediaUrl }}"
                 width="80"
                 height="56"
                 class="object-cover rounded"
@@ -42,7 +42,7 @@
                 controls
               >
                 <source
-                  [src]="'http://localhost:8080' + ad.mediaUrl"
+                  [src]=" ad.mediaUrl"
                   type="video/mp4"
                 />
               </video>
