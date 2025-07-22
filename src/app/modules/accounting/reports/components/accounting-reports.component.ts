@@ -107,6 +107,8 @@ export class AccountingReportsComponent {
           this.form.get('endDate')?.value
         )
         .subscribe((e) => {
+          console.log(e);
+
           this.trailBalance = e;
         });
     }

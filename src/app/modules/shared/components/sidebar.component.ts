@@ -3,9 +3,9 @@ import {
   Component,
   computed,
   inject,
+  OnInit,
   Signal,
   signal,
-  WritableSignal,
 } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -16,7 +16,7 @@ import {
 } from 'app/core/constants/constant';
 import { InvoiceTypeService } from 'app/modules/inventory/invoice-type/services/invoice-type.service';
 import { StorageService } from 'app/core/services/storage.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -32,9 +32,10 @@ import { TranslateModule } from '@ngx-translate/core';
 
     <!-- sidebar -->
     <aside
-      class="fixed start-0 top-0 min-w-56 z-40 h-svh bg-white dark:bg-dark-card-surface shadow-lg transition-transform duration-300 lg:sticky lg:translate-x-0 overflow-y-auto"
+      class="fixed start-0 top-0 min-w-60 z-40 h-svh bg-white dark:bg-dark-card-surface shadow-lg transition-transform duration-300 lg:sticky lg:translate-x-0 overflow-y-auto"
       [ngClass]="{
         '-translate-x-full ease-in': !isSidebarOpen,
+        'translate-x-full ease-in': !isSidebarOpen && isArabic(),
         'translate-x-0 ease-out': isSidebarOpen,
       }"
     >
@@ -147,11 +148,19 @@ import { TranslateModule } from '@ngx-translate/core';
     </aside>
   `,
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+  ngOnInit(): void {
+    this.languageService.onLangChange.subscribe((v) => {
+      this.isArabic.set(v.lang == 'ar');
+    });
+  }
+
   private readonly sanitizer = inject(DomSanitizer);
   private journalService = inject(JournalTypesService);
   private invoiceService = inject(InvoiceTypeService);
   private storageService = inject(StorageService);
+  private languageService = inject(TranslateService);
+  isArabic = signal<boolean>(false);
   journalTypes = this.journalService.journalTypes;
   invoiceTypes = this.invoiceService.invoiceTypes;
 

@@ -14,7 +14,12 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-edit-currency',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CustomFieldComponent,TranslateModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    CustomFieldComponent,
+    TranslateModule,
+  ],
   templateUrl: './update-currency.component.html',
 })
 export class UpdateCurrencyComponent implements OnInit {
@@ -30,8 +35,10 @@ export class UpdateCurrencyComponent implements OnInit {
     code: ['', [Validators.required]],
     name: ['', [Validators.required]],
     balance: [1, [Validators.required, Validators.min(0)]],
-    partName: ['', [Validators.required]],
-    partPrecision: [1, [Validators.required, Validators.min(0)]],
+    partName: this.fb.control<undefined | string>(undefined),
+    partPrecision: this.fb.control<undefined | number>(undefined, [
+      Validators.min(0),
+    ]),
   });
 
   ngOnInit(): void {
@@ -51,38 +58,44 @@ export class UpdateCurrencyComponent implements OnInit {
           partName: currency.partName,
           partPrecision: currency.partPrecision,
         });
+        console.log(currency);
       },
       error: () => {
         alert('Currency not found');
         this.location.back();
       },
     });
-
   }
 
   onSubmit() {
     if (this.editCurrencyForm.valid && this.currencyId) {
-      const formValue = this.editCurrencyForm.value;
+      const formValue = this.editCurrencyForm.controls;
 
       const updatedCurrency: Currency = {
         id: this.currencyId,
-        code: formValue.code!,
-        name: formValue.name!,
-        currencyValue: formValue.balance!,
-        partName: formValue.partName!,
-        partPrecision: formValue.partPrecision!,
+        code: formValue.code.value,
+        name: formValue.name.value,
+        currencyValue: formValue.balance.value,
+        partName: formValue.partName.value,
+        partPrecision: formValue.partPrecision.value
+          ? +formValue.partPrecision.value
+          : undefined,
       };
+      console.log(typeof updatedCurrency.partPrecision);
+      console.log(updatedCurrency.partPrecision);
 
-      this.currencyService.updateCurrency(this.currencyId, updatedCurrency).subscribe({
-        next: () => {
-          alert('Currency updated successfully');
-          this.location.back();
-        },
-        error: (err) => {
-          console.error('Update failed', err);
-          alert('Update failed');
-        },
-      });
+      this.currencyService
+        .updateCurrency(this.currencyId, updatedCurrency)
+        .subscribe({
+          next: () => {
+            alert('Currency updated successfully');
+            this.location.back();
+          },
+          error: (err) => {
+            console.error('Update failed', err);
+            alert('Update failed');
+          },
+        });
     }
   }
 }

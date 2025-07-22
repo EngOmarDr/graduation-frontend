@@ -42,13 +42,11 @@ export class AccountingReportsService {
 
   getTrialBalanceReport(
     startDate: string,
-    endDate: string,
+    endDate: string
   ): Observable<TrialBalanceReport> {
     let params = new HttpParams()
       .set('startDate', startDate)
       .set('endDate', endDate);
-      params = new HttpParams()
-        .set('date', endDate);
     return this.http.get<TrialBalanceReport>(
       this.apiUrl + '/trial-balance-report',
       { params }

@@ -68,7 +68,7 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
 
   form = this.fb.group({
     date: [this.currentDateTime, Validators.required],
-    warehouseId: this.fb.control<number | undefined>(
+    branchId: this.fb.control<number | undefined>(
       undefined,
       Validators.required
     ),
@@ -91,7 +91,7 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
 
       this.form = this.fb.group({
         date: [this.currentDateTime, Validators.required],
-        warehouseId: this.fb.control<number | undefined>(
+        branchId: this.fb.control<number | undefined>(
           undefined,
           Validators.required
         ),
@@ -134,7 +134,7 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
     this.warehouseService.getAll().subscribe((data) => {
       this.warehouses = data;
       if (data.length) {
-        this.form.controls.warehouseId.setValue(data[0].id);
+        this.form.controls.branchId.setValue(data[0].id);
       }
     });
 
@@ -158,12 +158,12 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
 
     let data: CreateJournalRequest = {
       date: this.form.controls.date.value,
-      warehouseId: this.form.controls.warehouseId.value!,
+      branchId: this.form.controls.branchId.value!,
       currencyId: this.form.controls.currencyId.value,
       currencyValue: this.form.controls.currencyValue.value!,
-      kind: 0,
+      kind: 1,
       parentId: null,
-      parentTypeId: this.journalType.id,
+      parentType: this.journalType.id,
       isPosted: this.form.controls.isPosted.value,
       journalItems: this.form.controls.journalItems
         .getRawValue()
@@ -243,8 +243,6 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
     });
     row.controls.currencyId.valueChanges.subscribe((value) => {
       const curr = this.currencies.find((c) => c.id == value);
-      console.log(curr);
-      console.log(value);
 
       row.controls.currencyValue.setValue(curr?.currencyValue, {
         emitEvent: false,
