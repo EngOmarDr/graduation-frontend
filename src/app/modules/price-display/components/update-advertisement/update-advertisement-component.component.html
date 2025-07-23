@@ -1,45 +1,56 @@
-<cust-card titleText="Update Advertisement">
+<cust-card [titleText]="'advertisements.updateTitle' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
-    <cust-form-field label="Title" inputId="title" [control]="form.controls.title" />
+    <cust-form-field
+      [label]="'advertisements.titleLabel' | translate"
+      inputId="title"
+      [control]="form.controls.title"
+    />
 
     <div class="col-span-full flex gap-4 items-center">
-      <label><input type="radio" formControlName="type" value="image"/> Image</label>
-      <label><input type="radio" formControlName="type" value="video"/> Video</label>
+      <label
+        ><input type="radio" formControlName="type" value="image" />
+        {{ 'advertisements.image' | translate }}</label
+      >
+      <label
+        ><input type="radio" formControlName="type" value="video" />
+        {{ 'advertisements.video' | translate }}</label
+      >
     </div>
 
     <cust-form-field
-      label="Media"
+      [label]="'advertisements.media' | translate"
       inputId="media"
       type="file"
       [control]="form.controls.media"
       (change)="upload($event)"
     />
 
-<p *ngIf="ad">
-  Current media:
-  <ng-container *ngIf="ad.type === 'image'">
-    <img
-      [src]="'http://localhost:8080' + ad.mediaUrl"
-      class="w-24 h-16 object-cover rounded"
-    />
-  </ng-container>
-  <ng-container *ngIf="ad.type === 'video'">
-    <video
-      [src]="'http://localhost:8080' + ad.mediaUrl"
-      class="w-48 h-32"
-      controls
-    ></video>
-  </ng-container>
-</p>
-
+    <p *ngIf="ad">
+      {{ 'advertisements.currentMedia' | translate }}:
+      <ng-container *ngIf="ad.type === 'image'">
+        <img
+          [src]="'http://localhost:8080' + ad.mediaUrl"
+          class="w-24 h-16 object-cover rounded"
+        />
+      </ng-container>
+      <ng-container *ngIf="ad.type === 'video'">
+        <video
+          [src]="'http://localhost:8080' + ad.mediaUrl"
+          class="w-48 h-32"
+          controls
+        ></video>
+      </ng-container>
+    </p>
 
     <cust-form-field
-      label="Duration (sec)"
+      [label]="'advertisements.duration' | translate"
       inputId="duration"
       type="number"
       [control]="form.controls.duration"
     />
 
-    <button type="submit" class="col-span-full btn">Update Advertisement</button>
+    <button type="submit" class="col-span-full btn">
+      {{ 'advertisements.updateBtn' | translate }}
+    </button>
   </form>
 </cust-card>

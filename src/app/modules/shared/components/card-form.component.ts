@@ -2,10 +2,11 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'cust-card',
-  imports: [CommonModule],
+  imports: [CommonModule,TranslateModule],
   template: `
     <div class="card">
       <div

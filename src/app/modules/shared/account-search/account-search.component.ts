@@ -23,6 +23,7 @@ import { ValidationMessageComponent } from '../components/validation-message.com
 import { AcccountSearchModalComponent } from '../../accounting/account/components/acccount-search-modal/acccount-search-modal.component';
 import { CommonModule } from '@angular/common';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-account-search',
@@ -31,6 +32,7 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
     ValidationMessageComponent,
     AcccountSearchModalComponent,
     CommonModule,
+    TranslateModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<form [formGroup]="form" (submit)="submitAccountSearch()">
@@ -44,6 +46,7 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
         [formControl]="form.controls.accountName"
         class="cust-input rounded-e-none"
         id="{{ label() }}"
+        [placeholder]="'accountS.searchPlaceholder' | translate"
       />
 
       <button class="btn rounded-s-none" type="submit">
@@ -86,7 +89,7 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
         }
       </button>
     </div>
-    <app-validation-message [control]="control!" [name]="label() ?? 'this'" />
+    <app-validation-message [control]="control!" [name]="label() ?? 'accountS.defaultLabel' | translate" />
     <div>
       <app-account-search-modal
         *ngIf="showModalAccount"

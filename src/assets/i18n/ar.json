@@ -407,5 +407,28 @@
     "deleteConfirm": "هل أنت متأكد أنك تريد حذف",
     "updateTitle": "تحديث المستودع"
   },
-  "noData": "لا توجد بيانات"
+  "noData": "لا توجد بيانات",
+  "advertisements": {
+    "title": "الإعلانات",
+    "add": "إضافة إعلان",
+    "actions": "الإجراءات",
+    "empty": "لم يتم العثور على إعلانات",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "sec": "ثانية",
+    "confirmDelete": "هل أنت متأكد أنك تريد حذف {{ title }}؟",
+    "updateTitle": "تحديث الإعلان",
+    "titleLabel": "العنوان",
+    "image": "صورة",
+    "video": "فيديو",
+    "media": "الوسائط",
+    "duration": "المدة (ثانية)",
+    "updateBtn": "تحديث الإعلان",
+    "currentMedia": "الوسائط الحالية"
+  },
+    "accountS": {
+    "searchPlaceholder": "ابحث عن الحساب...",
+    "enterValueToSearch": "أدخل قيمة للبحث",
+    "defaultLabel": "الحساب"
+  }
 }

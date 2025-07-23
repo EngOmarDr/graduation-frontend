@@ -1,18 +1,22 @@
-<cust-card titleText="Add Advertisement">
+<cust-card [titleText]="'advertisements.add_title' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
-    <cust-form-field label="Title" inputId="title" [control]="form.controls.title" />
+    <cust-form-field
+      [label]="'advertisements.form.title' | translate"
+      inputId="title"
+      [control]="form.controls.title"
+    />
 
     <div class="col-span-full flex gap-4 items-center">
       <label class="flex items-center gap-2">
-        <input type="radio" formControlName="type" value="image" /> Image
+        <input type="radio" formControlName="type" value="image" /> {{ 'advertisements.form.type_image' | translate }}
       </label>
       <label class="flex items-center gap-2">
-        <input type="radio" formControlName="type" value="video" /> Video
+        <input type="radio" formControlName="type" value="video" /> {{ 'advertisements.form.type_video' | translate }}
       </label>
     </div>
 
     <cust-form-field
-      label="Media"
+      [label]="'advertisements.form.media' | translate"
       inputId="media"
       type="file"
       [control]="form.controls.media"
@@ -20,12 +24,12 @@
     />
 
     <cust-form-field
-      label="Duration (sec)"
+      [label]="'advertisements.form.duration' | translate"
       inputId="duration"
       type="number"
       [control]="form.controls.duration"
     />
 
-    <button type="submit" class="col-span-full btn">Add Advertisement</button>
+    <button type="submit" class="col-span-full btn">{{ 'advertisements.form.submit' | translate }}</button>
   </form>
 </cust-card>
