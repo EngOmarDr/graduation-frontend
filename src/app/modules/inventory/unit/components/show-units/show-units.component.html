@@ -1,7 +1,7 @@
-<cust-card titleText="Units">
+<cust-card [titleText]="'units.title' | translate">
   <div class="flex justify-end items-center">
     <button type="button" class="py-1.5 px-2.5 mb-3 btn self-end" routerLink="/add-unit">
-      Add Unit
+      {{ 'units.addUnit' | translate }}
     </button>
   </div>
 
@@ -13,13 +13,13 @@
           <th *ngFor="let col of displayedColumns">
             {{ col }}
           </th>
-          <th>Actions</th>
+          <th>{{ 'units.actions' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         @if ( units().length == 0) {
         <tr>
-          <td [attr.colspan]="displayedColumns.length + 2">No Data Found</td>
+          <td [attr.colspan]="displayedColumns.length + 2">{{ 'units.noDataFound' | translate }}</td>
         </tr>
         } @for (item of units(); track $index) {
           <tr>
@@ -35,7 +35,7 @@
                 title="delete row"
                 class="text-red-600 hover:text-red-800 cursor-pointer"
               >
-                DELETE
+                {{ 'units.delete' | translate }}
               </button>
               <button
                 type="button"
@@ -43,7 +43,7 @@
                 title="edit row"
                 class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
               >
-                EDIT
+                {{ 'units.edit' | translate }}
               </button>
             </td>
           </tr>

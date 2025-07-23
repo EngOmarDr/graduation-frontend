@@ -28,6 +28,7 @@ import { CommonModule } from '@angular/common';
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { GroupService } from 'app/modules/inventory/group/services/group.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-daily-movement',
@@ -38,6 +39,7 @@ import { GroupService } from 'app/modules/inventory/group/services/group.service
     ProductSearchComponent,
     CustomSelectComponent,
     CommonModule,
+    TranslateModule
   ],
   templateUrl: './inventory-reports.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

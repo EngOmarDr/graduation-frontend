@@ -8,6 +8,7 @@ import { CustomFieldComponent } from '@shared/components/custom-field.component'
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
 import { AdvertisementService } from '../../services/Advertisement.service';
 import { AdvertisementResponse } from '../../models/advertisement-response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-advertisement-component',
@@ -15,7 +16,9 @@ import { AdvertisementResponse } from '../../models/advertisement-response';
     ReactiveFormsModule,
     CommonModule,
     CardComponent,
-    CustomFieldComponent,],
+    CustomFieldComponent,
+    TranslateModule
+  ],
   templateUrl: './update-advertisement-component.component.html',
   styleUrl: './update-advertisement-component.component.css'
 })

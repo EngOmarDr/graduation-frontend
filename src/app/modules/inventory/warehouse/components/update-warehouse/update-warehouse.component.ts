@@ -16,6 +16,7 @@ import { WarehouseService } from '../../services/warehouse.service';
 import { BranchService } from 'app/modules/branch/services/branch.service';
 import { WarehouseResponse } from '../../models/response/warehouse-response';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-warehouse',
@@ -27,6 +28,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ValidationMessageComponent,
     CustomSelectComponent,
     NgSelectModule,
+    TranslateModule
   ],
   templateUrl: './update-warehouse.component.html',
 })

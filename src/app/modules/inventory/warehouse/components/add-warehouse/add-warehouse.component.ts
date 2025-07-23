@@ -12,6 +12,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { WarehouseService } from '../../services/warehouse.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BranchService } from 'app/modules/branch/services/branch.service';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-add-warehouse',
@@ -22,6 +24,7 @@ import { BranchService } from 'app/modules/branch/services/branch.service';
     NgSelectModule,
     CustomFieldComponent,
     ValidationMessageComponent,
+    TranslateModule
   ],
   templateUrl: './add-warehouse.component.html',
 })

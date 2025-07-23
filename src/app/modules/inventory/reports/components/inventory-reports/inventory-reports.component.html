@@ -1,20 +1,20 @@
-<cust-card [titleText]="typeReport()">
+<cust-card [titleText]="typeReport() | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select
       *ngIf="isAdmin"
-      label="Warehouse"
+      [label]="'warehouse' | translate"
       [options]="warehouses()"
       [canBeNull]="true"
       [control]="form.get('warehouseId')!"
     />
 
     <app-search-product
-      [label]="typeReport() == 'item-movement' ? 'item*' : 'item'"
+      [label]="typeReport() == 'item-movement' ? ('itemStar' | translate) : ('item' | translate)"
       [control]="form.get('productId')!"
     />
 
     <cust-select
-      label="Group"
+      [label]="'group' | translate"
       [options]="groups()"
       [canBeNull]="true"
       [control]="form.get('groupId')!"
@@ -23,18 +23,18 @@
     <cust-form-field
       [control]="form.get('startDate')!"
       inputId="Start Date"
-      label="Start Date"
+      [label]="'startDate' | translate"
       type="date"
     />
     <cust-form-field
       [control]="form.get('endDate')!"
       inputId="End Date"
-      label="End Date"
+      [label]="'endDate' | translate"
       type="date"
     />
     <div class="space-x-2">
       <button type="submit" class="btn mt-[22px] mb-3" [disabled]="!form.valid">
-        Preview
+        {{ 'preview' | translate }}
       </button>
       <button
         type="button"
@@ -42,7 +42,7 @@
         (click)="printReport()"
         [disabled]="isPrintDisable()"
       >
-        print
+        {{ 'print' | translate }}
       </button>
     </div>
   </form>
@@ -54,19 +54,19 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Invoice</th>
-          <th>Date</th>
-          <th>Product</th>
-          <th>Unit Item Name</th>
-          <th>Quantity</th>
-          <th>Individual</th>
-          <th>Total</th>
+          <th>{{ 'invoice' | translate }}</th>
+          <th>{{ 'date' | translate }}</th>
+          <th>{{ 'product' | translate }}</th>
+          <th>{{ 'unitItemName' | translate }}</th>
+          <th>{{ 'quantity' | translate }}</th>
+          <th>{{ 'individual' | translate }}</th>
+          <th>{{ 'total' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         @if (dailyMovement()?.mainItems?.length==0) {
         <tr>
-          <td colspan="10">No Data Found</td>
+          <td colspan="10">{{ 'noDataFound' | translate }}</td>
         </tr>
         } @for (row of dailyMovement()?.mainItems; track $index) {
         <tr>
@@ -86,16 +86,16 @@
     <table class="mt-3">
       <thead>
         <tr>
-          <th>Invoice</th>
-          <th>Total</th>
-          <th>Total Cash</th>
-          <th>Total future</th>
+          <th>{{ 'invoice' | translate }}</th>
+          <th>{{ 'total' | translate }}</th>
+          <th>{{ 'totalCash' | translate }}</th>
+          <th>{{ 'totalFuture' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         @if (dailyMovement()?.sideItems?.length==0) {
         <tr>
-          <td colspan="10">No Data Found</td>
+          <td colspan="10">{{ 'noDataFound' | translate }}</td>
         </tr>
         } @for (row of dailyMovement()?.sideItems; track $index) {
         <tr>
@@ -113,25 +113,25 @@
       <thead>
         <tr>
           <th colspan="3"></th>
-          <th colspan="2">Input</th>
-          <th colspan="2">Output</th>
-          <th colspan="1">balance</th>
+          <th colspan="2">{{ 'input' | translate }}</th>
+          <th colspan="2">{{ 'output' | translate }}</th>
+          <th colspan="1">{{ 'balance' | translate }}</th>
         </tr>
         <tr>
           <th>#</th>
-          <th>Date</th>
-          <th>Invoice</th>
-          <th>quantity</th>
-          <th>price</th>
-          <th>quantity</th>
-          <th>price</th>
-          <th>quantity</th>
+          <th>{{ 'date' | translate }}</th>
+          <th>{{ 'invoice' | translate }}</th>
+          <th>{{ 'quantity' | translate }}</th>
+          <th>{{ 'price' | translate }}</th>
+          <th>{{ 'quantity' | translate }}</th>
+          <th>{{ 'price' | translate }}</th>
+          <th>{{ 'quantity' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         @if (itemMovement()?.length == 0) {
         <tr>
-          <td [attr.colspan]="10">No Data Found</td>
+          <td [attr.colspan]="10">{{ 'noDataFound' | translate }}</td>
         </tr>
         } @for (row of itemMovement()?.at(0)?.items; track $index) {
         <tr>
@@ -150,19 +150,19 @@
 
     <div class="cust-grid grid-cols-2 mt-4">
       <div class="cust-grid grid-cols-2 gap-x-2 gap-y-1">
-        <div class="text-right">Max Purchase:</div>
+        <div class="text-right">{{ 'maxPurchase' | translate }}:</div>
         <div class="text-left">{{ itemMovement()?.at(0)?.maxPurchase }}</div>
-        <div class="text-right">Min Purchase:</div>
+        <div class="text-right">{{ 'minPurchase' | translate }}:</div>
         <div class="text-left">{{ itemMovement()?.at(0)?.minPurchase }}</div>
-        <div class="text-right">average Purchase:</div>
+        <div class="text-right">{{ 'avgPurchase' | translate }}:</div>
         <div class="text-left">{{ itemMovement()?.at(0)?.avgPurchase }}</div>
       </div>
       <div class="cust-grid grid-cols-2 gap-x-2 gap-y-1">
-        <div class="text-right">Max Sell:</div>
+        <div class="text-right">{{ 'maxSell' | translate }}:</div>
         <div class="text-left">{{ itemMovement()?.at(0)?.maxSell }}</div>
-        <div class="text-right">Min Sell:</div>
+        <div class="text-right">{{ 'minSell' | translate }}:</div>
         <div class="text-left">{{ itemMovement()?.at(0)?.minSell }}</div>
-        <div class="text-right">average Sell:</div>
+        <div class="text-right">{{ 'avgSell' | translate }}:</div>
         <div class="text-left">{{ itemMovement()?.at(0)?.avgSell }}</div>
       </div>
     </div>
@@ -171,17 +171,17 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Item</th>
-          <th>quantity</th>
-          <th>unit</th>
+          <th>{{ 'item' | translate }}</th>
+          <th>{{ 'quantity' | translate }}</th>
+          <th>{{ 'unit' | translate }}</th>
           <!-- <th>price</th> -->
-          <th>total price</th>
+          <th>{{ 'totalPrice' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         @if (itemStock()?.mainItems?.length == 0) {
         <tr>
-          <td [attr.colspan]="10">No Data Found</td>
+          <td [attr.colspan]="10">{{ 'noDataFound' | translate }}</td>
         </tr>
         } @for (row of itemStock()?.mainItems; track $index) {
         <tr>
@@ -200,29 +200,29 @@
       <thead>
         <tr>
           <th></th>
-          <th>prices</th>
-          <th>quantities</th>
+          <th>{{ 'prices' | translate }}</th>
+          <th>{{ 'quantities' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         @if (!itemStock()?.sideItems) {
         <tr>
-          <td colspan="10">No Data Found</td>
+          <td colspan="10">{{ 'noDataFound' | translate }}</td>
         </tr>
         }@else {
 
         <tr>
-          <td>total positive items</td>
+          <td>{{ 'totalPositiveItems' | translate }}</td>
           <td>{{ itemStock()?.sideItems?.toatlPricePositive }}</td>
           <td>{{ itemStock()?.sideItems?.totalQuantityPositive }}</td>
         </tr>
         <tr>
-          <td>total Negative items</td>
+          <td>{{ 'totalNegativeItems' | translate }}</td>
           <td>{{ itemStock()?.sideItems?.toatlPriceNegative }}</td>
           <td>{{ itemStock()?.sideItems?.totalQuantityNegative }}</td>
         </tr>
         <tr>
-          <td>total item</td>
+          <td>{{ 'totalItems' | translate }}</td>
           <td>{{ itemStock()?.sideItems?.totalPrice }}</td>
           <td>{{ itemStock()?.sideItems?.totalQuantity }}</td>
         </tr>

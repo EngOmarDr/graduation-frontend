@@ -283,7 +283,7 @@
     "difference": "Difference",
     "noProducts": "You don't have any products"
   },
-    "transfer": {
+  "transfer": {
     "addTransfer": "Add Transfer",
     "fromWarehouse": "From Warehouse",
     "toWarehouse": "To Warehouse",
@@ -326,7 +326,7 @@
   "priceType": "Price Type",
   "unitName": "Unit Name",
   "unitItem": "Unit Item",
-    "productA": {
+  "productA": {
     "required": "Product is required"
   },
   "search": {
@@ -338,15 +338,89 @@
   },
   "ok": "Ok",
   "cancel": "Cancel",
-    "productS": {
+  "productS": {
     "title": "Product",
     "add": "Add Product",
     "no_data": "No Data Found",
-    "delete_confirm": "Are you sure you want to delete"
+    "delete_confirm": "Are you sure you want to delete",
+    "update_title": "Update Product",
+    "code": "Code",
+    "name": "Name",
+    "type": "Type",
+    "group": "Group",
+    "unit": "Unit",
+    "image": "Image",
+    "minQty": "Min Qty",
+    "maxQty": "Max Qty",
+    "orderQty": "Order Qty",
+    "notes": "Notes",
+    "priceType": "Price Type",
+    "unitName": "Unit Name",
+    "price": "Price",
+    "barcode": "Barcode"
   },
   "common": {
     "actions": "Actions",
     "delete": "Delete",
-    "edit": "Edit"
-  }
+    "edit": "Edit",
+    "update": "Update",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "invoice": "Invoice",
+  "unitItemName": "Unit Name",
+  "individual": "Individual Price",
+  "totalCash": "Total (Cash)",
+  "totalFuture": "Total (Credit)",
+  "input": "Input",
+  "output": "Output",
+  "balance": "Balance",
+  "maxPurchase": "Max Purchase",
+  "minPurchase": "Min Purchase",
+  "avgPurchase": "Average Purchase",
+  "maxSell": "Max Sell",
+  "minSell": "Min Sell",
+  "avgSell": "Average Sell",
+  "item": "Item",
+  "totalPrice": "Total Price",
+  "quantities": "Quantities",
+  "totalPositiveItems": "Total Positive Items",
+  "totalNegativeItems": "Total Negative Items",
+  "totalItems": "Total Items",
+  "itemStar": "Item*",
+  "add_unit": "Add Unit",
+  "fact": "Fact",
+  "is_default": "Is Default",
+  "remove": "Remove",
+  "units": {
+    "title": "Units",
+    "addUnit": "Add Unit",
+    "actions": "Actions",
+    "delete": "Delete",
+    "edit": "Edit",
+    "noDataFound": "No Data Found",
+    "name": "Name"
+  },
+  "update_unit": "Update Unit",
+  "warehouseA": {
+    "addTitle": "Add Warehouse",
+    "code": "Code",
+    "name": "Name",
+    "branch": "Branch",
+    "parent": "Parent Warehouse",
+    "phone": "Phone",
+    "address": "Address",
+    "notes": "Notes",
+    "add": "Add",
+    "title": "Warehouses",
+    "type": "Type",
+    "active": "Active",
+    "tableView": "Table View",
+    "treeView": "Tree View",
+    "deleteConfirm": "Are you sure you want to delete",
+    "updateTitle": "Update Warehouse"
+  },
+  "noData": "No Data Found"
 }

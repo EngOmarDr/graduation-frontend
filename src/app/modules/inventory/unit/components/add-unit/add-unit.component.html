@@ -1,9 +1,9 @@
-<cust-card titleText="Add Unit">
+<cust-card [titleText]="'add_unit' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls.name"
       inputId="name"
-      label="Name"
+      [label]="'name' | translate"
     />
 
     <div class="overflow-y-auto col-span-full w-full">
@@ -11,10 +11,10 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Fact</th>
-            <th>Is Default</th>
-            <th>Actions</th>
+            <th>{{ 'name' | translate }}</th>
+            <th>{{ 'fact' | translate }}</th>
+            <th>{{ 'is_default' | translate }}</th>
+            <th>{{ 'actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@
               <input formControlName="name" class="cust-input" />
               <app-validation-message
                 [control]="row.get('name')!"
-                name="name"
+                [name]="'name' | translate"
               />
             </td>
             <td>
@@ -42,7 +42,7 @@
               />
               <app-validation-message
                 [control]="row.get('fact')!"
-                name="fact"
+                [name]="'fact' | translate"
               />
             </td>
 
@@ -56,7 +56,7 @@
 
             <td>
               <button type="button" class="text-red-500" (click)="removeRow(i)">
-                Remove
+                {{ 'remove' | translate }}
               </button>
             </td>
           </tr>
@@ -74,9 +74,8 @@
         </tbody>
       </table>
     </div>
-
     <div class="col-span-full">
-      <button type="submit" class="btn">Add</button>
+      <button type="submit" class="btn">{{ 'add' | translate }}</button>
     </div>
   </form>
 </cust-card>

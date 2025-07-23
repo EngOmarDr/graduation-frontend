@@ -283,7 +283,7 @@
     "difference": "الفرق",
     "noProducts": "لا يوجد منتجات"
   },
-    "transfer": {
+  "transfer": {
     "addTransfer": "إضافة تحويل",
     "fromWarehouse": "من المستودع",
     "toWarehouse": "إلى المستودع",
@@ -326,7 +326,7 @@
   "priceType": "نوع السعر",
   "unitName": "اسم الوحدة",
   "unitItem": "عنصر الوحدة",
-    "productA": {
+  "productA": {
     "required": "المنتج مطلوب"
   },
   "search": {
@@ -338,7 +338,7 @@
   },
   "ok": "موافق",
   "cancel": "إلغاء",
-    "productS": {
+  "productS": {
     "title": "المنتج",
     "add": "إضافة منتج",
     "no_data": "لا توجد بيانات",
@@ -347,6 +347,65 @@
   "common": {
     "actions": "الإجراءات",
     "delete": "حذف",
-    "edit": "تعديل"
-  }
+    "edit": "تعديل",
+    "yes": "نعم",
+    "no": "لا",
+    "update": "تحديث"
+  },
+  "startDate": "تاريخ البداية",
+  "endDate": "تاريخ النهاية",
+  "invoice": "الفاتورة",
+  "unitItemName": "اسم الوحدة",
+  "individual": "السعر الفردي",
+  "totalCash": "الإجمالي نقداً",
+  "totalFuture": "الإجمالي آجل",
+  "input": "الوارد",
+  "output": "الصادر",
+  "balance": "الرصيد",
+  "maxPurchase": "أعلى شراء",
+  "minPurchase": "أقل شراء",
+  "avgPurchase": "متوسط الشراء",
+  "maxSell": "أعلى بيع",
+  "minSell": "أقل بيع",
+  "avgSell": "متوسط البيع",
+  "item": "العنصر",
+  "totalPrice": "السعر الإجمالي",
+  "quantities": "الكميات",
+  "totalPositiveItems": "إجمالي العناصر الموجبة",
+  "totalNegativeItems": "إجمالي العناصر السالبة",
+  "totalItems": "إجمالي العناصر",
+  "itemStar": "العنصر*",
+  "add_unit": "إضافة وحدة",
+  "fact": "المعامل",
+  "is_default": "افتراضي",
+  "remove": "حذف",
+  "units": {
+    "title": "الوحدات",
+    "addUnit": "إضافة وحدة",
+    "actions": "الإجراءات",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "noDataFound": "لا توجد بيانات",
+    "name": "الاسم"
+  },
+  "update_unit": "تحديث الوحدة",
+  "warehouseA": {
+    "addTitle": "إضافة مستودع",
+    "code": "الرمز",
+    "name": "الاسم",
+    "branch": "الفرع",
+    "parent": "المستودع الأب",
+    "phone": "الهاتف",
+    "address": "العنوان",
+    "notes": "ملاحظات",
+    "add": "إضافة",
+    "title": "المستودعات",
+    "type": "النوع",
+    "active": "نشط",
+    "tableView": "عرض الجدول",
+    "treeView": "عرض الشجرة",
+    "deleteConfirm": "هل أنت متأكد أنك تريد حذف",
+    "updateTitle": "تحديث المستودع"
+  },
+  "noData": "لا توجد بيانات"
 }

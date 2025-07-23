@@ -9,6 +9,7 @@ import { WarehouseService } from '../../services/warehouse.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TreeNode, TreeViewComponent } from '@shared/components/tree-view.component';
 import { WarehouseTreeResponse } from '../../models/response/warehouse-tree-response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-warehouses',
@@ -19,7 +20,8 @@ import { WarehouseTreeResponse } from '../../models/response/warehouse-tree-resp
     ReactiveFormsModule,
     CommonModule,
     SweetAlert2Module,
-    TreeViewComponent
+    TreeViewComponent,
+    TranslateModule
 ],
   templateUrl: './show-warehouses.component.html',
 })

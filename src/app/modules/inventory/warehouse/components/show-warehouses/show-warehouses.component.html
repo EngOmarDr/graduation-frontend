@@ -1,4 +1,4 @@
-<cust-card titleText="Warehouse" [titlePadding]="false">
+<cust-card [titleText]="'warehouseA.title' | translate" [titlePadding]="false">
   <div class="cust-grid">
     <div class="flex justify-end items-center col-span-full">
       <button
@@ -6,7 +6,7 @@
         class="py-1.5 px-2.5 mb-3 btn"
         routerLink="/add-warehouse"
       >
-        Add Warehouse
+        {{ 'warehouseA.add' | translate }}
       </button>
     </div>
 
@@ -14,7 +14,7 @@
       class="bg-zinc-100 dark:bg-gray-700 w-full rounded-sm p-2 flex space-x-2 col-span-full"
     >
       <button
-        title="table view"
+        title="{{ 'warehouseA.tableView' | translate }}"
         class="cursor-pointer"
         (click)="changeView(false)"
       >
@@ -39,7 +39,7 @@
       </button>
 
       <button
-        title="tree view"
+        title="{{ 'warehouseA.treeView' | translate }}"
         class="cursor-pointer"
         (click)="changeView(true)"
       >
@@ -88,20 +88,20 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Code</th>
-            <th>Name</th>
-            <th>type</th>
-            <th>branch name</th>
-            <th>active</th>
-            <th>address</th>
-            <th>notes</th>
-            <th>Action</th>
+            <th>{{ 'warehouseA.code' | translate }}</th>
+            <th>{{ 'warehouseA.name' | translate }}</th>
+            <th>{{ 'warehouseA.type' | translate }}</th>
+            <th>{{ 'warehouseA.branch' | translate }}</th>
+            <th>{{ 'warehouseA.active' | translate }}</th>
+            <th>{{ 'warehouseA.address' | translate }}</th>
+            <th>{{ 'warehouseA.notes' | translate }}</th>
+            <th>{{ 'common.actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           @if ( warehouses().length == 0) {
           <tr>
-            <td [attr.colspan]="10">No Data Found</td>
+            <td [attr.colspan]="10">{{ 'noData' | translate }}</td>
           </tr>
           }
           <tr *ngFor="let row of warehouses(); let i = index">
@@ -118,12 +118,12 @@
             <td class="text-nowrap">
               <button
                 type="button"
-                [swal]="['Delete', 'Are you sure want to delete ' + row.name]"
+                [swal]="['common.delete' | translate, ('warehouseA.deleteConfirm' | translate) + ' ' + row.name]"
                 (confirm)="deleteWarehouse(row)"
                 title="delete row"
                 class="text-red-600 hover:text-red-800 cursor-pointer"
               >
-                DELETE
+                {{ 'common.delete' | translate }}
               </button>
               <button
                 type="button"
@@ -131,7 +131,7 @@
                 title="edit row"
                 class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
               >
-                EDIT
+                {{ 'common.edit' | translate }}
               </button>
             </td>
           </tr>

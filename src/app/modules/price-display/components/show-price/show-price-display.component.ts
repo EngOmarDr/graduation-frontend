@@ -7,6 +7,7 @@ import { AdvertisementService } from '../../services/Advertisement.service';
 import { AdvertisementResponse } from '../../models/advertisement-response';
 import { CardComponent } from '@shared/components/card-form.component';
 import { map } from 'rxjs/operators';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-price-display',
@@ -16,6 +17,7 @@ import { map } from 'rxjs/operators';
     SweetAlert2Module,
     NgOptimizedImage,
     CardComponent,
+    TranslateModule
   ],
   templateUrl: './show-price-display.component.html',
   styleUrl: './show-price-display.component.css'

@@ -12,6 +12,7 @@ import { CardComponent } from '../../../../shared/components/card-form.component
 import { UnitService } from '../../services/unit.service';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-group',
@@ -21,6 +22,7 @@ import { ToastrService } from 'ngx-toastr';
     CustomFieldComponent,
     CardComponent,
     ValidationMessageComponent,
+    TranslateModule
   ],
   templateUrl: './add-unit.component.html',
 })

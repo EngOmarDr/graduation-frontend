@@ -1,21 +1,21 @@
-<cust-card titleText="Update Warehouse">
+<cust-card [titleText]="'warehouseA.updateTitle' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls.code"
       inputId="code"
-      label="Code"
+      [label]="'warehouseA.code' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.name"
       inputId="name"
-      label="Name"
+      [label]="'warehouseA.name' | translate"
     />
 
     <cust-select
       [control]="form.controls.type"
       inputId="type"
-      label="type"
+      [label]="'warehouseA.type' | translate"
       [options]="types"
     />
 
@@ -24,11 +24,11 @@
         type="checkbox"
         [formControl]="this.form.controls.active"
       />
-      Is Acitve
+      {{ 'warehouseA.isActive' | translate }}
     </label>
 
     <div>
-      <label for="branchId" class="cust-input-label">Branch </label>
+      <label for="branchId" class="cust-input-label">{{ 'warehouseA.branch' | translate }} </label>
       <ng-select
         id="branchId"
         [items]="branches()"
@@ -50,13 +50,13 @@
       <app-validation-message
         [control]="form.controls.branchId"
         [customMessage]="null"
-        name="Branch"
+        [name]="'warehouseA.branch' | translate"
       />
     </div>
 
     <div>
       <label for="primaryAccount" class="cust-input-label"
-        >Parent Warehouse
+        >{{ 'warehouseA.parent' | translate }}
       </label>
       <ng-select
         id="primaryAccount"
@@ -79,30 +79,30 @@
       <app-validation-message
         [control]="form.controls.parentId"
         [customMessage]="null"
-        name="Parent Warehouse"
+        [name]="'warehouseA.parent' | translate"
       />
     </div>
 
     <cust-form-field
       [control]="form.controls.phone"
       inputId="phone"
-      label="phone"
+      [label]="'warehouseA.phone' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.address"
       inputId="address"
-      label="Address"
+      [label]="'warehouseA.address' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.notes"
       inputId="notes"
-      label="Notes"
+      [label]="'warehouseA.notes' | translate"
     />
 
     <div class="self-center">
-      <button type="submit" class="btn">Update</button>
+      <button type="submit" class="btn">{{ 'common.update' | translate }}</button>
     </div>
   </form>
 </cust-card>

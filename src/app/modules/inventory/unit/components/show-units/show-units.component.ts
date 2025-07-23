@@ -7,10 +7,12 @@ import { CardComponent } from '@shared/components/card-form.component';
 import { UnitService } from '../../services/unit.service';
 import { UnitItemResponse } from '../../models/response/unit-item-response.model';
 import { UnitResponse } from '../../models/response/unit-response.model';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-show-units',
-  imports: [CardComponent, RouterModule, CommonModule],
+  imports: [CardComponent, RouterModule, CommonModule,TranslateModule],
   templateUrl: './show-units.component.html',
 })
 export class ShowUnitsComponent implements OnInit {

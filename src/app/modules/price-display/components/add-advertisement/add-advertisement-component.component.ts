@@ -6,6 +6,7 @@ import { CustomFieldComponent } from '@shared/components/custom-field.component'
 import { ValidationMessageComponent } from '@shared/components/validation-message.component';
 import { AdvertisementService } from '../../services/Advertisement.service';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-advertisement-component',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
     CommonModule,
     CardComponent,
     CustomFieldComponent,
+    TranslateModule
   ],
   templateUrl: './add-advertisement-component.component.html',
   styleUrl: './add-advertisement-component.component.css',

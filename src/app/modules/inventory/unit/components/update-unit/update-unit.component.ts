@@ -14,6 +14,8 @@ import { CustomFieldComponent } from '../../../../shared/components/custom-field
 import { UnitResponse } from '../../models/response/unit-response.model';
 import { CardComponent } from '../../../../shared/components/card-form.component';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-update-unit',
@@ -24,6 +26,7 @@ import { ValidationMessageComponent } from '../../../../shared/components/valida
     CustomFieldComponent,
     CardComponent,
     ValidationMessageComponent,
+    TranslateModule
   ],
   templateUrl: './update-unit.component.html',
 })

@@ -1,34 +1,34 @@
-<cust-card [titleText]="'product.update_title' | translate">
+<cust-card [titleText]="'productS.update_title' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-form-field
       [control]="form.controls.code"
       inputId="code"
-      [label]="'product.code' | translate"
+      [label]="'productS.code' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.name"
       inputId="name"
-      [label]="'product.name' | translate"
+      [label]="'productS.name' | translate"
     />
 
     <cust-select
       [control]="form.controls.type"
       inputId="Type"
-      [label]="'product.type' | translate"
+      [label]="'productS.type' | translate"
       [options]="productType"
     />
 
     <cust-select
       [control]="this.form.controls.groupId"
-      [label]="'product.group' | translate"
+      [label]="'productS.group' | translate"
       inputId="group"
       [options]="this.groupsList()"
     />
 
     <cust-select
       [control]="this.form.controls.defaultUnitId"
-      [label]="'product.unit' | translate"
+      [label]="'productS.unit' | translate"
       inputId="unit"
       [options]="this.unitsList()"
     />
@@ -37,7 +37,7 @@
       [control]="form.controls.image"
       type="file"
       inputId="image"
-      [label]="'product.image' | translate"
+      [label]="'productS.image' | translate"
       (change)="uploadImage($event)"
     />
 
@@ -55,27 +55,27 @@
       [control]="form.controls.minQty"
       type="number"
       inputId="Min Qty"
-      [label]="'product.minQty' | translate"
+      [label]="'productS.minQty' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.maxQty"
       type="number"
       inputId="Max Qty"
-      [label]="'product.maxQty' | translate"
+      [label]="'productS.maxQty' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.orderQty"
       type="number"
       inputId="Order Qty"
-      [label]="'product.orderQty' | translate"
+      [label]="'productS.orderQty' | translate"
     />
 
     <cust-form-field
       [control]="form.controls.notes"
       inputId="Note"
-      [label]="'product.notes' | translate"
+      [label]="'productS.notes' | translate"
     />
 
     <div class="overflow-auto max-h-80 relative col-span-full add-table">
@@ -83,9 +83,9 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>{{ 'product.unitName' | translate }}</th>
-            <th>{{ 'product.priceType' | translate }}</th>
-            <th>{{ 'product.price' | translate }}</th>
+            <th>{{ 'productS.unitName' | translate }}</th>
+            <th>{{ 'productS.priceType' | translate }}</th>
+            <th>{{ 'productS.price' | translate }}</th>
             <th>{{ 'common.actions' | translate }}</th>
           </tr>
         </thead>
@@ -99,7 +99,7 @@
               <cust-select
                 [control]="row.controls['unitItemId']"
                 [showLabel]="false"
-                [label]="'product.unitName' | translate"
+                [label]="'productS.unitName' | translate"
                 inputId="price"
                 [options]="this.unitItems()"
               />
@@ -108,7 +108,7 @@
               <cust-select
                 [control]="row.controls['priceId']"
                 [showLabel]="false"
-                [label]="'product.priceType' | translate"
+                [label]="'productS.priceType' | translate"
                 inputId="price"
                 [options]="this.pricesList()"
               />
@@ -118,7 +118,7 @@
               <app-validation-message
                 [control]="row.get('price')!"
                 [customMessage]="null"
-                [name]="'product.price' | translate"
+                [name]="'productS.price' | translate"
               />
             </td>
 
@@ -172,8 +172,8 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>{{ 'product.unitName' | translate }}</th>
-            <th>{{ 'product.barcode' | translate }}</th>
+            <th>{{ 'productS.unitName' | translate }}</th>
+            <th>{{ 'productS.barcode' | translate }}</th>
             <th>{{ 'common.actions' | translate }}</th>
           </tr>
         </thead>
@@ -186,7 +186,7 @@
             <td>
               <cust-select
                 [control]="row.controls['unitItemId']"
-                [label]="'product.unitName' | translate"
+                [label]="'productS.unitName' | translate"
                 [showLabel]="false"
                 inputId="unit Name"
                 [options]="this.unitItems()"
@@ -197,7 +197,7 @@
               <app-validation-message
                 [control]="row.get('barcode')!"
                 [customMessage]="null"
-                [name]="'product.barcode' | translate"
+                [name]="'productS.barcode' | translate"
               />
             </td>
             <td>
