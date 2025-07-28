@@ -7,11 +7,12 @@ import { RouterLink } from '@angular/router';
 import { CardComponent } from '../../../shared/components/card-form.component';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-show-currencies',
   standalone: true,
-  imports: [RouterLink, CardComponent, CommonModule,TranslateModule],
+  imports: [RouterLink, CardComponent, CommonModule,TranslateModule,SweetAlert2Module],
   templateUrl: './show-currencies.component.html',
 })
 export class ShowCurrenciesComponent implements OnInit {
@@ -33,7 +34,7 @@ deleteCurrency(id: number): void {
     this.currencyService.deleteCurrency(id).subscribe({
       next: () => {
         alert('Currency deleted successfully');
-        this.currencies$ = this.currencyService.getCurrencies(); // لإعادة التحديث
+        this.currencies$ = this.currencyService.getCurrencies();
       },
       error: (err) => {
         console.error('Delete failed:', err);

@@ -8,11 +8,12 @@ import { UnitService } from '../../services/unit.service';
 import { UnitItemResponse } from '../../models/response/unit-item-response.model';
 import { UnitResponse } from '../../models/response/unit-response.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 @Component({
   selector: 'app-show-units',
-  imports: [CardComponent, RouterModule, CommonModule,TranslateModule],
+  imports: [CardComponent, RouterModule, CommonModule,TranslateModule,SweetAlert2Module],
   templateUrl: './show-units.component.html',
 })
 export class ShowUnitsComponent implements OnInit {

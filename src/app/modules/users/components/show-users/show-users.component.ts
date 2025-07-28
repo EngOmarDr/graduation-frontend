@@ -11,10 +11,12 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../service/user.service';
 import { UserResponse } from '../../models/response/user-response';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-users',
-  imports: [CardComponent, CommonModule, RouterModule],
+  imports: [CardComponent, CommonModule, RouterModule,SweetAlert2Module,TranslateModule],
   templateUrl: './show-users.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -31,11 +33,10 @@ constructor(){
 }
 
   deleteItem(object: UserResponse): void {
-    if (confirm('are you sure you want to delete ?')) {
       this.service.delete(object.id).subscribe(() => {
         this.users.update((old) => old.filter((v) => v.id !== object.id));
       });
-    }
+
   }
 
   updateItem(object: UserResponse): void {

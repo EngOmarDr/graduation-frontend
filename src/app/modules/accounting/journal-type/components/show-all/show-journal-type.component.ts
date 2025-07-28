@@ -10,10 +10,11 @@ import { Router, RouterModule } from '@angular/router';
 import { CardComponent } from '@shared/components/card-form.component';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-show-journal-types',
-  imports: [CardComponent, CommonModule, RouterModule,TranslateModule],
+  imports: [CardComponent, CommonModule, RouterModule,TranslateModule,SweetAlert2Module],
   templateUrl: './show-journal-type.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

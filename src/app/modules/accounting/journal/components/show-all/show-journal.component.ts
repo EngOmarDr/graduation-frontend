@@ -13,10 +13,11 @@ import { JournalResponse } from '../../models/reponse/journal-response.model';
 import { JournalTypesService } from 'app/modules/accounting/journal-type/services/journal-types.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { InvoiceTypeService } from 'app/modules/inventory/invoice-type/services/invoice-type.service';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-show-journals',
-  imports: [CardComponent, CommonModule, RouterModule,TranslateModule],
+  imports: [CardComponent, CommonModule, RouterModule,TranslateModule,SweetAlert2Module],
   templateUrl: './show-journal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
