@@ -449,5 +449,38 @@
     "validation": {
     "required": "{{name}} is required",
     "email": "Should be a valid email"
+  },
+    "tree": {
+    "noMatch": "No matching items found.",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All"
+  },
+    "settings": {
+    "themes": "Themes",
+    "menuType": "Menu Type",
+    "menuTheme": "Menu Theme",
+    "colorScheme": "Color Scheme",
+    "inputStyle": "Input Style",
+    "rippleEffect": "Ripple Effect",
+    "light": "🌙 Light",
+    "dark": "☀️ Dark",
+    "menuModes": {
+      "static": "Static",
+      "overlay": "Overlay",
+      "slim": "Slim",
+      "slim-plus": "Slim +",
+      "reveal": "Reveal",
+      "drawer": "Drawer",
+      "horizontal": "Horizontal"
+    },
+    "menuThemes": {
+      "colorScheme": "Color Scheme",
+      "primaryColor": "Primary Color",
+      "transparent": "Transparent"
+    },
+    "inputStyles": {
+      "outlined": "Outlined",
+      "filled": "Filled"
+    }
   }
 }

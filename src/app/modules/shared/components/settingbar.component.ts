@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-setting-bar',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,TranslateModule],
   template: `
     <!-- overlay -->
     <div
@@ -50,7 +50,7 @@ import { TranslateModule } from '@ngx-translate/core';
       </div>
 
       <!-- Themes Section -->
-      <h5 class="text-lg font-semibold mb-2">Themes</h5>
+      <h5 class="text-lg font-semibold mb-2">{{ 'settings.themes' | translate }}</h5>
       <div class="grid grid-cols-4 gap-2">
         @for (color of themeColors; track $index) {
         <button
@@ -108,7 +108,7 @@ import { TranslateModule } from '@ngx-translate/core';
     </div> -->
 
       <!-- Menu Type Section -->
-      <h5 class="text-lg font-semibold mt-4 mb-2">Menu Type</h5>
+      <h5 class="text-lg font-semibold mt-4 mb-2">{{ 'settings.menuType' | translate }}</h5>
       <div class="flex flex-wrap gap-2">
         <div *ngFor="let menu of menuTypes" class="flex items-center gap-2">
           <input
@@ -118,12 +118,12 @@ import { TranslateModule } from '@ngx-translate/core';
             [value]="menu.value"
             [(ngModel)]="selectedMenuMode"
           />
-          <label [for]="menu.id">{{ menu.label }}</label>
+          <label [for]="menu.id">{{ menu.label | translate }}</label>
         </div>
       </div>
 
       <!-- Menu Theme Section -->
-      <h5 class="text-lg font-semibold mt-4 mb-2">Menu Theme</h5>
+      <h5 class="text-lg font-semibold mt-4 mb-2">{{ 'settings.menuTheme' | translate }}</h5>
       <div class="flex flex-col gap-2">
         <div *ngFor="let theme of menuThemes" class="flex items-center gap-2">
           <input
@@ -133,7 +133,7 @@ import { TranslateModule } from '@ngx-translate/core';
             [value]="theme.value"
             [(ngModel)]="selectedMenuTheme"
           />
-          <label [for]="theme.id">{{ theme.label }}</label>
+          <label [for]="theme.id">{{ theme.label | translate }}</label>
         </div>
       </div>
 
@@ -144,20 +144,20 @@ import { TranslateModule } from '@ngx-translate/core';
       </div> -->
 
       <!-- Color Scheme Section -->
-      <h5 class="text-lg font-semibold mt-4 mb-2">Color Scheme</h5>
+      <h5 class="text-lg font-semibold mt-4 mb-2">{{ 'settings.colorScheme' | translate }}</h5>
       <div class="flex flex-col gap-2">
         <!-- Theme toggle button -->
         <button
           (click)="toggleDarkMode()"
           class="p-2 bg-gray-200 dark:bg-gray-700 rounded w-fit"
         >
-          <span class="dark:hidden">🌙 Light</span>
-          <span class="hidden dark:inline">☀️ Dark</span>
+          <span class="dark:hidden">{{ 'settings.light' | translate }}</span>
+          <span class="hidden dark:inline">{{ 'settings.dark' | translate }}</span>
         </button>
       </div>
 
       <!-- Input Style Section -->
-      <h5 class="text-lg font-semibold mt-4 mb-2">Input Style</h5>
+      <h5 class="text-lg font-semibold mt-4 mb-2">{{ 'settings.inputStyle' | translate }}</h5>
       <div class="flex gap-4">
         <div *ngFor="let style of inputStyles" class="flex items-center gap-2">
           <input
@@ -167,12 +167,12 @@ import { TranslateModule } from '@ngx-translate/core';
             [value]="style.value"
             [(ngModel)]="selectedInputStyle"
           />
-          <label [for]="style.id">{{ style.label }}</label>
+          <label [for]="style.id">{{ style.label | translate }}</label>
         </div>
       </div>
 
       <!-- Ripple Effect Section -->
-      <h5 class="text-lg font-semibold mt-4 mb-2">Ripple Effect</h5>
+      <h5 class="text-lg font-semibold mt-4 mb-2">{{ 'settings.rippleEffect' | translate }}</h5>
       <input type="checkbox" [(ngModel)]="rippleEffect" class="toggle" />
     </div>
   `,
@@ -228,31 +228,31 @@ export class SettingbarComponent implements OnInit {
   }
 
   menuTypes = [
-    { id: 'mode1', value: 'static', label: 'Static' },
-    { id: 'mode2', value: 'overlay', label: 'Overlay' },
-    { id: 'mode3', value: 'slim', label: 'Slim' },
-    { id: 'mode4', value: 'slim-plus', label: 'Slim +' },
-    { id: 'mode5', value: 'reveal', label: 'Reveal' },
-    { id: 'mode6', value: 'drawer', label: 'Drawer' },
-    { id: 'mode7', value: 'horizontal', label: 'Horizontal' },
+    { id: 'mode1', value: 'static', label: 'settings.menuModes.static'},
+    { id: 'mode2', value: 'overlay', label: 'settings.menuModes.overlay'},
+    { id: 'mode3', value: 'slim', label: 'settings.menuModes.slim'},
+    { id: 'mode4', value: 'slim-plus', label: 'settings.menuModes.slim-plus'},
+    { id: 'mode5', value: 'reveal', label: 'settings.menuModes.reveal'},
+    { id: 'mode6', value: 'drawer', label: 'settings.menuModes.drawer'},
+    { id: 'mode7', value: 'horizontal', label: 'settings.menuModes.horizontal'},
   ];
   menuThemes = [
     {
       id: 'menutheme-colorscheme',
       value: 'colorScheme',
-      label: 'Color Scheme',
+      label: 'settings.menuThemes.colorScheme',
     },
     {
       id: 'menutheme-primarycolor',
       value: 'primaryColor',
-      label: 'Primary Color',
+      label: 'settings.menuThemes.primaryColor',
     },
-    { id: 'menutheme-transparent', value: 'transparent', label: 'Transparent' },
+    { id: 'menutheme-transparent', value: 'transparent', label: 'settings.menuThemes.transparent', },
   ];
 
   inputStyles = [
-    { id: 'outlined_input', value: 'outlined', label: 'Outlined' },
-    { id: 'filled_input', value: 'filled', label: 'Filled' },
+    { id: 'outlined_input', value: 'outlined', label: 'settings.inputStyles.outlined' },
+    { id: 'filled_input', value: 'filled', label: 'settings.inputStyles.filled' },
   ];
 
   selectedMenuMode = 'static';

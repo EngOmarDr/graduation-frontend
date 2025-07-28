@@ -38,7 +38,7 @@ export interface TreeNode {
       </div> -->
       @if(!filteredData.length){
       <p class="text-gray-500 dark:text-gray-400 text-center mt-4">
-        No matching items found.
+        {{ 'tree.noMatch' | translate }}
       </p>
       }@else {
       <ul class="select-none">
