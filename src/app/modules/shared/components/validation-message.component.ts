@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, input } from '@angular/core';
 import { AbstractControl, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-validation-message',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,TranslateModule],
   template: `
     @if(control.invalid && (control.touched || control.dirty)){
     @if(control.errors?.['required']){
     <small class="validation-text">
-      {{ name() + ' is required' }}
+      {{ 'validation.required' | translate:{ name: name() } }}
     </small>
     }@else if(control.errors?.['email']){
     <small class="validation-text">
-      {{ 'should be a valid email' }}
+      {{ 'validation.email' | translate }}
     </small>
     }@else if(customMessage){
     <small class="validation-text">

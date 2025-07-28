@@ -2,11 +2,12 @@ import { Component, output, input } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-custom-table',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,TranslateModule],
   template: `
     <div class="overflow-auto max-h-96 relative">
       <table>
@@ -16,14 +17,14 @@ import { ReactiveFormsModule } from '@angular/forms';
             <th *ngFor="let col of columns()">
               {{ col }}
             </th>
-            <th>Actions</th>
+            <th>{{ 'advertisements.actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           @if (data()?.length == 0) {
           <tr>
             <td [attr.colspan]="columns().length + 2">
-              No Data Found
+              {{ 'advertisements.empty' | translate }}
             </td>
           </tr>
           }
@@ -39,7 +40,7 @@ import { ReactiveFormsModule } from '@angular/forms';
                 title="delete row"
                 class="text-red-600 hover:text-red-800 cursor-pointer"
               >
-                DELETE
+                {{ 'advertisements.delete' | translate }}
               </button>
               <button
                 type="button"
@@ -47,7 +48,7 @@ import { ReactiveFormsModule } from '@angular/forms';
                 title="edit row"
                 class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
               >
-                EDIT
+                {{ 'advertisements.edit' | translate }}
               </button>
             </td>
           </tr>

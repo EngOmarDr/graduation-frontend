@@ -422,5 +422,65 @@
     "deleteConfirm": "Are you sure you want to delete",
     "updateTitle": "Update Warehouse"
   },
-  "noData": "No Data Found"
+  "noData": "No Data Found",
+  "advertisements": {
+    "title": "Advertisements",
+    "add": "Add Advertisement",
+    "actions": "Actions",
+    "empty": "No Advertisements Found",
+    "delete": "Delete",
+    "edit": "Edit",
+    "sec": "sec",
+    "confirmDelete": "Are you sure you want to delete {{ title }}?",
+    "updateTitle": "Update Advertisement",
+    "titleLabel": "Title",
+    "image": "Image",
+    "video": "Video",
+    "media": "Media",
+    "duration": "Duration (sec)",
+    "updateBtn": "Update Advertisement",
+    "currentMedia": "Current media"
+  },
+    "accountS": {
+    "searchPlaceholder": "Search account...",
+    "enterValueToSearch": "Enter value to search",
+    "defaultLabel": "Account"
+  },
+    "validation": {
+    "required": "{{name}} is required",
+    "email": "Should be a valid email"
+  },
+    "tree": {
+    "noMatch": "No matching items found.",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All"
+  },
+    "settings": {
+    "themes": "Themes",
+    "menuType": "Menu Type",
+    "menuTheme": "Menu Theme",
+    "colorScheme": "Color Scheme",
+    "inputStyle": "Input Style",
+    "rippleEffect": "Ripple Effect",
+    "light": "🌙 Light",
+    "dark": "☀️ Dark",
+    "menuModes": {
+      "static": "Static",
+      "overlay": "Overlay",
+      "slim": "Slim",
+      "slim-plus": "Slim +",
+      "reveal": "Reveal",
+      "drawer": "Drawer",
+      "horizontal": "Horizontal"
+    },
+    "menuThemes": {
+      "colorScheme": "Color Scheme",
+      "primaryColor": "Primary Color",
+      "transparent": "Transparent"
+    },
+    "inputStyles": {
+      "outlined": "Outlined",
+      "filled": "Filled"
+    }
+  }
 }

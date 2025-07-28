@@ -11,6 +11,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ValidationMessageComponent } from './validation-message.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search-input',
