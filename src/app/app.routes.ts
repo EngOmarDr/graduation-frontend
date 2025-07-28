@@ -79,7 +79,6 @@ export const routes: Routes = [
                 './modules/price-display/components/show-price/show-price-display.component'
               ).then((m) => m.ShowPriceDisplayComponent),
           },
-          // (يمكنك إضافة المزيد لاحقاً مثل عرض الإعلانات، تحديثها، حذفها... إلخ)
         ],
       },
       {
