@@ -430,5 +430,9 @@
     "searchPlaceholder": "ابحث عن الحساب...",
     "enterValueToSearch": "أدخل قيمة للبحث",
     "defaultLabel": "الحساب"
+  },
+    "validation": {
+    "required": "حقل {{name}} مطلوب",
+    "email": "يجب أن يكون بريدًا إلكترونيًا صحيحًا"
   }
 }

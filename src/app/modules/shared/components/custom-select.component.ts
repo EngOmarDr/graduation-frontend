@@ -12,6 +12,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { ValidationMessageComponent } from './validation-message.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'cust-select',

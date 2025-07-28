@@ -445,5 +445,9 @@
     "searchPlaceholder": "Search account...",
     "enterValueToSearch": "Enter value to search",
     "defaultLabel": "Account"
+  },
+    "validation": {
+    "required": "{{name}} is required",
+    "email": "Should be a valid email"
   }
 }

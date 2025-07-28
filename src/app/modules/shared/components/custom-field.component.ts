@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { ValidationMessageComponent } from './validation-message.component';
 import { NumberFormatDirective } from 'app/core/directives/number-format.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'cust-form-field',

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, output, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface TreeNode {
   label: string;
@@ -11,7 +12,7 @@ export interface TreeNode {
 
 @Component({
   selector: 'app-tree-view',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   template: `
     <div class="max-h-80 overflow-y-auto py-1 ">
       <!-- <input
