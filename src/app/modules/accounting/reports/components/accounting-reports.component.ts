@@ -18,8 +18,9 @@ import { ToastrService } from 'ngx-toastr';
 import { GeneralJournalReport } from '../models/general-journal-report';
 import { LedgerReport } from '../models/ledger-report';
 import { TrialBalanceReport } from '../models/trial-balance-report';
-import { AccountSearchComponent } from "@shared/account-search/account-search.component";
+import { AccountSearchComponent } from '@shared/account-search/account-search.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormatNumberPipe } from 'app/core/pipes/format-number.pipe';
 
 @Component({
   selector: 'app-accounting-report',
@@ -30,8 +31,9 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     CommonModule,
     AccountSearchComponent,
-    TranslateModule
-],
+    TranslateModule,
+    FormatNumberPipe,
+  ],
 })
 export class AccountingReportsComponent {
   private readonly service = inject(AccountingReportsService);

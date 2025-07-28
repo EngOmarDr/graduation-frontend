@@ -1,17 +1,21 @@
 <cust-card [titleText]="'prices' | translate" [titlePadding]="false">
-  <div class="flex justify-end">
-    <button
-      type="button"
-      class="py-1.5 px-2.5 mb-3 rounded-lg text-white bg-primary cursor-pointer"
-      routerLink="/add-price"
-    >
-      {{ 'add_price' | translate }}
-    </button>
+  <div class="cust-grid">
+    <div class="flex justify-end">
+      <button
+        type="button"
+        class="py-1.5 px-2.5 mb-3 rounded-lg text-white bg-primary cursor-pointer"
+        routerLink="/add-price"
+      >
+        {{ "add_price" | translate }}
+      </button>
+    </div>
+    <div class="col-span-full overflow-auto">
+      <app-custom-table
+        [data]="prices$ | async"
+        [columns]="displayedColumns"
+        (deleteRowEvent)="deletePrice($event)"
+        (updateRowEvent)="updatePrice($event)"
+      />
+    </div>
   </div>
-  <app-custom-table
-    [data]="prices$ | async"
-    [columns]="displayedColumns"
-    (deleteRowEvent)="deletePrice($event)"
-    (updateRowEvent)="updatePrice($event)"
-  />
 </cust-card>
