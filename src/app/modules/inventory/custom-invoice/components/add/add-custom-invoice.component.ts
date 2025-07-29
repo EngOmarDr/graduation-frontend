@@ -50,7 +50,7 @@ import { AlertService } from '@shared/services/alert.service';
     ValidationMessageComponent,
     AccountSearchComponent,
     ProductSearchComponent,
-    TranslateModule
+    TranslateModule,
   ],
   providers: [NumberFormatDirective],
   templateUrl: './add-custom-invoice.component.html',
@@ -345,6 +345,8 @@ export class AddCustomInvoiceComponent implements OnInit {
   >([]);
   onSelectProduct(product: ProductResponse, i: number) {
     this.unitService.getUnitById(product.defaultUnitId).subscribe((data) => {
+      console.log(data);
+      console.log(product);
       this.products.update((old) => {
         old[i] = { i, product, unitItems: data.unitItems ?? [] };
         return [...old];
@@ -353,6 +355,11 @@ export class AddCustomInvoiceComponent implements OnInit {
         data.unitItems.find((item) => {
           return item.isDef;
         })?.id
+      );
+      this.invoiceItems.controls[i].controls['price'].setValue(
+        product.prices.find((e) => this.invoiceType().defaultPriceId == e.id)
+          ?.price ?? 0,
+        { emitEvent: false }
       );
     });
   }
