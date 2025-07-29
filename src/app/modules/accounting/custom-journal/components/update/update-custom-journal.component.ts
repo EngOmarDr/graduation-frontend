@@ -28,6 +28,7 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-update-custom-journal',
@@ -45,6 +46,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './update-custom-journal.component.html',
 })
 export class UpdateCustomJournalComponent implements OnInit {
+  constructor(private alert: AlertService) { }
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly currencyService = inject(CurrencyService);
   private readonly accountService = inject(AccountService);
@@ -233,9 +235,9 @@ export class UpdateCustomJournalComponent implements OnInit {
             currencyValue: this.journalType.fieldCurrencyEquilty
               ? e['currencyValue']
               : e['currencyId']
-              ? this.currencies.filter((i) => i.id == e['currencyId'])[0]
+                ? this.currencies.filter((i) => i.id == e['currencyId'])[0]
                   .currencyValue
-              : undefined,
+                : undefined,
             date: this.journalType.fieldDate ? e['date'] : null,
           })
         ),
@@ -250,11 +252,11 @@ export class UpdateCustomJournalComponent implements OnInit {
                 this.minus() > 0
                   ? 0
                   : Math.abs(this.minus()) /
-                    this.form.controls.currencyValue.value,
+                  this.form.controls.currencyValue.value,
               credit:
                 this.minus() > 0
                   ? Math.abs(this.minus()) /
-                    this.form.controls.currencyValue.value
+                  this.form.controls.currencyValue.value
                   : 0,
             };
           } else {
@@ -276,9 +278,13 @@ export class UpdateCustomJournalComponent implements OnInit {
       //       ? Math.abs(this.minus()) / this.form.controls.currencyValue.value
       //       : 0,
       // });
+
     }
     this.journalService.updateJournal(data, this.journalId).subscribe({
-      next: (_) => this.location.back(),
+      next: (_) => {
+        this.alert.showSuccess('updated');
+        this.location.back();
+      },
       error: (err) => console.error(err),
     });
   }

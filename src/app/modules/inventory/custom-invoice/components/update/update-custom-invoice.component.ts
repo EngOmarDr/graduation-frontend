@@ -36,6 +36,7 @@ import { UnitResponse } from 'app/modules/inventory/unit/models/response/unit-re
 import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/unit-item-response.model';
 import { InvoiceResponse } from '../../models/response/invoice-response';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-update-custom-invoice',
@@ -57,6 +58,7 @@ import { TranslateModule } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UpdateCustomInvoiceComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly currencyService = inject(CurrencyService);
   private readonly service = inject(InvoiceService);
@@ -157,7 +159,10 @@ export class UpdateCustomInvoiceComponent implements OnInit {
     }
 
     this.service.update(this.id, this.form.getRawValue()).subscribe({
-      next: (_) => this.location.back(),
+      next: (_) => {
+    this.alert.showSuccess('updated');
+    this.location.back();
+  },
       error: (err) => console.log(err),
     });
   }

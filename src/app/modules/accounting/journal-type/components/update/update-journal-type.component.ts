@@ -18,6 +18,7 @@ import { ValidationMessageComponent } from '@shared/components/validation-messag
 import { JournalTypesService } from '../../services/journal-types.service';
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-update-journalType',
@@ -33,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './update-journal-type.component.html',
 })
 export class UpdateJournalTypeComponent {
+  constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly service = inject(JournalTypesService);
   private readonly accountService = inject(AccountService);
@@ -140,6 +142,7 @@ export class UpdateJournalTypeComponent {
       .updateJournalType(this.journalTypeId, this.form.getRawValue())
       .subscribe({
         next: (n) => {
+          this.alert.showSuccess('updated');
           this.location.back();
         },
       });

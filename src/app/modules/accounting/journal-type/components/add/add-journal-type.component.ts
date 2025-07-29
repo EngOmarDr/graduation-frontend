@@ -16,6 +16,7 @@ import { Currency } from 'app/modules/accounting/currency/models/currency.model'
 import { AccountResponse } from 'app/modules/accounting/account/models/response/account-response.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardComponent } from '@shared/components/card-form.component';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-journalType',
@@ -31,6 +32,7 @@ import { CardComponent } from '@shared/components/card-form.component';
   templateUrl: './add-journal-type.component.html',
 })
 export class AddJournalTypeComponent {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private service = inject(JournalTypesService);
   private accountService = inject(AccountService);
@@ -75,6 +77,7 @@ export class AddJournalTypeComponent {
   onSubmit() {
     this.service.createJournalType(this.form.getRawValue()).subscribe({
       next: () => {
+        this.alert.showSuccess('added');
         this.form.reset();
       },
     });

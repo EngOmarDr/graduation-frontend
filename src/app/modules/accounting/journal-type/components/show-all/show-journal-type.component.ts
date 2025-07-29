@@ -11,6 +11,7 @@ import { CardComponent } from '@shared/components/card-form.component';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-journal-types',
@@ -19,6 +20,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShowJournalTypesComponent {
+  constructor(private alert: AlertService) {}
   private readonly service = inject(JournalTypesService);
   private readonly router = inject(Router);
 
@@ -37,12 +39,11 @@ export class ShowJournalTypesComponent {
   }
 
   deleteItem(object: JournalTypeResponse): void {
-    if (confirm('Are you sure you want to delete this journalType?')) {
       this.service.deleteJournalType(object.id).subscribe(() => {
         this.journalTypes.update((old) =>
           old.filter((item) => item.id != object.id)
         );
       });
-    }
+      this.alert.showSuccess('deleted');
   }
 }

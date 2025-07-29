@@ -14,6 +14,7 @@ import { UserService } from '../../service/user.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UserResponse } from '../../models/response/user-response';
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-update-branch',
@@ -27,6 +28,7 @@ import { WarehouseService } from 'app/modules/inventory/warehouse/services/wareh
   templateUrl: './update-user.component.html',
 })
 export class UpdateUserComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly service = inject(UserService);
   private readonly warehouseService = inject(WarehouseService);
@@ -68,6 +70,7 @@ export class UpdateUserComponent implements OnInit {
   onSubmit() {
     this.service.update(this.form.getRawValue(), this.id!).subscribe({
       next: () => {
+        this.alert.showSuccess('updated');
         this.location.back();
       },
     });
