@@ -425,31 +425,31 @@
     "duration": "المدة (ثانية)",
     "updateBtn": "تحديث الإعلان",
     "currentMedia": "الوسائط الحالية",
-      "add_title": "إضافة عنوان الإعلان",
-  "form": {
-    "title": "العنوان",
-    "type_image": "نوع الصورة",
-    "type_video": "نوع الفيديو",
-    "media": "الوسائط",
-    "duration": "المدة",
-    "submit": "إرسال"
-  }
+    "add_title": "إضافة عنوان الإعلان",
+    "form": {
+      "title": "العنوان",
+      "type_image": "نوع الصورة",
+      "type_video": "نوع الفيديو",
+      "media": "الوسائط",
+      "duration": "المدة",
+      "submit": "إرسال"
+    }
   },
-    "accountS": {
+  "accountS": {
     "searchPlaceholder": "ابحث عن الحساب...",
     "enterValueToSearch": "أدخل قيمة للبحث",
     "defaultLabel": "الحساب"
   },
-    "validation": {
+  "validation": {
     "required": "حقل {{name}} مطلوب",
     "email": "يجب أن يكون بريدًا إلكترونيًا صحيحًا"
   },
-    "tree": {
+  "tree": {
     "noMatch": "لم يتم العثور على عناصر مطابقة",
     "expandAll": "توسيع الكل",
     "collapseAll": "طي الكل"
   },
-    "settings": {
+  "settings": {
     "themes": "الثيمات",
     "menuType": "نوع القائمة",
     "menuTheme": "ثيم القائمة",
@@ -478,8 +478,38 @@
     }
   },
   "messages": {
-  "added": "تمت الإضافة بنجاح",
-  "updated": "تم التحديث بنجاح",
-  "deleted": "تم الحذف بنجاح"
-}
+    "added": "تمت الإضافة بنجاح",
+    "updated": "تم التحديث بنجاح",
+    "deleted": "تم الحذف بنجاح"
+  },
+  "user": {
+    "add_title": "إضافة مستخدم",
+    "update_title": "تحديث مستخدم",
+    "form": {
+      "first_name": "الاسم الأول",
+      "last_name": "اسم العائلة",
+      "username": "اسم المستخدم",
+      "password": "كلمة المرور",
+      "warehouse": "المستودع",
+      "role": "الدور",
+      "submit": "إضافة",
+      "submit_update": "تحديث"
+    },
+    "title": "المستخدمون",
+    "add": "إضافة مستخدم",
+    "noData": "لا توجد بيانات",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "username": "اسم المستخدم",
+    "role": "الدور",
+    "warehouse": "اسم المستودع",
+    "action": "الإجراء",
+    "delete": "حذف",
+    "update": "تعديل",
+    "confirmDelete": "هل أنت متأكد من حذف {{ name }}؟"
+  },
+  "logout": "تسجيل الخروج",
+  "layout": {
+    "syrianTradingCompany": "المؤسسة السورية للتجارة"
+  }
 }

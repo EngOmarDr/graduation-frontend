@@ -15,6 +15,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertService } from '@shared/services/alert.service';
 
+
 @Component({
   selector: 'app-show-users',
   imports: [CardComponent, CommonModule, RouterModule, SweetAlert2Module, TranslateModule],
