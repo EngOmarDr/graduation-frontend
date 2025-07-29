@@ -482,5 +482,10 @@
       "outlined": "Outlined",
       "filled": "Filled"
     }
+  },
+    "messages": {
+    "added": "Successfully added",
+    "updated": "Successfully updated",
+    "deleted": "Successfully deleted"
   }
 }

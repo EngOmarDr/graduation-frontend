@@ -9,6 +9,7 @@ import { UnitItemResponse } from '../../models/response/unit-item-response.model
 import { UnitResponse } from '../../models/response/unit-response.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { AlertService } from '@shared/services/alert.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   templateUrl: './show-units.component.html',
 })
 export class ShowUnitsComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private readonly service = inject(UnitService);
   private readonly router = inject(Router);
 
@@ -38,12 +40,12 @@ export class ShowUnitsComponent implements OnInit {
   }
 
   deleteUnit(unit: UnitResponse): void {
-    if (confirm(`Are you sure you want to delete unit "${unit.name}"?`)) {
+
       this.service.deleteUnit(unit.id!).subscribe({
         next: () => {
           this.units.update((old) => old.filter((e) => e.id != unit.id));
         },
       });
-    }
+    this.alert.showSuccess('deleted');
   }
 }

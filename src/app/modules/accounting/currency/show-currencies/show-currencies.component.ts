@@ -8,6 +8,7 @@ import { CardComponent } from '../../../shared/components/card-form.component';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-currencies',
@@ -16,6 +17,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   templateUrl: './show-currencies.component.html',
 })
 export class ShowCurrenciesComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private readonly router = inject(Router);
   private readonly currencyService = inject(CurrencyService);
 
@@ -30,10 +32,9 @@ updateCurrency(currency: Currency) {
 }
 
 deleteCurrency(id: number): void {
-  if (confirm('Are you sure you want to delete this currency?')) {
     this.currencyService.deleteCurrency(id).subscribe({
       next: () => {
-        alert('Currency deleted successfully');
+        this.alert.showSuccess('deleted');
         this.currencies$ = this.currencyService.getCurrencies();
       },
       error: (err) => {
@@ -41,7 +42,7 @@ deleteCurrency(id: number): void {
         alert('Failed to delete currency');
       },
     });
-  }
+
 }
 
   showAlert(message: string): void {

@@ -18,6 +18,7 @@ import { CustomTableComponent } from '../../../shared/components/cust-table.comp
 import { HelperFunctionsService } from 'app/core/services/helper-functions.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-groups',
@@ -32,6 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './show-groups.component.html',
 })
 export class ShowGroupsComponent {
+  constructor(private alert: AlertService) {}
   private service = inject(GroupService);
   private router = inject(Router);
   private helper = inject(HelperFunctionsService);
@@ -61,6 +63,7 @@ export class ShowGroupsComponent {
         this.groups.update((old) => old.filter((item) => item.id != group.id));
       },
     });
+    this.alert.showSuccess('deleted');
   }
 
   changeView(isViewTree: boolean) {

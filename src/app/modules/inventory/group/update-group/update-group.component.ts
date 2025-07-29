@@ -16,6 +16,7 @@ import { ValidationMessageComponent } from '../../../shared/components/validatio
 import { Observable, of } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-update-group',
@@ -35,6 +36,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './update-group.component.html',
 })
 export class UpdateGroupComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private service = inject(GroupService);
   private activeRouter = inject(ActivatedRoute);
@@ -110,6 +112,7 @@ export class UpdateGroupComponent implements OnInit {
       this.service.updateGroup(this.group?.id!, this.form.value).subscribe({
         next: (res) => {
           console.log('group created:', res);
+          this.alert.showSuccess('updated');
           this.router.navigate(['/groups']);
         },
         error: (err) => {

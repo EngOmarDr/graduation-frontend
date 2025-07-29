@@ -17,6 +17,7 @@ import { BranchService } from 'app/modules/branch/services/branch.service';
 import { WarehouseResponse } from '../../models/response/warehouse-response';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-update-warehouse',
@@ -33,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './update-warehouse.component.html',
 })
 export class UpdateWarehouseComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly location = inject(Location);
   private readonly activeRoute = inject(ActivatedRoute);
@@ -80,6 +82,7 @@ export class UpdateWarehouseComponent implements OnInit {
     }
     this.service.update(this.id, this.form.getRawValue()).subscribe({
       next: () => {
+        this.alert.showSuccess('updated');
         this.location.back();
       },
     });

@@ -12,6 +12,7 @@ import { BranchService } from '../../services/branch.service';
 import { BranchResponse } from '../../models/response/branch-response';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-branch',
@@ -25,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './update-branch.component.html',
 })
 export class UpdateBranchComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private service = inject(BranchService);
   private activatedRoute = inject(ActivatedRoute);
@@ -66,6 +68,7 @@ export class UpdateBranchComponent implements OnInit {
       .updateBranch(this.branchId!, this.form.getRawValue())
       .subscribe({
         next: () => {
+          this.alert.showSuccess('updated');
           this.location.back();
         },
       });

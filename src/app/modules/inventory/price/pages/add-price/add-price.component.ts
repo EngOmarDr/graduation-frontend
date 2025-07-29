@@ -10,6 +10,7 @@ import { CardComponent } from '@shared/components/card-form.component';
 import { PriceService } from '../../services/price.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-price',
@@ -23,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './add-price.component.html',
 })
 export class AddPriceComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private service = inject(PriceService);
   private location = inject(Location);
@@ -60,10 +62,12 @@ export class AddPriceComponent implements OnInit {
         this.service
           .updatePrice(this.priceId!, this.priceForm.value)
           .subscribe(() => {
+            this.alert.showSuccess('updated');
             this.location.back();
           });
       } else {
         this.service.createPrice(this.priceForm.value).subscribe(() => {
+          this.alert.showSuccess('added');
           this.location.back();
         });
       }

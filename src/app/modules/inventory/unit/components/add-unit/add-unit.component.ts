@@ -13,6 +13,7 @@ import { UnitService } from '../../services/unit.service';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-group',
@@ -27,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './add-unit.component.html',
 })
 export class AddUnitComponent {
+  constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly unitService = inject(UnitService);
   private readonly toastr = inject(ToastrService);
@@ -87,7 +89,7 @@ export class AddUnitComponent {
 
     this.unitService.createUnit(this.form.getRawValue()).subscribe({
       next: () => {
-        this.toastr.success('added successfully');
+        this.alert.showSuccess('added');
         this.form.reset();
       },
     });

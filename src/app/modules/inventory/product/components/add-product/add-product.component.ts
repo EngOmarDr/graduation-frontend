@@ -19,6 +19,7 @@ import { CustomSelectComponent } from '@shared/components/custom-select.componen
 import { GroupService } from 'app/modules/inventory/group/services/group.service';
 import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/unit-item-response.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-product',
@@ -34,6 +35,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './add-product.component.html',
 })
 export class AddProductComponent {
+    constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly service = inject(ProductService);
   private readonly priceService = inject(PriceService);
@@ -161,6 +163,7 @@ export class AddProductComponent {
       console.log(object);
 
       this.service.createProduct(object).subscribe(() => this.form.reset());
+      this.alert.showSuccess('added');
     } else {
       this.form.markAllAsTouched();
     }

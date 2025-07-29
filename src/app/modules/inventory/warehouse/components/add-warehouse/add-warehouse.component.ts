@@ -13,6 +13,7 @@ import { WarehouseService } from '../../services/warehouse.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BranchService } from 'app/modules/branch/services/branch.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 
 @Component({
@@ -29,6 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './add-warehouse.component.html',
 })
 export class AddWarehouseComponent {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private service = inject(WarehouseService);
   private branchService = inject(BranchService);
@@ -68,6 +70,7 @@ export class AddWarehouseComponent {
     }
     this.service.create(this.form.getRawValue()).subscribe({
       next: () => {
+        this.alert.showSuccess('added');
         this.form.reset();
       },
     });

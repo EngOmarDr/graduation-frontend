@@ -9,7 +9,7 @@ import { ValidationMessageComponent } from '@shared/components/validation-messag
 import { AdvertisementService } from '../../services/Advertisement.service';
 import { AdvertisementResponse } from '../../models/advertisement-response';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { AlertService } from '@shared/services/alert.service';
 @Component({
   selector: 'app-update-advertisement-component',
   imports: [
@@ -23,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './update-advertisement-component.component.css'
 })
 export class UpdateAdvertisementComponentComponent implements OnInit {
+  constructor(private alert: AlertService) {}
  private service = inject(AdvertisementService);
   private loc = inject(Location);
   private route = inject(ActivatedRoute);
@@ -82,7 +83,7 @@ onSubmit() {
 
     this.service.update(this.ad.id, { name: title, duration, type }, this.file ?? undefined).subscribe({
       next: () => {
-        alert('Advertisement updated successfully!');
+        this.alert.showSuccess('updated');
         this.loc.back();
       },
       error: (err) => {

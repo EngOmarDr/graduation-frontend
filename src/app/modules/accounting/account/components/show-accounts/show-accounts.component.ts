@@ -13,6 +13,7 @@ import { AccountTreeResponse } from '../../models/response/account-tree-response
 import { HelperFunctionsService } from 'app/core/services/helper-functions.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-accounts',
@@ -27,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './show-accounts.component.html',
 })
 export class ShowAccountsComponent {
+  constructor(private alert: AlertService) {}
   private accountService = inject(AccountService);
   private router = inject(Router);
   private helper = inject(HelperFunctionsService);
@@ -63,6 +65,7 @@ export class ShowAccountsComponent {
           return old.filter((item) => item.id != object.id);
         }),
     });
+    this.alert.showSuccess('deleted');
   }
 
   changeView(treeView: boolean) {
@@ -78,7 +81,7 @@ export class ShowAccountsComponent {
 
   convertAccountTreeToTreeNode(accounts: AccountTreeResponse[]): TreeNode[] {
     return accounts
-      .filter((account) => account.id !== undefined) // Ensure id is defined since TreeNode requires id
+      .filter((account) => account.id !== undefined)
       .map((account) => {
         const node: TreeNode = {
           id: account.id as number,
