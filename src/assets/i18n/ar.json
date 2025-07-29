@@ -424,7 +424,16 @@
     "media": "الوسائط",
     "duration": "المدة (ثانية)",
     "updateBtn": "تحديث الإعلان",
-    "currentMedia": "الوسائط الحالية"
+    "currentMedia": "الوسائط الحالية",
+      "add_title": "إضافة عنوان الإعلان",
+  "form": {
+    "title": "العنوان",
+    "type_image": "نوع الصورة",
+    "type_video": "نوع الفيديو",
+    "media": "الوسائط",
+    "duration": "المدة",
+    "submit": "إرسال"
+  }
   },
     "accountS": {
     "searchPlaceholder": "ابحث عن الحساب...",
@@ -467,5 +476,10 @@
       "outlined": "بحدود",
       "filled": "مملوء"
     }
-  }
+  },
+  "messages": {
+  "added": "تمت الإضافة بنجاح",
+  "updated": "تم التحديث بنجاح",
+  "deleted": "تم الحذف بنجاح"
+}
 }

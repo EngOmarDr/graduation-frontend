@@ -17,6 +17,7 @@ import { AccountResponse } from '../../models/response/account-response.model';
 import { AcccountSearchModalComponent } from '../acccount-search-modal/acccount-search-modal.component';
 import { CreateAccountRequest } from '../../models/request/create_account_request';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-update-account',
@@ -34,6 +35,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './update-account.component.html',
 })
 export class UpdateAccountComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private service = inject(AccountService);
   private location = inject(Location);
@@ -120,6 +122,7 @@ export class UpdateAccountComponent implements OnInit {
 
     this.service.updateAccount(this.accountId!, data).subscribe({
       next: () => {
+        this.alert.showSuccess('updated');
         this.location.back();
       },
       error: (error) => {

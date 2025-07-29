@@ -34,6 +34,7 @@ import {
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-custom-journal',
@@ -52,6 +53,7 @@ import { TranslateModule } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddCustomJournalComponent implements OnInit, OnDestroy {
+  constructor(private alert: AlertService) { }
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly currencyService = inject(CurrencyService);
   private readonly accountService = inject(AccountService);
@@ -178,9 +180,9 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
           currencyValue: this.journalType.fieldCurrencyEquilty
             ? e['currencyValue']
             : e['currencyId']
-            ? this.currencies.filter((i) => i.id == e['currencyId'])[0]
+              ? this.currencies.filter((i) => i.id == e['currencyId'])[0]
                 .currencyValue
-            : undefined,
+              : undefined,
           date: this.journalType.fieldDate ? e['date'] : null,
         })),
     };
@@ -199,10 +201,14 @@ export class AddCustomJournalComponent implements OnInit, OnDestroy {
             ? Math.abs(this.minus) / this.form.controls.currencyValue.value
             : 0,
       });
+      this.alert.showSuccess('added');
       console.log(data.journalItems);
     }
     this.journalService.createJournal(data).subscribe({
-      next: (_) => this.form.reset(),
+      next: (_) => {
+    this.alert.showSuccess('added');
+    this.form.reset();
+  },
       error: (err) => console.error(err),
     });
   }

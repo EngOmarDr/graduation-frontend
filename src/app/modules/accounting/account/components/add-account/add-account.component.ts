@@ -16,6 +16,7 @@ import { AcccountSearchModalComponent } from '../acccount-search-modal/acccount-
 import { AccountResponse } from '../../models/response/account-response.model';
 import { CreateAccountRequest } from '../../models/request/create_account_request';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-account',
@@ -33,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './add-account.component.html',
 })
 export class AddAccountComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private service = inject(AccountService);
   private location = inject(Location);
@@ -81,6 +83,7 @@ export class AddAccountComponent implements OnInit {
     };
     this.service.createAccount(data).subscribe({
       next: () => {
+        this.alert.showSuccess('added');
         this.location.back();
       },
       error: (error) => {

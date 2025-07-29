@@ -7,6 +7,7 @@ import { map, Observable, of, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { CustomTableComponent } from '@shared/components/cust-table.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-branches',
@@ -14,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './show-branches.component.html',
 })
 export class ShowBranchesComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   readonly service = inject(BranchService);
   readonly router = inject(Router);
 
@@ -45,5 +47,6 @@ export class ShowBranchesComponent implements OnInit {
         ).subscribe();
       },
     });
+    this.alert.showSuccess('deleted');
   }
 }

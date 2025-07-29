@@ -10,6 +10,7 @@ import { CardComponent } from '../../../shared/components/card-form.component';
 import { CustomFieldComponent } from '../../../shared/components/custom-field.component';
 import { BranchService } from '../../services/branch.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-branch',
@@ -23,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './add-branch.component.html',
 })
 export class AddBranchComponent {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private service = inject(BranchService);
 
@@ -36,6 +38,7 @@ export class AddBranchComponent {
   onSubmit() {
     this.service.createBranch(this.form.getRawValue()).subscribe({
       next: () => {
+         this.alert.showSuccess('added');
         this.form.reset();
       },
     });

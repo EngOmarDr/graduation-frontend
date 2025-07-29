@@ -11,10 +11,13 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../service/user.service';
 import { UserResponse } from '../../models/response/user-response';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-users',
-  imports: [CardComponent, CommonModule, RouterModule],
+  imports: [CardComponent, CommonModule, RouterModule, SweetAlert2Module, TranslateModule],
   templateUrl: './show-users.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -25,17 +28,16 @@ export class ShowUsersComponent {
   usersReadonly = toSignal(this.service.getAllUsers(), { initialValue: [] });
   users = linkedSignal(() => this.usersReadonly());
 
-constructor(){
-  effect(() =>console.log(
-   this.users()));
-}
+  constructor(private alert: AlertService) {
+    effect(() => console.log(
+      this.users()));
+  }
 
   deleteItem(object: UserResponse): void {
-    if (confirm('are you sure you want to delete ?')) {
-      this.service.delete(object.id).subscribe(() => {
-        this.users.update((old) => old.filter((v) => v.id !== object.id));
-      });
-    }
+    this.service.delete(object.id).subscribe(() => {
+      this.users.update((old) => old.filter((v) => v.id !== object.id));
+    });
+    this.alert.showSuccess('deleted');
   }
 
   updateItem(object: UserResponse): void {

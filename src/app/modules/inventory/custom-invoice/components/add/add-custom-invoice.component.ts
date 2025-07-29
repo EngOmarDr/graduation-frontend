@@ -35,6 +35,7 @@ import { UnitService } from 'app/modules/inventory/unit/services/unit.service';
 import { UnitResponse } from 'app/modules/inventory/unit/models/response/unit-response.model';
 import { UnitItemResponse } from 'app/modules/inventory/unit/models/response/unit-item-response.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-custom-journal',
@@ -56,6 +57,7 @@ import { TranslateModule } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddCustomInvoiceComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly currencyService = inject(CurrencyService);
   private readonly service = inject(InvoiceService);
@@ -153,7 +155,10 @@ export class AddCustomInvoiceComponent implements OnInit {
     }
 
     this.service.create(this.form.getRawValue()).subscribe({
-      next: (_) => this.form.reset(),
+      next: (_) => {
+    this.alert.showSuccess('added');
+    this.form.reset();
+  },
       error: (err) => console.error(err),
     });
   }

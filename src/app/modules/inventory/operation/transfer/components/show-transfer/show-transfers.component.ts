@@ -7,6 +7,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TransferService } from '../../transfer.service';
 import { TransferResponse } from '../../models/response/transfer-response';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-transfers',
@@ -27,7 +28,7 @@ export class ShowTransfersComponent {
 
   readonly transfers = signal<TransferResponse[]>([]);
 
-  constructor() {
+  constructor(private alert: AlertService) {
     this.service.getAll().subscribe((data) => {
       this.transfers.set(data);
     });
@@ -43,5 +44,6 @@ export class ShowTransfersComponent {
     this.service.delete(object.id).subscribe(() => {
       this.transfers.update((old) => old.filter((e) => e.id !== object.id));
     });
+    this.alert.showSuccess('deleted');
   }
 }

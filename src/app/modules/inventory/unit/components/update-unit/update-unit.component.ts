@@ -15,6 +15,7 @@ import { UnitResponse } from '../../models/response/unit-response.model';
 import { CardComponent } from '../../../../shared/components/card-form.component';
 import { ValidationMessageComponent } from '../../../../shared/components/validation-message.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 
 @Component({
@@ -31,6 +32,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './update-unit.component.html',
 })
 export class UpdateUnitComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly service = inject(UnitService);
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -94,7 +96,7 @@ export class UpdateUnitComponent implements OnInit {
 
     this.service.updateUnit(this.unitId, this.form.getRawValue()).subscribe({
       next: () => {
-        this.toastr.success('updated successfully');
+        this.alert.showSuccess('updated');
         this.location.back();
       },
     });

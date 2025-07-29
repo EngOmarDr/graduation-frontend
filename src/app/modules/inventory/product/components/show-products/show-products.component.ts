@@ -7,6 +7,7 @@ import { ProductService } from '../../services/product.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-products',
@@ -21,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './show-products.component.html',
 })
 export class ShowProductsComponent {
+  constructor(private alert: AlertService) {}
   private readonly router = inject(Router);
   private readonly service = inject(ProductService);
 
@@ -38,5 +40,6 @@ export class ShowProductsComponent {
     this.service.deleteProduct(object.id).subscribe(() => {
       this.products.update((old) => old.filter((e) => e.id !== object.id));
     });
+    this.alert.showSuccess('deleted');
   }
 }

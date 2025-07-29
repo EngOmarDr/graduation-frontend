@@ -24,6 +24,7 @@ import { WarehouseService } from 'app/modules/inventory/warehouse/services/wareh
 import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
 import { AccountSearchComponent } from '../../../../shared/account-search/account-search.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-journal',
@@ -43,6 +44,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './add-journal.component.html',
 })
 export class AddJournalComponent implements OnInit {
+  constructor(private alert: AlertService) { }
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly currencyService = inject(CurrencyService);
   private readonly accountService = inject(AccountService);
@@ -205,7 +207,10 @@ export class AddJournalComponent implements OnInit {
       })),
     };
     this.journalService.createJournal(data).subscribe({
-      next: (_) => this.form.reset(),
+      next: (_) => {
+        this.alert.showSuccess('added');
+        this.form.reset();
+      },
       error: (err) => console.error(err),
     });
   }

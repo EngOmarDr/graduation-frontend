@@ -24,6 +24,7 @@ import { AccountResponse } from 'app/modules/accounting/account/models/response/
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/response/warehouse-response';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-update-journal',
@@ -41,6 +42,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './update-journal.component.html',
 })
 export class UpdateJournalComponent implements OnInit {
+  constructor(private alert: AlertService) { }
   private fb = inject(NonNullableFormBuilder);
   private activatedRoute = inject(ActivatedRoute);
   private location = inject(Location);
@@ -215,8 +217,12 @@ export class UpdateJournalComponent implements OnInit {
         date: e!['date'],
       })),
     };
+
     this.journalService.updateJournal(data, this.journalId).subscribe({
-      next: (_) => this.location.back(),
+      next: (_) => {
+        this.alert.showSuccess('updated');
+        this.location.back();
+      },
       error: (err) => console.error(err),
     });
   }

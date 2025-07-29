@@ -11,6 +11,7 @@ import { JournalService } from 'app/modules/accounting/journal/service/journal.s
 import { JournalResponse } from 'app/modules/accounting/journal/models/reponse/journal-response.model';
 import { JournalTypeResponse } from 'app/modules/accounting/journal-type/models/response/journal-type-response.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-custom-journal',
@@ -19,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShowCustomJournalsComponent {
+  constructor(private alert: AlertService) {}
   private readonly service = inject(JournalService);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -42,11 +44,10 @@ export class ShowCustomJournalsComponent {
   }
 
   deleteItem(voucher: JournalResponse): void {
-    if (confirm('are you sure you want to delete ?')) {
       this.service.deleteJournal(voucher.id).subscribe(() => {
         this.journals.update((old) => old.filter((v) => v.id !== voucher.id));
       });
-    }
+    this.alert.showSuccess('deleted');
   }
 
   updateItem(object: JournalResponse): void {

@@ -24,6 +24,7 @@ import { ProductSearchComponent } from 'app/modules/inventory/product/components
 import { ProductResponse } from 'app/modules/inventory/product/models/response/product-response';
 import { AccountSearchComponent } from 'app/modules/shared/account-search/account-search.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 
 @Component({
@@ -42,6 +43,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './add-transfer.component.html',
 })
 export class AddTransferComponent {
+  constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly service = inject(ProductService);
   private readonly priceService = inject(PriceService);
@@ -122,6 +124,7 @@ onSubmit(): void {
 
   this.transferService.create(transferData).subscribe({
     next: (response) => {
+      this.alert.showSuccess('added');
       console.log('Transfer created successfully:', response);
       this.form.reset();
     },

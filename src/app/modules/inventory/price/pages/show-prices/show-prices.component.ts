@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { CustomTableComponent } from '../../../../shared/components/cust-table.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-prices',
@@ -14,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './show-prices.component.html',
 })
 export class ShowPricesComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private readonly router = inject(Router);
   private readonly service = inject(PriceService);
 
@@ -42,5 +44,6 @@ export class ShowPricesComponent implements OnInit {
       );
       this.pricesSubject.next(updatedPrices);
     });
+    this.alert.showSuccess('deleted');
   }
 }

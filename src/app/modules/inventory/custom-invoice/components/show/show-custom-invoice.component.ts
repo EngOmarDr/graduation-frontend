@@ -15,6 +15,7 @@ import { InvoiceResponse } from '../../models/response/invoice-response';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { switchMap } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-custom-journal',
@@ -23,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShowCustomInvoicesComponent {
+  constructor(private alert: AlertService) {}
   private readonly service = inject(InvoiceService);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -60,6 +62,7 @@ export class ShowCustomInvoicesComponent {
     this.service.delete(voucher.id).subscribe(() => {
       this.invoices.update((old) => old.filter((v) => v.id !== voucher.id));
     });
+    this.alert.showSuccess('deleted');
   }
 
   updateItem(object: InvoiceResponse): void {

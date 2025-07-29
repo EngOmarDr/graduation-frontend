@@ -10,6 +10,7 @@ import { CustomFieldComponent } from '../../../shared/components/custom-field.co
 import { CurrencyService } from '../services/currency.service';
 import { Currency } from '../models/currency.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-edit-currency',
@@ -23,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './update-currency.component.html',
 })
 export class UpdateCurrencyComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private location = inject(Location);
   private router = inject(Router);
@@ -88,7 +90,7 @@ export class UpdateCurrencyComponent implements OnInit {
         .updateCurrency(this.currencyId, updatedCurrency)
         .subscribe({
           next: () => {
-            alert('Currency updated successfully');
+            this.alert.showSuccess('updated');
             this.location.back();
           },
           error: (err) => {

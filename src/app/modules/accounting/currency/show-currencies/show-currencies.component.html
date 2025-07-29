@@ -1,11 +1,14 @@
-<cust-card [titleText]="'currency.listTitle' | translate" [titlePadding]="false">
+<cust-card
+  [titleText]="'currency.listTitle' | translate"
+  [titlePadding]="false"
+>
   <div class="flex justify-end">
     <button
       type="button"
       class="py-1.5 px-2.5 mb-3 btn"
       routerLink="/add-currency"
     >
-      {{ 'currency.addButton' | translate }}
+      {{ "currency.addButton" | translate }}
     </button>
   </div>
 
@@ -19,18 +22,16 @@
         class="bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-neutral-400 uppercase"
       >
         <tr>
-          <th class="px-6 py-3">{{ 'currency.code' | translate }}</th>
-          <th class="px-6 py-3">{{ 'currency.name' | translate }}</th>
+          <th class="px-6 py-3">{{ "currency.code" | translate }}</th>
+          <th class="px-6 py-3">{{ "currency.name" | translate }}</th>
           <!-- <th class="px-6 py-3">Balance</th> -->
-          <th class="px-6 py-3">{{ 'currency.value' | translate }}</th>
-          <th class="px-6 py-3">{{ 'currency.partName' | translate }}</th>
-          <th class="px-6 py-3">{{ 'currency.partPrecision' | translate }}</th>
-          <th class="px-6 py-3">{{ 'currency.action' | translate }}</th>
+          <th class="px-6 py-3">{{ "currency.value" | translate }}</th>
+          <th class="px-6 py-3">{{ "currency.partName" | translate }}</th>
+          <th class="px-6 py-3">{{ "currency.partPrecision" | translate }}</th>
+          <th class="px-6 py-3">{{ "currency.action" | translate }}</th>
         </tr>
       </thead>
-      <tbody
-        class="divide-y-2 divide-gray-200 dark:divide-neutral-700"
-      >
+      <tbody class="divide-y-2 divide-gray-200 dark:divide-neutral-700">
         <tr
           *ngFor="let currency of currencies$ | async"
           class="hover:bg-neutral-100 dark:hover:bg-neutral-700"
@@ -39,8 +40,8 @@
           <td class="px-6 py-4">{{ currency.name }}</td>
           <!-- <td class="px-6 py-4">1</td> -->
           <td class="px-6 py-4">{{ currency.currencyValue }}</td>
-          <td class="px-6 py-4">{{ currency.partName || '-' }}</td>
-          <td class="px-6 py-4">{{ currency.partPrecision || '-' }}</td>
+          <td class="px-6 py-4">{{ currency.partName || "-" }}</td>
+          <td class="px-6 py-4">{{ currency.partPrecision || "-" }}</td>
           <td class="px-6 py-4">
             <button
               class="cursor-pointer me-2"
@@ -48,26 +49,37 @@
               type="button"
               (click)="updateCurrency(currency)"
             >
-              <img src="assets/icons/edit.png" alt="edit" width="23px" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#facc15"
+                viewBox="0 0 512 512"
+                width="16"
+                height="16"
+              >
+                <path
+                  d="M490.3 40.4C512.2 62.27 512.2 97.73 490.3 119.6L460.3 149.7L362.3 51.72L392.4 21.66C414.3-.2135 449.7-.2135 471.6 21.66L490.3 40.4zM172.4 241.7L339.7 74.34L437.7 172.3L270.3 339.6C264.2 345.8 256.7 350.4 248.4 353.2L159.6 382.8C150.1 385.6 141.5 383.4 135 376.1C128.6 370.5 126.4 361 129.2 352.4L158.8 263.6C161.6 255.3 166.2 247.8 172.4 241.7zM192 63.1C209.7 63.1 224 78.33 224 95.1C224 113.7 209.7 127.1 192 127.1H96C78.33 127.1 64 142.3 64 159.1V416C64 433.7 78.33 448 96 448H352C369.7 448 384 433.7 384 416V319.1C384 302.3 398.3 287.1 416 287.1C433.7 287.1 448 302.3 448 319.1V416C448 469 405 512 352 512H96C42.98 512 0 469 0 416V159.1C0 106.1 42.98 63.1 96 63.1H192z"
+                />
+              </svg>
             </button>
             <button
               class="cursor-pointer"
               [title]="'currency.delete' | translate"
               type="button"
-              (click)="currency.id !== undefined && deleteCurrency(currency.id)"
+              [swal]="[
+                  'invoiceType.delete' | translate,
+                  ('invoiceType.confirmDelete' | translate) + ' ' + currency.name
+                ]"
+                (confirm)="currency.id !== undefined && deleteCurrency(currency.id)"
             >
               <svg
-                class="fill-red-500"
-                height="24"
-                viewBox="0 0 24 24"
-                width="24"
                 xmlns="http://www.w3.org/2000/svg"
+                fill="#f87171"
+                viewBox="0 0 448 512"
+                width="16"
+                height="16"
               >
                 <path
-                  d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z"
-                />
-                <path
-                  d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
+                  d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128H416L394.8 466.1z"
                 />
               </svg>
             </button>

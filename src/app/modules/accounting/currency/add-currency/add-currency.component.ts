@@ -12,6 +12,7 @@ import { CardComponent } from '../../../shared/components/card-form.component';
 import { CurrencyService } from '../services/currency.service';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-currency',
@@ -26,6 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
 })
 export class AddCurrencyComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private currencyService = inject(CurrencyService);
   private router = inject(Router);
@@ -75,6 +77,7 @@ const data = {
 
     this.currencyService.createCurrency(data).subscribe({
       next: (res) => {
+        this.alert.showSuccess('added');
         console.log('Currency created:', res);
         this.router.navigate(['/currencies']);
       },

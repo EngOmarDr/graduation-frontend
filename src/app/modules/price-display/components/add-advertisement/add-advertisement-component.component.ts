@@ -7,6 +7,7 @@ import { ValidationMessageComponent } from '@shared/components/validation-messag
 import { AdvertisementService } from '../../services/Advertisement.service';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-advertisement-component',
@@ -21,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './add-advertisement-component.component.css',
 })
 export class AddAdvertisementComponentComponent {
+  constructor(private alert: AlertService) {}
   private service = inject(AdvertisementService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
@@ -53,6 +55,7 @@ onSubmit() {
 
     this.service.create({ name: title, duration, type }, this.file).subscribe({
       next: (res) => {
+        this.alert.showSuccess('added');
         console.log('Advertisement added:', res);
         this.form.reset({ type: 'image' });
         this.file = null;

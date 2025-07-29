@@ -29,6 +29,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductResponse } from '../../models/response/product-response';
 import { environment } from 'environments/environment';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
+
 
 @Component({
   selector: 'app-update-product',
@@ -44,6 +46,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './update-product.component.html',
 })
 export class UpdateProductComponent implements OnInit {
+  constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly service = inject(ProductService);
   private readonly priceService = inject(PriceService);
@@ -179,6 +182,7 @@ export class UpdateProductComponent implements OnInit {
       this.service
         .updateProduct(window.history.state.object.id!, object)
         .subscribe(() => this.location.back());
+          this.alert.showSuccess('updated');
     } else {
       this.form.markAllAsTouched();
     }

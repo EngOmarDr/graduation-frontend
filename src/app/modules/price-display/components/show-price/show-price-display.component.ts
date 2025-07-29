@@ -8,6 +8,7 @@ import { AdvertisementResponse } from '../../models/advertisement-response';
 import { CardComponent } from '@shared/components/card-form.component';
 import { map } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-price-display',
@@ -23,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './show-price-display.component.css'
 })
 export class ShowPriceDisplayComponent {
+  constructor(private alert: AlertService) {}
   private readonly router = inject(Router);
   private readonly service = inject(AdvertisementService);
 
@@ -50,5 +52,6 @@ updateAd(ad: AdvertisementResponse) {
     this.service.delete(ad.id).subscribe(() => {
       this.ads.update((old) => old.filter((e) => e.id !== ad.id));
     });
+    this.alert.showSuccess('deleted');
   }
 }

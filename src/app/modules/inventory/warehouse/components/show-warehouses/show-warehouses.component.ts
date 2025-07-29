@@ -10,6 +10,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TreeNode, TreeViewComponent } from '@shared/components/tree-view.component';
 import { WarehouseTreeResponse } from '../../models/response/warehouse-tree-response';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-show-warehouses',
@@ -26,6 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './show-warehouses.component.html',
 })
 export class ShowWarehousesComponent {
+  constructor(private alert: AlertService) {}
   private readonly service = inject(WarehouseService);
   private readonly router = inject(Router);
 
@@ -44,6 +46,7 @@ export class ShowWarehousesComponent {
     this.service.delete(object.id).subscribe(() => {
       this.warehouses.update((old) => old.filter((e) => e.id !== object.id));
     });
+    this.alert.showSuccess('deleted');
   }
 
   treeView = false;

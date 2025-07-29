@@ -14,6 +14,7 @@ import { Observable, of } from 'rxjs';
 import { Group } from '../models/group';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from '@shared/services/alert.service';
 
 @Component({
   selector: 'app-add-group',
@@ -30,6 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './add-group.component.html',
 })
 export class AddGroupComponent {
+  constructor(private alert: AlertService) {}
   private fb = inject(NonNullableFormBuilder);
   private service = inject(GroupService);
   private router = inject(Router);
@@ -63,6 +65,7 @@ export class AddGroupComponent {
       this.service.createGroup(this.form.getRawValue()).subscribe({
         next: (res) => {
           console.log('Currency created:', res);
+          this.alert.showSuccess('added');
           this.router.navigate(['/groups']);
         },
         error: (err) => {
