@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { BranchService } from 'app/modules/branch/services/branch.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-user',
@@ -21,6 +22,7 @@ import { WarehouseService } from 'app/modules/inventory/warehouse/services/wareh
     CustomSelectComponent,
     ReactiveFormsModule,
     RouterModule,
+    TranslateModule
   ],
   templateUrl: './add-user.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

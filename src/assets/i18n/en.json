@@ -441,30 +441,30 @@
     "updateBtn": "Update Advertisement",
     "currentMedia": "Current media",
     "add_title": "Add Advertisement Title",
-  "form": {
-    "title": "Title",
-    "type_image": "Image Type",
-    "type_video": "Video Type",
-    "media": "Media",
-    "duration": "Duration",
-    "submit": "Submit"
-  }
+    "form": {
+      "title": "Title",
+      "type_image": "Image Type",
+      "type_video": "Video Type",
+      "media": "Media",
+      "duration": "Duration",
+      "submit": "Submit"
+    }
   },
-    "accountS": {
+  "accountS": {
     "searchPlaceholder": "Search account...",
     "enterValueToSearch": "Enter value to search",
     "defaultLabel": "Account"
   },
-    "validation": {
+  "validation": {
     "required": "{{name}} is required",
     "email": "Should be a valid email"
   },
-    "tree": {
+  "tree": {
     "noMatch": "No matching items found.",
     "expandAll": "Expand All",
     "collapseAll": "Collapse All"
   },
-    "settings": {
+  "settings": {
     "themes": "Themes",
     "menuType": "Menu Type",
     "menuTheme": "Menu Theme",
@@ -492,9 +492,39 @@
       "filled": "Filled"
     }
   },
-    "messages": {
+  "messages": {
     "added": "Successfully added",
     "updated": "Successfully updated",
     "deleted": "Successfully deleted"
+  },
+  "user": {
+    "add_title": "Add User",
+    "update_title": "Update User",
+    "form": {
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "username": "Username",
+      "password": "Password",
+      "warehouse": "Warehouse",
+      "role": "Role",
+      "submit": "Add",
+      "submit_update": "Update"
+    },
+      "title": "Users",
+  "add": "Add User",
+  "noData": "No Data",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "username": "Username",
+  "role": "Role",
+  "warehouse": "Warehouse Name",
+  "action": "Action",
+  "delete": "Delete",
+  "update": "Update",
+  "confirmDelete": "Are you sure you want to delete {{ name }}?"
+  },
+  "logout": "Logout",
+   "layout": {
+    "syrianTradingCompany": "Syrian Trading Company"
   }
 }

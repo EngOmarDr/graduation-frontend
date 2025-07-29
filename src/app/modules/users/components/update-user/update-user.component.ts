@@ -15,6 +15,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { UserResponse } from '../../models/response/user-response';
 import { WarehouseService } from 'app/modules/inventory/warehouse/services/warehouse.service';
 import { AlertService } from '@shared/services/alert.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-branch',
@@ -24,6 +25,7 @@ import { AlertService } from '@shared/services/alert.service';
     ReactiveFormsModule,
     CommonModule,
     CustomSelectComponent,
+    TranslateModule
   ],
   templateUrl: './update-user.component.html',
 })
