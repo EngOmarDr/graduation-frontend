@@ -125,6 +125,16 @@ export class AccountSearchComponent implements OnInit {
   accounts = signal<AccountResponse[]>([]);
 
   ngOnInit(): void {
+    this.control.valueChanges.subscribe((v) => {
+      if (!v) {
+        this.form.reset();
+      }
+    });
+    this.form.controls.accountName.valueChanges.subscribe((v) => {
+      if (!v) {
+        this.control.setValue(undefined, { emitEvent: false });
+      }
+    });
     if (this.fetch() && this.control.value) {
       this.isLoadingAccounts.set(true);
       this.accountService
