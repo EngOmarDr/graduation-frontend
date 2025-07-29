@@ -439,7 +439,16 @@
     "media": "Media",
     "duration": "Duration (sec)",
     "updateBtn": "Update Advertisement",
-    "currentMedia": "Current media"
+    "currentMedia": "Current media",
+    "add_title": "Add Advertisement Title",
+  "form": {
+    "title": "Title",
+    "type_image": "Image Type",
+    "type_video": "Video Type",
+    "media": "Media",
+    "duration": "Duration",
+    "submit": "Submit"
+  }
   },
     "accountS": {
     "searchPlaceholder": "Search account...",
