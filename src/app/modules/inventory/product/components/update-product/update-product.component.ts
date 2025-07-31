@@ -31,7 +31,6 @@ import { environment } from 'environments/environment';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertService } from '@shared/services/alert.service';
 
-
 @Component({
   selector: 'app-update-product',
   imports: [
@@ -41,7 +40,7 @@ import { AlertService } from '@shared/services/alert.service';
     CustomFieldComponent,
     ValidationMessageComponent,
     CustomSelectComponent,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './update-product.component.html',
 })
@@ -74,9 +73,9 @@ export class UpdateProductComponent implements OnInit {
     image: [''],
     groupId: this.fb.control<number | null>(null, Validators.required),
     defaultUnitId: this.fb.control<number | null>(null, Validators.required),
-    minQty: this.fb.control<number | null>(null, Validators.required),
-    maxQty: this.fb.control<number | null>(null, Validators.required),
-    orderQty: this.fb.control<number | null>(null, Validators.required),
+    minQty: this.fb.control<number | undefined>(undefined),
+    maxQty: this.fb.control<number | undefined>(undefined),
+    orderQty: this.fb.control<number | undefined>(undefined),
     notes: this.fb.control<string | undefined>(undefined),
     type: [0, Validators.required],
     prices: this.fb.array<FormGroup>(
@@ -171,9 +170,9 @@ export class UpdateProductComponent implements OnInit {
         type: this.form.controls.type.value,
         defaultUnitId: this.form.controls.defaultUnitId.value!,
         groupId: this.form.controls.groupId.value!,
-        maxQty: this.form.controls.maxQty.value!,
-        minQty: this.form.controls.minQty.value!,
-        orderQty: this.form.controls.orderQty.value!,
+        maxQty: this.form.controls.maxQty.value,
+        minQty: this.form.controls.minQty.value,
+        orderQty: this.form.controls.orderQty.value,
         image: this.file,
         notes: this.form.controls.notes.value,
         barcodes: this.form.controls.barcodes.value,
@@ -182,7 +181,7 @@ export class UpdateProductComponent implements OnInit {
       this.service
         .updateProduct(window.history.state.object.id!, object)
         .subscribe(() => this.location.back());
-          this.alert.showSuccess('updated');
+      this.alert.showSuccess('updated');
     } else {
       this.form.markAllAsTouched();
     }
@@ -213,18 +212,9 @@ export class UpdateProductComponent implements OnInit {
           null,
           Validators.required
         ),
-        minQty: this.fb.control<number | null>(
-          objectState.minQty,
-          Validators.required
-        ),
-        maxQty: this.fb.control<number | null>(
-          objectState.maxQty,
-          Validators.required
-        ),
-        orderQty: this.fb.control<number | null>(
-          objectState.orderQty,
-          Validators.required
-        ),
+        minQty: this.fb.control<number | undefined>(objectState.minQty),
+        maxQty: this.fb.control<number | undefined>(objectState.maxQty),
+        orderQty: this.fb.control<number | undefined>(objectState.orderQty),
         notes: this.fb.control<string | undefined>(objectState.notes),
         type: [objectState.type, Validators.required],
         prices: this.fb.array<FormGroup>(

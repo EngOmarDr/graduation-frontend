@@ -32,7 +32,7 @@
           <td>
             <img
               *ngIf="row.image"
-              ngSrc="{{ row.image }}"
+              ngSrc="{{ row.image.includes('http') ? row.image : 'http://localhost:8080' + row.image }}"
               class="object-contain"
               fill
               alt="{{ row.name }}"

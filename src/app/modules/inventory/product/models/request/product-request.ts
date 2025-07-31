@@ -8,9 +8,9 @@ export interface ProductRequest {
   image?: File;
   groupId: number;
   defaultUnitId: number;
-  minQty: number;
-  maxQty: number;
-  orderQty: number;
+  minQty?: number;
+  maxQty?: number;
+  orderQty?: number;
   notes?: string;
   prices: ProductPriceRequest[];
   barcodes: ProductBarcodeRequest[];
