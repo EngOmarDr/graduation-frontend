@@ -342,7 +342,8 @@
     "title": "المنتج",
     "add": "إضافة منتج",
     "no_data": "لا توجد بيانات",
-    "delete_confirm": "هل أنت متأكد أنك تريد حذف"
+    "delete_confirm": "هل أنت متأكد أنك تريد حذف",
+  "importExcel": "استيراد من Excel"
   },
   "common": {
     "actions": "الإجراءات",

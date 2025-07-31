@@ -98,4 +98,11 @@ export class ProductService {
   deleteProduct(id: number | string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+    importFromExcel(fileForm: FormData) {
+    return this.http.post(`${this.apiUrl}/import-excel`, fileForm, {
+  responseType: 'text',
+});
+  }
+
 }

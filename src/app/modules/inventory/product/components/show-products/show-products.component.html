@@ -1,8 +1,22 @@
 <cust-card [titleText]="'productS.title' | translate" [titlePadding]="false">
-  <div class="flex justify-end items-center">
+<div class="flex justify-end items-center gap-3">
     <button type="button" class="mb-3 btn" routerLink="/add-product">
       {{ "productS.add" | translate }}
     </button>
+      <input
+    #fileInput
+    type="file"
+    accept=".xlsx, .xls"
+    hidden
+    (change)="onFileSelected($event)"
+  />
+  <button
+    type="button"
+    class="mb-3 btn bg-green-600 text-white"
+    (click)="fileInput.click()"
+  >
+    {{ "productS.importExcel" | translate }}
+  </button>
   </div>
 
   <div class="overflow-auto max-h-96 relative">

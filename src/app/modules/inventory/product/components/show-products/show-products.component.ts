@@ -9,6 +9,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertService } from '@shared/services/alert.service';
 
+
 @Component({
   selector: 'app-show-products',
   imports: [
@@ -59,4 +60,36 @@ export class ShowProductsComponent {
     });
     this.alert.showSuccess('deleted');
   }
+
+  onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+
+  if (!input.files || input.files.length === 0) {
+    this.alert.showWarning('No file selected');
+    return;
+  }
+
+  const file = input.files[0];
+  const formData = new FormData();
+  formData.append('file', file);
+
+  this.service.importFromExcel(formData).subscribe({
+    next: (res) => {
+      this.alert.showSuccess('added');
+      this.refreshProducts();
+    },
+    error: () => {
+      this.alert.showError('Failed to import products');
+    },
+  });
+
+  input.value = '';
+}
+
+refreshProducts() {
+  this.service.getProducts().subscribe((data) => {
+    this.productsRaw.set(data);
+  });
+}
+
 }

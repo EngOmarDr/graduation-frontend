@@ -357,7 +357,8 @@
     "priceType": "Price Type",
     "unitName": "Unit Name",
     "price": "Price",
-    "barcode": "Barcode"
+    "barcode": "Barcode",
+    "importExcel": "importExcel"
   },
   "common": {
     "actions": "Actions",
