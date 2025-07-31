@@ -65,7 +65,7 @@ export class ShowProductsComponent {
   const input = event.target as HTMLInputElement;
 
   if (!input.files || input.files.length === 0) {
-    this.alert.showWarning('No file selected');
+    this.alert.showWarning('messages.no_file_selected');
     return;
   }
 
@@ -79,7 +79,7 @@ export class ShowProductsComponent {
       this.refreshProducts();
     },
     error: () => {
-      this.alert.showError('Failed to import products');
+      this.alert.showError('messages.import_failed');
     },
   });
 
