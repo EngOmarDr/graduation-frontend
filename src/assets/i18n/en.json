@@ -365,7 +365,9 @@
     "edit": "Edit",
     "update": "Update",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "prev": "prev",
+    "next": "next"
   },
   "startDate": "Start Date",
   "endDate": "End Date",

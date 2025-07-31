@@ -23,12 +23,26 @@ import { AlertService } from '@shared/services/alert.service';
 })
 export class ShowProductsComponent {
   constructor(private alert: AlertService) {}
+
   private readonly router = inject(Router);
   private readonly service = inject(ProductService);
 
   productsReadonly = toSignal(this.service.getProducts(), { initialValue: [] });
-  products = linkedSignal(() => this.productsReadonly());
+  productsRaw = linkedSignal(() => this.productsReadonly());
+
   displayColumns = ['code', 'name', 'image'];
+
+  page = 1;
+  perPage = 10;
+
+  get totalPages(): number {
+    return Math.ceil(this.productsRaw().length / this.perPage);
+  }
+
+  products() {
+    const start = (this.page - 1) * this.perPage;
+    return this.productsRaw().slice(start, start + this.perPage);
+  }
 
   updateProduct(object: ProductResponse) {
     this.router.navigate(['update-product', object.id], {
@@ -38,7 +52,10 @@ export class ShowProductsComponent {
 
   deleteProduct(object: ProductResponse) {
     this.service.deleteProduct(object.id).subscribe(() => {
-      this.products.update((old) => old.filter((e) => e.id !== object.id));
+      this.productsRaw.update((old) => old.filter((e) => e.id !== object.id));
+      if (this.page > this.totalPages) {
+        this.page = this.totalPages || 1;
+      }
     });
     this.alert.showSuccess('deleted');
   }
