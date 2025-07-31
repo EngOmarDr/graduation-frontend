@@ -25,6 +25,7 @@ import { WarehouseResponse } from 'app/modules/inventory/warehouse/models/respon
 import { AccountSearchComponent } from '../../../../shared/account-search/account-search.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertService } from '@shared/services/alert.service';
+import { StorageService } from 'app/core/services/storage.service';
 
 @Component({
   selector: 'app-add-journal',
@@ -44,12 +45,13 @@ import { AlertService } from '@shared/services/alert.service';
   templateUrl: './add-journal.component.html',
 })
 export class AddJournalComponent implements OnInit {
-  constructor(private alert: AlertService) { }
+  constructor(private alert: AlertService) {}
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly currencyService = inject(CurrencyService);
   private readonly accountService = inject(AccountService);
   private readonly journalService = inject(JournalService);
   private readonly warehouseService = inject(WarehouseService);
+  readonly isAdmin = inject(StorageService).isAdmin;
 
   warehouses: WarehouseResponse[] = [];
   currencies: Currency[] = [];
@@ -60,7 +62,7 @@ export class AddJournalComponent implements OnInit {
     date: [this.getCurrentDate(), Validators.required],
     branchId: this.fb.control<undefined | number>(
       undefined,
-      Validators.required
+      this.isAdmin ? Validators.required : null
     ),
     currencyId: [1, Validators.required],
     currencyValue: [1, Validators.required],

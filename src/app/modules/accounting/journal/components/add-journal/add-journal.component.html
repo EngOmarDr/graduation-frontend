@@ -7,12 +7,14 @@
       type="datetime-local"
     />
 
+    @if (isAdmin) {
     <cust-select
       [control]="form.controls.branchId"
       [options]="warehouses"
       inputId="Warehouse"
       [label]="'journal.warehouse' | translate"
     />
+    }
 
     <cust-select
       [control]="form.controls['currencyId']"
@@ -30,7 +32,7 @@
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isPosted" />
-      {{ 'journal.isPosted' | translate }}
+      {{ "journal.isPosted" | translate }}
       <app-validation-message
         [control]="this.form.controls.isPosted"
         name="is posted"
@@ -43,14 +45,14 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>{{ 'journal.account' | translate }}</th>
-              <th>{{ 'journal.notes' | translate }}</th>
-              <th>{{ 'journal.debit' | translate }}</th>
-              <th>{{ 'journal.credit' | translate }}</th>
-              <th>{{ 'journal.currency' | translate }}</th>
-              <th>{{ 'journal.currencyValue' | translate }}</th>
+              <th>{{ "journal.account" | translate }}</th>
+              <th>{{ "journal.notes" | translate }}</th>
+              <th>{{ "journal.debit" | translate }}</th>
+              <th>{{ "journal.credit" | translate }}</th>
+              <th>{{ "journal.currency" | translate }}</th>
+              <th>{{ "journal.currencyValue" | translate }}</th>
               <!-- <th>Date</th> -->
-              <th>{{ 'journal.actions' | translate }}</th>
+              <th>{{ "journal.actions" | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -152,13 +154,13 @@
     </div>
 
     <div class="col-span-full mt-4">
-      <p>{{ 'journal.totalDebit' | translate }}: {{ sumDebit }}</p>
-      <p>{{ 'journal.totalCredit' | translate }}: {{ sumCredit }}</p>
-      <p>{{ 'journal.difference' | translate }}: {{ minus }}</p>
+      <p>{{ "journal.totalDebit" | translate }}: {{ sumDebit }}</p>
+      <p>{{ "journal.totalCredit" | translate }}: {{ sumCredit }}</p>
+      <p>{{ "journal.difference" | translate }}: {{ minus }}</p>
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn">{{ 'journal.add' | translate }}</button>
+      <button type="submit" class="btn">{{ "journal.add" | translate }}</button>
     </div>
   </form>
 </cust-card>
