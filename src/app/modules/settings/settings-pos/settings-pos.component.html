@@ -1,0 +1,20 @@
+<cust-card [titleText]="'sidebar.settings' | translate">
+  <form [formGroup]="form()" (ngSubmit)="onSubmit()" class="cust-grid">
+    <cust-select
+      [control]="form().controls.invoiceTypeId"
+      [options]="invoiceTypes()"
+      inputId="name"
+      [label]="'invoice-type-pos' | translate"
+    />
+
+    <div class="self-end">
+      <button type="submit" class="btn" [disabled]="form().invalid">
+        @if (settings().length>0) {
+        {{ "update" | translate }}
+        }@else {
+        {{ "add" | translate }}
+        }
+      </button>
+    </div>
+  </form>
+</cust-card>

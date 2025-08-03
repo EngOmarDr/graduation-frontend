@@ -511,5 +511,6 @@
   "logout": "تسجيل الخروج",
   "layout": {
     "syrianTradingCompany": "المؤسسة السورية للتجارة"
-  }
+  },
+  "invoice-type-pos": "نمط فاتورة نقطة البيع"
 }

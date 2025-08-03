@@ -526,5 +526,6 @@
   "logout": "Logout",
    "layout": {
     "syrianTradingCompany": "Syrian Trading Company"
-  }
+  },
+  "invoice-type-pos": "POS Invoice Type"
 }

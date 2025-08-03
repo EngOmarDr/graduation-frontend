@@ -256,6 +256,14 @@ export const routes: Routes = [
           },
         ],
       },
+      {
+        path: 'settings',
+        canActivate: [authGuard, adminGuard],
+        loadComponent: () =>
+          import('./modules/settings/settings-pos/settings-pos.component').then(
+            (m) => m.SettingsPosComponent
+          ),
+      },
       ...accountingRoutes,
       ...inventoryRoutes,
     ],
