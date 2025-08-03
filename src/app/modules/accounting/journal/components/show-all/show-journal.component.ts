@@ -24,26 +24,43 @@ import { AlertService } from '@shared/services/alert.service';
 })
 export class ShowJournalsComponent {
   constructor(private alert: AlertService) {}
+
   private readonly service = inject(JournalService);
   private readonly router = inject(Router);
   private readonly jt = inject(JournalTypesService);
   private readonly invoiceTypeService = inject(InvoiceTypeService);
   journalTypes = this.jt.journalTypes;
   invoiceTypes = this.invoiceTypeService.invoiceTypes;
+
   journals = signal<JournalResponse[]>([]);
+  page = 1;
+  perPage = 10;
+
+  get totalPages(): number {
+    return Math.ceil(this.journals().length / this.perPage);
+  }
+
+  paginatedJournals(): JournalResponse[] {
+    const start = (this.page - 1) * this.perPage;
+    return this.journals().slice(start, start + this.perPage);
+  }
 
   ngOnInit(): void {
     this.service.getJournals().subscribe((data) => {
       this.journals.set(data);
-      console.log(this.journals());
-
+      if (this.page > this.totalPages) {
+        this.page = this.totalPages || 1;
+      }
     });
   }
 
   deleteItem(voucher: JournalResponse): void {
-      this.service.deleteJournal(voucher.id).subscribe(() => {
-        this.journals.update((old) => old.filter((v) => v.id !== voucher.id));
-      });
+    this.service.deleteJournal(voucher.id).subscribe(() => {
+      this.journals.update((old) => old.filter((v) => v.id !== voucher.id));
+      if (this.page > this.totalPages) {
+        this.page = this.totalPages || 1;
+      }
+    });
     this.alert.showSuccess('deleted');
   }
 
@@ -56,7 +73,9 @@ export class ShowJournalsComponent {
   getJournalTypeName(id: number) {
     return this.journalTypes().find((item) => item.id === id)?.name;
   }
+
   getInvoiceTypeName(id: number) {
     return this.invoiceTypes().find((item) => item.id === id)?.name;
   }
 }
+

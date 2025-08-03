@@ -19,6 +19,18 @@ export class ShowInvoiceTypesComponent {
 
   types = this.service.invoiceTypes;
 
+  page = 1;
+  perPage = 10;
+
+  get totalPages(): number {
+    return Math.ceil(this.types().length / this.perPage);
+  }
+
+  paginatedTypes() {
+    const start = (this.page - 1) * this.perPage;
+    return this.types().slice(start, start + this.perPage);
+  }
+
   updateItem(object: InvoiceTypeResponse) {
     this.router.navigate(['update-invoice-type', object.id], {
       state: { object },
@@ -28,6 +40,10 @@ export class ShowInvoiceTypesComponent {
   deleteItem(object: InvoiceTypeResponse): void {
     this.service.delete(object.id).subscribe(() => {
       this.types.update((old) => old.filter((item) => item.id != object.id));
+      if (this.page > this.totalPages) {
+        this.page = this.totalPages || 1;
+      }
     });
   }
 }
+

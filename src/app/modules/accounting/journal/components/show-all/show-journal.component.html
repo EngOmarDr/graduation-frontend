@@ -27,8 +27,8 @@
           <td [attr.colspan]="7" class="text-center">{{ 'journal.noData' | translate }}</td>
         </tr>
 
-        <tr *ngFor="let journal of journals(); let i = index">
-          <td>{{ i + 1 }}</td>
+       <tr *ngFor="let journal of paginatedJournals(); let i = index">
+          <td>{{ (page - 1) * perPage + i + 1 }}</td>
           <td>{{ journal.branchId }}</td>
           <td>{{ journal.totalCredit }}</td>
           <td>
@@ -87,5 +87,33 @@
         </tr>
       </tbody>
     </table>
+    <!-- Pagination controls -->
+<div class="flex justify-center mt-4 gap-2">
+  <button
+    class="px-3 py-1 border rounded disabled:opacity-50"
+    [disabled]="page === 1"
+    (click)="page = page - 1"
+  >
+    {{ 'common.prev' | translate }}
+  </button>
+
+  <ng-container *ngFor="let p of [].constructor(totalPages); let i = index">
+    <button
+      class="px-3 py-1 border rounded hover:bg-gray-200"
+      [ngClass]="{ 'bg-blue-600 text-white': page === i + 1 }"
+      (click)="page = i + 1"
+    >
+      {{ i + 1 }}
+    </button>
+  </ng-container>
+
+  <button
+    class="px-3 py-1 border rounded disabled:opacity-50"
+    [disabled]="page === totalPages"
+    (click)="page = page + 1"
+  >
+    {{ 'common.next' | translate }}
+  </button>
+</div>
   </div>
 </cust-card>
