@@ -21,7 +21,7 @@ export class BranchService {
   }
 
   createBranch(branch: BranchRequest) {
-    return this.http.post<BranchRequest>(this.apiUrl, branch);
+    return this.http.post<BranchResponse>(this.apiUrl, branch);
   }
 
   updateBranch(id: number, branch: BranchRequest): Observable<BranchResponse> {
