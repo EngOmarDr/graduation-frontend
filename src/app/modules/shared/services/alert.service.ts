@@ -37,4 +37,30 @@ export class AlertService {
       });
     });
   }
+
+  showWarning(messageKey: string) {
+  this.translate.get(messageKey).subscribe((msg) => {
+    Swal.fire({
+      icon: 'warning',
+      title: msg,
+      toast: true,
+      timer: 2500,
+      position: 'top-end',
+      showConfirmButton: false,
+    });
+  });
+}
+
+showError(messageKey: string) {
+  this.translate.get(messageKey).subscribe((msg) => {
+    Swal.fire({
+      icon: 'error',
+      title: msg,
+      toast: true,
+      timer: 2500,
+      position: 'top-end',
+      showConfirmButton: false,
+    });
+  });
+}
 }

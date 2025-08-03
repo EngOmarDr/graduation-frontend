@@ -357,7 +357,8 @@
     "priceType": "Price Type",
     "unitName": "Unit Name",
     "price": "Price",
-    "barcode": "Barcode"
+    "barcode": "Barcode",
+    "importExcel": "importExcel"
   },
   "common": {
     "actions": "Actions",
@@ -365,7 +366,9 @@
     "edit": "Edit",
     "update": "Update",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "prev": "prev",
+    "next": "next"
   },
   "startDate": "Start Date",
   "endDate": "End Date",
@@ -495,7 +498,9 @@
   "messages": {
     "added": "Successfully added",
     "updated": "Successfully updated",
-    "deleted": "Successfully deleted"
+    "deleted": "Successfully deleted",
+  "no_file_selected": "No file selected",
+  "import_failed": "Failed to import products"
   },
   "user": {
     "add_title": "Add User",

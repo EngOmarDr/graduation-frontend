@@ -1,8 +1,22 @@
 <cust-card [titleText]="'productS.title' | translate" [titlePadding]="false">
-  <div class="flex justify-end items-center">
+<div class="flex justify-end items-center gap-3">
     <button type="button" class="mb-3 btn" routerLink="/add-product">
-      {{ 'productS.add' | translate }}
+      {{ "productS.add" | translate }}
     </button>
+      <input
+    #fileInput
+    type="file"
+    accept=".xlsx, .xls"
+    hidden
+    (change)="onFileSelected($event)"
+  />
+  <button
+    type="button"
+    class="mb-3 btn bg-green-600 text-white"
+    (click)="fileInput.click()"
+  >
+    {{ "productS.importExcel" | translate }}
+  </button>
   </div>
 
   <div class="overflow-auto max-h-96 relative">
@@ -13,13 +27,15 @@
           <th *ngFor="let col of displayColumns">
             {{ col }}
           </th>
-          <th>{{ 'common.actions' | translate }}</th>
+          <th>{{ "common.actions" | translate }}</th>
         </tr>
       </thead>
       <tbody>
         @if (products().length == 0) {
         <tr>
-          <td [attr.colspan]="displayColumns.length + 2">{{ 'productS.no_data' | translate }}</td>
+          <td [attr.colspan]="displayColumns.length + 2">
+            {{ "productS.no_data" | translate }}
+          </td>
         </tr>
         }
         <tr *ngFor="let row of products(); let i = index">
@@ -83,5 +99,33 @@
         </tr>
       </tbody>
     </table>
+    <!-- Pagination controls -->
+    <div class="flex justify-center mt-4 gap-2">
+      <button
+        class="px-3 py-1 border rounded disabled:opacity-50"
+        [disabled]="page === 1"
+        (click)="page = page - 1"
+      >
+        {{ "common.prev" | translate }}
+      </button>
+
+      <ng-container *ngFor="let p of [].constructor(totalPages); let i = index">
+        <button
+          class="px-3 py-1 border rounded hover:bg-gray-200"
+          [ngClass]="{ 'bg-blue-600 text-white': page === i + 1 }"
+          (click)="page = i + 1"
+        >
+          {{ i + 1 }}
+        </button>
+      </ng-container>
+
+      <button
+        class="px-3 py-1 border rounded disabled:opacity-50"
+        [disabled]="page === totalPages"
+        (click)="page = page + 1"
+      >
+        {{ "common.next" | translate }}
+      </button>
+    </div>
   </div>
 </cust-card>
