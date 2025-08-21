@@ -4,6 +4,7 @@
       [label]="'advertisements.form.title' | translate"
       inputId="title"
       [control]="form.controls.title"
+      [required]="true"
     />
 
     <div class="col-span-full flex gap-4 items-center">
@@ -21,6 +22,7 @@
       type="file"
       [control]="form.controls.media"
       (change)="upload($event)"
+      [required]="true"
     />
 
     <cust-form-field
@@ -28,6 +30,7 @@
       inputId="duration"
       type="number"
       [control]="form.controls.duration"
+      [required]="true"
     />
 
     <button type="submit" class="col-span-full btn">{{ 'advertisements.form.submit' | translate }}</button>

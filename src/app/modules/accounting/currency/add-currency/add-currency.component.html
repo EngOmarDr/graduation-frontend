@@ -4,12 +4,14 @@
       [control]="currencyForm.controls.code"
       inputId="code"
       [label]="'currency.code' | translate"
+      [required]="true"
     />
 
     <cust-form-field
       [control]="currencyForm.controls.name"
       inputId="name"
       [label]="'currency.name' | translate"
+      [required]="true"
     />
 
     <cust-form-field
@@ -17,6 +19,7 @@
       inputId="currencyValue"
       [label]="'currency.value' | translate"
       type="number"
+      [required]="true"
     />
 
     <cust-form-field

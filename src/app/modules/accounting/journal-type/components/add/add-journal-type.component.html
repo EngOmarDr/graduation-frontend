@@ -4,6 +4,7 @@
       [control]="form.controls.name"
       inputId="name"
       [label]="'journal.name' | translate"
+      [required]="true"
     />
 
     <div>
@@ -76,12 +77,14 @@
       [control]="form.controls.creditName"
       inputId="Credit Name"
       [label]="'journal.creditName' | translate"
+      [required]="true"
     />
 
     <cust-form-field
       [control]="form.controls.debitName"
       inputId="Debit Name"
       [label]="'journal.debitName' | translate"
+      [required]="true"
     />
 
     <label class="self-center">

@@ -76,7 +76,7 @@ export const routes: Routes = [
             canActivate: [authGuard],
             loadComponent: () =>
               import(
-                './modules/price-display/components/show-price/show-price-display.component'
+                './modules/price-display/components/show-advertisement/show-price-display.component'
               ).then((m) => m.ShowPriceDisplayComponent),
           },
         ],

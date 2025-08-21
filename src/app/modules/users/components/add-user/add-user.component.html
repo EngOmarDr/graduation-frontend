@@ -4,18 +4,21 @@
       [control]="form.controls.firstName"
       inputId="firstname"
       [label]="'user.form.first_name' | translate"
+      [required]="true"
     />
 
     <cust-form-field
       [control]="form.controls.lastName"
       inputId="lastname"
       [label]="'user.form.last_name' | translate"
+      [required]="true"
     />
 
     <cust-form-field
       [control]="form.controls.username"
       inputId="username"
       [label]="'user.form.username' | translate"
+      [required]="true"
     />
 
     <cust-form-field
@@ -23,6 +26,7 @@
       inputId="password"
       label="Password"
       [label]="'user.form.password' | translate"
+      [required]="true"
     />
 
     <cust-select

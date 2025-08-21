@@ -1,6 +1,6 @@
 import { Component, inject, linkedSignal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AdvertisementService } from '../../services/Advertisement.service';
@@ -16,7 +16,6 @@ import { AlertService } from '@shared/services/alert.service';
     CommonModule,
     RouterModule,
     SweetAlert2Module,
-    NgOptimizedImage,
     CardComponent,
     TranslateModule
   ],

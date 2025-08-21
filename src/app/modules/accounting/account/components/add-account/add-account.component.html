@@ -5,12 +5,14 @@
       inputId="code"
       [label]="'accountForm.code' | translate"
       [customMessage]="error?.code"
+      [required]="true"
     />
 
     <cust-form-field
       [control]="form.controls.name"
       inputId="name"
       [label]="'accountForm.name' | translate"
+      [required]="true"
     />
 
     <form [formGroup]="form" (submit)="submitSearch()">

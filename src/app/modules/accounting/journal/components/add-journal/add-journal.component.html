@@ -5,6 +5,7 @@
       inputId="date"
       [label]="'journal.date' | translate"
       type="datetime-local"
+      [required]="true"
     />
 
     @if (isAdmin) {
@@ -28,6 +29,7 @@
       inputId="currencyValue"
       [label]="'journal.currencyValue' | translate"
       type="number"
+      [required]="true"
     />
 
     <label class="self-center">
