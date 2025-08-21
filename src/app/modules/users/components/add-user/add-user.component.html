@@ -33,13 +33,15 @@
     />
 
     <cust-select
-      [control]="form.controls.role"
-      [options]="[
-        { key: 'USER', value: 'USER' },
-      ]"
-      inputId="role"
-      [label]="'user.form.role' | translate"
-    />
+  [control]="form.controls.role"
+  [options]="[
+    { key: 'USER', value: 'USER' },
+    { key: 'ADMIN', value: 'ADMIN' },
+    { key: 'MANAGER', value: 'MANAGER' }
+  ]"
+  inputId="role"
+  [label]="'user.form.role' | translate"
+/>
 
     <div class="col-span-full grid grid-cols-4">
       <button type="submit" class="btn" [disabled]="!form.valid">{{ 'user.form.submit' | translate }}</button>

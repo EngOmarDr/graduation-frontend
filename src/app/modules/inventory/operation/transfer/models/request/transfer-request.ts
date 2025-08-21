@@ -4,15 +4,15 @@ export interface TransferRequest {
   cashAccountId: number;
   expenseAccountId: number;
   expenseValue: number;
-  date: string; 
+  date: string;
   driverName: string;
-  notes: string;
+  notes?: string;
   items: TransferItem[];
 }
 
 export interface TransferItem {
   productId: number;
   qty: number;
-  unitItemId: number;
-  unitFact: number;
+  unitItemId?: number;
+  unitFact?: number;
 }

@@ -125,46 +125,48 @@ export class AccountSearchComponent implements OnInit {
   accounts = signal<AccountResponse[]>([]);
 
   ngOnInit(): void {
+    // حماية valueChanges لتجنب حلقة لا نهائية
     this.control.valueChanges.subscribe((v) => {
       if (!v) {
-        this.form.reset();
+        this.form.reset({ accountName: '', accountId: '' }, { emitEvent: false });
       }
     });
+
     this.form.controls.accountName.valueChanges.subscribe((v) => {
       if (!v) {
         this.control.setValue(undefined, { emitEvent: false });
       }
     });
+
     if (this.fetch() && this.control.value) {
       this.isLoadingAccounts.set(true);
       this.accountService
         .getAccountById(this.control.value)
         .subscribe((next) => {
-          this.onAccountSelected(next);
+          this.onAccountSelected(next, true);
           this.isLoadingAccounts.set(false);
         });
     }
-    this.form.controls.accountName.valueChanges.subscribe((value) => {
-      if (value.toString().trim().length == 0) {
-        this.control?.setValue(undefined);
-        this.accountSelected.emit(undefined);
-      }
-    });
   }
 
-  onAccountSelected(object: any) {
-    this.form.controls.accountName!.setValue(object.code + '-' + object.name);
-    this.form.controls.accountId!.setValue(object.id);
-    this.control?.setValue(object.id);
-    console.log(this.control.value);
+  onAccountSelected(object: any, preventEmit: boolean = false) {
+    const idStr = String(object.id); // تحويل الرقم إلى نص
 
-    this.accountSelected.emit(object);
+    // استخدام emitEvent: false لتجنب الحلقات
+    this.form.controls.accountName!.setValue(object.code + '-' + object.name, { emitEvent: false });
+    this.form.controls.accountId!.setValue(idStr, { emitEvent: false });
+    this.control.setValue(idStr, { emitEvent: preventEmit ? false : true });
+
+    if (!preventEmit) {
+      this.accountSelected.emit(object);
+    }
+
     this.showModalAccount = false;
   }
 
   submitAccountSearch() {
     const searchValue =
-      this.form.controls.accountName.value.toString().search('-') == 0
+      this.form.controls.accountName.value.toString().search('-') === 0
         ? this.form.controls.accountName.value.toString()
         : this.form.controls.accountName.value.split('-')[0];
 
@@ -178,7 +180,6 @@ export class AccountSearchComponent implements OnInit {
     this.accountService.searchAccount(searchValue).subscribe({
       next: (next) => {
         this.accounts.set(next);
-
         this.isLoadingAccounts.set(false);
 
         if (next.length === 1) {
@@ -193,3 +194,4 @@ export class AccountSearchComponent implements OnInit {
     });
   }
 }
+

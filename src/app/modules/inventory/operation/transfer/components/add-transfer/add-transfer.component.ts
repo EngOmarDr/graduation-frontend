@@ -69,7 +69,7 @@ export class AddTransferComponent {
     items: this.fb.array<FormGroup>([
       this.fb.group({
         productId: [null, Validators.required],
-        qty: [null, Validators.required],
+        qty: [0, Validators.required],
         unitItemId: [1, Validators.required],
         unitFact: [1, Validators.required],
       }),
@@ -96,14 +96,37 @@ addRow(): void {
     this.items.removeAt(index);
   }
 
+
 onSubmit(): void {
   if (this.form.invalid) {
     this.form.markAllAsTouched();
+
+    const invalidFields: string[] = [];
+
+    Object.keys(this.form.controls).forEach(key => {
+      const control = this.form.get(key);
+      if (control?.invalid) {
+        if (key === 'items' && control instanceof FormArray) {
+          control.controls.forEach((row, index) => {
+            Object.keys((row as FormGroup).controls).forEach(rowKey => {
+              const rowControl = row.get(rowKey);
+              if (rowControl?.invalid) {
+                invalidFields.push(`Row ${index + 1} -> ${rowKey}`);
+              }
+            });
+          });
+        } else {
+          invalidFields.push(key);
+        }
+      }
+    });
+
+    console.error('Invalid fields:', invalidFields);
+    this.alert.showError('Please fill all required fields. Check console for details.');
     return;
   }
 
   const raw = this.form.getRawValue();
-
 
   const transferData: TransferRequest = {
     fromWarehouseId: Number(raw.fromWarehouseId),
@@ -117,22 +140,39 @@ onSubmit(): void {
     items: raw.items.map((item: any) => ({
       productId: Number(item.productId),
       qty: Number(item.qty),
-      unitItemId: Number(item.unitItemId),
-      unitFact: Number(item.unitFact),
+      unitItemId: item.unitItemId ? Number(item.unitItemId) : 1,
+      unitFact: item.unitFact ? Number(item.unitFact) : 1,
     })),
   };
+
+  console.log('Sending payload to API:', transferData);
 
   this.transferService.create(transferData).subscribe({
     next: (response) => {
       this.alert.showSuccess('added');
-      console.log('Transfer created successfully:', response);
-      this.form.reset();
+      console.log('API Response:', response);
+
+      this.form.reset({
+        fromWarehouseId: null,
+        toWarehouseId: null,
+        cashAccountId: null,
+        expenseAccountId: null,
+        expenseValue: null,
+        date: new Date().toISOString().split('.')[0],
+        driverName: '',
+        notes: '',
+        items: []
+      });
+      this.addRow();
     },
     error: (err) => {
       console.error('Error creating transfer:', err);
+      this.alert.showError(err?.error?.message || 'Failed to create transfer.');
     }
   });
 }
+
+
 
 onProductSelected(product: ProductResponse, row: AbstractControl) {
   row.get('productId')?.setValue(product.id);
@@ -147,7 +187,4 @@ onProductSelected(product: ProductResponse, row: AbstractControl) {
     this.unitItemsMap.set(map);
   }
 }
-
-
-
 }

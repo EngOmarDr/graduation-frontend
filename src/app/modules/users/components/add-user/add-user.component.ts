@@ -39,7 +39,7 @@ export class AddUserComponent {
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
     warehouseId: [undefined, [Validators.required]],
-    role: this.fb.control<'USER'>('USER', [Validators.required]),
+    role: this.fb.control<'USER' | 'ADMIN' | 'MANAGER'>('USER', [Validators.required]),
   });
 
   onSubmit() {

@@ -3,6 +3,6 @@ export interface UserResponse {
   firstName: string;
   lastName: string;
   username: string;
-  role: 'USER' | 'ADMIN';
+  role: 'USER' | 'ADMIN' | 'MANAGER';
   warehouseId?: number;
 }

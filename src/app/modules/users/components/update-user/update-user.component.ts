@@ -47,7 +47,7 @@ export class UpdateUserComponent implements OnInit {
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
     warehouseId: [-1, [Validators.required]],
-    role: this.fb.control<'USER' | 'ADMIN'>('USER', [Validators.required]),
+    role: this.fb.control<'USER' | 'ADMIN' | 'MANAGER'>('USER', [Validators.required]),
   });
 
   ngOnInit(): void {
