@@ -82,6 +82,14 @@ export const inventoryRoutes: Routes = [
     canActivate: [adminGuard],
   },
   {
+  path: 'edit-transfer/:id',
+  loadComponent: () =>
+    import(
+      './operation/transfer/components/edit-transfer/edit-transfer.component'
+    ).then((m) => m.EditTransferComponent),
+  canActivate: [adminGuard],
+},
+  {
     path: 'inventory-reports/:name',
     canActivate: [authGuard],
     loadComponent: () =>

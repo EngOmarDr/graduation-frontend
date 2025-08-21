@@ -35,10 +35,8 @@ export class ShowTransfersComponent {
   }
 
   update(object: TransferResponse) {
-    this.router.navigate(['update-warehouse', object.id], {
-      state: { object },
-    });
-  }
+  this.router.navigate(['/edit-transfer', object.id]);
+}
 
   delete(object: TransferResponse) {
     this.service.delete(object.id).subscribe(() => {
