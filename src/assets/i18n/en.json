@@ -530,7 +530,13 @@
   },
   "logout": "Logout",
    "layout": {
-    "syrianTradingCompany": "Syrian Trading Company"
+    "syrianTradingCompany": "Syrian Trading Company",
+    "confirmLogoutTitle": "Are you sure?",
+    "confirmLogoutText": "Do you want to log out of the system?",
+    "confirmButtonText": "Yes, logout",
+    "cancelButtonText": "Cancel",
+    "logoutSuccessTitle": "Logged out!",
+    "logoutSuccessText": "You have successfully logged out."
   },
   "invoice-type-pos": "POS Invoice Type"
 }

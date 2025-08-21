@@ -343,7 +343,7 @@
     "add": "إضافة منتج",
     "no_data": "لا توجد بيانات",
     "delete_confirm": "هل أنت متأكد أنك تريد حذف",
-  "importExcel": "استيراد من Excel"
+    "importExcel": "استيراد من Excel"
   },
   "common": {
     "actions": "الإجراءات",
@@ -352,7 +352,7 @@
     "yes": "نعم",
     "no": "لا",
     "update": "تحديث",
-        "prev": "السابق",
+    "prev": "السابق",
     "next": "التالي"
   },
   "startDate": "تاريخ البداية",
@@ -485,7 +485,7 @@
     "updated": "تم التحديث بنجاح",
     "deleted": "تم الحذف بنجاح",
     "no_file_selected": "لم يتم تحديد ملف",
-  "import_failed": "فشل في استيراد المنتجات"
+    "import_failed": "فشل في استيراد المنتجات"
   },
   "user": {
     "add_title": "إضافة مستخدم",
@@ -515,7 +515,13 @@
   },
   "logout": "تسجيل الخروج",
   "layout": {
-    "syrianTradingCompany": "المؤسسة السورية للتجارة"
+    "syrianTradingCompany": "المؤسسة السورية للتجارة",
+    "confirmLogoutTitle": "هل أنت متأكد؟",
+    "confirmLogoutText": "هل تريد تسجيل الخروج من النظام؟",
+    "confirmButtonText": "نعم، خروج",
+    "cancelButtonText": "إلغاء",
+    "logoutSuccessTitle": "تم الخروج!",
+    "logoutSuccessText": "تم تسجيل الخروج بنجاح."
   },
   "invoice-type-pos": "نمط فاتورة نقطة البيع"
 }
