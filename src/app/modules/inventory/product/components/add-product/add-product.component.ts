@@ -30,7 +30,7 @@ import { AlertService } from '@shared/services/alert.service';
     CustomFieldComponent,
     ValidationMessageComponent,
     CustomSelectComponent,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './add-product.component.html',
 })

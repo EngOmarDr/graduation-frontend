@@ -15,13 +15,13 @@
     "noResults": "لا توجد نتائج",
     "ok": "موافق",
     "cancel": "إلغاء",
-    "code": "الرمز",
+    "code": "الكود",
     "name": "الاسم"
   },
   "accountForm": {
     "title": "إضافة حساب",
     "updateTitle": "تعديل الحساب",
-    "code": "الرمز",
+    "code": "الكود",
     "name": "الاسم",
     "parentAccount": "الحساب الرئيسي",
     "parent": "الحساب الأب",
@@ -38,7 +38,7 @@
   "loading": "جارٍ التحميل...",
   "currency": {
     "addTitle": "إضافة عملة",
-    "code": "الرمز",
+    "code": "الكود",
     "name": "الاسم",
     "value": "قيمة العملة",
     "partName": "اسم الجزء",
@@ -221,7 +221,7 @@
   "is_suspended": "معلق",
   "groupForm": {
     "addTitle": "إضافة مجموعة",
-    "code": "الرمز",
+    "code": "الكود",
     "name": "الاسم",
     "parentGroup": "المجموعة الأم",
     "notes": "ملاحظات",
@@ -394,7 +394,7 @@
   "update_unit": "تحديث الوحدة",
   "warehouseA": {
     "addTitle": "إضافة مستودع",
-    "code": "الرمز",
+    "code": "الكود",
     "name": "الاسم",
     "branch": "الفرع",
     "parent": "المستودع الأب",

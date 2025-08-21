@@ -33,14 +33,14 @@ import { TranslateModule } from '@ngx-translate/core';
   template: `
     <div>
       <label
-        [for]="inputId()"
-        class="cust-input-label"
-        *ngIf="label()"
-        [ngClass]="{
-          'cust-label-disable': control().disabled
-        }"
-        >{{ label() }}
-      </label>
+  [for]="inputId()"
+  class="cust-input-label"
+  *ngIf="label()"
+  [ngClass]="{ 'cust-label-disable': control().disabled }"
+>
+  {{ label() }}
+  <span *ngIf="required()" class="text-red-600">*</span>
+</label>
       @if(type()=='number'){
 
       <input
@@ -99,6 +99,7 @@ export class CustomFieldComponent {
     | 'week'
   >('text');
   readonly readOnly = input<boolean>(false);
+  readonly required = input<boolean>(false);
   readonly customMessage = input<string | null>(null);
   get formControl(): FormControl {
     return this.control() as FormControl;

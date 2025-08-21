@@ -4,12 +4,14 @@
       [control]="form.controls.code"
       inputId="code"
       [label]="'code' | translate"
+      [required]="true"
     />
 
     <cust-form-field
       [control]="form.controls.name"
       inputId="name"
       [label]="'name' | translate"
+      [required]="true"
     />
 
     <cust-select
@@ -73,10 +75,10 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>{{ 'priceType' | translate }}</th>
-            <th>{{ 'unitName' | translate }}</th>
-            <th>{{ 'price' | translate }}</th>
-            <th>{{ 'actions' | translate }}</th>
+            <th>{{ "priceType" | translate }}</th>
+            <th>{{ "unitName" | translate }}</th>
+            <th>{{ "price" | translate }}</th>
+            <th>{{ "actions" | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -162,9 +164,9 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>{{ 'unitItem' | translate }}</th>
-            <th>{{ 'barcode' | translate }}</th>
-            <th>{{ 'actions' | translate }}</th>
+            <th>{{ "unitItem" | translate }}</th>
+            <th>{{ "barcode" | translate }}</th>
+            <th>{{ "actions" | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -236,7 +238,7 @@
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn">{{ 'add' | translate }}</button>
+      <button type="submit" class="btn">{{ "add" | translate }}</button>
     </div>
   </form>
 </cust-card>
