@@ -95,7 +95,10 @@ export class UpdateAccountComponent implements OnInit {
               ...next,
               parentId: account?.code + '-' + account?.name,
             };
-            this.form.patchValue(data);
+            this.form.patchValue({
+  ...data,
+  finalAccount: data.finalAccount ?? 0
+});
           },
           error: () => {
             this.location.back();

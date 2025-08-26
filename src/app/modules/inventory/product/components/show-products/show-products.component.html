@@ -25,8 +25,8 @@
         <tr>
           <th>#</th>
           <th *ngFor="let col of displayColumns">
-            {{ col }}
-          </th>
+  {{ col | translate }}
+</th>
           <th>{{ "common.actions" | translate }}</th>
         </tr>
       </thead>

@@ -36,12 +36,13 @@ export class ShowAccountsComponent {
   treeView = false;
   treeData: TreeNode[] = [];
 
-  displayedColumns: (keyof AccountResponse)[] = [
-    'code',
-    'name',
-    'parentId',
-    'finalAccount',
-  ];
+displayedColumns: (keyof AccountResponse)[] = [
+  'code',
+  'name',
+  'parentName',
+  'finalAccountName',
+];
+
 
   accounts = linkedSignal(
     toSignal(this.accountService.getAccounts(), { initialValue: [] })

@@ -79,7 +79,7 @@ export class ShowGroupsComponent {
 
   convertToTreeNode(groups: GroupTree[]): TreeNode[] {
     return groups
-      .filter((group) => group.id !== undefined) // Ensure id is defined since TreeNode requires id
+      .filter((group) => group.id !== undefined)
       .map((group) => {
         const node: TreeNode = {
           id: group.id as number,

@@ -8,7 +8,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 @Component({
   selector: 'app-custom-table',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,TranslateModule,SweetAlert2Module],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule, SweetAlert2Module],
   template: `
     <div class="overflow-auto max-h-96 relative">
       <table>
@@ -16,16 +16,16 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
           <tr>
             <th>#</th>
             <th *ngFor="let col of columns()">
-              {{ col }}
-            </th>
-            <th>{{ 'advertisements.actions' | translate }}</th>
+  {{ translateColumn(col) | translate }}
+</th>
+            <th>{{ 'groups.actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           @if (data()?.length == 0) {
           <tr>
             <td [attr.colspan]="columns().length + 2">
-              {{ 'advertisements.empty' | translate }}
+              {{ 'groups.empty' | translate }}
             </td>
           </tr>
           }
@@ -33,7 +33,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
             <td>
               {{ i + 1 }}
             </td>
-            <td *ngFor="let col of columns()">{{ row[col] }}</td>
+            <td *ngFor="let col of columns()">
+  {{ row[col] ?? '' }}
+</td>
             <td>
               <button
                 type="button"
@@ -83,7 +85,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   `,
 })
 export class CustomTableComponent<T> {
-  constructor(public fb: NonNullableFormBuilder) {}
+  constructor(public fb: NonNullableFormBuilder) { }
 
   readonly data = input.required<T[] | null>();
   readonly columns = input.required<(keyof T)[]>();
@@ -95,5 +97,8 @@ export class CustomTableComponent<T> {
   }
   editRow(object: T) {
     this.updateRowEvent.emit(object);
+  }
+  translateColumn(col: keyof T): string {
+    return `groups.columns.${String(col)}`;
   }
 }

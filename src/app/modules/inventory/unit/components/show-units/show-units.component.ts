@@ -22,7 +22,10 @@ export class ShowUnitsComponent implements OnInit {
   private readonly service = inject(UnitService);
   private readonly router = inject(Router);
 
-  displayedColumns = ['unit Name', ];
+  displayedColumns = ['unitName'];
+  translateColumn(col: string): string {
+    return `units.columns.${col}`;
+  }
 
   units = signal<UnitResponse[]>([]);
   get unitItems(): UnitItemResponse[][] {

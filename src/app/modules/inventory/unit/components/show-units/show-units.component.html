@@ -11,8 +11,8 @@
         <tr>
           <th>#</th>
           <th *ngFor="let col of displayedColumns">
-            {{ col }}
-          </th>
+      {{ translateColumn(col) | translate }}
+    </th>
           <th>{{ 'units.actions' | translate }}</th>
         </tr>
       </thead>

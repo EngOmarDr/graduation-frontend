@@ -25,7 +25,7 @@
     "name": "الاسم",
     "parentAccount": "الحساب الرئيسي",
     "parent": "الحساب الأب",
-    "finalAccount": "الحساب النهائي",
+    "finalAccount": "الحساب الختامي",
     "addButton": "إضافة",
     "updateButton": "تعديل"
   },
@@ -232,8 +232,20 @@
   "groups": {
     "title": "المجموعات",
     "add_group": "إضافة مجموعة",
+    "columns": {
+    "code": "الكود",
+    "name": "الاسم",
+    "parentName": "المجموعة الأم",
+    "notes": "ملاحظات",
+    "parentId" : "معرّف المجموعة الأم",
+    "finalAccountName": "الحساب الختامي",
+    "phone":"رقم الهاتف",
+    "address":"العنوان"
+  },
     "table_view": "عرض جدول",
-    "tree_view": "عرض شجري"
+    "tree_view": "عرض شجري",
+        "actions": "إجراءات",
+    "empty": "لا توجد مجموعات"
   },
   "invoiceType": {
     "addInvoiceType": "إضافة نوع فاتورة",
@@ -271,7 +283,7 @@
   "auto_post": "ترحيل تلقائي",
   "cash_bill": "فاتورة نقدية",
   "inventoryCount": {
-    "title": "جرد المخزون",
+    "title": "جرد المستودع",
     "warehouse": "المستودع",
     "product": "المنتج",
     "group": "المجموعة",
@@ -340,12 +352,32 @@
   "ok": "موافق",
   "cancel": "إلغاء",
   "productS": {
-    "title": "المنتج",
-    "add": "إضافة منتج",
-    "no_data": "لا توجد بيانات",
-    "delete_confirm": "هل أنت متأكد أنك تريد حذف",
-    "importExcel": "استيراد من Excel"
-  },
+  "title": "المنتج",
+  "add": "إضافة منتج",
+  "no_data": "لا توجد بيانات",
+  "delete_confirm": "هل أنت متأكد أنك تريد حذف؟",
+  "update_title": "تحديث المنتج",
+  "code": "الكود",
+  "name": "الاسم",
+  "type": "النوع",
+  "group": "المجموعة",
+  "unit": "الوحدة",
+  "image": "الصورة",
+  "minQty": "الحد الأدنى",
+  "maxQty": "الحد الأقصى",
+  "orderQty": "الكمية المطلوبة",
+  "notes": "ملاحظات",
+  "priceType": "نوع السعر",
+  "unitName": "اسم الوحدة",
+  "price": "السعر",
+  "barcode": "الباركود",
+  "importExcel": "استيراد من Excel",
+  "columns": {
+    "code": "الكود",
+    "name": "الاسم",
+    "image": "الصورة"
+  }
+},
   "common": {
     "actions": "الإجراءات",
     "delete": "حذف",
@@ -372,13 +404,13 @@
   "maxSell": "أعلى بيع",
   "minSell": "أقل بيع",
   "avgSell": "متوسط البيع",
-  "item": "العنصر",
+  "item": "المنتج",
   "totalPrice": "السعر الإجمالي",
   "quantities": "الكميات",
   "totalPositiveItems": "إجمالي العناصر الموجبة",
   "totalNegativeItems": "إجمالي العناصر السالبة",
   "totalItems": "إجمالي العناصر",
-  "itemStar": "العنصر*",
+  "itemStar": "المنتج*",
   "add_unit": "إضافة وحدة",
   "fact": "المعامل",
   "is_default": "افتراضي",
@@ -390,7 +422,10 @@
     "delete": "حذف",
     "edit": "تعديل",
     "noDataFound": "لا توجد بيانات",
-    "name": "الاسم"
+    "name": "الاسم",
+    "columns": {
+      "unitName": "اسم الوحدة"
+    }
   },
   "update_unit": "تحديث الوحدة",
   "warehouseA": {
@@ -409,7 +444,8 @@
     "tableView": "عرض الجدول",
     "treeView": "عرض الشجرة",
     "deleteConfirm": "هل أنت متأكد أنك تريد حذف",
-    "updateTitle": "تحديث المستودع"
+    "updateTitle": "تحديث المستودع",
+    "isActive": "نشط"
   },
   "noData": "لا توجد بيانات",
   "advertisements": {

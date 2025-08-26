@@ -232,8 +232,18 @@
   "groups": {
     "title": "Groups",
     "add_group": "Add Group",
+    "columns": {
+    "code": "Code",
+    "name": "Name",
+    "parentName": "Parent Group",
+    "notes": "Notes",
+    "parentId" : "parent id",
+    "finalAccountName": "Final Account"
+  },
     "table_view": "Table View",
-    "tree_view": "Tree View"
+    "tree_view": "Tree View",
+        "actions": "Actions",
+    "empty": "No groups found"
   },
   "invoiceType": {
     "addInvoiceType": "Add Invoice Type",
@@ -359,7 +369,12 @@
     "unitName": "Unit Name",
     "price": "Price",
     "barcode": "Barcode",
-    "importExcel": "importExcel"
+    "importExcel": "importExcel",
+    "columns": {
+    "code": "Code",
+    "name": "Name",
+    "image": "Image"
+  }
   },
   "common": {
     "actions": "Actions",
@@ -405,7 +420,10 @@
     "delete": "Delete",
     "edit": "Edit",
     "noDataFound": "No Data Found",
-    "name": "Name"
+    "name": "Name",
+    "columns": {
+      "unitName": "unit name"
+    }
   },
   "update_unit": "Update Unit",
   "warehouseA": {
@@ -424,7 +442,8 @@
     "tableView": "Table View",
     "treeView": "Tree View",
     "deleteConfirm": "Are you sure you want to delete",
-    "updateTitle": "Update Warehouse"
+    "updateTitle": "Update Warehouse",
+    "isActive": "is active"
   },
   "noData": "No Data Found",
   "advertisements": {

@@ -31,7 +31,8 @@ export class ShowProductsComponent {
   productsReadonly = toSignal(this.service.getProducts(), { initialValue: [] });
   productsRaw = linkedSignal(() => this.productsReadonly());
 
-  displayColumns = ['code', 'name', 'image'];
+  displayColumns = ['productS.columns.code', 'productS.columns.name', 'productS.columns.image'];
+
 
   page = 1;
   perPage = 10;
