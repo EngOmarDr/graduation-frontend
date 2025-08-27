@@ -17,6 +17,8 @@ import {
 import { InvoiceTypeService } from 'app/modules/inventory/invoice-type/services/invoice-type.service';
 import { StorageService } from 'app/core/services/storage.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { sidebarConfig } from './sidebar.config';
+import { Roles } from '../../../core/constants/roles.enum';
 
 @Component({
   selector: 'app-sidebar',
@@ -153,6 +155,7 @@ export class SidebarComponent implements OnInit {
     this.languageService.onLangChange.subscribe((v) => {
       this.isArabic.set(v.lang == 'ar');
     });
+    this.currentRole = this.storageService.role as Roles;
   }
 
   private readonly sanitizer = inject(DomSanitizer);
@@ -172,6 +175,9 @@ export class SidebarComponent implements OnInit {
     vouchers: signal(false),
   };
 
+  currentRole!: Roles;
+
+
   toggleSidebar(isOpen?: boolean) {
     this.isSidebarOpen = isOpen ?? !this.isSidebarOpen;
   }
@@ -186,155 +192,199 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  routes: Signal<any> = computed(() => [
-    { name: 'sidebar.dashboard', icon: 'home', routerLink: '/' },
-    {
-      name: 'sidebar.products',
-      icon: 'package-search',
-      fun: () => this.toggleSection('products'),
-      attr: this.isExpanded.products,
-      children: [
-        {
-          name: 'sidebar.products_list',
-          icon: 'box',
-          routerLink: '/products',
-          state: undefined,
-        },
-        { name: 'sidebar.groups', icon: 'layers', routerLink: '/groups' },
-        { name: 'sidebar.units', icon: 'ruler', routerLink: '/units' },
-        {
-          name: 'sidebar.warehouses',
-          icon: 'warehouse',
-          routerLink: '/warehouses',
-        },
-        { name: 'sidebar.price', icon: 'tag', routerLink: '/prices' },
-        {
-          name: 'sidebar.print_barcode',
-          icon: 'barcode',
-          routerLink: '/printBarcode',
-        },
-      ],
-    },
-    {
-      name: 'sidebar.accounts',
-      icon: 'wallet-cards',
-      fun: () => this.toggleSection('accounts'),
-      attr: this.isExpanded.accounts,
-      children: [
-        {
-          name: 'sidebar.accounts_list',
-          icon: 'wallet-card',
-          routerLink: '/accounts',
-        },
-        { name: 'br', icon: '' },
-        {
-          name: 'sidebar.general_journal',
-          icon: '',
-          routerLink: `accounting-reports/${AccountingReportsKeys.GENERALJOURNAL}`,
-        },
-        {
-          name: 'sidebar.ledger',
-          icon: '',
-          routerLink: `accounting-reports/${AccountingReportsKeys.LEDGER}`,
-        },
-        {
-          name: 'sidebar.trial_balance',
-          icon: '',
-          routerLink: `accounting-reports/${AccountingReportsKeys.TRAILBALANCE}`,
-        },
-      ],
-    },
-    {
-      name: 'sidebar.price_display',
-      icon: 'tag',
-      routerLink: '/advertisements/',
-    },
-    { name: 'sidebar.branches', icon: 'git-branch', routerLink: '/branches' },
-    { name: 'sidebar.currencies', icon: 'coins', routerLink: '/currencies' },
-    {
-      name: 'sidebar.vouchers',
-      icon: 'book-text',
-      fun: () => this.toggleSection('vouchers'),
-      attr: this.isExpanded.vouchers,
-      children: [
-        {
-          name: 'sidebar.journal_entry',
-          icon: 'book-text',
-          routerLink: 'journal/journals',
-        },
-        { name: 'br', icon: '' },
-        {
-          name: 'sidebar.journal_type',
-          icon: '',
-          routerLink: 'journal-types',
-        },
-        ...this.journalTypes().map((next) => ({
-          name: next.name,
-          routerLink: `/show-custom-journal/${next.name}`,
-          icon: '',
-          state: next,
-        })),
-      ],
-    },
-    {
-      name: 'sidebar.invoices',
-      icon: 'invoice',
-      fun: () => this.toggleSection('invoices'),
-      attr: this.isExpanded.invoices,
-      children: [
-        // {
-        //   name: 'sidebar.invoice_entry',
-        //   icon: 'book-text',
-        //   routerLink: 'invoice/invoices',
-        // },
-        // { name: 'br', icon: '' },
-        {
-          name: 'sidebar.invoice_type',
-          icon: '',
-          routerLink: 'invoice-types',
-        },
-        ...this.invoiceTypes().map((next) => ({
-          name: next.name,
-          routerLink: `/invoice/${next.name}`,
-          icon: '',
-          state: next,
-        })),
-        this.storageService.isAdmin ? { name: 'br', icon: '' } : undefined,
+//   routes: Signal<any[]> = computed(() => {
+//   if (!this.currentRole) return [];
 
-        this.storageService.isAdmin
-          ? {
-              name: 'sidebar.transfer_process',
-              icon: '',
-              routerLink: 'transfers',
-            }
-          : undefined,
-        {
-          name: 'sidebar.inventory_count',
-          icon: '',
-          routerLink: 'inventory-count',
-        },
-        ,
-        { name: 'br', icon: '' },
-        {
-          name: 'sidebar.item_movement',
-          icon: '',
-          routerLink: `inventory-reports/${InventoryReportsKeys.ItemMovement}`,
-        },
-        {
-          name: 'sidebar.daily_movement',
-          icon: '',
-          routerLink: `inventory-reports/${InventoryReportsKeys.DailyMovement}`,
-        },
-        {
-          name: 'sidebar.item_stock',
-          icon: '',
-          routerLink: `inventory-reports/${InventoryReportsKeys.ItemStock}`,
-        },
-      ],
-    },
-    { name: 'sidebar.users', icon: 'lock-keyhole', routerLink: '/users' },
-    { name: 'sidebar.settings', icon: 'settings', routerLink: '/settings' },
-  ]);
+//   return sidebarConfig[this.currentRole] || [];
+// });
+
+  // routes: Signal<any> = computed(() => [
+  //   { name: 'sidebar.dashboard', icon: 'home', routerLink: '/' },
+  //   {
+  //     name: 'sidebar.products',
+  //     icon: 'package-search',
+  //     fun: () => this.toggleSection('products'),
+  //     attr: this.isExpanded.products,
+  //     children: [
+  //       {
+  //         name: 'sidebar.products_list',
+  //         icon: 'box',
+  //         routerLink: '/products',
+  //         state: undefined,
+  //       },
+  //       { name: 'sidebar.groups', icon: 'layers', routerLink: '/groups' },
+  //       { name: 'sidebar.units', icon: 'ruler', routerLink: '/units' },
+  //       {
+  //         name: 'sidebar.warehouses',
+  //         icon: 'warehouse',
+  //         routerLink: '/warehouses',
+  //       },
+  //       { name: 'sidebar.price', icon: 'tag', routerLink: '/prices' },
+  //       {
+  //         name: 'sidebar.print_barcode',
+  //         icon: 'barcode',
+  //         routerLink: '/printBarcode',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: 'sidebar.accounts',
+  //     icon: 'wallet-cards',
+  //     fun: () => this.toggleSection('accounts'),
+  //     attr: this.isExpanded.accounts,
+  //     children: [
+  //       {
+  //         name: 'sidebar.accounts_list',
+  //         icon: 'wallet-card',
+  //         routerLink: '/accounts',
+  //       },
+  //       { name: 'br', icon: '' },
+  //       {
+  //         name: 'sidebar.general_journal',
+  //         icon: '',
+  //         routerLink: `accounting-reports/${AccountingReportsKeys.GENERALJOURNAL}`,
+  //       },
+  //       {
+  //         name: 'sidebar.ledger',
+  //         icon: '',
+  //         routerLink: `accounting-reports/${AccountingReportsKeys.LEDGER}`,
+  //       },
+  //       {
+  //         name: 'sidebar.trial_balance',
+  //         icon: '',
+  //         routerLink: `accounting-reports/${AccountingReportsKeys.TRAILBALANCE}`,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: 'sidebar.price_display',
+  //     icon: 'tag',
+  //     routerLink: '/advertisements/',
+  //   },
+  //   { name: 'sidebar.branches', icon: 'git-branch', routerLink: '/branches' },
+  //   { name: 'sidebar.currencies', icon: 'coins', routerLink: '/currencies' },
+  //   {
+  //     name: 'sidebar.vouchers',
+  //     icon: 'book-text',
+  //     fun: () => this.toggleSection('vouchers'),
+  //     attr: this.isExpanded.vouchers,
+  //     children: [
+  //       {
+  //         name: 'sidebar.journal_entry',
+  //         icon: 'book-text',
+  //         routerLink: 'journal/journals',
+  //       },
+  //       { name: 'br', icon: '' },
+  //       {
+  //         name: 'sidebar.journal_type',
+  //         icon: '',
+  //         routerLink: 'journal-types',
+  //       },
+  //       ...this.journalTypes().map((next) => ({
+  //         name: next.name,
+  //         routerLink: `/show-custom-journal/${next.name}`,
+  //         icon: '',
+  //         state: next,
+  //       })),
+  //     ],
+  //   },
+  //   {
+  //     name: 'sidebar.invoices',
+  //     icon: 'invoice',
+  //     fun: () => this.toggleSection('invoices'),
+  //     attr: this.isExpanded.invoices,
+  //     children: [
+  //       // {
+  //       //   name: 'sidebar.invoice_entry',
+  //       //   icon: 'book-text',
+  //       //   routerLink: 'invoice/invoices',
+  //       // },
+  //       // { name: 'br', icon: '' },
+  //       {
+  //         name: 'sidebar.invoice_type',
+  //         icon: '',
+  //         routerLink: 'invoice-types',
+  //       },
+  //       ...this.invoiceTypes().map((next) => ({
+  //         name: next.name,
+  //         routerLink: `/invoice/${next.name}`,
+  //         icon: '',
+  //         state: next,
+  //       })),
+  //       this.storageService.isAdmin ? { name: 'br', icon: '' } : undefined,
+
+  //       this.storageService.isAdmin
+  //         ? {
+  //             name: 'sidebar.transfer_process',
+  //             icon: '',
+  //             routerLink: 'transfers',
+  //           }
+  //         : undefined,
+  //       {
+  //         name: 'sidebar.inventory_count',
+  //         icon: '',
+  //         routerLink: 'inventory-count',
+  //       },
+  //       ,
+  //       { name: 'br', icon: '' },
+  //       {
+  //         name: 'sidebar.item_movement',
+  //         icon: '',
+  //         routerLink: `inventory-reports/${InventoryReportsKeys.ItemMovement}`,
+  //       },
+  //       {
+  //         name: 'sidebar.daily_movement',
+  //         icon: '',
+  //         routerLink: `inventory-reports/${InventoryReportsKeys.DailyMovement}`,
+  //       },
+  //       {
+  //         name: 'sidebar.item_stock',
+  //         icon: '',
+  //         routerLink: `inventory-reports/${InventoryReportsKeys.ItemStock}`,
+  //       },
+  //     ],
+  //   },
+  //   { name: 'sidebar.users', icon: 'lock-keyhole', routerLink: '/users' },
+  //   { name: 'sidebar.settings', icon: 'settings', routerLink: '/settings' },
+  // ]);
+
+  routes: Signal<any[]> = computed(() => {
+  if (!this.currentRole) return [];
+
+  let config = sidebarConfig[this.currentRole] || [];
+
+  // انسخ نسخة جديدة مع إدخال الـ dynamic data
+  return config.map(item => {
+    if (item.section) {
+      return {
+        ...item,
+        fun: () => this.toggleSection(item.section),
+        attr: this.isExpanded[item.section as keyof typeof this.isExpanded],
+        children: [
+          ...(item.children || []),
+          ...(item.section === 'vouchers'
+            ? this.journalTypes().map(next => ({
+                name: next.name,
+                routerLink: `/show-custom-journal/${next.name}`,
+                icon: '',
+                state: next,
+              }))
+            : []),
+          ...(item.section === 'invoices'
+            ? this.invoiceTypes().map(next => ({
+                name: next.name,
+                routerLink: `/invoice/${next.name}`,
+                icon: '',
+                state: next,
+              }))
+            : []),
+        ],
+      };
+    }
+    return item;
+  });
+});
+
 
   getLucideIcon(name: string): SafeHtml {
     const icons: { [key: string]: string } = {
