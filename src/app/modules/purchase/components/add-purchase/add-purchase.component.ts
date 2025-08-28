@@ -74,6 +74,7 @@ export class AddPurchaseComponent {
       warehouseId: Number(raw.warehouseId),
       supplyDate: raw.supplyDate,
       notes: raw.notes ?? '',
+      status: 1,
       items: raw.items.map((item: any) => ({
         productId: Number(item.productId),
         qty: Number(item.qty),

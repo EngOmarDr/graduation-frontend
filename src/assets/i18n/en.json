@@ -102,7 +102,12 @@
   "unitItemId": "Unit Code",
   "unitFact": "Conversion Factor",
   "addRow": "Add Row",
-  "save": "Save"
+  "save": "Save",
+  "editPurchase": "Edit Purchase Invoice",
+  "status.supply": "Supply",
+  "status.request": "Request",
+  "status.buy": "Buy",
+  "status.receive": "Receive"
 },
   "journal": {
     "addTitle": "Add {{name}}",

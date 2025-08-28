@@ -32,7 +32,7 @@
           <td>{{ i + 1 }}</td>
           <td>{{ row.warehouseName }}</td>
           <td>{{ row.supplyDate | date: 'yyyy-MM-dd' }}</td>
-          <td>{{ row.status }}</td>
+          <td>{{ 'purchase.status.' + row.status | translate }}</td>
           <td>{{ row.items.length }}</td>
           <td>{{ row.notes }}</td>
           <td class="text-nowrap">

@@ -102,7 +102,12 @@
   "unitItemId": "رمز الوحدة",
   "unitFact": "معامل التحويل",
   "addRow": "إضافة صف",
-  "save": "حفظ"
+  "save": "حفظ",
+  "editPurchase": "تعديل فاتورة شراء",
+  "status.supply": "توريد",
+  "status.request": "طلب",
+  "status.buy": "شراء",
+  "status.receive": "استلام"
 },
   "journal": {
     "addTitle": "إضافة {{name}}",

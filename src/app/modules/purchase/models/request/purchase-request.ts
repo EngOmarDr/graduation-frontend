@@ -6,8 +6,9 @@ export interface PurchaseItemRequest {
 }
 
 export interface PurchaseRequest {
-  warehouseId: number;
+  warehouseId: number | null;
   supplyDate: string; // ISO Date
   notes: string;
+  status?: number;
   items: PurchaseItemRequest[];
 }
