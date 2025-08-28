@@ -1,0 +1,61 @@
+<cust-card [titleText]="'purchase.title' | translate" [titlePadding]="false">
+  <div class="flex justify-end items-center">
+    <button
+      type="button"
+      class="py-1.5 px-2.5 mb-3 btn"
+      routerLink="/purchases/add"
+    >
+      {{ 'purchase.add' | translate }}
+    </button>
+  </div>
+
+  <div class="overflow-auto max-w-full max-h-80">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ 'purchase.warehouse' | translate }}</th>
+          <th>{{ 'purchase.supplyDate' | translate }}</th>
+          <th>{{ 'purchase.status' | translate }}</th>
+          <th>{{ 'purchase.numberItem' | translate }}</th>
+          <th>{{ 'purchase.notes' | translate }}</th>
+          <th>{{ 'purchase.action' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if ( purchases().length == 0) {
+          <tr>
+            <td [attr.colspan]="10">{{ 'purchase.noData' | translate }}</td>
+          </tr>
+        }
+        <tr *ngFor="let row of purchases(); let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ row.warehouseName }}</td>
+          <td>{{ row.supplyDate | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ row.status }}</td>
+          <td>{{ row.items.length }}</td>
+          <td>{{ row.notes }}</td>
+          <td class="text-nowrap">
+            <button
+              type="button"
+              [swal]="['purchase.delete' | translate, 'purchase.confirmDelete' | translate]"
+              (confirm)="delete(row)"
+              class="text-red-600 hover:text-red-800 cursor-pointer"
+              title="{{ 'purchase.delete' | translate }}"
+            >
+              🗑️
+            </button>
+            <button
+              type="button"
+              (click)="update(row)"
+              class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
+              title="{{ 'purchase.edit' | translate }}"
+            >
+              ✏️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</cust-card>

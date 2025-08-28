@@ -80,8 +80,30 @@
     "item_stock": "مخزون المادة",
     "users": "المستخدمين",
     "settings": "الإعدادات",
-    "price_display": "الاعلانات"
+    "price_display": "الاعلانات",
+    "purchases": "المشتريات"
   },
+ "purchase": {
+  "title": "المشتريات",
+  "add": "إضافة شراء",
+  "addPurchase": "إضافة فاتورة شراء",
+  "warehouse": "المستودع",
+  "supplyDate": "تاريخ التوريد",
+  "status": "الحالة",
+  "numberItem": "عدد المواد",
+  "notes": "ملاحظات",
+  "action": "إجراءات",
+  "delete": "حذف",
+  "confirmDelete": "هل أنت متأكد من الحذف؟",
+  "edit": "تعديل",
+  "noData": "لا يوجد بيانات",
+  "product": "المنتج",
+  "quantity": "الكمية",
+  "unitItemId": "رمز الوحدة",
+  "unitFact": "معامل التحويل",
+  "addRow": "إضافة صف",
+  "save": "حفظ"
+},
   "journal": {
     "addTitle": "إضافة {{name}}",
     "updateTitle": "تحديث {{name}}",

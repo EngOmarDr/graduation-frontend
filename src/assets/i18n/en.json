@@ -80,8 +80,30 @@
     "item_stock": "Item Stock",
     "users": "Users",
     "settings": "Settings",
-    "price_display": "Advertisement"
+    "price_display": "Advertisement",
+    "purchases": "Purchases"
   },
+"purchase": {
+  "title": "Purchases",
+  "add": "Add Purchase",
+  "addPurchase": "Add Purchase Invoice",
+  "warehouse": "Warehouse",
+  "supplyDate": "Supply Date",
+  "status": "Status",
+  "numberItem": "Number of Items",
+  "notes": "Notes",
+  "action": "Actions",
+  "delete": "Delete",
+  "confirmDelete": "Are you sure you want to delete?",
+  "edit": "Edit",
+  "noData": "No data available",
+  "product": "Product",
+  "quantity": "Quantity",
+  "unitItemId": "Unit Code",
+  "unitFact": "Conversion Factor",
+  "addRow": "Add Row",
+  "save": "Save"
+},
   "journal": {
     "addTitle": "Add {{name}}",
     "updateTitle": "Update {{name}}",

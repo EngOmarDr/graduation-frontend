@@ -83,6 +83,33 @@ export const routes: Routes = [
         ],
       },
       {
+        path: 'purchases',
+        canActivate: [authGuard],
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import(
+                './modules/purchase/components/list-purchase/list-purchase.component'
+              ).then((m) => m.ListPurchaseComponent),
+          },
+          {
+            path: 'add',
+            loadComponent: () =>
+              import(
+                './modules/purchase/components/add-purchase/add-purchase.component'
+              ).then((m) => m.AddPurchaseComponent),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () =>
+              import(
+                './modules/purchase/components/edit-purchase/edit-purchase.component'
+              ).then((m) => m.EditPurchaseComponent),
+          },
+        ],
+      },
+      {
         path: 'branches',
         canActivate: [authGuard],
         children: [

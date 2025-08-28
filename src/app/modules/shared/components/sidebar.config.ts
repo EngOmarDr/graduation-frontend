@@ -18,6 +18,7 @@ export const sidebarConfig: Record<Roles, any[]> = {
         { name: 'sidebar.print_barcode', icon: 'barcode', routerLink: '/printBarcode' },
       ],
     },
+    { name: 'sidebar.purchases', icon: 'shopping-cart', routerLink: '/purchases' },
     {
       name: 'sidebar.accounts',
       icon: 'wallet-cards',
@@ -70,7 +71,7 @@ export const sidebarConfig: Record<Roles, any[]> = {
     {
       name: 'sidebar.products',
       icon: 'package-search',
-      section: 'products', // نستخدم هذا المفتاح بدل fun/attr
+      section: 'products',
       children: [
         { name: 'sidebar.products_list', icon: 'box', routerLink: '/products' },
         { name: 'sidebar.print_barcode', icon: 'barcode', routerLink: '/printBarcode' },
