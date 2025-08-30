@@ -57,7 +57,7 @@ import { AlertService } from '@shared/services/alert.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddCustomInvoiceComponent implements OnInit {
-  constructor(private alert: AlertService) {}
+  constructor(private alert: AlertService) { }
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly currencyService = inject(CurrencyService);
   private readonly service = inject(InvoiceService);
@@ -81,8 +81,7 @@ export class AddCustomInvoiceComponent implements OnInit {
   form = this.fb.group({
     warehouseId: this.fb.control<number>(
       this.storageService.warehouseId ??
-        this.invoiceType().defaultWarehouseId ??
-        1,
+      this.invoiceType()?.defaultWarehouseId ?? this.warehouses().at(0),
       Validators.required
     ),
     invoiceTypeId: [this.invoiceType().id],
@@ -137,7 +136,9 @@ export class AddCustomInvoiceComponent implements OnInit {
         emitEvent: false,
       });
     });
-
+    console.log('====================================');
+    console.log(this.currencies());
+    console.log('====================================');
     this.form.controls.currencyId.setValue(
       this.invoiceType().defaultCurrencyId ?? this.currencies()[0].id
     );
@@ -156,9 +157,9 @@ export class AddCustomInvoiceComponent implements OnInit {
 
     this.service.create(this.form.getRawValue()).subscribe({
       next: (_) => {
-    this.alert.showSuccess('added');
-    this.form.reset();
-  },
+        this.alert.showSuccess('added');
+        this.form.reset();
+      },
       error: (err) => console.error(err),
     });
   }

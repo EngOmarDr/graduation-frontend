@@ -72,7 +72,7 @@
             <td>
               <app-search-product
                 [control]="row.controls['productId']"
-                (productSelected)="onProductSelected($event, row)"
+                (productSelected)="onProductSelected($event, i,row)"
               ></app-search-product>
             </td>
             <td>
@@ -85,13 +85,13 @@
               />
             </td>
             <td>
-              <!-- <cust-select
-                [control]="row.controls['unitItemId']"
+              <cust-select
+                [control]="row.get('unitItemId')!"
+                [options]="products().at(i)?.unitItems ?? []"
                 [showLabel]="false"
-                label="Unit Item"
-                inputId="unitItem"
-                [options]="unitItemsMap()[row.controls['productId'].value] ?? []"
-              /> -->
+                label="Unit"
+                inputId="Unit"
+              />
             </td>
             <td>
               <input

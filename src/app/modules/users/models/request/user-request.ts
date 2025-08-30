@@ -3,6 +3,6 @@ export interface UserRequest {
   lastName: string;
   username: string;
   password: string;
-  role: 'USER' | 'ADMIN' | 'MANAGER';
+  role: 'USER' | 'ADMIN' | 'MANAGER' | 'PURCHASE_MANAGER';
   warehouseId?: number;
 }

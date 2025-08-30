@@ -8,7 +8,7 @@ export const sidebarConfig: Record<Roles, any[]> = {
     {
       name: 'sidebar.products',
       icon: 'package-search',
-      section: 'products', // نستخدم هذا المفتاح بدل fun/attr
+      section: 'products',
       children: [
         { name: 'sidebar.products_list', icon: 'box', routerLink: '/products' },
         { name: 'sidebar.groups', icon: 'layers', routerLink: '/groups' },
@@ -42,7 +42,6 @@ export const sidebarConfig: Record<Roles, any[]> = {
         { name: 'sidebar.journal_entry', icon: 'book-text', routerLink: 'journal/journals' },
         { name: 'br', icon: '' },
         { name: 'sidebar.journal_type', icon: '', routerLink: 'journal-types' },
-        // سيتم إضافة journalTypes ديناميكياً من السيرفس
       ],
     },
     {
@@ -50,8 +49,9 @@ export const sidebarConfig: Record<Roles, any[]> = {
       icon: 'invoice',
       section: 'invoices',
       children: [
+        { name: 'sidebar.invoices_list', icon: 'file-text', routerLink: '/invoices' },
+        { name: 'br', icon: '' },
         { name: 'sidebar.invoice_type', icon: '', routerLink: 'invoice-types' },
-        // سيتم إضافة invoiceTypes ديناميكياً من السيرفس
         { name: 'br', icon: '' },
         { name: 'sidebar.transfer_process', icon: '', routerLink: 'transfers' },
         { name: 'sidebar.inventory_count', icon: '', routerLink: 'inventory-count' },
@@ -65,7 +65,6 @@ export const sidebarConfig: Record<Roles, any[]> = {
     { name: 'sidebar.settings', icon: 'settings', routerLink: '/settings' },
   ],
 
-  // مدير المستودع
   [Roles.MANAGER]: [
     { name: 'sidebar.dashboard', icon: 'home', routerLink: '/' },
     {
@@ -97,7 +96,6 @@ export const sidebarConfig: Record<Roles, any[]> = {
         { name: 'sidebar.journal_entry', icon: 'book-text', routerLink: 'journal/journals' },
         { name: 'br', icon: '' },
         { name: 'sidebar.journal_type', icon: '', routerLink: 'journal-types' },
-        // سيتم إضافة journalTypes ديناميكياً من السيرفس
       ],
     },
     {
@@ -105,8 +103,9 @@ export const sidebarConfig: Record<Roles, any[]> = {
       icon: 'invoice',
       section: 'invoices',
       children: [
+        { name: 'sidebar.invoices_list', icon: 'file-text', routerLink: '/invoices' },
+        { name: 'br', icon: '' },
         { name: 'sidebar.invoice_type', icon: '', routerLink: 'invoice-types' },
-        // سيتم إضافة invoiceTypes ديناميكياً من السيرفس
         { name: 'br', icon: '' },
         { name: 'sidebar.transfer_process', icon: '', routerLink: 'transfers' },
         { name: 'sidebar.inventory_count', icon: '', routerLink: 'inventory-count' },

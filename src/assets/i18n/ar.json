@@ -71,6 +71,7 @@
     "journal_entry": "إدخال اليومية",
     "journal_type": "نوع اليومية",
     "invoices": "الفواتير",
+    "invoices_list":"عرض الفواتير",
     "invoice_entry": "إدخال فاتورة",
     "invoice_type": "نوع الفاتورة",
     "transfer_process": "عملية التحويل",
@@ -563,6 +564,12 @@
       "role": "الدور",
       "submit": "إضافة",
       "submit_update": "تحديث"
+    },
+    "roles": {
+      "USER": "كاشير نقطة البيع",
+      "ADMIN": "المدير العام",
+      "MANAGER": "مدير مستودع",
+      "PURCHASE_MANAGER": "مدير مشتريات"
     },
     "title": "المستخدمون",
     "add": "إضافة مستخدم",

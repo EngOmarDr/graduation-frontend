@@ -56,7 +56,13 @@ export class AddTransferComponent {
   unitItems = signal<UnitItemResponse[]>([]);
   warehouses = toSignal(this.warehouseService.getAll(), { initialValue: [] });
   unitItemsMap = signal<Record<number, UnitItemResponse[]>>({});
-
+ products = signal<
+    {
+      i: number;
+      product: ProductResponse;
+      unitItems: UnitItemResponse[];
+    }[]
+  >([]);
   form = this.fb.group({
     fromWarehouseId: [null, Validators.required],
     toWarehouseId: [null, Validators.required],
@@ -67,12 +73,12 @@ export class AddTransferComponent {
     driverName: ['', Validators.required],
     notes: [''],
     items: this.fb.array<FormGroup>([
-      this.fb.group({
-        productId: [null, Validators.required],
-        qty: [0, Validators.required],
-        unitItemId: [1, Validators.required],
-        unitFact: [1, Validators.required],
-      }),
+      // this.fb.group({
+      //   productId: [null, Validators.required],
+      //   qty: [0, Validators.required],
+      //   unitItemId: [1, Validators.required],
+      //   unitFact: [1, Validators.required],
+      // }),
     ]),
   });
 
@@ -89,6 +95,18 @@ addRow(): void {
     unitItemId: [1, Validators.required],
     unitFact: [1, Validators.required],
   });
+  newRow.controls.unitItemId.valueChanges.subscribe((v) => {
+    console.log('====================================');
+    console.log(this.items);
+    console.log('====================================');
+      newRow.controls.unitFact.setValue(
+        this.products()
+          .at(this.items.length - 1)
+          ?.unitItems?.find((item) => {
+            return item.id == v;
+          })?.fact ?? 1
+      );
+    });
   this.items.push(newRow);
 }
 
@@ -174,7 +192,7 @@ onSubmit(): void {
 
 
 
-onProductSelected(product: ProductResponse, row: AbstractControl) {
+onProductSelected(product: ProductResponse,i:number, row: AbstractControl) {
   row.get('productId')?.setValue(product.id);
 
   if (product.defaultUnitId) {
@@ -186,5 +204,24 @@ onProductSelected(product: ProductResponse, row: AbstractControl) {
     map[product.id] = product.unitItems;
     this.unitItemsMap.set(map);
   }
+    this.unitService.getUnitById(product.defaultUnitId).subscribe((data) => {
+      console.log(data);
+      console.log(product);
+      this.products.update((old) => {
+        old[i] = { i, product, unitItems: data.unitItems ?? [] };
+        return [...old];
+      });
+      // this.invoiceItems.controls[i].controls['unitItemId'].setValue(
+      //   data.unitItems.find((item) => {
+      //     return item.isDef;
+      //   })?.id
+      // );
+      // this.invoiceItems.controls[i].controls['price'].setValue(
+      //   product.prices.find((e) => this.invoiceType().defaultPriceId == e.id)
+      //     ?.price ?? 0,
+      //   { emitEvent: false }
+      // );
+    });
+
 }
 }

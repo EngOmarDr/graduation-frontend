@@ -23,11 +23,13 @@
     <app-account-search
       [control]="form.controls.cashAccountId"
       [label]="'transfer.cashAccount' | translate"
-    />
+    [fetch]="true"
+      />
 
     <app-account-search
       [control]="form.controls.expenseAccountId"
       [label]="'transfer.expenseAccount' | translate"
+      [fetch]="true"
     />
 
     <cust-form-field
@@ -73,6 +75,7 @@
               <app-search-product
                 [control]="row.controls['productId']"
                 (productSelected)="onProductSelected($event, row)"
+                [fetch]="true"
               ></app-search-product>
             </td>
             <td>

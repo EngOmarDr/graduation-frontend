@@ -72,6 +72,7 @@
     "journal_type": "Journal Type",
     "invoices": "Invoices",
     "invoice_entry": "Invoice Entry",
+    "invoices_list":"invoices list",
     "invoice_type": "Invoice Type",
     "transfer_process": "Transfer Process",
     "inventory_count": "inventory count",
@@ -83,32 +84,32 @@
     "price_display": "Advertisement",
     "purchases": "Purchases"
   },
-"purchase": {
-  "title": "Purchases",
-  "add": "Add Purchase",
-  "addPurchase": "Add Purchase Invoice",
-  "warehouse": "Warehouse",
-  "supplyDate": "Supply Date",
-  "status": "Status",
-  "numberItem": "Number of Items",
-  "notes": "Notes",
-  "action": "Actions",
-  "delete": "Delete",
-  "confirmDelete": "Are you sure you want to delete?",
-  "edit": "Edit",
-  "noData": "No data available",
-  "product": "Product",
-  "quantity": "Quantity",
-  "unitItemId": "Unit Code",
-  "unitFact": "Conversion Factor",
-  "addRow": "Add Row",
-  "save": "Save",
-  "editPurchase": "Edit Purchase Invoice",
-  "status.supply": "Supply",
-  "status.request": "Request",
-  "status.buy": "Buy",
-  "status.receive": "Receive"
-},
+  "purchase": {
+    "title": "Purchases",
+    "add": "Add Purchase",
+    "addPurchase": "Add Purchase Invoice",
+    "warehouse": "Warehouse",
+    "supplyDate": "Supply Date",
+    "status": "Status",
+    "numberItem": "Number of Items",
+    "notes": "Notes",
+    "action": "Actions",
+    "delete": "Delete",
+    "confirmDelete": "Are you sure you want to delete?",
+    "edit": "Edit",
+    "noData": "No data available",
+    "product": "Product",
+    "quantity": "Quantity",
+    "unitItemId": "Unit Code",
+    "unitFact": "Conversion Factor",
+    "addRow": "Add Row",
+    "save": "Save",
+    "editPurchase": "Edit Purchase Invoice",
+    "status.supply": "Supply",
+    "status.request": "Request",
+    "status.buy": "Buy",
+    "status.receive": "Receive"
+  },
   "journal": {
     "addTitle": "Add {{name}}",
     "updateTitle": "Update {{name}}",
@@ -260,16 +261,16 @@
     "title": "Groups",
     "add_group": "Add Group",
     "columns": {
-    "code": "Code",
-    "name": "Name",
-    "parentName": "Parent Group",
-    "notes": "Notes",
-    "parentId" : "parent id",
-    "finalAccountName": "Final Account"
-  },
+      "code": "Code",
+      "name": "Name",
+      "parentName": "Parent Group",
+      "notes": "Notes",
+      "parentId": "parent id",
+      "finalAccountName": "Final Account"
+    },
     "table_view": "Table View",
     "tree_view": "Tree View",
-        "actions": "Actions",
+    "actions": "Actions",
     "empty": "No groups found"
   },
   "invoiceType": {
@@ -398,10 +399,10 @@
     "barcode": "Barcode",
     "importExcel": "importExcel",
     "columns": {
-    "code": "Code",
-    "name": "Name",
-    "image": "Image"
-  }
+      "code": "Code",
+      "name": "Name",
+      "image": "Image"
+    }
   },
   "common": {
     "actions": "Actions",
@@ -546,8 +547,8 @@
     "added": "Successfully added",
     "updated": "Successfully updated",
     "deleted": "Successfully deleted",
-  "no_file_selected": "No file selected",
-  "import_failed": "Failed to import products"
+    "no_file_selected": "No file selected",
+    "import_failed": "Failed to import products"
   },
   "user": {
     "add_title": "Add User",
@@ -562,21 +563,27 @@
       "submit": "Add",
       "submit_update": "Update"
     },
-      "title": "Users",
-  "add": "Add User",
-  "noData": "No Data",
-  "firstName": "First Name",
-  "lastName": "Last Name",
-  "username": "Username",
-  "role": "Role",
-  "warehouse": "Warehouse Name",
-  "action": "Action",
-  "delete": "Delete",
-  "update": "Update",
-  "confirmDelete": "Are you sure you want to delete {{ name }}?"
+    "roles": {
+      "USER": "User",
+      "ADMIN": "Admin",
+      "MANAGER": "Manager",
+      "PURCHASE_MANAGER": "Purchase Manager"
+    },
+    "title": "Users",
+    "add": "Add User",
+    "noData": "No Data",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "username": "Username",
+    "role": "Role",
+    "warehouse": "Warehouse Name",
+    "action": "Action",
+    "delete": "Delete",
+    "update": "Update",
+    "confirmDelete": "Are you sure you want to delete {{ name }}?"
   },
   "logout": "Logout",
-   "layout": {
+  "layout": {
     "syrianTradingCompany": "Syrian Trading Company",
     "confirmLogoutTitle": "Are you sure?",
     "confirmLogoutText": "Do you want to log out of the system?",

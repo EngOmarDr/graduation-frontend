@@ -46,6 +46,7 @@
               <app-search-product
                 [control]="row.controls['productId']"
                 (productSelected)="onProductSelected($event, row)"
+                [fetch]="true"
               ></app-search-product>
             </td>
             <td>

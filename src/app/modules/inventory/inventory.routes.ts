@@ -8,6 +8,13 @@ export const inventoryRoutes: Routes = [
     canActivate: [authGuard],
     children: [
       {
+        path: 'invoices',
+        loadComponent: () =>
+          import(
+            './custom-invoice/components/invoice-list/invoice-list.component'
+          ).then((m) => m.InvoiceListComponent),
+      },
+      {
         path: 'invoice/:name',
         loadComponent: () =>
           import(
@@ -82,13 +89,13 @@ export const inventoryRoutes: Routes = [
     canActivate: [adminGuard],
   },
   {
-  path: 'edit-transfer/:id',
-  loadComponent: () =>
-    import(
-      './operation/transfer/components/edit-transfer/edit-transfer.component'
-    ).then((m) => m.EditTransferComponent),
-  canActivate: [adminGuard],
-},
+    path: 'edit-transfer/:id',
+    loadComponent: () =>
+      import(
+        './operation/transfer/components/edit-transfer/edit-transfer.component'
+      ).then((m) => m.EditTransferComponent),
+    canActivate: [adminGuard],
+  },
   {
     path: 'inventory-reports/:name',
     canActivate: [authGuard],

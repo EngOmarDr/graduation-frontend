@@ -16,6 +16,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { switchMap } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertService } from '@shared/services/alert.service';
+import { StorageService } from 'app/core/services/storage.service';
 
 @Component({
   selector: 'app-show-custom-journal',
@@ -29,6 +30,7 @@ export class ShowCustomInvoicesComponent {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly location = inject(Location);
+   readonly storage = inject(StorageService);
 
   invoiceType = signal<InvoiceTypeResponse>(window.history.state.state);
   // Create an observable that reacts to invoiceType changes

@@ -25,15 +25,18 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>{{ 'purchase.product' | translate }}</th>
-            <th>{{ 'purchase.quantity' | translate }}</th>
-            <th>{{ 'purchase.unitItemId' | translate }}</th>
-            <th>{{ 'purchase.unitFact' | translate }}</th>
-            <th>{{ 'actions' | translate }}</th>
+            <th>{{ "purchase.product" | translate }}</th>
+            <th>{{ "purchase.quantity" | translate }}</th>
+            <th>{{ "purchase.unitItemId" | translate }}</th>
+            <th>{{ "purchase.unitFact" | translate }}</th>
+            <th>{{ "actions" | translate }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of items.controls; let i = index" [formGroup]="row">
+          <tr
+            *ngFor="let row of items.controls; let i = index"
+            [formGroup]="row"
+          >
             <td>{{ i + 1 }}</td>
             <td>
               <app-search-product
@@ -45,23 +48,43 @@
               <input formControlName="qty" type="number" class="cust-input" />
             </td>
             <td>
-              <input formControlName="unitItemId" type="number" class="cust-input" />
+              <input
+                formControlName="unitItemId"
+                type="number"
+                class="cust-input"
+              />
             </td>
             <td>
-              <input formControlName="unitFact" type="number" class="cust-input" step="0.01" />
+              <input
+                formControlName="unitFact"
+                type="number"
+                class="cust-input"
+                step="0.01"
+              />
             </td>
             <td>
-              <button type="button" (click)="removeRow(i)" class="cursor-pointer">
+              <button
+                type="button"
+                (click)="removeRow(i)"
+                class="cursor-pointer"
+              >
                 <svg class="fill-red-500" height="28" viewBox="0 0 24 24">
-                  <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                  <path
+                    d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+                  />
                 </svg>
               </button>
             </td>
           </tr>
           <tr>
             <td [attr.colspan]="6" class="text-center w-full">
-              <button type="button" (click)="addRow()" class="btn">
-                {{ 'purchase.addRow' | translate }}
+              <button
+                type="button"
+                (click)="addRow()"
+                class="w-fit self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
+                [title]="'purchase.addRow' | translate"
+              >
+                <img src="assets/icons/add.png" alt="add" />
               </button>
             </td>
           </tr>
@@ -70,7 +93,9 @@
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn">{{ 'purchase.save' | translate }}</button>
+      <button type="submit" class="btn">
+        {{ "purchase.save" | translate }}
+      </button>
     </div>
   </form>
 </cust-card>

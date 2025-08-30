@@ -39,16 +39,20 @@
     <cust-select
   [control]="form.controls.role"
   [options]="[
-    { key: 'USER', value: 'USER' },
-    { key: 'ADMIN', value: 'ADMIN' },
-    { key: 'MANAGER', value: 'MANAGER' }
+    { key: 'USER', value: ('user.roles.USER' | translate) },
+    { key: 'ADMIN', value: ('user.roles.ADMIN' | translate) },
+    { key: 'MANAGER', value: ('user.roles.MANAGER' | translate) },
+    { key: 'PURCHASE_MANAGER', value: ('user.roles.PURCHASE_MANAGER' | translate) }
   ]"
   inputId="role"
   [label]="'user.form.role' | translate"
 />
 
+
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn" [disabled]="!form.valid">{{ 'user.form.submit' | translate }}</button>
+      <button type="submit" class="btn" [disabled]="!form.valid">
+        {{ "user.form.submit" | translate }}
+      </button>
     </div>
   </form>
 </cust-card>

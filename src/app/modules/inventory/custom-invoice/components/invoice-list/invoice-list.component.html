@@ -1,16 +1,12 @@
-<cust-card titleText="{{ invoiceType().name }}" [titlePadding]="false">
+<cust-card titleText="{{ 'sidebar.invoices_list' | translate }}" [titlePadding]="false">
   <div class="cust-grid">
     <div class="flex justify-end items-center col-span-full">
       <button
         type="button"
         class="py-1.5 px-2.5 btn"
-        [routerLink]="'/add-invoice/' + invoiceType().name"
-        [state]="{ invoiceType: invoiceType() }"
+        [routerLink]="'/add-invoice/all'"
       >
-        {{
-          "add_invoice"
-            | translate : { invoiceType: (invoiceType().name | translate) }
-        }}
+        {{ 'add_invoice' | translate:{ invoiceType: ('sidebar.invoices_list' | translate) } }}
       </button>
     </div>
 
@@ -19,34 +15,30 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Warehouse</th>
-            <th>{{ "total" | translate }}</th>
-            <th>{{ "total_discount" | translate }}</th>
-            <th>{{ "total_extra" | translate }}</th>
-            <!-- <th>Is Suspended</th> -->
-            <th *ngIf="!invoiceType().isAutoPost">is posted</th>
-            <th>{{ "notes" | translate }}</th>
-            <th>{{ "date" | translate }}</th>
-            <th>{{ "action" | translate }}</th>
+            <th>{{ 'warehouse' | translate }}</th>
+            <th>{{ 'total' | translate }}</th>
+            <th>{{ 'total_discount' | translate }}</th>
+            <th>{{ 'total_extra' | translate }}</th>
+            <th>{{ 'is_posted' | translate }}</th>
+            <th>{{ 'notes' | translate }}</th>
+            <th>{{ 'date' | translate }}</th>
+            <th>{{ 'action' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngIf="invoices().length === 0">
-            <td [attr.colspan]="10" class="text-center">No Data</td>
+            <td [attr.colspan]="10" class="text-center">{{ 'no_data' | translate }}</td>
           </tr>
 
-          @for (item of invoices(); track $index) { @if (storage.warehouseId==
-          item.warehouseId || storage.isAdmin) {
+          @for (item of invoices(); track $index) {
+          @if (storage.warehouseId== item.warehouseId || storage.isAdmin) {
           <tr>
             <td>{{ $index + 1 }}</td>
             <td>{{ item.warehouseName }}</td>
             <td>{{ item.total }}</td>
             <td>{{ item.totalDisc }}</td>
             <td>{{ item.totalExtra }}</td>
-            <!-- <td>{{ item.isSuspended ? "✅" : "❌" }}</td> -->
-            <td *ngIf="!invoiceType().isAutoPost">
-              {{ item.isPosted ? "✅" : "❌" }}
-            </td>
+            <td>{{ item.isPosted ? "✅" : "❌" }}</td>
             <td>{{ item.notes }}</td>
             <td>{{ item.date | date : "yyyy-MM-dd" }}</td>
             <td class="text-nowrap">
@@ -54,18 +46,16 @@
                 type="button"
                 [swal]="['Delete', 'Are you sure want to delete ?']"
                 (confirm)="deleteItem(item)"
-                title="{{ 'delete' | translate }}"
                 class="text-red-600 hover:text-red-800 cursor-pointer"
               >
-                {{ "delete" | translate }}
+                {{ 'delete' | translate }}
               </button>
               <button
                 type="button"
                 (click)="updateItem(item)"
-                title="{{ 'edit' | translate }}"
                 class="px-2 text-yellow-600 hover:text-yellow-800 cursor-pointer"
               >
-                {{ "edit" | translate }}
+                {{ 'edit' | translate }}
               </button>
             </td>
           </tr>
