@@ -1,47 +1,22 @@
 <cust-card [titleText]="typeReport() | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
-    <cust-select
-      *ngIf="isAdmin"
-      [label]="'warehouse' | translate"
-      [options]="warehouses()"
-      [canBeNull]="true"
-      [control]="form.get('warehouseId')!"
-    />
+    <cust-select *ngIf="isAdmin" [label]="'warehouse' | translate" [options]="warehouses()" [canBeNull]="true"
+      [control]="form.get('warehouseId')!" />
 
-    <app-search-product
-      [label]="typeReport() == 'item-movement' ? ('itemStar' | translate) : ('item' | translate)"
-      [control]="form.get('productId')!"
-    />
+    <app-search-product [label]="typeReport() == 'item-movement' ? ('itemStar' | translate) : ('item' | translate)"
+      [control]="form.get('productId')!" />
 
-    <cust-select
-      [label]="'group' | translate"
-      [options]="groups()"
-      [canBeNull]="true"
-      [control]="form.get('groupId')!"
-    />
+    <cust-select [label]="'group' | translate" [options]="groups()" [canBeNull]="true"
+      *ngIf="typeReport()!='item-movement'" [control]="form.get('groupId')!" />
 
-    <cust-form-field
-      [control]="form.get('startDate')!"
-      inputId="Start Date"
-      [label]="'startDate' | translate"
-      type="date"
-    />
-    <cust-form-field
-      [control]="form.get('endDate')!"
-      inputId="End Date"
-      [label]="'endDate' | translate"
-      type="date"
-    />
+    <cust-form-field [control]="form.get('startDate')!" inputId="Start Date" [label]="'startDate' | translate"
+      type="date" />
+    <cust-form-field [control]="form.get('endDate')!" inputId="End Date" [label]="'endDate' | translate" type="date" />
     <div class="space-x-2">
       <button type="submit" class="btn mt-[22px] mb-3" [disabled]="!form.valid">
         {{ 'preview' | translate }}
       </button>
-      <button
-        type="button"
-        class="btn mt-[22px] mb-3"
-        (click)="printReport()"
-        [disabled]="isPrintDisable()"
-      >
+      <button type="button" class="btn mt-[22px] mb-3" (click)="printReport()" [disabled]="isPrintDisable()">
         {{ 'print' | translate }}
       </button>
     </div>

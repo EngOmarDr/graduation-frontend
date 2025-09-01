@@ -1,24 +1,12 @@
 <cust-card [titleText]="'update_invoice_type' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
-    <cust-select
-      [control]="form.controls.type"
-      [options]="invoiceTypes"
-      [label]="'invoice_type' | translate"
-      inputId="Invoice Type"
-    />
+    <cust-select [control]="form.controls.type" [options]="invoiceTypes" [label]="'invoice_type' | translate"
+      inputId="Invoice Type" />
 
-    <cust-form-field
-      [control]="form.controls.name"
-      inputId="name"
-      [label]="'name' | translate"
-    />
+    <cust-form-field [control]="form.controls.name" inputId="name" [label]="'name' | translate" />
 
-    <cust-select
-      [control]="form.controls.defaultPriceId"
-      [options]="prices()"
-      [label]="'default_price' | translate"
-      inputId="Default Price"
-    />
+    <cust-select [control]="form.controls.defaultPriceId" [options]="prices()" [label]="'default_price' | translate"
+      inputId="Default Price" />
 
     <!-- <cust-select
       [control]="form.controls.minDefaultPriceId"
@@ -27,33 +15,17 @@
       inputId="Default Min Price"
     /> -->
 
-    <cust-select
-      [control]="this.form.controls.defaultWarehouseId"
-      [options]="warehouses()"
-      inputId="Warehouse"
-      [label]="'warehouse' | translate"
-    />
+    <cust-select [control]="this.form.controls.defaultWarehouseId" [options]="warehouses()" inputId="Warehouse"
+      [label]="'warehouse' | translate" />
 
-    <app-account-search
-      [control]="this.form.controls.defaultBillAccId"
-      [fetch]="true"
-      [label]="'bill_account' | translate"
-    />
-    <app-account-search
-      [control]="this.form.controls.defaultCashAccId"
-      [fetch]="true"
-      [label]="'cash_account' | translate"
-    />
-    <app-account-search
-      [control]="this.form.controls.defaultDiscAccId"
-      [fetch]="true"
-      [label]="'disc_account' | translate"
-    />
-    <app-account-search
-      [control]="this.form.controls.defaultExtraAccId"
-      [fetch]="true"
-      [label]="'extra_account' | translate"
-    />
+    <app-account-search [control]="this.form.controls.defaultBillAccId" [fetch]="true"
+      [label]="'bill_account' | translate" />
+    <app-account-search [control]="this.form.controls.defaultCashAccId" [fetch]="true"
+      [label]="'cash_account' | translate" />
+    <app-account-search [control]="this.form.controls.defaultDiscAccId" [fetch]="true"
+      [label]="'disc_account' | translate" />
+    <app-account-search [control]="this.form.controls.defaultExtraAccId" [fetch]="true"
+      [label]="'extra_account' | translate" />
 
     <!-- <app-account-search
       [control]="this.form.controls.defaultCostAccId"
@@ -65,12 +37,8 @@
       label="Stock Account"
     /> -->
 
-    <cust-select
-      [control]="form.controls.defaultCurrencyId"
-      [options]="currencies()"
-      [label]="'default_currency' | translate"
-      inputId="Default Currency"
-    />
+    <cust-select [control]="form.controls.defaultCurrencyId" [options]="currencies()"
+      [label]="'default_currency' | translate" inputId="Default Currency" />
 
     <!-- <label class="self-center">
       <input
@@ -153,10 +121,10 @@
       Short Entry
     </label> -->
 
-    <label class="self-center">
+    <!-- <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isCashBill" />
       {{ 'cash_bill' | translate }}
-    </label>
+    </label> -->
 
     <!-- <label class="self-center">
       <input

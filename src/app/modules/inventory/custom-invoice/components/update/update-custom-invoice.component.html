@@ -1,19 +1,9 @@
 <cust-card titleText="Update {{ invoiceType().name }}">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
-    <cust-select
-      [control]="form.controls.warehouseId"
-      *ngIf="isAdmin"
-      [options]="warehouses()"
-      inputId="branchId"
-      [label]="'branch' | translate"
-    />
+    <cust-select [control]="form.controls.warehouseId" *ngIf="isAdmin" [options]="warehouses()" inputId="branchId"
+      [label]="'branch' | translate" />
 
-    <cust-form-field
-      [control]="form.controls.date"
-      inputId="Date"
-      [label]="'date' | translate"
-      type="datetime-local"
-    />
+    <cust-form-field [control]="form.controls.date" inputId="Date" [label]="'date' | translate" type="datetime-local" />
 
     <!-- <cust-form-field
       [control]="form.controls.postDate"
@@ -23,41 +13,20 @@
       type="date"
     /> -->
 
-    <app-account-search
-      [control]="form.controls.accountId"
-      [fetch]="true"
-      [label]="'client_account' | translate"
-    />
+    <app-account-search [control]="form.controls.accountId" [fetch]="true" [label]="'client_account' | translate" />
 
-    <cust-select
-      [control]="form.controls.currencyId"
-      [options]="currencies()"
-      inputId="Currency"
-      [label]="'currencyA' | translate"
-    />
+    <cust-select [control]="form.controls.currencyId" [options]="currencies()" inputId="Currency"
+      [label]="'currencyA' | translate" />
 
-    <cust-form-field
-      [control]="form.controls.currencyValue"
-      inputId="value"
-      [label]="'value' | translate"
-      type="number"
-    />
+    <cust-form-field [control]="form.controls.currencyValue" inputId="value" [label]="'value' | translate"
+      type="number" />
 
-    <cust-select
-      [control]="form.controls.payType"
-      [options]="[
+    <cust-select [control]="form.controls.payType" [options]="[
         { value: 'monetary', key: 0 },
         { value: 'delay', key: 1 }
-      ]"
-      inputId="pay"
-      [label]="'pay' | translate"
-    />
+      ]" inputId="pay" [label]="'pay' | translate" />
 
-    <cust-form-field
-      [control]="form.controls.notes"
-      inputId="notes"
-      [label]="'notes' | translate"
-    />
+    <cust-form-field [control]="form.controls.notes" inputId="notes" [label]="'notes' | translate" />
 
     <!-- <div class="self-end">
       <label class="relative inline-flex items-center cursor-pointer">
@@ -73,27 +42,20 @@
       </label>
     </div> -->
 
-    <div *ngIf="!invoiceType().isAutoPost" class="self-end">
+    <div class="self-end">
       <label class="relative inline-flex items-center cursor-pointer">
-        <input
-          type="checkbox"
-          class="sr-only peer"
-          [formControl]="form.controls.isPosted"
-        />
+        <input [readonly]="invoiceType().isAutoPost || invoiceType().isNoPost" type="checkbox" class="sr-only peer"
+          [formControl]="form.controls.isPosted" />
         <div
-          class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
-        ></div>
+          class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+        </div>
         <span class="ml-3 text-gray-700">{{ 'is_posted' | translate }}</span>
       </label>
     </div>
 
-    <cust-form-field
-      [control]="form.controls.postedDate"
-      *ngIf="!invoiceType().isAutoPost"
-      inputId="Posted Date"
-      [label]="'posted_date' | translate"
-      type="datetime-local"
-    />
+    <cust-form-field [control]="form.controls.postedDate"
+      [readOnly]="invoiceType().isAutoPost || invoiceType().isNoPost" inputId="Posted Date"
+      [label]="'posted_date' | translate" type="datetime-local" />
 
     <div class="col-span-full w-full overflow-auto">
       <table formArrayName="invoiceItems" class="add-table">
@@ -111,103 +73,57 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            *ngFor="let row of invoiceItems.controls; let i = index"
-            [formGroup]="row"
-          >
+          <tr *ngFor="let row of invoiceItems.controls; let i = index" [formGroup]="row">
             <td>{{ i + 1 }}</td>
             <td>
-              <app-search-product
-                [control]="row.get('productId')!"
-                (productSelected)="onSelectProduct($event, i)"
-                [fetch]="true"
-              />
+              <app-search-product [control]="row.get('productId')!" (productSelected)="onSelectProduct($event, i)"
+                [fetch]="true" />
             </td>
             <td>
-              <cust-form-field
-                [control]="row.get('qty')!"
-                type="number"
-                inputId="qty"
-              />
+              <cust-form-field [control]="row.get('qty')!" type="number" inputId="qty" />
             </td>
             <td>
-              <cust-form-field
-                [control]="row.get('price')!"
-                type="number"
-                inputId="price"
-              />
+              <cust-form-field [control]="row.get('price')!" type="number" inputId="price" />
             </td>
             <td>
-              <cust-form-field
-                [control]="row.get('total')!"
-                type="number"
-                inputId="total"
-                [readOnly]="true"
-              />
+              <cust-form-field [control]="row.get('total')!" type="number" inputId="total" [readOnly]="true" />
             </td>
             <td>
-              <cust-select
-                [control]="row.get('unitItemId')!"
-                [options]="products().at(i)?.unitItems ?? []"
-                [showLabel]="false"
-                [label]="'unit_item' | translate"
-                inputId="Unit"
-              />
+              <cust-select [control]="row.get('unitItemId')!" [options]="products().at(i)?.unitItems ?? []"
+                [showLabel]="false" [label]="'unit_item' | translate" inputId="Unit" />
             </td>
             <td>
               <input formControlName="unitFact" class="cust-input" readonly />
             </td>
             <td>
               <input formControlName="notes" class="cust-input" />
-              <app-validation-message
-                [control]="row.get('notes')!"
-                name="notes"
-              />
+              <app-validation-message [control]="row.get('notes')!" name="notes" />
             </td>
 
             <td>
-              <button
-                class="cursor-pointer"
-                title="edit"
-                type="button"
-                (click)="removeInvoiceItem(i)"
-              >
-                <svg
-                  class="fill-red-500"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+              <button class="cursor-pointer" title="edit" type="button" (click)="removeInvoiceItem(i)">
+                <svg class="fill-red-500" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path
-                    d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z"
-                  />
+                    d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z" />
                   <path
-                    d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
-                  />
+                    d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z" />
                 </svg>
               </button>
             </td>
           </tr>
           <tr>
             <td [attr.colspan]="9" class="text-center w-full">
-              <button
-                type="button"
+              <button type="button"
                 class="w-fit self-center mx-auto my-1 cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
-                (click)="addInvoiceItem()"
-              >
+                (click)="addInvoiceItem()">
                 <img src="assets/icons/add.png" alt="add" />
               </button>
             </td>
           </tr>
         </tbody>
       </table>
-      <app-validation-message
-        *ngIf="invoiceItems.errors"
-        [control]="invoiceItems"
-        [customMessage]="null"
-        [name]="'journal_items' | translate"
-        class="col-span-full flex justify-start"
-      />
+      <app-validation-message *ngIf="invoiceItems.errors" [control]="invoiceItems" [customMessage]="null"
+        [name]="'journal_items' | translate" class="col-span-full flex justify-start" />
     </div>
 
     <div class="col-span-full w-full overflow-auto">
@@ -225,99 +141,55 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            *ngFor="let row of invoiceDiscounts.controls; let i = index"
-            [formGroup]="row"
-          >
+          <tr *ngFor="let row of invoiceDiscounts.controls; let i = index" [formGroup]="row">
             <td>{{ i + 1 }}</td>
             <td>
-              <app-account-search
-                [control]="row.get('account')!"
-                [fetch]="true"
-              />
+              <app-account-search [control]="row.get('account')!" [fetch]="true" />
             </td>
             <td>
-              <cust-form-field
-                [control]="row.get('discount')!"
-                type="number"
-                inputId="discount"
-              />
+              <cust-form-field [control]="row.get('discount')!" type="number" inputId="discount" />
             </td>
             <td>
-              <cust-form-field
-                [control]="row.get('discountRate')!"
-                type="number"
-                inputId="discountRate"
-                [numberFormat]="5"
-              />
+              <cust-form-field [control]="row.get('discountRate')!" type="number" inputId="discountRate"
+                [numberFormat]="5" />
             </td>
 
             <td>
-              <cust-form-field
-                [control]="row.get('extra')!"
-                type="number"
-                inputId="price"
-              />
+              <cust-form-field [control]="row.get('extra')!" type="number" inputId="price" />
             </td>
             <td>
-              <cust-form-field
-                [control]="row.get('extraRate')!"
-                type="number"
-                inputId="price"
-              />
+              <cust-form-field [control]="row.get('extraRate')!" type="number" inputId="price" />
             </td>
 
             <td>
               <input formControlName="notes" class="cust-input" />
-              <app-validation-message
-                [control]="row.get('notes')!"
-                name="notes"
-              />
+              <app-validation-message [control]="row.get('notes')!" name="notes" />
             </td>
 
             <td>
-              <button
-                class="cursor-pointer"
-                title="edit"
-                type="button"
-                (click)="removeInvoiceDiscount(i)"
-              >
-                <svg
-                  class="fill-red-500"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+              <button class="cursor-pointer" title="edit" type="button" (click)="removeInvoiceDiscount(i)">
+                <svg class="fill-red-500" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path
-                    d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z"
-                  />
+                    d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z" />
                   <path
-                    d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
-                  />
+                    d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z" />
                 </svg>
               </button>
             </td>
           </tr>
           <tr>
             <td [attr.colspan]="9" class="text-center w-full">
-              <button
-                type="button"
+              <button type="button"
                 class="w-fit self-center mx-auto my-1 cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
-                (click)="addInvoiceDiscount()"
-              >
+                (click)="addInvoiceDiscount()">
                 <img src="assets/icons/add.png" alt="add" />
               </button>
             </td>
           </tr>
         </tbody>
       </table>
-      <app-validation-message
-        *ngIf="invoiceItems.errors"
-        [control]="invoiceItems"
-        [customMessage]="null"
-        [name]="'journal_items' | translate"
-        class="col-span-full flex justify-start"
-      />
+      <app-validation-message *ngIf="invoiceItems.errors" [control]="invoiceItems" [customMessage]="null"
+        [name]="'journal_items' | translate" class="col-span-full flex justify-start" />
     </div>
 
     <div class="col-span-full">

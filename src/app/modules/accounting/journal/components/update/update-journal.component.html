@@ -1,44 +1,25 @@
 <cust-card [titleText]="'journal.updateTitle' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
-    <cust-form-field
-      [control]="form.controls['date']"
-      inputId="date"
-      [label]="'journal.date' | translate"
-      type="datetime-local"
-    />
+    <cust-form-field [control]="form.controls['date']" inputId="date" [label]="'journal.date' | translate"
+      type="datetime-local" />
 
-    <cust-select
-      [control]="form.controls.branchId"
-      [options]="warehouses"
-      inputId="branchId"
-      [label]="'journal.branch' | translate"
-    />
+    <cust-select [control]="form.controls.branchId" [options]="warehouses" inputId="branchId"
+      [label]="'journal.branch' | translate" />
 
-    <cust-select
-      [control]="form.controls['currencyId']"
-      [options]="toOption()"
-      inputId="currencyId"
-      [label]="'journal.currency' | translate"
-    />
+    <cust-select [control]="form.controls['currencyId']" [options]="toOption()" inputId="currencyId"
+      [label]="'journal.currency' | translate" />
 
-    <cust-form-field
-      [control]="form.controls['currencyValue']"
-      inputId="currencyValue"
-      [label]="'journal.currencyValue' | translate"
-      type="number"
-    />
+    <cust-form-field [control]="form.controls['currencyValue']" inputId="currencyValue"
+      [label]="'journal.currencyValue' | translate" type="number" />
 
     <label class="self-center">
       <input type="checkbox" [formControl]="this.form.controls.isPosted" />
       {{ 'journal.isPosted' | translate }}
-      <app-validation-message
-        [control]="this.form.controls.isPosted"
-        [name]="'journal.isPosted' | translate"
-      />
+      <app-validation-message [control]="this.form.controls.isPosted" [name]="'journal.isPosted' | translate" />
     </label>
 
-    <div class="parentSelect col-span-full relative">
-      <div class="overflow-auto max-h-80 add-table">
+    <div class="parentSelect col-span-full overflow-auto relative">
+      <div class=" max-h-80 add-table">
         <table formArrayName="journalItems">
           <thead>
             <tr>
@@ -54,64 +35,33 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              *ngFor="let row of journalItems.controls; let i = index"
-              [formGroup]="row"
-            >
+            <tr *ngFor="let row of journalItems.controls; let i = index" [formGroup]="row">
               <td>{{ i + 1 }}</td>
               <td>
-                <ng-select
-                  [items]="searchAccounts$ | async"
-                  bindLabel="name"
-                  bindValue="id"
-                  appendTo=".parentSelect"
-                  [searchFn]="searchFn"
-                  formControlName="accountId"
-                  class="w-40 border bg-gray-50"
-                >
+                <ng-select [items]="searchAccounts$ | async" bindLabel="name" bindValue="id" appendTo=".parentSelect"
+                  [searchFn]="searchFn" formControlName="accountId" class="w-40 border bg-gray-50">
                   <ng-template ng-option-tmp let-item="item">
                     {{ item.name }} - {{ item.code }}
                   </ng-template>
                 </ng-select>
-                <app-validation-message
-                  [control]="row.get('accountId')!"
-                  [name]="'journal.account' | translate"
-                />
+                <app-validation-message [control]="row.get('accountId')!" [name]="'journal.account' | translate" />
               </td>
               <td>
                 <input formControlName="notes" class="cust-input" />
               </td>
               <td>
-                <input
-                  formControlName="debit"
-                  type="number"
-                  class="cust-input"
-                />
+                <input formControlName="debit" type="number" class="cust-input" />
               </td>
               <td>
-                <input
-                  formControlName="credit"
-                  type="number"
-                  class="cust-input"
-                />
+                <input formControlName="credit" type="number" class="cust-input" />
               </td>
               <td>
-                <cust-select
-                  [control]="row.get('currencyId')!"
-                  [options]="toOption()"
-                  inputId="rowCurrency"
-                  [showLabel]="false"
-                  [label]="'journal.currency' | translate"
-                  class="min-w-[100px]"
-                ></cust-select>
+                <cust-select [control]="row.get('currencyId')!" [options]="toOption()" inputId="rowCurrency"
+                  [showLabel]="false" [label]="'journal.currency' | translate" class="min-w-[100px]"></cust-select>
               </td>
 
               <td>
-                <input
-                  formControlName="currencyValue"
-                  type="number"
-                  class="cust-input"
-                />
+                <input formControlName="currencyValue" type="number" class="cust-input" />
               </td>
               <!-- <td>
                 <input
@@ -122,48 +72,29 @@
               </td> -->
 
               <td>
-                <button
-                  class="cursor-pointer"
-                  title="edit"
-                  type="button"
-                  (click)="removeRow(i)"
-                >
-                  <svg
-                    class="fill-red-500"
-                    height="28"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                <button class="cursor-pointer" title="edit" type="button" (click)="removeRow(i)">
+                  <svg class="fill-red-500" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path
-                      d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z"
-                    />
+                      d="m21.0697 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33003 0-2.55003 1.32-2.71003 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82s.4.71.82.67l2.04-.2c5.24003-.52 10.52003-.32 15.82003.21h.08c.38 0 .71-.29.75-.68.03-.41-.27-.78-.69-.82z" />
                     <path
-                      d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z"
-                    />
+                      d="m19.2297 8.14c-.24-.25-.57-.39-.91-.39h-12.63995c-.34 0-.68.14-.91.39s-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.41995c3.49 0 3.6301-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95zm-5.57 9.61h-3.33c-.40995 0-.74995-.34-.74995-.75s.34-.75.74995-.75h3.33c.41 0 .75.34.75.75s-.34.75-.75.75zm.84-4h-4.99995c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.99995c.41 0 .75.34.75.75s-.34.75-.75.75z" />
                   </svg>
                 </button>
               </td>
             </tr>
             <tr>
               <td [attr.colspan]="9" class="text-center w-full">
-                <button
-                  type="button"
+                <button type="button"
                   class="w-fit self-center m-auto cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
-                  (click)="addRow(undefined)"
-                >
+                  (click)="addRow(undefined)">
                   <img src="assets/icons/add.png" alt="{{ 'journal.addRow' | translate }}" />
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
-        <app-validation-message
-          *ngIf="journalItems.errors"
-          [control]="this.journalItems"
-          [customMessage]="null"
-          name="journalItems"
-          class="col-span-full flex justify-start"
-        />
+        <app-validation-message *ngIf="journalItems.errors" [control]="this.journalItems" [customMessage]="null"
+          name="journalItems" class="col-span-full flex justify-start" />
       </div>
     </div>
 

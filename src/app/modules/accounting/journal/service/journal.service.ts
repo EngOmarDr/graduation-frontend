@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { CreateJournalRequest } from '../models/request/create-journal-request.model';
 import { JournalResponse } from '../models/reponse/journal-response.model';
@@ -30,7 +30,9 @@ export class JournalService {
         }
       : undefined;
     const url = parentType ? `${this.apiUrl}/search` : `${this.apiUrl}`;
-    return this.http.get<JournalResponse[]>(url, option);
+    return this.http.get<JournalResponse[]>(url, option).pipe(map((res)=>{
+      return res.filter((value)=>value.kind=='JOURNAL_TYPE')
+    }));
   }
 
   getJournalsById(id: number): Observable<JournalResponse> {

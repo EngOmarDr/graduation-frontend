@@ -1,4 +1,6 @@
-<cust-card [titleText]="'journal.addTitle' | translate : { name: journalType.name }">
+<cust-card
+  [titleText]="'journal.addTitle' | translate : { name: journalType.name }"
+>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select
       [control]="form.controls.branchId"
@@ -29,7 +31,7 @@
         [ngClass]="{
           'cust-label-disable': form.controls.account.disabled
         }"
-        >{{ 'journal.account' | translate }}
+        >{{ "journal.account" | translate }}
       </label>
       <ng-select
         id="Account"
@@ -73,6 +75,9 @@
 
     <div *ngIf="!journalType?.autoPost" class="self-end">
       <label class="relative inline-flex items-center cursor-pointer">
+        <span class="ml-3 text-gray-700">{{
+          "journal.isPosted" | translate
+        }}</span>
         <input
           type="checkbox"
           class="sr-only peer"
@@ -81,7 +86,6 @@
         <div
           class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
         ></div>
-        <span class="ml-3 text-gray-700">{{ 'journal.isPosted' | translate }}</span>
       </label>
     </div>
 
@@ -91,26 +95,34 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>{{ 'journal.account' | translate }}</th>
-              <th *ngIf="journalType?.fieldNotes">{{ 'journal.notes' | translate }}</th>
+              <th>{{ "journal.account" | translate }}</th>
+              <th *ngIf="journalType?.fieldNotes">
+                {{ "journal.notes" | translate }}
+              </th>
               <th *ngIf="journalType?.fieldDebit">
                 {{
                   journalType.debitName.length == 0
-                    ? ('journal.debit' | translate)
+                    ? ("journal.debit" | translate)
                     : journalType.debitName
                 }}
               </th>
               <th *ngIf="journalType?.fieldCredit">
                 {{
                   journalType.creditName.length == 0
-                    ? ('journal.credit' | translate)
+                    ? ("journal.credit" | translate)
                     : journalType.creditName
                 }}
               </th>
-              <th *ngIf="journalType?.fieldCurrencyName">{{ 'journal.currency' | translate }}</th>
-              <th *ngIf="journalType?.fieldCurrencyEquilty">{{ 'journal.currencyValue' | translate }}</th>
-              <th *ngIf="journalType?.fieldDate">{{ 'journal.date' | translate }}</th>
-              <th>{{ 'journal.actions' | translate }}</th>
+              <th *ngIf="journalType?.fieldCurrencyName">
+                {{ "journal.currency" | translate }}
+              </th>
+              <th *ngIf="journalType?.fieldCurrencyEquilty">
+                {{ "journal.currencyValue" | translate }}
+              </th>
+              <th *ngIf="journalType?.fieldDate">
+                {{ "journal.date" | translate }}
+              </th>
+              <th>{{ "journal.actions" | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -232,7 +244,10 @@
                   class="w-fit self-center mx-auto my-1 cursor-pointer size-8 border dark:bg-white border-black rounded-full shadow-sm shadow-black/40 p-2 flex text-white"
                   (click)="addRow()"
                 >
-                  <img src="assets/icons/add.png" alt="{{ 'journal.addRow' | translate }}" />
+                  <img
+                    src="assets/icons/add.png"
+                    alt="{{ 'journal.addRow' | translate }}"
+                  />
                 </button>
               </td>
             </tr>
@@ -249,16 +264,15 @@
     </div>
 
     <div class="col-span-full mt-4">
-      <p>{{ 'journal.totalDebit' | translate }}: {{ sumDebit }}</p>
-      <p>{{ 'journal.totalCredit' | translate }}: {{ sumCredit }}</p>
-      <p>{{ 'journal.difference' | translate }}: {{ minus }}</p>
+      <p>{{ "journal.totalDebit" | translate }}: {{ sumDebit }}</p>
+      <p>{{ "journal.totalCredit" | translate }}: {{ sumCredit }}</p>
+      <p>{{ "journal.difference" | translate }}: {{ minus }}</p>
     </div>
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn" [disabled]="!form.valid">{{ 'journal.addButton' | translate }}</button>
+      <button type="submit" class="btn" [disabled]="!form.valid">
+        {{ "journal.addButton" | translate }}
+      </button>
     </div>
   </form>
-  <div>
-    {{ form.value | json }}
-  </div>
 </cust-card>

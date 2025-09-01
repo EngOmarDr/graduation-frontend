@@ -27,7 +27,7 @@ export class DashboardComponentComponent implements OnInit {
   @ViewChild('timeChart') timeChart!: ElementRef<HTMLCanvasElement>;
   @ViewChild('stockChart') stockChart!: ElementRef<HTMLCanvasElement>;
 
-  constructor(private statisticsService: StatisticsService) {}
+  constructor(private statisticsService: StatisticsService) { }
 
   ngOnInit(): void {
     const start = '2025-06-07T15:00:00';
@@ -40,7 +40,7 @@ export class DashboardComponentComponent implements OnInit {
         this.prepareIndicators();
 
         // تأخير قليل لضمان إنشاء الـ canvas
-        setTimeout(() => this.renderCharts(), 0);
+        // setTimeout(() => this.renderCharts(), 0);
       },
       error: (err) => {
         this.error = 'فشل تحميل البيانات';
@@ -145,7 +145,7 @@ export class DashboardComponentComponent implements OnInit {
         labels: ['LOW', 'SUFFICIENT', 'HIGH'],
         datasets: [{
           data: [summary.LOW, summary.SUFFICIENT, summary.HIGH || 0],
-          backgroundColor: ['#EF4444','#10B981','#3B82F6']
+          backgroundColor: ['#EF4444', '#10B981', '#3B82F6']
         }]
       },
       options: { responsive: true }

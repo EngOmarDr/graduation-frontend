@@ -1,4 +1,4 @@
-<div class="p-6 bg-gray-100 min-h-screen">
+<div class="p-6 min-h-screen">
   <!-- عنوان -->
   <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
     📊 لوحة التحكم - الإحصائيات
@@ -12,7 +12,8 @@
 
     <!-- 🟦 المؤشرات العامة -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-      <div *ngFor="let item of generalIndicatorItems" class="p-4 bg-white rounded-2xl shadow hover:shadow-lg transition transform hover:-translate-y-1">
+      <div *ngFor="let item of generalIndicatorItems"
+        class="p-4 bg-white rounded-2xl shadow hover:shadow-lg transition transform hover:-translate-y-1">
         <p class="text-sm text-gray-500">{{ item.label }}</p>
         <h2 [ngClass]="item.colorClass" class="text-2xl font-bold">{{ item.value | number }}</h2>
       </div>
@@ -24,7 +25,8 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
         <div *ngFor="let item of financialItems" class="text-center">
           <p class="text-sm text-gray-500">{{ item.label }}</p>
-          <h3 [ngClass]="item.colorClass" class="text-lg font-bold">{{ item.value | number }}{{ item.suffix || '' }}</h3>
+          <h3 [ngClass]="item.colorClass" class="text-lg font-bold">{{ item.value | number }}{{ item.suffix || '' }}
+          </h3>
         </div>
       </div>
     </div>
@@ -66,8 +68,7 @@
               <td class="px-4 py-2">{{ stock.productName }}</td>
               <td class="px-4 py-2">{{ stock.currentStock }}</td>
               <td class="px-4 py-2">
-                <span class="px-2 py-1 rounded text-white text-xs"
-                  [ngClass]="getStockStatusColor(stock.stockStatus)">
+                <span class="px-2 py-1 rounded text-white text-xs" [ngClass]="getStockStatusColor(stock.stockStatus)">
                   {{ stock.stockStatus }}
                 </span>
               </td>
