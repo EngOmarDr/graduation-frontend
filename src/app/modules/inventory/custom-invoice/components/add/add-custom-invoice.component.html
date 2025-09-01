@@ -17,8 +17,8 @@
     />
 
     <!-- <cust-form-field
-      [control]="form.controls.postDate"
-      *ngIf="!journalType?.autoPost"
+      [control]="form.controls.postedDate"
+      *ngIf="!invoiceType()?.isAutoPost"
       inputId="Post Date"
       label="Post Date"
       type="date"
@@ -48,8 +48,8 @@
     <cust-select
       [control]="form.controls.payType"
       [options]="[
-        { value: 'monetary', key: 0 },
-        { value: 'delay', key: 1 }
+        { value: 'كاش', key: 0 },
+        { value: 'آجل', key: 1 }
       ]"
       inputId="pay"
       [label]="'pay' | translate"

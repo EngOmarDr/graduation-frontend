@@ -33,14 +33,17 @@ import { Roles } from '../../../core/constants/roles.enum';
     ></div>
 
     <!-- sidebar -->
-    <aside
-      class="fixed start-0 top-0 min-w-60 z-40 h-svh bg-white dark:bg-dark-card-surface shadow-lg transition-transform duration-300 lg:sticky lg:translate-x-0 overflow-y-auto"
-      [ngClass]="{
-        '-translate-x-full ease-in': !isSidebarOpen,
-        'translate-x-full ease-in': !isSidebarOpen && isArabic(),
-        'translate-x-0 ease-out': isSidebarOpen,
-      }"
-    >
+<aside
+  class="fixed top-0 min-w-60 z-40 h-svh bg-white dark:bg-dark-card-surface
+         shadow-lg transition-transform duration-300 lg:sticky lg:translate-x-0 overflow-y-auto"
+  [ngClass]="{
+    'start-0 -translate-x-full': !isSidebarOpen && !isArabic,
+    'start-0 translate-x-0': isSidebarOpen && !isArabic,
+    'end-0 translate-x-full': !isSidebarOpen && isArabic,
+    'end-0 translate-x-0': isSidebarOpen && isArabic
+  }"
+>
+
       <!-- Logo -->
       <div
         class="flex items-center justify-center h-16 border-b-2 border-primary"

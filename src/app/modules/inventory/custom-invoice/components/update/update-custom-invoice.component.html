@@ -15,13 +15,13 @@
       type="datetime-local"
     />
 
-    <!-- <cust-form-field
-      [control]="form.controls.postDate"
-      *ngIf="!journalType?.autoPost"
+    <cust-form-field
+      [control]="form.controls.postedDate"
+      [readOnly]="invoiceType().isAutoPost"
       inputId="Post Date"
-      label="Post Date"
-      type="date"
-    /> -->
+      label="تاريخ الترحيل"
+      type="datetime-local"
+    />
 
     <app-account-search
       [control]="form.controls.accountId"
@@ -46,8 +46,8 @@
     <cust-select
       [control]="form.controls.payType"
       [options]="[
-        { value: 'monetary', key: 0 },
-        { value: 'delay', key: 1 }
+        { value: 'كاش', key: 0 },
+        { value: 'آجل', key: 1 }
       ]"
       inputId="pay"
       [label]="'pay' | translate"
@@ -73,7 +73,7 @@
       </label>
     </div> -->
 
-    <div *ngIf="!invoiceType().isAutoPost" class="self-end">
+    <!-- <div class="self-end">
       <label class="relative inline-flex items-center cursor-pointer">
         <input
           type="checkbox"
@@ -85,7 +85,12 @@
         ></div>
         <span class="ml-3 text-gray-700">{{ 'is_posted' | translate }}</span>
       </label>
-    </div>
+    </div> -->
+
+ <label class="self-center">
+      <input type="checkbox" [formControl]="this.form.controls.isPosted" />
+      {{ 'journal.isPosted' | translate }}
+    </label>
 
     <cust-form-field
       [control]="form.controls.postedDate"

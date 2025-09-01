@@ -190,7 +190,13 @@
     "totalCredit": "إجمالي الدائن",
     "closingBalance": "الرصيد الختامي",
     "startDate": "تاريخ البداية",
-    "endDate": "تاريخ النهاية"
+    "endDate": "تاريخ النهاية",
+      "ledger": "دفتر الأستاذ",
+  "generalJournal": "اليومية العامة",
+  "trialBalance": "ميزان المراجعة",
+  "itemMovement": "حركة المواد",
+  "dailyMovement": "الحركة اليومية",
+  "itemStock": "مخزون المواد"
   },
   "add_branch": "إضافة فرع",
   "name": "الاسم",
@@ -251,7 +257,7 @@
     "addTitle": "إضافة مجموعة",
     "code": "الكود",
     "name": "الاسم",
-    "parentGroup": "المجموعة الأم",
+    "parentGroup": "المجموعة الرئيسية",
     "notes": "ملاحظات",
     "addButton": "إضافة",
     "updateTitle": "تحديث المجموعة",
@@ -263,7 +269,7 @@
     "columns": {
     "code": "الكود",
     "name": "الاسم",
-    "parentName": "المجموعة الأم",
+    "parentName": "المجموعة الرئيسية",
     "notes": "ملاحظات",
     "parentId" : "معرّف المجموعة الأم",
     "finalAccountName": "الحساب الختامي",
@@ -279,8 +285,9 @@
     "addInvoiceType": "إضافة نوع فاتورة",
     "invoiceType": "نوع الفاتورة",
     "name": "الاسم",
+    "type": "النوع",
     "defaultPrice": "السعر الافتراضي",
-    "warehouse": "المخزن",
+    "warehouse": "المستودع",
     "billAccount": "حساب الفاتورة",
     "cashAccount": "حساب النقدي",
     "discAccount": "حساب الخصم",
@@ -594,5 +601,8 @@
     "logoutSuccessTitle": "تم الخروج!",
     "logoutSuccessText": "تم تسجيل الخروج بنجاح."
   },
-  "invoice-type-pos": "نمط فاتورة نقطة البيع"
+  "invoice-type-pos": "نمط فاتورة نقطة البيع",
+  "monetary": "نقدي",
+  "delay": "آجل"
+
 }

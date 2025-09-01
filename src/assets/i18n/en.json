@@ -190,7 +190,13 @@
     "totalCredit": "Total Credit",
     "closingBalance": "Closing Balance",
     "startDate": "Start Date",
-    "endDate": "End Date"
+    "endDate": "End Date",
+    "ledger": "Ledger",
+  "generalJournal": "General Journal",
+  "trialBalance": "Trial Balance",
+  "itemMovement": "Item Movement",
+  "dailyMovement": "Daily Movement",
+  "itemStock": "Item Stock"
   },
   "add_branch": "Add Branch",
   "name": "Name",
@@ -277,6 +283,7 @@
     "addInvoiceType": "Add Invoice Type",
     "invoiceType": "Invoice Type",
     "name": "Name",
+    "type": "Type",
     "defaultPrice": "Default Price",
     "warehouse": "Warehouse",
     "billAccount": "Bill Account",
@@ -592,5 +599,7 @@
     "logoutSuccessTitle": "Logged out!",
     "logoutSuccessText": "You have successfully logged out."
   },
-  "invoice-type-pos": "POS Invoice Type"
+  "invoice-type-pos": "POS Invoice Type",
+  "monetary": "monetary",
+  "delay": "delay"
 }

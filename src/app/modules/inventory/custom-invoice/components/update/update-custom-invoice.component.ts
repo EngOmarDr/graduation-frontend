@@ -58,7 +58,7 @@ import { AlertService } from '@shared/services/alert.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UpdateCustomInvoiceComponent implements OnInit {
-  constructor(private alert: AlertService) {}
+  constructor(private alert: AlertService) { }
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly currencyService = inject(CurrencyService);
   private readonly service = inject(InvoiceService);
@@ -137,6 +137,10 @@ export class UpdateCustomInvoiceComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    console.log('====================================');
+    console.log(this.form.controls.invoiceItems.value);
+    console.log('====================================');
+
     this.form.controls.currencyId.valueChanges.subscribe((value) => {
       const curr = this.currencies().find((c) => c.id === value);
       this.form.controls.currencyValue.setValue(curr?.currencyValue ?? 1, {
@@ -145,221 +149,266 @@ export class UpdateCustomInvoiceComponent implements OnInit {
     });
 
     this.form.controls.currencyId.setValue(
-      this.invoiceType().defaultCurrencyId ?? this.currencies()[0].id
+      this.invoiceType()?.defaultCurrencyId ?? this.currencies().at(0)?.id ?? 1
     );
-  }
 
-  onSubmit() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      this.invoiceItems.markAllAsTouched();
-      this.invoiceDiscounts.markAllAsTouched();
+     // for (const item in this.oldInvoice.invoiceItems) {
 
-      return;
+    //   this.oldInvoice.invoiceItems.map((item) => {
+    //     const row = this.fb.group({
+    //       productId: this.fb.control<number | undefined>(
+    //         item.productId,
+    //         Validators.required
+    //       ),
+    //       qty: this.fb.control<number>(item.qty, Validators.min(0)),
+    //       price: this.fb.control<number>(item.price, Validators.min(0)),
+    //       total: this.fb.control<number>(item.qty * item.price),
+    //       bonusQty: this.fb.control<number>(item.bonusQty),
+    //       unitItemId: this.fb.control<number | undefined>(item.unitItemId),
+    //       unitFact: this.fb.control<number | undefined>(item.unitFact),
+    //       notes: [item.notes],
+    //     });
+
+    //     row.controls.qty.valueChanges.subscribe((v) => {
+    //       row.controls.total.setValue(v * row.controls.price.value, {
+    //         emitEvent: false,
+    //       });
+    //       this.calcTotalInvoice();
+    //     });
+
+    //     row.controls.price.valueChanges.subscribe((v) => {
+    //       row.controls.total.setValue(v * row.controls.qty.value, {
+    //         emitEvent: false,
+    //       });
+    //       this.calcTotalInvoice();
+    //     });
+
+    //     this.invoiceItems.push(row);
+    //     row.controls.unitItemId.valueChanges.subscribe((v) => {
+    //       row.controls.unitFact.setValue(
+    //         this.products()
+    //           .at(this.invoiceItems.length - 1)
+    //           ?.unitItems?.find((item) => {
+    //             return item.id == v;
+    //           })?.fact
+    //       );
+    //     })
+    //   })
+
+    // }
+   }
+
+    onSubmit() {
+      if (this.form.invalid) {
+        this.form.markAllAsTouched();
+        this.invoiceItems.markAllAsTouched();
+        this.invoiceDiscounts.markAllAsTouched();
+
+        return;
+      }
+
+      this.service.update(this.id, this.form.getRawValue()).subscribe({
+        next: (_) => {
+          this.alert.showSuccess('updated');
+          this.location.back();
+        },
+        error: (err) => console.log(err),
+      });
     }
 
-    this.service.update(this.id, this.form.getRawValue()).subscribe({
-      next: (_) => {
-    this.alert.showSuccess('updated');
-    this.location.back();
-  },
-      error: (err) => console.log(err),
-    });
-  }
-
-  get invoiceItems(): FormArray<FormGroup> {
-    return this.form.get('invoiceItems') as FormArray<FormGroup>;
-  }
-  addInvoiceItem() {
-    const row = this.fb.group({
-      productId: this.fb.control<number | undefined>(
-        undefined,
-        Validators.required
-      ),
-      qty: this.fb.control<number>(0, Validators.min(0)),
-      price: this.fb.control<number>(0, Validators.min(0)),
-      total: this.fb.control<number>(0),
-      bonusQty: this.fb.control<number>(0),
-      unitItemId: this.fb.control<number | undefined>(undefined),
-      unitFact: this.fb.control<number | undefined>(undefined),
-      notes: [''],
-    });
-
-    row.controls.qty.valueChanges.subscribe((v) => {
-      row.controls.total.setValue(v * row.controls.price.value, {
-        emitEvent: false,
+  get invoiceItems(): FormArray < FormGroup > {
+      return this.form.get('invoiceItems') as FormArray<FormGroup>;
+    }
+    addInvoiceItem() {
+      const row = this.fb.group({
+        productId: this.fb.control<number | undefined>(
+          undefined,
+          Validators.required
+        ),
+        qty: this.fb.control<number>(0, Validators.min(0)),
+        price: this.fb.control<number>(0, Validators.min(0)),
+        total: this.fb.control<number>(0),
+        bonusQty: this.fb.control<number>(0),
+        unitItemId: this.fb.control<number | undefined>(undefined),
+        unitFact: this.fb.control<number | undefined>(undefined),
+        notes: [''],
       });
-      this.calcTotalInvoice();
-    });
 
-    row.controls.price.valueChanges.subscribe((v) => {
-      row.controls.total.setValue(v * row.controls.qty.value, {
-        emitEvent: false,
+      row.controls.qty.valueChanges.subscribe((v) => {
+        row.controls.total.setValue(v * row.controls.price.value, {
+          emitEvent: false,
+        });
+        this.calcTotalInvoice();
       });
-      this.calcTotalInvoice();
-    });
 
-    this.invoiceItems.push(row);
-    row.controls.unitItemId.valueChanges.subscribe((v) => {
-      row.controls.unitFact.setValue(
-        this.products()
-          .at(this.invoiceItems.length - 1)
-          ?.unitItems?.find((item) => {
-            return item.id == v;
-          })?.fact
-      );
-    });
-  }
-  removeInvoiceItem(i: number) {
-    this.invoiceItems.removeAt(i);
-  }
+      row.controls.price.valueChanges.subscribe((v) => {
+        row.controls.total.setValue(v * row.controls.qty.value, {
+          emitEvent: false,
+        });
+        this.calcTotalInvoice();
+      });
 
-  get invoiceDiscounts(): FormArray<FormGroup> {
-    return this.form.get('invoiceDiscounts') as FormArray<FormGroup>;
-  }
-  addInvoiceDiscount() {
-    const row = this.fb.group({
-      account: [],
-      discount: [0],
-      discountRate: [0],
-      extra: [0],
-      extraRate: [0],
-      notes: [''],
-    });
-    this.listenToDiscountAndExtra(row);
-    this.invoiceDiscounts.push(row);
-  }
-  removeInvoiceDiscount(i: number) {
-    this.invoiceDiscounts.removeAt(i);
-  }
+      this.invoiceItems.push(row);
+      row.controls.unitItemId.valueChanges.subscribe((v) => {
+        row.controls.unitFact.setValue(
+          this.products()
+            .at(this.invoiceItems.length - 1)
+            ?.unitItems?.find((item) => {
+              return item.id == v;
+            })?.fact
+        );
+      });
+    }
+    removeInvoiceItem(i: number) {
+      this.invoiceItems.removeAt(i);
+    }
+
+  get invoiceDiscounts(): FormArray < FormGroup > {
+      return this.form.get('invoiceDiscounts') as FormArray<FormGroup>;
+    }
+    addInvoiceDiscount() {
+      const row = this.fb.group({
+        account: [],
+        discount: [0],
+        discountRate: [0],
+        extra: [0],
+        extraRate: [0],
+        notes: [''],
+      });
+      this.listenToDiscountAndExtra(row);
+      this.invoiceDiscounts.push(row);
+    }
+    removeInvoiceDiscount(i: number) {
+      this.invoiceDiscounts.removeAt(i);
+    }
 
   get currentDateTime(): string {
-    return new Date().toISOString().slice(0, 16);
-  }
-
-  calcTotalInvoice() {
-    let temp = 0;
-    for (let item of this.invoiceItems.controls) {
-      temp += +Number.parseFloat(item.controls['total'].value).toFixed(2);
-    }
-    this.total.set(temp);
-  }
-  calcTotalDiscountAndExtra() {
-    let tempDisc = 0;
-    let tempExtra = 0;
-    for (let item of this.invoiceDiscounts.controls) {
-      tempDisc += Number.parseFloat(item.controls['discount'].value);
-      tempExtra += Number.parseFloat(item.controls['extra'].value);
+      return new Date().toISOString().slice(0, 16);
     }
 
-    this.totalDisc.set(tempDisc);
-    this.totalExtra.set(tempExtra);
-  }
+    calcTotalInvoice() {
+      let temp = 0;
+      for (let item of this.invoiceItems.controls) {
+        temp += +Number.parseFloat(item.controls['total'].value).toFixed(2);
+      }
+      this.total.set(temp);
+    }
+    calcTotalDiscountAndExtra() {
+      let tempDisc = 0;
+      let tempExtra = 0;
+      for (let item of this.invoiceDiscounts.controls) {
+        tempDisc += Number.parseFloat(item.controls['discount'].value);
+        tempExtra += Number.parseFloat(item.controls['extra'].value);
+      }
 
-  initTheInvoiceDiscountRows() {
-    if (this.invoiceType().defaultDiscAccId) {
-      const row = this.fb.group({
-        account: [this.invoiceType().defaultDiscAccId],
-        discount: [0],
-        discountRate: [0],
-        extra: [0],
-        extraRate: [0],
-        notes: [''],
-      });
-      this.listenToDiscountAndExtra(row);
-
-      this.invoiceDiscounts.push(row);
+      this.totalDisc.set(tempDisc);
+      this.totalExtra.set(tempExtra);
     }
 
-    if (this.invoiceType().defaultExtraAccId) {
-      const row = this.fb.group({
-        account: [this.invoiceType().defaultExtraAccId],
-        discount: [0],
-        discountRate: [0],
-        extra: [0],
-        extraRate: [0],
-        notes: [''],
-      });
-      this.listenToDiscountAndExtra(row);
-      this.invoiceDiscounts.push(row);
+    initTheInvoiceDiscountRows() {
+      if (this.invoiceType().defaultDiscAccId) {
+        const row = this.fb.group({
+          account: [this.invoiceType().defaultDiscAccId],
+          discount: [0],
+          discountRate: [0],
+          extra: [0],
+          extraRate: [0],
+          notes: [''],
+        });
+        this.listenToDiscountAndExtra(row);
+
+        this.invoiceDiscounts.push(row);
+      }
+
+      if (this.invoiceType().defaultExtraAccId) {
+        const row = this.fb.group({
+          account: [this.invoiceType().defaultExtraAccId],
+          discount: [0],
+          discountRate: [0],
+          extra: [0],
+          extraRate: [0],
+          notes: [''],
+        });
+        this.listenToDiscountAndExtra(row);
+        this.invoiceDiscounts.push(row);
+      }
     }
+
+    listenToDiscountAndExtra(row: FormGroup) {
+      row.controls['discount'].valueChanges.subscribe((v) => {
+        let value = +((v * 100) / this.total()).toFixed(5);
+        if (!isFinite(value)) {
+          return;
+        }
+
+        row.controls['discountRate'].setValue(value, {
+          emitEvent: false,
+        });
+        row.controls['extra'].setValue(0, { emitEvent: false });
+        row.controls['extraRate'].setValue(0, { emitEvent: false });
+        this.calcTotalDiscountAndExtra();
+      });
+
+      row.controls['discountRate'].valueChanges.subscribe((v) => {
+        let value = +((v * this.total()) / 100).toFixed(2);
+        if (!isFinite(value)) {
+          return;
+        }
+        row.controls['discount'].setValue(value, {
+          emitEvent: false,
+        });
+        row.controls['extra'].setValue(0, { emitEvent: false });
+        row.controls['extraRate'].setValue(0, { emitEvent: false });
+        this.calcTotalDiscountAndExtra();
+      });
+
+      row.controls['extra'].valueChanges.subscribe((v) => {
+        let value = +((v * 100) / this.total()).toFixed(5);
+        if (!isFinite(value)) {
+          return;
+        }
+        row.controls['extraRate'].setValue(value, {
+          emitEvent: false,
+        });
+        row.controls['discount'].setValue(0, { emitEvent: false });
+        row.controls['discountRate'].setValue(0, { emitEvent: false });
+        this.calcTotalDiscountAndExtra();
+      });
+
+      row.controls['extraRate'].valueChanges.subscribe((v) => {
+        let value = +((v * this.total()) / 100).toFixed(2);
+        if (!isFinite(value)) {
+          return;
+        }
+        row.controls['extra'].setValue(value, {
+          emitEvent: false,
+        });
+        row.controls['discount'].setValue(0, { emitEvent: false });
+        row.controls['discountRate'].setValue(0, { emitEvent: false });
+        this.calcTotalDiscountAndExtra();
+      });
+    }
+    ds = Array();
+    products = signal<
+      {
+        i: number;
+        product: ProductResponse;
+        unitItems: UnitItemResponse[];
+      }[]
+    >([]);
+    onSelectProduct(product: ProductResponse, i: number) {
+      this.unitService.getUnitById(product.defaultUnitId).subscribe((data) => {
+        this.products.update((old) => {
+          old[i] = { i, product, unitItems: data.unitItems ?? [] };
+          return [...old];
+        });
+        this.invoiceItems.controls[i].controls['unitItemId'].setValue(
+          data.unitItems.find((item) => {
+            return item.isDef;
+          })?.id
+        );
+      });
+    }
+
+
   }
-
-  listenToDiscountAndExtra(row: FormGroup) {
-    row.controls['discount'].valueChanges.subscribe((v) => {
-      let value = +((v * 100) / this.total()).toFixed(5);
-      if (!isFinite(value)) {
-        return;
-      }
-
-      row.controls['discountRate'].setValue(value, {
-        emitEvent: false,
-      });
-      row.controls['extra'].setValue(0, { emitEvent: false });
-      row.controls['extraRate'].setValue(0, { emitEvent: false });
-      this.calcTotalDiscountAndExtra();
-    });
-
-    row.controls['discountRate'].valueChanges.subscribe((v) => {
-      let value = +((v * this.total()) / 100).toFixed(2);
-      if (!isFinite(value)) {
-        return;
-      }
-      row.controls['discount'].setValue(value, {
-        emitEvent: false,
-      });
-      row.controls['extra'].setValue(0, { emitEvent: false });
-      row.controls['extraRate'].setValue(0, { emitEvent: false });
-      this.calcTotalDiscountAndExtra();
-    });
-
-    row.controls['extra'].valueChanges.subscribe((v) => {
-      let value = +((v * 100) / this.total()).toFixed(5);
-      if (!isFinite(value)) {
-        return;
-      }
-      row.controls['extraRate'].setValue(value, {
-        emitEvent: false,
-      });
-      row.controls['discount'].setValue(0, { emitEvent: false });
-      row.controls['discountRate'].setValue(0, { emitEvent: false });
-      this.calcTotalDiscountAndExtra();
-    });
-
-    row.controls['extraRate'].valueChanges.subscribe((v) => {
-      let value = +((v * this.total()) / 100).toFixed(2);
-      if (!isFinite(value)) {
-        return;
-      }
-      row.controls['extra'].setValue(value, {
-        emitEvent: false,
-      });
-      row.controls['discount'].setValue(0, { emitEvent: false });
-      row.controls['discountRate'].setValue(0, { emitEvent: false });
-      this.calcTotalDiscountAndExtra();
-    });
-  }
-  ds = Array();
-  products = signal<
-    {
-      i: number;
-      product: ProductResponse;
-      unitItems: UnitItemResponse[];
-    }[]
-  >([]);
-  onSelectProduct(product: ProductResponse, i: number) {
-    this.unitService.getUnitById(product.defaultUnitId).subscribe((data) => {
-      this.products.update((old) => {
-        old[i] = { i, product, unitItems: data.unitItems ?? [] };
-        return [...old];
-      });
-      this.invoiceItems.controls[i].controls['unitItemId'].setValue(
-        data.unitItems.find((item) => {
-          return item.isDef;
-        })?.id
-      );
-    });
-  }
-
-
-}

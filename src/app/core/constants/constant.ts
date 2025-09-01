@@ -10,6 +10,19 @@ export const InventoryReportsKeys = {
   ItemStock: 'item-stock',
 } as const;
 
+export const AccountingReportsLabels: Record<typeof AccountingReportsKeys[keyof typeof AccountingReportsKeys], string> = {
+  [AccountingReportsKeys.GENERALJOURNAL]: 'دفتر اليومية',
+  [AccountingReportsKeys.LEDGER]: 'دفتر الأستاذ',
+  [AccountingReportsKeys.TRAILBALANCE]: 'ميزان المراجعة',
+};
+
+export const InventoryReportsLabels: Record<typeof InventoryReportsKeys[keyof typeof InventoryReportsKeys], string> = {
+  [InventoryReportsKeys.ItemMovement]: 'حركة المواد',
+  [InventoryReportsKeys.DailyMovement]: 'الحركة اليومية',
+  [InventoryReportsKeys.ItemStock]: 'مخزون المواد',
+};
+
+
 export const ActionIcons = {
   edit: `
     <svg xmlns="http://www.w3.org/2000/svg" fill="#facc15" viewBox="0 0 512 512" width="16" height="16">

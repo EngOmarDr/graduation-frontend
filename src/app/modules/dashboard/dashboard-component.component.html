@@ -1,24 +1,20 @@
 <div class="p-6 bg-gray-100 min-h-screen">
-  <!-- عنوان -->
-  <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
-    📊 لوحة التحكم - الإحصائيات
-  </h1>
+  <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">📊 لوحة التحكم - الإحصائيات</h1>
 
-  <!-- حالة التحميل -->
   <div *ngIf="loading" class="text-center text-gray-600">⏳ جاري التحميل...</div>
   <div *ngIf="error" class="text-center text-red-600">{{ error }}</div>
 
   <ng-container *ngIf="!loading && dashboardData">
 
-    <!-- 🟦 المؤشرات العامة -->
+    <!-- General Indicators -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
       <div *ngFor="let item of generalIndicatorItems" class="p-4 bg-white rounded-2xl shadow hover:shadow-lg transition transform hover:-translate-y-1">
         <p class="text-sm text-gray-500">{{ item.label }}</p>
-        <h2 [ngClass]="item.colorClass" class="text-2xl font-bold">{{ item.value | number }}</h2>
+        <h2 [ngClass]="item.colorClass" class="text-2xl font-bold">{{ item.value | number }}{{ item.suffix || '' }}</h2>
       </div>
     </div>
 
-    <!-- 🟧 التحليل المالي -->
+    <!-- Financial Analysis -->
     <div class="bg-white rounded-2xl shadow p-6 mb-8">
       <h2 class="text-xl font-semibold text-gray-700 mb-4">💰 التحليل المالي</h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -29,57 +25,47 @@
       </div>
     </div>
 
-    <!-- 🏬 أداء الفروع -->
+    <!-- Branch Performance Chart -->
     <div class="bg-white rounded-2xl shadow p-6 mb-8">
       <h2 class="text-xl font-semibold text-gray-700 mb-4">🏬 أداء الفروع</h2>
-      <canvas id="branchPerformanceChart" height="200"></canvas>
+      <apx-chart [series]="branchChartOptions.series"
+                 [chart]="branchChartOptions.chart"
+                 [xaxis]="branchChartOptions.xaxis"
+                 [dataLabels]="branchChartOptions.dataLabels"
+                 [plotOptions]="branchChartOptions.plotOptions">
+      </apx-chart>
     </div>
 
-    <!-- 📦 تحليل المنتجات -->
+    <!-- Product Profitability Chart -->
     <div class="bg-white rounded-2xl shadow p-6 mb-8">
       <h2 class="text-xl font-semibold text-gray-700 mb-4">📦 تحليل المنتجات</h2>
-      <canvas id="productProfitabilityChart" height="200"></canvas>
+      <apx-chart [series]="productChartOptions.series"
+                 [chart]="productChartOptions.chart"
+                 [xaxis]="productChartOptions.xaxis"
+                 [dataLabels]="productChartOptions.dataLabels"
+                 [plotOptions]="productChartOptions.plotOptions">
+      </apx-chart>
     </div>
 
-    <!-- ⏱️ التوجهات الزمنية -->
+    <!-- Time Trends Chart -->
     <div class="bg-white rounded-2xl shadow p-6 mb-8">
       <h2 class="text-xl font-semibold text-gray-700 mb-4">⏱️ التوجهات الزمنية</h2>
-      <canvas id="timeTrendsChart" height="200"></canvas>
+      <apx-chart [series]="timeChartOptions.series"
+                 [chart]="timeChartOptions.chart"
+                 [xaxis]="timeChartOptions.xaxis"
+                 [stroke]="timeChartOptions.stroke">
+      </apx-chart>
     </div>
 
-    <!-- 🏗️ المخزون -->
+    <!-- Stock Status Pie Chart -->
     <div class="bg-white rounded-2xl shadow p-6 mb-8">
       <h2 class="text-xl font-semibold text-gray-700 mb-4">🏗️ حالة المخزون</h2>
-      <div class="overflow-x-auto mb-4">
-        <table class="min-w-full border-collapse">
-          <thead>
-            <tr class="bg-gray-100 text-gray-700">
-              <th class="px-4 py-2 text-left">الفرع</th>
-              <th class="px-4 py-2 text-left">المنتج</th>
-              <th class="px-4 py-2 text-left">المخزون الحالي</th>
-              <th class="px-4 py-2 text-left">الحالة</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let stock of dashboardData.inventoryInsights.stockLevels" class="border-b hover:bg-gray-50">
-              <td class="px-4 py-2">{{ stock.branchName }}</td>
-              <td class="px-4 py-2">{{ stock.productName }}</td>
-              <td class="px-4 py-2">{{ stock.currentStock }}</td>
-              <td class="px-4 py-2">
-                <span class="px-2 py-1 rounded text-white text-xs"
-                  [ngClass]="getStockStatusColor(stock.stockStatus)">
-                  {{ stock.stockStatus }}
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- مخزون الحالة (Pie Chart) -->
-      <div>
-        <canvas id="stockStatusPieChart" height="150"></canvas>
-      </div>
+      <apx-chart [series]="stockChartOptions.series"
+                 [chart]="stockChartOptions.chart"
+                 [labels]="stockChartOptions.labels"
+                 [colors]="stockChartOptions.colors"
+                 [legend]="stockChartOptions.legend">
+      </apx-chart>
     </div>
 
   </ng-container>

@@ -4,6 +4,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
 import { inventoryRoutes } from './modules/inventory/inventory.routes';
 import { roleGuard } from './core/guards/role.guard';
+import { dashGuard } from './core/guards/dash.guard';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [dashGuard],
         loadComponent: () =>
           import('../app/modules/dashboard/dashboard-component.component').then(
             (m) => m.DashboardComponentComponent

@@ -46,7 +46,7 @@
           let-index="index"
           let-search="searchTerm"
         >
-          <div>{{ item.name + "-" + item.code }}</div>
+          <div>{{ item.name }}</div>
         </ng-template>
       </ng-select>
       <app-validation-message
@@ -89,14 +89,12 @@
       [control]="form.controls.phone"
       inputId="phone"
       [label]="'warehouseA.phone' | translate"
-      [required]="true"
     />
 
     <cust-form-field
       [control]="form.controls.address"
       inputId="address"
       [label]="'warehouseA.address' | translate"
-      [required]="true"
     />
 
     <cust-form-field

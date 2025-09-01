@@ -66,7 +66,7 @@ export const sidebarConfig: Record<Roles, any[]> = {
   ],
 
   [Roles.MANAGER]: [
-    { name: 'sidebar.dashboard', icon: 'home', routerLink: '/' },
+    { name: 'sidebar.dashboard', icon: 'home', routerLink: '' },
     {
       name: 'sidebar.products',
       icon: 'package-search',
@@ -119,18 +119,24 @@ export const sidebarConfig: Record<Roles, any[]> = {
 
   // مدير المشتريات
   [Roles.PURCHASING_MANAGER]: [
-    { name: 'sidebar.dashboard', icon: 'home', routerLink: '/' },
-    { name: 'sidebar.supply_requests', icon: 'shopping-cart', routerLink: '/supply-requests' },
-    { name: 'sidebar.purchase_orders', icon: 'shopping-bag', routerLink: '/purchase-orders' },
-  ],
 
-  // الكاشير
-  [Roles.CASHIER]: [
-    { name: 'sidebar.dashboard', icon: 'home', routerLink: '/' },
-    { name: 'sidebar.pos', icon: 'shopping-bag', routerLink: '/pos' },
-    { name: 'sidebar.customer_display', icon: 'receipt', routerLink: '/customer-display' },
-    { name: 'sidebar.shift_management', icon: 'clock', routerLink: '/shift-management' },
-    { name: 'sidebar.invoice_management', icon: 'file-invoice', routerLink: '/invoice-management' },
-    { name: 'sidebar.customer_screen', icon: 'monitor', routerLink: '/customer-screen' },
-  ],
+{ name: 'sidebar.purchases', icon: 'shopping-cart', routerLink: '/purchases' },
+{
+      name: 'sidebar.invoices',
+      icon: 'invoice',
+      section: 'invoices',
+      children: [
+        { name: 'sidebar.invoices_list', icon: 'file-text', routerLink: '/invoices' },
+        { name: 'br', icon: '' },
+        { name: 'sidebar.invoice_type', icon: '', routerLink: 'invoice-types' },
+        { name: 'br', icon: '' },
+        { name: 'sidebar.transfer_process', icon: '', routerLink: 'transfers' },
+        { name: 'sidebar.inventory_count', icon: '', routerLink: 'inventory-count' },
+        { name: 'br', icon: '' },
+        { name: 'sidebar.item_movement', icon: '', routerLink: `inventory-reports/${InventoryReportsKeys.ItemMovement}` },
+        { name: 'sidebar.daily_movement', icon: '', routerLink: `inventory-reports/${InventoryReportsKeys.DailyMovement}` },
+        { name: 'sidebar.item_stock', icon: '', routerLink: `inventory-reports/${InventoryReportsKeys.ItemStock}` },
+      ],
+    },
+  ]
 };

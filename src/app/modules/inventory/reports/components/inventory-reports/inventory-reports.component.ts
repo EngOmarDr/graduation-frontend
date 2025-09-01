@@ -29,6 +29,7 @@ import { WarehouseService } from 'app/modules/inventory/warehouse/services/wareh
 import { toSignal } from '@angular/core/rxjs-interop';
 import { GroupService } from 'app/modules/inventory/group/services/group.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { InventoryReportsLabels } from 'app/core/constants/constant';
 
 @Component({
   selector: 'app-daily-movement',
@@ -158,4 +159,7 @@ export class DailyMovementComponent {
   // }
 
   // search account card
+  get reportTitle(): string {
+  return InventoryReportsLabels[this.typeReport() as keyof typeof InventoryReportsLabels] ?? '';
+}
 }
