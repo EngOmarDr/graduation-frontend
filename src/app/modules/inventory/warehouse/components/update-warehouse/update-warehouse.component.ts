@@ -27,10 +27,9 @@ import { AlertService } from '@shared/services/alert.service';
     CardComponent,
     CustomFieldComponent,
     ValidationMessageComponent,
-    CustomSelectComponent,
     NgSelectModule,
     TranslateModule
-  ],
+],
   templateUrl: './update-warehouse.component.html',
 })
 export class UpdateWarehouseComponent implements OnInit {

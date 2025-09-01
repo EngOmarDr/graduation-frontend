@@ -53,12 +53,12 @@ export class AddInvoiceTypeComponent {
   });
 
   readonly invoiceTypes = [
-    { id: 1, name: 'buy' },
-    { id: 2, name: 'sale' },
-    { id: 3, name: 'retrieve buy' },
-    { id: 4, name: 'retrieve sale' },
-    { id: 5, name: 'input' },
-    { id: 6, name: 'output' },
+    { id: 1, name: 'مشتريات' },
+    { id: 2, name: 'مبيعات' },
+    { id: 3, name: 'مرتجع مشتريات' },
+    { id: 4, name: 'مرتجع مبيعات' },
+    { id: 5, name: 'ادخال' },
+    { id: 6, name: 'اخراج' },
   ];
 
   onAccountSelected(object: any) {

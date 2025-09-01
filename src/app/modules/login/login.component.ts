@@ -10,6 +10,8 @@ import { Router, RouterModule } from '@angular/router';
 import { LoginService } from './services/login.service';
 import { CustomFieldComponent } from '../shared/components/custom-field.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { Roles } from 'app/core/constants/roles.enum';
+import { StorageService } from 'app/core/services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class LoginComponent {
   private loginService = inject(LoginService);
   private fb = inject(NonNullableFormBuilder);
+  private storageService = inject(StorageService);
 
   constructor(private router: Router) {}
 
@@ -41,7 +44,12 @@ export class LoginComponent {
     if (this.form.valid) {
       this.loginService.login(this.form.getRawValue()).subscribe({
         next: () => {
-          this.router.navigate(['/']);
+          console.log('====================================');
+          console.log();
+          console.log('====================================');
+          this.storageService.role == Roles.PURCHASING_MANAGER ?
+          this.router.navigate(['/purchases'])
+          : this.router.navigate(['/'])
         },
         error: (err) => {
           console.error('Login failed:', err);

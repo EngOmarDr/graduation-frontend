@@ -1,14 +1,14 @@
 <cust-card titleText="{{ 'sidebar.invoices_list' | translate }}" [titlePadding]="false">
   <div class="cust-grid">
-    <div class="flex justify-end items-center col-span-full">
-      <button
+    <!-- <div class="flex justify-end items-center col-span-full"> -->
+      <!-- <button
         type="button"
         class="py-1.5 px-2.5 btn"
         [routerLink]="'/add-invoice/all'"
       >
         {{ 'add_invoice' | translate:{ invoiceType: ('sidebar.invoices_list' | translate) } }}
       </button>
-    </div>
+    </div> -->
 
     <div class="overflow-x-auto col-span-full">
       <table class="min-w-full">
@@ -42,14 +42,14 @@
             <td>{{ item.notes }}</td>
             <td>{{ item.date | date : "yyyy-MM-dd" }}</td>
             <td class="text-nowrap">
-              <button
+              <!-- <button
                 type="button"
                 [swal]="['Delete', 'Are you sure want to delete ?']"
                 (confirm)="deleteItem(item)"
                 class="text-red-600 hover:text-red-800 cursor-pointer"
               >
                 {{ 'delete' | translate }}
-              </button>
+              </button> -->
               <button
                 type="button"
                 (click)="updateItem(item)"

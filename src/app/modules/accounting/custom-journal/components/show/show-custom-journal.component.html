@@ -1,4 +1,4 @@
-<cust-card [titleText]="'journal.' + journalType.name | translate" [titlePadding]="false">
+<cust-card [titleText]=" journalType.name | translate" [titlePadding]="false">
   <div class="flex justify-end items-center">
     <button
       type="button"
@@ -6,7 +6,7 @@
       [routerLink]="'/add-cust-journal/' + journalType.name"
       [state]="{journalType}"
     >
-      {{ 'journal.add' | translate }} {{ 'journal.' + journalType.name | translate }}
+      {{ 'journal.add' | translate }} {{  journalType.name | translate }}
     </button>
   </div>
 

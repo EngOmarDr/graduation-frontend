@@ -1,33 +1,107 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StatisticsService } from './service/statistics.service';
 import { StatisticsDashboardResponse } from './model/product.model';
 import { CommonModule } from '@angular/common';
-import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
+import { NgApexchartsModule } from 'ng-apexcharts';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexXAxis,
+  ApexDataLabels,
+  ApexPlotOptions,
+  ApexTitleSubtitle,
+  ApexStroke,
+  ApexFill,
+  ApexLegend,
+  ApexNonAxisChartSeries,
+  ApexResponsive,
+} from 'ng-apexcharts';
+
+export type ApexPieChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  labels: string[];
+  colors: string[];
+  legend: ApexLegend;
+  responsive: ApexResponsive[];
+};
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries | ApexNonAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+  title: ApexTitleSubtitle;
+  stroke: ApexStroke;
+  fill: ApexFill;
+  legend: ApexLegend;
+  responsive: ApexResponsive[];
+};
 
 @Component({
   selector: 'app-dashboard-component',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgApexchartsModule],
   templateUrl: './dashboard-component.component.html',
   styleUrls: ['./dashboard-component.component.css'],
 })
 export class DashboardComponentComponent implements OnInit {
-
-  dashboardData?: StatisticsDashboardResponse;
+  dashboardData!: StatisticsDashboardResponse;
   loading = true;
   error: string | null = null;
 
   generalIndicatorItems: any[] = [];
   financialItems: any[] = [];
 
-  // ViewChild لكل Canvas
-  @ViewChild('branchChart') branchChart!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('productChart') productChart!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('timeChart') timeChart!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('stockChart') stockChart!: ElementRef<HTMLCanvasElement>;
+  branchChartOptions: ChartOptions = {
+    series: [],
+    chart: { type: 'bar', height: 350 },
+    xaxis: { categories: [] },
+    dataLabels: { enabled: false },
+    plotOptions: { bar: { borderRadius: 6, horizontal: false } },
+    title: { text: '' },
+    stroke: { show: true, width: 2, curve: 'straight' },
+    fill: { opacity: 1 },
+    legend: { show: true, position: 'top' },
+    responsive: [],
+  };
 
-  constructor(private statisticsService: StatisticsService) { }
+  productChartOptions: ChartOptions = {
+    series: [],
+    chart: { type: 'bar', height: 350 },
+    xaxis: { categories: [] },
+    dataLabels: { enabled: false },
+    plotOptions: { bar: { borderRadius: 6, horizontal: false } },
+    title: { text: '' },
+    stroke: { show: true, width: 2, curve: 'straight' },
+    fill: { opacity: 1 },
+    legend: { show: true, position: 'top' },
+    responsive: [],
+  };
+
+  timeChartOptions: ChartOptions = {
+    series: [],
+    chart: { type: 'line', height: 350 },
+    xaxis: { categories: [] },
+    dataLabels: { enabled: false },
+    plotOptions: {},
+    title: { text: '' },
+    stroke: { curve: 'smooth', width: 2 },
+    fill: { opacity: 0.5 },
+    legend: { show: true, position: 'top' },
+    responsive: [],
+  };
+  stockChartOptions: ApexPieChartOptions = {
+    series: [],
+    chart: { type: 'pie', height: 350 },
+    labels: ['LOW', 'SUFFICIENT', 'HIGH'],
+    colors: ['#EF4444', '#10B981', '#3B82F6'],
+    legend: { show: true, position: 'bottom' },
+    responsive: [],
+  };
+
+  constructor(private statisticsService: StatisticsService) {}
 
   ngOnInit(): void {
     const start = '2025-06-07T15:00:00';
@@ -38,14 +112,12 @@ export class DashboardComponentComponent implements OnInit {
         this.dashboardData = data;
         this.loading = false;
         this.prepareIndicators();
-
-        // تأخير قليل لضمان إنشاء الـ canvas
-        // setTimeout(() => this.renderCharts(), 0);
+        this.prepareCharts();
       },
-      error: (err) => {
+      error: () => {
         this.error = 'فشل تحميل البيانات';
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -53,102 +125,179 @@ export class DashboardComponentComponent implements OnInit {
     if (!this.dashboardData) return;
     const gi = this.dashboardData.generalIndicators;
     this.generalIndicatorItems = [
-      { label: 'إجمالي المبيعات', value: gi.totalSales, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي الكمية المباعة', value: gi.totalQuantitySold, colorClass: 'text-indigo-600' },
-      { label: 'عدد الفواتير', value: gi.totalInvoices, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي المشتريات', value: gi.totalPurchases, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي الكمية المشتراة', value: gi.totalQuantityPurchased, colorClass: 'text-indigo-600' },
-      { label: 'عدد فواتير المشتريات', value: gi.totalPurchaseInvoices, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي المرتجعات', value: gi.totalReturnsValue, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي كمية المرتجعات', value: gi.totalReturnsQuantity, colorClass: 'text-indigo-600' },
-      { label: 'عدد فواتير المرتجعات', value: gi.totalReturnInvoices, colorClass: 'text-indigo-600' },
-      { label: 'معدل المرتجعات %', value: gi.returnRatePercentage, colorClass: 'text-purple-600', suffix: '%' },
-      { label: 'عدد الفروع', value: gi.totalBranches, colorClass: 'text-indigo-600' },
-      { label: 'عدد المخازن', value: gi.totalWarehouses, colorClass: 'text-indigo-600' },
-      { label: 'عدد نقاط البيع', value: gi.totalPos, colorClass: 'text-indigo-600' },
-      { label: 'الموظفون النشطون', value: gi.totalActiveEmployees, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي المنتجات', value: gi.totalProducts, colorClass: 'text-indigo-600' },
-      { label: 'منتجات المخازن', value: gi.warehouseProducts, colorClass: 'text-indigo-600' },
-      { label: 'منتجات الخدمات', value: gi.serviceProducts, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي المخزون', value: gi.totalStockQuantity, colorClass: 'text-indigo-600' }
-    ];
+      {
+        label: 'إجمالي المبيعات',
+        value: gi.totalSales,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'إجمالي الكمية المباعة',
+        value: gi.totalQuantitySold,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'عدد الفواتير',
+        value: gi.totalInvoices,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'إجمالي المشتريات',
+        value: gi.totalPurchases,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'إجمالي الكمية المشتراة',
+        value: gi.totalQuantityPurchased,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'عدد فواتير المشتريات',
+        value: gi.totalPurchaseInvoices,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'إجمالي المرتجعات',
+        value: gi.totalReturnsValue,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'معدل المرتجعات %',
+        value: gi.returnRatePercentage,
+        colorClass: 'text-purple-600',
+        suffix: '%',
+      },
+      {
+        label: 'عدد الفروع',
+        value: gi.totalBranches,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'عدد المخازن',
+        value: gi.totalWarehouses,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'عدد نقاط البيع',
+        value: gi.totalPos,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'الموظفون النشطون',
+        value: gi.totalActiveEmployees,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'إجمالي المنتجات',
+        value: gi.totalProducts,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'إجمالي المخزون',
+        value: gi.totalStockQuantity,
+        colorClass: 'text-indigo-600',
+      },
+    ].filter((item) => item.value !== 0 && item.value !== null); // ✅ إزالة صفر و null
 
     const fa = this.dashboardData.financialAnalysis;
     this.financialItems = [
-      { label: 'الإيرادات', value: fa.totalRevenue, colorClass: 'text-green-600' },
+      {
+        label: 'الإيرادات',
+        value: fa.totalRevenue,
+        colorClass: 'text-green-600',
+      },
       { label: 'التكاليف', value: fa.totalCost, colorClass: 'text-red-600' },
-      { label: 'إجمالي المرتجعات', value: fa.totalReturnsValue, colorClass: 'text-yellow-600' },
-      { label: 'الأرباح', value: fa.grossProfit, colorClass: 'text-indigo-600' },
-      { label: 'هامش الربح %', value: fa.profitMarginPercentage, colorClass: 'text-purple-600', suffix: '%' }
+      {
+        label: 'الأرباح',
+        value: fa.grossProfit,
+        colorClass: 'text-indigo-600',
+      },
+      {
+        label: 'هامش الربح %',
+        value: fa.profitMarginPercentage,
+        colorClass: 'text-purple-600',
+        suffix: '%',
+      },
+    ].filter((item) => item.value !== 0 && item.value !== null);
+  }
+
+  prepareCharts() {
+    if (!this.dashboardData) return;
+
+    this.branchChartOptions.series = [
+      {
+        name: 'المبيعات',
+        data: this.dashboardData.branchPerformance.map((b) => b.sales || 0),
+      },
     ];
+    this.branchChartOptions.xaxis = {
+      categories: this.dashboardData.branchPerformance.map((b) => b.branchName),
+    };
+    this.branchChartOptions.plotOptions = {
+      bar: { borderRadius: 6, horizontal: false },
+    };
+    this.branchChartOptions.dataLabels = { enabled: false };
+
+    // Product Profitability
+    this.productChartOptions.series = [
+      {
+        name: 'الأرباح',
+        data: this.dashboardData.productAnalytics.allProductsProfitability.map(
+          (p) => p.profit
+        ),
+      },
+    ];
+    this.productChartOptions.xaxis = {
+      categories:
+        this.dashboardData.productAnalytics.allProductsProfitability.map(
+          (p) => p.productName
+        ),
+    };
+    this.productChartOptions.plotOptions = {
+      bar: { borderRadius: 6, horizontal: false },
+    };
+    this.productChartOptions.dataLabels = { enabled: false };
+
+    // Time Trends
+    this.timeChartOptions.series = [
+      {
+        name: 'المبيعات',
+        data: this.dashboardData.timeTrends.dailyTrends.map((d) => d.sales),
+      },
+      {
+        name: 'المشتريات',
+        data: this.dashboardData.timeTrends.dailyTrends.map((d) => d.purchases),
+      },
+      {
+        name: 'المرتجعات',
+        data: this.dashboardData.timeTrends.dailyTrends.map((d) => d.returns),
+      },
+    ];
+    this.timeChartOptions.xaxis = {
+      categories: this.dashboardData.timeTrends.dailyTrends.map((d) => d.date),
+    };
+    this.timeChartOptions.stroke = { curve: 'smooth' };
+
+    // Stock Status Pie
+    const summary = this.dashboardData.inventoryInsights.stockStatusSummary;
+    this.stockChartOptions.series = [
+      summary.LOW,
+      summary.SUFFICIENT,
+      summary.HIGH || 0,
+    ];
+    this.stockChartOptions.labels = ['LOW', 'SUFFICIENT', 'HIGH'];
+    this.stockChartOptions.colors = ['#EF4444', '#10B981', '#3B82F6'];
   }
 
   getStockStatusColor(status: string): string {
     switch (status) {
-      case 'LOW': return 'bg-red-500';
-      case 'SUFFICIENT': return 'bg-green-500';
-      case 'HIGH': return 'bg-blue-500';
-      default: return 'bg-gray-400';
+      case 'LOW':
+        return 'bg-red-500';
+      case 'SUFFICIENT':
+        return 'bg-green-500';
+      case 'HIGH':
+        return 'bg-blue-500';
+      default:
+        return 'bg-gray-400';
     }
-  }
-
-  renderCharts() {
-    if (!this.dashboardData) return;
-
-    // 🏬 Branch Performance
-    new Chart(this.branchChart.nativeElement, {
-      type: 'bar',
-      data: {
-        labels: this.dashboardData.branchPerformance.map(b => b.branchName),
-        datasets: [{
-          label: 'المبيعات',
-          data: this.dashboardData.branchPerformance.map(b => b.sales || 0),
-          backgroundColor: '#4F46E5'
-        }]
-      },
-      options: { responsive: true }
-    });
-
-    // 📦 Product Profitability
-    new Chart(this.productChart.nativeElement, {
-      type: 'bar',
-      data: {
-        labels: this.dashboardData.productAnalytics.allProductsProfitability.map(p => p.productName),
-        datasets: [{
-          label: 'الأرباح',
-          data: this.dashboardData.productAnalytics.allProductsProfitability.map(p => p.profit),
-          backgroundColor: '#10B981'
-        }]
-      },
-      options: { responsive: true }
-    });
-
-    // ⏱️ Time Trends
-    new Chart(this.timeChart.nativeElement, {
-      type: 'line',
-      data: {
-        labels: this.dashboardData.timeTrends.dailyTrends.map(d => d.date),
-        datasets: [
-          { label: 'المبيعات', data: this.dashboardData.timeTrends.dailyTrends.map(d => d.sales), borderColor: '#4F46E5', fill: false },
-          { label: 'المشتريات', data: this.dashboardData.timeTrends.dailyTrends.map(d => d.purchases), borderColor: '#EF4444', fill: false },
-          { label: 'المرتجعات', data: this.dashboardData.timeTrends.dailyTrends.map(d => d.returns), borderColor: '#F59E0B', fill: false }
-        ]
-      },
-      options: { responsive: true }
-    });
-
-    // 🏗️ Stock Status Pie
-    const summary = this.dashboardData.inventoryInsights.stockStatusSummary;
-    new Chart(this.stockChart.nativeElement, {
-      type: 'pie',
-      data: {
-        labels: ['LOW', 'SUFFICIENT', 'HIGH'],
-        datasets: [{
-          data: [summary.LOW, summary.SUFFICIENT, summary.HIGH || 0],
-          backgroundColor: ['#EF4444', '#10B981', '#3B82F6']
-        }]
-      },
-      options: { responsive: true }
-    });
   }
 }

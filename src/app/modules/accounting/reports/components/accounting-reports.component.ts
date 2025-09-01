@@ -21,6 +21,7 @@ import { TrialBalanceReport } from '../models/trial-balance-report';
 import { AccountSearchComponent } from '@shared/account-search/account-search.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormatNumberPipe } from 'app/core/pipes/format-number.pipe';
+import { AccountingReportsLabels } from 'app/core/constants/constant';
 
 @Component({
   selector: 'app-accounting-report',
@@ -40,6 +41,7 @@ export class AccountingReportsComponent {
   private readonly toastr = inject(ToastrService);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly activatedRoute = inject(ActivatedRoute);
+
 
   typeReport!: string;
   form!: FormGroup;
@@ -118,6 +120,7 @@ export class AccountingReportsComponent {
 
   printReport(): void {
     const printContents = document.getElementById('report')?.innerHTML;
+    const title = AccountingReportsLabels[this.typeReport as keyof typeof AccountingReportsLabels];
     if (printContents) {
       const originalContents = document.body.innerHTML;
       document.body.innerHTML = printContents;
@@ -170,4 +173,8 @@ export class AccountingReportsComponent {
         },
       });
   }
+  get reportTitle(): string {
+  return AccountingReportsLabels[this.typeReport as keyof typeof AccountingReportsLabels] ?? '';
+}
+
 }

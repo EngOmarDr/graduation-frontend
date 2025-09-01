@@ -1,12 +1,25 @@
 <cust-card [titleText]="'warehouseA.addTitle' | translate">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
-    <cust-form-field [control]="form.controls.code" inputId="code" [label]="'warehouseA.code' | translate"
-      [required]="true" />
+    <cust-form-field
+      [control]="form.controls.code"
+      inputId="code"
+      [label]="'warehouseA.code' | translate"
+      [required]="true"
+    />
 
-    <cust-form-field [control]="form.controls.name" inputId="name" [label]="'warehouseA.name' | translate"
-      [required]="true" />
+    <cust-form-field
+      [control]="form.controls.name"
+      inputId="name"
+      [label]="'warehouseA.name' | translate"
+      [required]="true"
+    />
 
-    <cust-select [control]="form.controls.type" inputId="type" label="type" [options]="types" />
+    <cust-select
+      [control]="form.controls.type"
+      inputId="type"
+      label="type"
+      [options]="types"
+    />
 
     <!-- <label class="self-center">
       <input
@@ -17,40 +30,85 @@
     </label> -->
 
     <div>
-      <label for="branchId" class="cust-input-label">{{ 'warehouseA.branch' | translate }} </label>
-      <ng-select id="branchId" [items]="branches()" bindLabel="name" bindValue="id" [searchFn]="searchFn"
-        [formControl]="form.controls.branchId" class="cust-input">
-        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-          <div>{{ item.name + "-" + item.code }}</div>
+      <label for="branchId" class="cust-input-label"
+        >{{ "warehouseA.branch" | translate }}
+      </label>
+      <ng-select
+        id="branchId"
+        [items]="branches()"
+        bindLabel="name"
+        bindValue="id"
+        [searchFn]="searchFn"
+        [formControl]="form.controls.branchId"
+        class="cust-input"
+      >
+        <ng-template
+          ng-option-tmp
+          let-item="item"
+          let-index="index"
+          let-search="searchTerm"
+        >
+          <div>{{ item.name }}</div>
         </ng-template>
       </ng-select>
-      <app-validation-message [control]="form.controls.branchId" [customMessage]="null"
-        [name]="'warehouseA.branch' | translate" />
+      <app-validation-message
+        [control]="form.controls.branchId"
+        [customMessage]="null"
+        [name]="'warehouseA.branch' | translate"
+      />
     </div>
 
     <div>
-      <label for="primaryAccount" class="cust-input-label">{{ 'warehouseA.parent' | translate }}
+      <label for="primaryAccount" class="cust-input-label"
+        >{{ "warehouseA.parent" | translate }}
       </label>
-      <ng-select id="primaryAccount" [items]="warehouses()" bindLabel="name" bindValue="id" [searchFn]="searchFn"
-        [formControl]="form.controls.parentId" class="cust-input">
-        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+      <ng-select
+        id="primaryAccount"
+        [items]="warehouses()"
+        bindLabel="name"
+        bindValue="id"
+        [searchFn]="searchFn"
+        [formControl]="form.controls.parentId"
+        class="cust-input"
+      >
+        <ng-template
+          ng-option-tmp
+          let-item="item"
+          let-index="index"
+          let-search="searchTerm"
+        >
           <div>{{ item.name + "-" + item.code }}</div>
         </ng-template>
       </ng-select>
-      <app-validation-message [control]="form.controls.parentId" [customMessage]="null"
-        [name]="'warehouseA.parent' | translate" />
+      <app-validation-message
+        [control]="form.controls.parentId"
+        [customMessage]="null"
+        [name]="'warehouseA.parent' | translate"
+      />
     </div>
 
-    <cust-form-field [control]="form.controls.phone" inputId="phone" [label]="'warehouseA.phone' | translate"
-      [required]="true" />
+    <cust-form-field
+      [control]="form.controls.phone"
+      inputId="phone"
+      [label]="'warehouseA.phone' | translate"
+    />
 
-    <cust-form-field [control]="form.controls.address" inputId="address" [label]="'warehouseA.address' | translate"
-      [required]="true" />
+    <cust-form-field
+      [control]="form.controls.address"
+      inputId="address"
+      [label]="'warehouseA.address' | translate"
+    />
 
-    <cust-form-field [control]="form.controls.notes" inputId="notes" [label]="'warehouseA.notes' | translate" />
+    <cust-form-field
+      [control]="form.controls.notes"
+      inputId="notes"
+      [label]="'warehouseA.notes' | translate"
+    />
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn">{{ 'warehouseA.add' | translate }}</button>
+      <button type="submit" class="btn">
+        {{ "warehouseA.add" | translate }}
+      </button>
     </div>
   </form>
 </cust-card>

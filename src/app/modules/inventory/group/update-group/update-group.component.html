@@ -19,7 +19,7 @@
         [ngClass]="{
           'cust-label-disable': form.controls.parentId
         }"
-        >{{ 'groupForm.parentGroup' | translate }}
+        >{{ "groupForm.parentGroup" | translate }}
       </label>
       <ng-select
         id="parentGroup"
@@ -54,10 +54,9 @@
     />
 
     <div class="col-span-full grid grid-cols-4">
-      <button type="submit" class="btn" [disabled]="!form.valid">{{ 'groupForm.updateButton' | translate }}</button>
+      <button type="submit" class="btn" [disabled]="!form.valid">
+        {{ "groupForm.updateButton" | translate }}
+      </button>
     </div>
   </form>
-  <div>
-    {{ form.value | json }}
-  </div>
 </cust-card>

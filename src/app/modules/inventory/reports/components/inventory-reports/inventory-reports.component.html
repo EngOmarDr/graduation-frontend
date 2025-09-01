@@ -1,4 +1,4 @@
-<cust-card [titleText]="typeReport() | translate">
+<cust-card [titleText]="reportTitle">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="cust-grid">
     <cust-select *ngIf="isAdmin" [label]="'warehouse' | translate" [options]="warehouses()" [canBeNull]="true"
       [control]="form.get('warehouseId')!" />
