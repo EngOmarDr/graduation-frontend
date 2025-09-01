@@ -96,9 +96,9 @@ export class DashboardComponentComponent implements OnInit {
   stockChartOptions: ApexPieChartOptions = {
   series: [],
   chart: { type: 'pie', height: 350 },
-  labels: ['LOW', 'SUFFICIENT', 'HIGH'], // دائماً مصفوفة صالحة
-  colors: ['#EF4444','#10B981','#3B82F6'], // دائماً مصفوفة صالحة
-  legend: { show: true, position: 'bottom' }, // دائماً كائن صالح
+  labels: ['LOW', 'SUFFICIENT', 'HIGH'],
+  colors: ['#EF4444','#10B981','#3B82F6'],
+  legend: { show: true, position: 'bottom' },
   responsive: []
 };
 
@@ -124,38 +124,38 @@ export class DashboardComponentComponent implements OnInit {
   }
 
   prepareIndicators() {
-    if (!this.dashboardData) return;
-    const gi = this.dashboardData.generalIndicators;
-    this.generalIndicatorItems = [
-      { label: 'إجمالي المبيعات', value: gi.totalSales, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي الكمية المباعة', value: gi.totalQuantitySold, colorClass: 'text-indigo-600' },
-      { label: 'عدد الفواتير', value: gi.totalInvoices, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي المشتريات', value: gi.totalPurchases, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي الكمية المشتراة', value: gi.totalQuantityPurchased, colorClass: 'text-indigo-600' },
-      { label: 'عدد فواتير المشتريات', value: gi.totalPurchaseInvoices, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي المرتجعات', value: gi.totalReturnsValue, colorClass: 'text-indigo-600' },
-      { label: 'معدل المرتجعات %', value: gi.returnRatePercentage, colorClass: 'text-purple-600', suffix: '%' },
-      { label: 'عدد الفروع', value: gi.totalBranches, colorClass: 'text-indigo-600' },
-      { label: 'عدد المخازن', value: gi.totalWarehouses, colorClass: 'text-indigo-600' },
-      { label: 'عدد نقاط البيع', value: gi.totalPos, colorClass: 'text-indigo-600' },
-      { label: 'الموظفون النشطون', value: gi.totalActiveEmployees, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي المنتجات', value: gi.totalProducts, colorClass: 'text-indigo-600' },
-      { label: 'إجمالي المخزون', value: gi.totalStockQuantity, colorClass: 'text-indigo-600' }
-    ];
+  if (!this.dashboardData) return;
+  const gi = this.dashboardData.generalIndicators;
+  this.generalIndicatorItems = [
+    { label: 'إجمالي المبيعات', value: gi.totalSales, colorClass: 'text-indigo-600' },
+    { label: 'إجمالي الكمية المباعة', value: gi.totalQuantitySold, colorClass: 'text-indigo-600' },
+    { label: 'عدد الفواتير', value: gi.totalInvoices, colorClass: 'text-indigo-600' },
+    { label: 'إجمالي المشتريات', value: gi.totalPurchases, colorClass: 'text-indigo-600' },
+    { label: 'إجمالي الكمية المشتراة', value: gi.totalQuantityPurchased, colorClass: 'text-indigo-600' },
+    { label: 'عدد فواتير المشتريات', value: gi.totalPurchaseInvoices, colorClass: 'text-indigo-600' },
+    { label: 'إجمالي المرتجعات', value: gi.totalReturnsValue, colorClass: 'text-indigo-600' },
+    { label: 'معدل المرتجعات %', value: gi.returnRatePercentage, colorClass: 'text-purple-600', suffix: '%' },
+    { label: 'عدد الفروع', value: gi.totalBranches, colorClass: 'text-indigo-600' },
+    { label: 'عدد المخازن', value: gi.totalWarehouses, colorClass: 'text-indigo-600' },
+    { label: 'عدد نقاط البيع', value: gi.totalPos, colorClass: 'text-indigo-600' },
+    { label: 'الموظفون النشطون', value: gi.totalActiveEmployees, colorClass: 'text-indigo-600' },
+    { label: 'إجمالي المنتجات', value: gi.totalProducts, colorClass: 'text-indigo-600' },
+    { label: 'إجمالي المخزون', value: gi.totalStockQuantity, colorClass: 'text-indigo-600' }
+  ].filter(item => item.value !== 0 && item.value !== null); // ✅ إزالة صفر و null
 
-    const fa = this.dashboardData.financialAnalysis;
-    this.financialItems = [
-      { label: 'الإيرادات', value: fa.totalRevenue, colorClass: 'text-green-600' },
-      { label: 'التكاليف', value: fa.totalCost, colorClass: 'text-red-600' },
-      { label: 'الأرباح', value: fa.grossProfit, colorClass: 'text-indigo-600' },
-      { label: 'هامش الربح %', value: fa.profitMarginPercentage, colorClass: 'text-purple-600', suffix: '%' }
-    ];
-  }
+  const fa = this.dashboardData.financialAnalysis;
+  this.financialItems = [
+    { label: 'الإيرادات', value: fa.totalRevenue, colorClass: 'text-green-600' },
+    { label: 'التكاليف', value: fa.totalCost, colorClass: 'text-red-600' },
+    { label: 'الأرباح', value: fa.grossProfit, colorClass: 'text-indigo-600' },
+    { label: 'هامش الربح %', value: fa.profitMarginPercentage, colorClass: 'text-purple-600', suffix: '%' }
+  ].filter(item => item.value !== 0 && item.value !== null);
+}
+
 
   prepareCharts() {
     if (!this.dashboardData) return;
 
-    // Branch Performance
     this.branchChartOptions.series = [
       { name: 'المبيعات', data: this.dashboardData.branchPerformance.map(b => b.sales || 0) }
     ];

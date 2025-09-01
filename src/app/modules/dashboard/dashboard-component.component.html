@@ -14,50 +14,6 @@
       </div>
     </div>
 
-    <!-- Financial Analysis -->
-    <div class="bg-white rounded-2xl shadow p-6 mb-8">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">💰 التحليل المالي</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div *ngFor="let item of financialItems" class="text-center">
-          <p class="text-sm text-gray-500">{{ item.label }}</p>
-          <h3 [ngClass]="item.colorClass" class="text-lg font-bold">{{ item.value | number }}{{ item.suffix || '' }}</h3>
-        </div>
-      </div>
-    </div>
-
-    <!-- Branch Performance Chart -->
-    <div class="bg-white rounded-2xl shadow p-6 mb-8">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">🏬 أداء الفروع</h2>
-      <apx-chart [series]="branchChartOptions.series"
-                 [chart]="branchChartOptions.chart"
-                 [xaxis]="branchChartOptions.xaxis"
-                 [dataLabels]="branchChartOptions.dataLabels"
-                 [plotOptions]="branchChartOptions.plotOptions">
-      </apx-chart>
-    </div>
-
-    <!-- Product Profitability Chart -->
-    <div class="bg-white rounded-2xl shadow p-6 mb-8">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">📦 تحليل المنتجات</h2>
-      <apx-chart [series]="productChartOptions.series"
-                 [chart]="productChartOptions.chart"
-                 [xaxis]="productChartOptions.xaxis"
-                 [dataLabels]="productChartOptions.dataLabels"
-                 [plotOptions]="productChartOptions.plotOptions">
-      </apx-chart>
-    </div>
-
-    <!-- Time Trends Chart -->
-    <div class="bg-white rounded-2xl shadow p-6 mb-8">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">⏱️ التوجهات الزمنية</h2>
-      <apx-chart [series]="timeChartOptions.series"
-                 [chart]="timeChartOptions.chart"
-                 [xaxis]="timeChartOptions.xaxis"
-                 [stroke]="timeChartOptions.stroke">
-      </apx-chart>
-    </div>
-
-    <!-- Stock Status Pie Chart -->
     <div class="bg-white rounded-2xl shadow p-6 mb-8">
       <h2 class="text-xl font-semibold text-gray-700 mb-4">🏗️ حالة المخزون</h2>
       <apx-chart [series]="stockChartOptions.series"
